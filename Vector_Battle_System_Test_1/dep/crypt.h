@@ -5,8 +5,18 @@
 
 using namespace std;
 
+/*The first character in this alphabet being the numeral '0' actually isn't great. You see, when
+storing floats (in, say, graphical data) many of these floats will take on integral values. This
+means (you guessed it) a LOT of zeroes appear in the decrypted text file. And in this type of ci
+pher, the first character in the alphabet shows up as one of the characters in the cipher key. S
+o if we use zeroes next to eachother a lot, the key begins to show up in the cryptogram, and then
+they'll be onto us. Simple solution: move 0 to the end of the numerals in the cipher's base alpha
+bet. Unfortunately this means that any graphics or cryptograms from before 1/22/19 at 10:45 PM wi
+ll be rendered unreadable. If you really want to read some of those, use version of 'crypt.h' fro
+m before then, or just move the 0 back to the beginning for a bit. I'm moving the 0 now. '1' will
+be the new first numeral, which should not cause the same problem.*/
 const string cipher_base_alphabet = 
-"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz;:[]{}<>', .?/!@#$%^&*()-_=+|`~";
+"1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz;:[]{}<>', .?/!@#$%^&*()-_=+|`~";
 
 
 string alphabet_shift(char new_firstletter, string base_alphabet) {
