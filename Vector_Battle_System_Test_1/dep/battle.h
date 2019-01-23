@@ -38,9 +38,6 @@ public:
 	//portals
 	//Function that contains code for this stage's graphics
 ///public:
-
-	//Returns a vector of all the points of intsection between the walls in member battlefield::walls
-	///(this was mainly implemented for debug purposes, it's maybe obsolete now. But maybe not!!!!)
 	vector<point> intersections() {
 		vector<point> returnthis;
 		unsigned int i = 0;
@@ -185,11 +182,8 @@ public:
 	void spawn_ray(const ray &spawnthis) {
 		rays.push_back(spawnthis);
 	}
-
-	/*This is the iterative function of combat. Anytime combat is rolling, 
-	this is to be called every frame. It's also a little messy and could probably be split up better.*/
 	void iterate(float &inc /*incremental time*/) {
-		//Iterative task I: Iterate Rays
+		//Iterate Rays
 		for (unsigned int i = 0; i < rays.size(); i++) {
 			rays[i].advance(inc);
 			//Now we check for collisions
@@ -322,11 +316,6 @@ public:
 				i--; //Appropriately adjust our iterator
 			}
 		}
-		//Iterative task II:
-
-		//Iterative task III:
-
-		//And so on.
 	}
 	//Constructor to read a "battle_preset.txt" and define this battlestate accordingly
 
