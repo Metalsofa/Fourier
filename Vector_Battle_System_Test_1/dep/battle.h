@@ -27,8 +27,8 @@ public:
 	wall() {}
 };
 
-
-class battlefield { //These are pre-defined battlefields; to the game, read-only
+//A battlefield is one of the members of battle_preset and battlestate; it contains the "terrain" of the battle, if you will.
+class battlefield { 
 public:
 	float width;
 	float height;
@@ -36,7 +36,7 @@ public:
 	//Other vectors containg other sets of battlefield objects
 	//sinks
 	//portals
-	//Function that contains code for this stage's graphics
+	//background animations
 ///public:
 	vector<point> intersections() {
 		vector<point> returnthis;
@@ -176,12 +176,17 @@ public:
 	int raycount() {
 		return rays.size();
 	}
+	//Add a ray to the vector or travelling rays (this is a relic of when I had private members. I miss those days)
 	void spawn_ray(ray &spawnthis) {
 		rays.push_back(spawnthis);
 	}
+	//Oh look there's another version of the previous function that works with const
 	void spawn_ray(const ray &spawnthis) {
 		rays.push_back(spawnthis);
 	}
+	/*This function is called every frame during battle unless the battle is paused; even then, It may still be best
+	to call it and simply because certain animations might look cool cycling in the background when the battle is
+	awaiting user input. All iterative battle behaviour and logic goes in here, or is called from in here.*/
 	void iterate(float &inc /*incremental time*/) {
 		//Iterate Rays
 		for (unsigned int i = 0; i < rays.size(); i++) {
