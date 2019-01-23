@@ -15,8 +15,14 @@ bet. Unfortunately this means that any graphics or cryptograms from before 1/22/
 ll be rendered unreadable. If you really want to read some of those, use version of 'crypt.h' fro
 m before then, or just move the 0 back to the beginning for a bit. I'm moving the 0 now. '1' will
 be the new first numeral, which should not cause the same problem.*/
+/*1/22/2019 10:56 PM: Actually, I gave it some more thought, and I see no reason that the alphabe
+t should be ordered at all. It'll be WAY tougher to decrypt then! I bet there won't be a single
+keyed vigenere cipher codebreaker program on the internet that could possible handle it then!*/
+//Scrambling the alphabet now. Here's the old one: 
+//"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz;:[]{}<>', .?/!@#$%^&*()-_=+|`~";
+//Now for the new one, which includes the characters \ and " :
 const string cipher_base_alphabet = 
-"1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz;:[]{}<>', .?/!@#$%^&*()-_=+|`~";
+"+L~A0|J`F9Ir8?/O!t@E#u$NhiP7nQRS^(K)-_s1v[B]{M}<C>', .%wG&Hxyz;:=T*U6VWXY\\ZD5abcde4f\"gj3klmo2pq";
 
 
 string alphabet_shift(char new_firstletter, string base_alphabet) {
