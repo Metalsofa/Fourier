@@ -1,0 +1,23 @@
+﻿  Vector_Battle_System_Test_1.cpp
+c:\users\medlod\documents\vc projects\dependencies\combat\players.h(83): warning C4018: '<': signed/unsigned mismatch
+c:\users\medlod\documents\vc projects\dependencies\combat\players.h(103): warning C4018: '<': signed/unsigned mismatch
+c:\users\medlod\documents\vc projects\dependencies\combat\players.h(175): warning C4018: '<': signed/unsigned mismatch
+c:\users\medlod\documents\vc projects\dependencies\combat\players.h(214): warning C4018: '<': signed/unsigned mismatch
+c:\users\medlod\documents\vc projects\dependencies\combat\players.h(263): warning C4018: '<': signed/unsigned mismatch
+c:\users\medlod\documents\vc projects\dependencies\combat\waves.h(50): warning C4018: '<=': signed/unsigned mismatch
+c:\users\medlod\documents\vc projects\dependencies\combat\waves.h(71): warning C4018: '<=': signed/unsigned mismatch
+c:\users\medlod\documents\vc projects\dependencies\combat\waves.h(84): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\medlod\documents\vc projects\dependencies\combat\waves.h(92): warning C4018: '<=': signed/unsigned mismatch
+c:\users\medlod\documents\vc projects\dependencies\combat\waves.h(112): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\medlod\documents\vc projects\vector_battle_system_test_1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(86): warning C4129: '/': unrecognized character escape sequence
+c:\users\medlod\documents\vc projects\vector_battle_system_test_1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(232): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\medlod\documents\vc projects\vector_battle_system_test_1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(255): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\medlod\documents\vc projects\vector_battle_system_test_1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(485): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+c:\users\medlod\documents\vc projects\vector_battle_system_test_1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(687): warning C4018: '<': signed/unsigned mismatch
+c:\users\medlod\documents\vc projects\vector_battle_system_test_1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(759): warning C4018: '<': signed/unsigned mismatch
+c:\users\medlod\documents\vc projects\vector_battle_system_test_1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(784): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\medlod\documents\vc projects\vector_battle_system_test_1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(837): warning C4018: '<': signed/unsigned mismatch
+c:\users\medlod\documents\vc projects\vector_battle_system_test_1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(845): warning C4018: '<': signed/unsigned mismatch
+c:\users\medlod\documents\vc projects\vector_battle_system_test_1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(982): warning C4018: '>': signed/unsigned mismatch
+c:\users\medlod\documents\vc projects\dependencies\combat\players.h(203): warning C4715: 'shape::getGLMODE': not all control paths return a value
+  Vector_Battle_System_Test_1.vcxproj -> C:\Users\medlod\Documents\VC Projects\Vector_Battle_System_Test_1\Debug\Vector_Battle_System_Test_1.exe
