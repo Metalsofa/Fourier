@@ -5,6 +5,7 @@
 #include<stdlib.h>
 #include<string>
 #include<map>
+#include<time.h>
 
 using namespace std;
 
@@ -87,7 +88,7 @@ const char keys[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ',
 map<char, bool> normal_keysdown;
 
 ///Special and other keys
-bool up_down = false;
+bool up_down = false; //DP: Instead of _down, _press might be less confusing
 bool left_down = false;
 bool down_down = false;
 bool right_down = false;
@@ -165,8 +166,8 @@ metastat colorfromID(int colorID) {
 }
 
 
-metastat randomhue() {
-	int hueID = rand() % 12 + 1;
+metastat randomhue() { 
+	int hueID = rand() % 12 + 1; //DP: Not good random, should seed random in main, I did it on line 1065 and also included time.h
 	return colorfromID(hueID);
 }
 
@@ -205,7 +206,7 @@ void drawsegment(segment &seg) {
 	glEnd();
 }
 
-void rendertext(point location, string text) {
+void rendertext(point location, string text) {  //DP: IF glRasterPos2f doesn't edit the inputs, you might want to pass location in by reference and not create dot;
 	point dot = location;
 	
 	// set position to text    
@@ -319,7 +320,7 @@ void drawaxes() {
 	glColor3f(1, 1, 1);
 }
 
-void setcolor(metastat col, float opacity) {
+void setcolor(metastat col, float opacity) { //DP: May want to pass by reference
 	float R = float(col.som) / 255.0f;
 	float G = float(col.emo) / 255.0f;
 	float B = float(col.cog) / 255.0f;
@@ -346,8 +347,8 @@ void drawcursor() {
 		glVertex2f(CursorPosition.x, 0); glVertex2f(CursorPosition.x, ticksize);
 		glVertex2f(CursorPosition.x, currentbattle.BoardHeight()); glVertex2f(CursorPosition.x, currentbattle.BoardHeight() - ticksize);
 		glVertex2f(0, CursorPosition.y); glVertex2f(ticksize, CursorPosition.y);
-		glVertex2f(currentbattle.BoardWidth(), CursorPosition.y); glVertex2f(currentbattle.BoardWidth() - ticksize, CursorPosition.y);
-		glColor3f(CursorRed, CursorGreen, CursorBlue); //OH THERE IT IS I FOUND THE CURSOR COLOR LINE FINALLY
+		glVertex2f(currentbattle.BoardWidth(), CursorPosition.y); glVertex2f(currentbattle.BoardWidth() - ticksize, CursorPosition.y); 
+		glColor3f(CursorRed, CursorGreen, CursorBlue); //OH THERE IT IS I FOUND THE CURSOR COLOR LINE FINALLY								DP: YAY
 		glEnd();
 	}
 	if (DESIGN_FUNCTION == BD_MAKE_SHAPES)
@@ -376,7 +377,7 @@ void drawcursor() {
 
 void ClearScreen() {glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);}
 
-void drawwall(wall drawing_wall) {
+void drawwall(wall drawing_wall) { //DP: Pass by reference?
 	glLineWidth(drawing_wall.material.thickness);
 	glBegin(GL_LINES);
 	glColor4f(
@@ -391,7 +392,7 @@ void drawwall(wall drawing_wall) {
 	glLineWidth(1.0f);
 }
 
-void rendertext(float x, float y, float z, void *font, string text) {
+void rendertext(float x, float y, float z, void *font, string text) { //DP: It might be slightly faster to use glutBitmapString https://stackoverflow.com/questions/544079/how-do-i-use-glutbitmapstring-in-c-to-draw-text-to-the-screen
 	glRasterPos3f(x, y, z);
 	for (char c : text)
 		glutBitmapCharacter(font, c);
@@ -410,12 +411,17 @@ void drawray(ray &drawing_ray) {
 	bool showjoints = false;
 	if (showjoints) {
 		unsigned int i = 1;
-		for (point dot : drawing_ray.getbits()) {
+		for (point dot : drawing_ray.getbits()) { //DP: if you are already using an index, it might be better to do what I put on line 420
 			drawpoint(dot);
 			glColor3f(drawing_ray.getRed(), drawing_ray.getGreen(), drawing_ray.getBlue());
 			rendertext(dot, to_string(i));
 			i++;
 		}
+		/*for (unsigned int i = 1; i <= drawing_ray.getbits(); i++) {
+			drawpoint(drawing_ray.getbits()[i-1]);
+			glColor3f(drawing_ray.getRed(), drawing_ray.getGreen(), drawing_ray.getBlue());
+			rendertext(drawing_ray.getbits()[i - 1], to_string(i));
+		}*/
 	}
 
 	//Draw Arrowhead
@@ -454,11 +460,11 @@ void drawray(ray &drawing_ray) {
 	}
 }
 
-void drawfighter(combatant &fighter) {
+void drawfighter(combatant &fighter) { //DP: This is the coolest function I've ever read
 
 }
 
-void draw_art_GUI() { //Idea I just had: Every player metastat caps at 255; WHITE is the optimum in any area
+void draw_art_GUI() { //Idea I just had: Every player metastat caps at 255; WHITE is the optimum in any area		DP: Cool Idea
 	string headerstring = "ART MODE: ";
 	rendertext(point(0.0f, currentbattle.map.height + 0.5f), headerstring);
 	for (unsigned int i = 0; i < art.pieces.size(); i++) {
@@ -677,7 +683,7 @@ void handle_input(string &input) {
 		output_console("exit ..................................... Exit the program without saving");
 	}
 	else {
-		output_console("Invalid command: " + arg);
+		output_console("Invalid command: " + arg); //DP: Should probably add "type help for a list of commands"
 	}
 }
 
@@ -734,7 +740,7 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 	//Draw Battlefield Geometry
 		//Draw Walls
 	int walliterator = 0;
-	while (walliterator < currentbattle.map.wallcount()) {
+	while (walliterator < currentbattle.map.wallcount()) { //DP: Do you have to redraw everything every render? Is it possible to only do it when a wall is added or deleted?, applies for other things rendered here
 		drawwall(currentbattle.map.getwall(walliterator));
 		walliterator++;
 	}
@@ -992,7 +998,7 @@ void MouseClick(int button, int state, int x, int y) { //Note that this is good 
 	}
 }
 
-void ActiveMouseMove(int x, int y) {
+void ActiveMouseMove(int x, int y) { //DP: something I didn't put for the draw fighter function, even though it is void, when we optimize, it will break if we don't return (I think)
 
 }
 
@@ -1047,13 +1053,16 @@ int main(int argc, char **argv) {
 	//For development purposes
 	///Tumbleweeds
 
-	//Define the keyboard map
+	//Define the keyboard map		DP: You don't need to do this, I'll talk to you about this
 	for (char c : keys) {
 		normal_keysdown.insert(pair<char, bool>(c, false));
 	}
 
 	output_console("Welcome to the Vector_Battle_System_Test_1.cpp Console");
 	output_console("Type help for a list of commands.");
+
+	//DP: Initialize rand
+	srand(time(NULL));
 
 	//Initialize GLUT
 	glutInit(&argc, argv);
