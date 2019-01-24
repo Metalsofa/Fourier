@@ -1,1 +1,17 @@
-﻿  Vector_Battle_System_Test_1.vcxproj -> C:\Users\medlod\Source\Repos\Metalsofa\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe
+﻿  Vector_Battle_System_Test_1.cpp
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\dep\waves.h(50): warning C4018: '<=': signed/unsigned mismatch
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\dep\waves.h(71): warning C4018: '<=': signed/unsigned mismatch
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\dep\waves.h(84): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\dep\waves.h(92): warning C4018: '<=': signed/unsigned mismatch
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\dep\waves.h(112): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\dep\battle.h(91): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\dep\battle.h(177): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(86): warning C4129: '/': unrecognized character escape sequence
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(232): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(255): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(485): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(784): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(983): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\medlod\source\repos\metalsofa\gameproj1\vector_battle_system_test_1\dep\players.h(203): warning C4715: 'shape::getGLMODE': not all control paths return a value
+  LINK : C:\Users\medlod\Source\Repos\Metalsofa\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe not found or not built by the last incremental link; performing full link
+  Vector_Battle_System_Test_1.vcxproj -> C:\Users\medlod\Source\Repos\Metalsofa\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe
