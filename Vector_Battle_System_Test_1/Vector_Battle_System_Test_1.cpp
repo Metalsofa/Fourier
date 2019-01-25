@@ -269,7 +269,7 @@ void draw_series(vector<sinusoid> &series, float leftbound, float rightbound, in
 }
 
 void feedkeyboardinput(string &field) {
-	for (char c : keys) {
+	for (char c : keys) { //Not sure how to eliminate this for loop
 		if (normal_keysdown[c]) {
 			normal_keysdown[c] = false;
 			field += c;
@@ -331,8 +331,8 @@ void drawshape(shape &obj) {
 	setcolor(obj.color, obj.opacity);
 	glLineWidth(obj.line_thickness);
 	glBegin(obj.mode);
-	for (point dot : obj.vertices) {
-		glVertex2f(dot.x, dot.y);
+	for (int i = 0; i < obj.vertices.size(); i++) {
+		glVertex2f(obj.vertices[i].x, obj.vertices[i].y);
 	}
 	glEnd();
 }
@@ -746,12 +746,9 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 	}
 
 	if (show_corners) {
-		for (point corner : currentbattle.map.intersections()) {
-			drawpoint(corner);
+		for (unsigned int i = 0; i < currentbattle.map.intersections().size(); i++) {
+			drawpoint(currentbattle.map.intersections()[i]);
 			glColor3f(1, 1, 1);
-			/*drawsegment(reflective_bisector(point(3, 3),
-				currentbattle.getmap().getwall(0).getbody(),
-				currentbattle.getmap().getwall(1).getbody()));*/
 		}
 	}
 		//Debug: object counts
@@ -809,11 +806,9 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 					segment eraser = rightclicktrail;
 					rightclicktrail.define(0, 0, 0, 0);
 					int wallID = 0;
-					for (wall checker : currentbattle.map.walls){
-						if (isintersect(eraser, checker.body))
-							currentbattle.destroy_wall(wallID);
-						else
-							wallID++;
+					for (int i = 0; i < currentbattle.map.walls.size(); i++) {
+						if (isintersect(eraser, currentbattle.map.walls[i].body))
+							currentbattle.destroy_wall(i--);
 					}
 				}
 				else {
@@ -1052,11 +1047,6 @@ void PassiveMouseMove(int x, int y) {
 int main(int argc, char **argv) {
 	//For development purposes
 	///Tumbleweeds
-
-	//Define the keyboard map		DP: You don't need to do this, I'll talk to you about this
-	for (char c : keys) {
-		normal_keysdown.insert(pair<char, bool>(c, false));
-	}
 
 	output_console("Welcome to the Vector_Battle_System_Test_1.cpp Console");
 	output_console("Type help for a list of commands.");
