@@ -24,7 +24,7 @@ public:
 		material = defining_material;
 		fixed = isfixed;
 	}
-	wall() {}
+	wall() {} //DP: You don't need default values?
 };
 
 //A battlefield is one of the members of battle_preset and battlestate; it contains the "terrain" of the battle, if you will.
@@ -63,11 +63,27 @@ public:
 			}
 			i++;
 		}
+		//DP: Below is a cleaner and slightly more efficient version of the loops you have above
+		/*for (int i = 0; i < walls.size(); i++) {
+			for (int j = i+1; j < walls.size(); j++) {
+				if (isintersect(walls[i].getbody(), walls[j].getbody())) {
+					point ints = intersection(walls[i].getbody(), walls[j].getbody());
+					bool add_it = true;
+					for (int k = 0; k < returnthis.size(), k++) {
+						if (converges(returnthis[k], ints)) {
+							add_it = false;
+						}
+					}
+					if (add_it)
+						returnthis.emplace_back(ints);
+				}
+			}
+		}*/
 		return returnthis;
 	}
 
 	//returns the point (-100, -100) if there are no intersections.
-	point nearestintersection(point dot) {
+	point nearestintersection(point dot) { //DP: Pass by reference?
 		point nearest(-100, -100);
 		for (unsigned int i = 0; i < intersections().size(); i++) {
 			point comp = intersections()[i];
@@ -95,10 +111,10 @@ public:
 	vector<wall> getwalls() {
 		return walls;
 	}
-	void add_wall(wall new_wall) { //Consider overloading this to take a wall or to take multiple args
+	void add_wall(wall new_wall) { //Consider overloading this to take a wall or to take multiple args   DP: Pass by ref?
 		walls.push_back(new_wall);
 	}
-	void pop_wall(int wallID) {
+	void pop_wall(int wallID) { 
 		swap(walls[wallID], walls.back());
 		return walls.pop_back();
 	}
@@ -162,14 +178,14 @@ public:
 	void setmapsize(float wideness, float highness) {
 		map.setsize(wideness, highness);
 	}
-	void construct_wall(wall new_wall) {
+	void construct_wall(wall new_wall) { //Pass by ref?
 		map.add_wall(new_wall);
 	}
 	void destroy_wall(int wallID) {
 		map.pop_wall(wallID);
 	}
 	//Constructor for battlestate; takes a battle_preset
-	battlestate (battle_preset preset) {
+	battlestate (battle_preset preset) { //Pass by ref?
 		map = preset.map;
 	}
 	//Returns the number of travelling rays in existence
