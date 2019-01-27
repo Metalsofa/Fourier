@@ -31,13 +31,16 @@ private:
 			A = 1.0f;
 		if (A < 0.0f)
 			A = 0.0f;
+		// DP: Can do it the way below:
+		/*R = fmod(R, 1.0);
+		G = fmod(G, 1.0);
+		B = fmod(B, 1.0);
+		A = fmod(A, 1.0);*/
+
 	}
 public:
-	fcolor() {
-		R = 0.0f;
-		G = 0.0f;
-		B = 0.0f;
-		A = 0.0f;
+	fcolor() { //DP: Simplified initalizer below
+		R = G = B = A = 0.0f;
 	}
 	fcolor(float red, float green, float blue, float alpha) {
 		R = red;
@@ -97,7 +100,7 @@ public:
 
 };
 
-fcolor fcolor_inverse(fcolor col) {
+fcolor fcolor_inverse(fcolor col) { //DP: Pass by reference?
 	col.invert();
 	return col;
 }
