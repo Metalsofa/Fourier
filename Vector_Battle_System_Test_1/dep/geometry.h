@@ -322,6 +322,8 @@ float distancetoseg(point dot, segment seg) { //DP: pass by ref
 		point r2 = difference(dot, seg.p2);
 		float shortest = (r1.magnitude() < r2.magnitude()) ? r1.magnitude() : r2.magnitude();
 		return shortest;
+		//DP: conscise version:
+		//return min(difference(dot, seg.p1).magnitude(), difference(dot, seg.p2).magnitude());
 	}
 	//Otherwise we find the perpendicular path to the segment
 	float r = distancetoline(dot, seg);
@@ -329,7 +331,7 @@ float distancetoseg(point dot, segment seg) { //DP: pass by ref
 }
 
 //Returns the given point after refection about an axis defined by a given segment
-point reflection(point &dot, segment &mirror) {
+point reflection(point &dot, segment &mirror) { //DP: Don't have to create all these vars
 	point transform = mirror.midpoint(); //Bring the process to the origin
 	dot = difference(dot, transform);
 	point mir = difference(mirror.p1,transform);
@@ -387,11 +389,13 @@ segment reflective_bisector(point &dot, segment &sega, segment &segb) {
 		proper_angle = bisector_angle_1;
 	else
 		proper_angle = bisector_angle_2;
+	//DP: proper_angle = (diff1>diff2)? bisector_angle_1: bisector_angle_2;
 	//New logic
 	if (use_angle1)
 		proper_angle = bisector_angle_1;
 	else
 		proper_angle = bisector_angle_2;
+	//DP: proper_angle = (use_angle1)? bisector_angle_1: bisector_angle_2;
 	point bisector_unit = unitfromangle(proper_angle);
 	point bisector_p1 = bisector_unit;
 	point bisector_p2 = scalarproduct(bisector_unit, -1.0f);
@@ -409,7 +413,7 @@ public:
 		center = point(0, 0);
 		radius = 0.0f;
 	}
-	circle(point centre, float rad) {
+	circle(point centre, float rad) { //DP: Pass by ref?
 		center = centre;
 		radius = rad;
 	}
