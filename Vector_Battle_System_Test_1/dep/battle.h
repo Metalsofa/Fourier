@@ -220,6 +220,7 @@ public:
 						point inters = intersection(frontseg, serf);
 						unsigned int k = 0;
 						unsigned int closestID = 0; //The ID of the closest wall
+						//DP: Might want to store the distance of the closest so it doensn't have to keep recalculating
 						while (k < map.getwalls().size()) {
 							segment comparator = map.getwall(k).getbody();
 							if (distancetoseg(inters, comparator) <= distancetoseg(inters, serf))
@@ -240,8 +241,9 @@ public:
 							collision took place.*/
 							//Also it's breaking wall collisions on walls with certain indices
 							unsigned int k = 0;
-							int closestID = -1;
+							int closestID = -1; //DP: Didn't you already calculate the closest above? also known as j? This is pretty confusing, you'll have to explain it to me
 							int secondclosestID = -1;
+							//DP: Might want to store the distance of the first and second closest so it doensn't have to keep recalculating
 							while (k < map.getwalls().size()) {
 								segment comparator = map.getwall(k).getbody();
 								if (distancetoseg(previnter, comparator) <= distancetoseg(previnter, serf)) {
