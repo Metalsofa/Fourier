@@ -14,35 +14,36 @@
 #include "GL/glut.h"
 #include "fcolor.h"
 
-void setcolor(fcolor col) {
+void setcolor(fcolor col) { //DP: Ref?
 	glColor4f(col.getlevel('r'), col.getlevel('g'), col.getlevel('b'), col.getlevel('a'));
 }
 
-void draw_text(point location, string text) {
+void draw_text(point location, string text) {//DP: Ref?
 	point dot = location;
 	glRasterPos2f(dot.x, dot.y);
-	for (unsigned int i = 0; i < text.size(); i++)
-	{
+	for (unsigned int i = 0; i < text.size(); i++) { //glutBitmapString() https://stackoverflow.com/questions/544079/how-do-i-use-glutbitmapstring-in-c-to-draw-text-to-the-screen
 		//Draw each character    
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
 	}
 }
 
-void glVertexPoint(point dot) {
+void glVertexPoint(point dot) {//DP: Ref?
 	glVertex2f(dot.x, dot.y);
 }
-void glVertexSegment(segment seg) {
+void glVertexSegment(segment seg) {//DP: Ref?
 	glVertexPoint(seg.p1);
 	glVertexPoint(seg.p2);
 }
-void glVertexTriangle(triangle tri) {
+void glVertexTriangle(triangle tri) {//DP: Ref?
 	glVertexPoint(tri.p1);
 	glVertexPoint(tri.p2);
 	glVertexPoint(tri.p3);
 }
-void glVertexFermatPoint(triangle tri) {
+void glVertexFermatPoint(triangle tri) {//DP: Ref?
 	glVertexPoint(tri.fermatpoint(0));
 }
+
+//what is the point of glVertexPoint and glVertexFermatPoint, it just seems to be an unecessary function call, when u use these, you could just use that one line?
 
 void draw_point(point &dot, float size, bool label) {
 	glPointSize(size);
