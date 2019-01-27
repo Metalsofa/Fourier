@@ -4,7 +4,7 @@
 
 class materialtype {
 public:
-	metastat hitpoints; //Values of 0 indicate the contstruct is indestructible with respect to that dimension
+	metastat hitpoints; //Values of 0 indicate the contstruct is indestructible with respect to that dimension DP: Might want to make that -1, as 0 hitpoints is entirely possible(broken)
 	metastat permittivity_spells; //for permittivity, 0 = STOP, 1 = REFLECT, 2 = PASS
 	metastat permittivity_players; //If the player has an impermissible component, it cannot pass
 	metastat permittivity_enemies; //Same as above
@@ -45,8 +45,9 @@ public:
 #define MATERIALS_DEFAULT 1
 #define MATERIALS_BASIC_REFLECTIVE 2
 #define MATERIALS_ERASER 3
+//DP: I like the lightbulbs idea of making these contexpr, or just make these constants, or enums. Preprocessor stuff scares me.
 
-materialtype::materialtype(int MATERIAL_ID) {
+materialtype::materialtype(int MATERIAL_ID) { //DP: Might want to pull out the things that all 3 have in common so it is more clear what separates these things ex: permittivity_spells, color, thickness, etc.
 	switch (MATERIAL_ID) {
 	case MATERIALS_DEFAULT:
 		hitpoints.define(0, 0, 0);
