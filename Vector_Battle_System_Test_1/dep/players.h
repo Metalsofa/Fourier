@@ -54,18 +54,20 @@ public:
 			return cog;
 		if (comp == 4)
 			return mean();
-		else
+		else //DP: sum()? mean()*3?
 			return (som + emo + cog);
 	}
 };
 
 //255 - each stat's value for 
 metastat inverse(metastat &base) {
-	metastat inv;
+	metastat inv; 
 	inv.som = 255 - base.som;
 	inv.emo = 255 - base.emo;
 	inv.cog = 255 - base.cog;
 	return inv;
+	//DP: concise ver:
+	//return metastat(255-base.som, 255-base.emo, 255-base.cog);
 }
 
 class shape {
@@ -85,6 +87,11 @@ public:
 			translation += to_string(vertices[i].x);
 			translation += " ";
 			translation += to_string(vertices[i].y);
+			//DP:
+			//translation += " "
+			//	+ to_string(vertices[i].x)
+			//	+ " "
+			//	+ to_string(vertices[i].y);
 		}
 		translation += " ";
 		translation += to_string(color.som) + " ";
@@ -94,10 +101,17 @@ public:
 		translation += to_string(mode) + " ";
 		translation += to_string(line_thickness) + " ";
 		return translation;
+		//DP: return translation + " "
+			//+ to_string(color.som) + " "
+			//+ to_string(color.emo) + " "
+			//+ to_string(color.cog) + " "
+			//+ to_string(opacity) + " "
+			//+ to_string(mode) + " "
+			//+ to_string(line_thickness) + " ";
 	}
 
 	//Write this shape's contents to a text file
-	void savetofile(string filename) {
+	void savetofile(string filename) { //DP: Seems to be repetitive with cryptogram, just make 1 function. Pass by ref
 		vector<string> translation(2, "");
 		translation[0] = to_string(vertices.size()); ///The first argument is an integer counting the number of verticies
 		for (int i = 0; i < vertices.size(); i++) {
@@ -125,12 +139,12 @@ public:
 	}
 
 	//Initialize a shape by reading it from a string
-	shape(string text) {
+	shape(string text) { //DP: Good use of stringstream, pass by ref
 		///Container 0: vertices
 		stringstream reader(text);
 		int vertexcount;
 		reader >> vertexcount;
-		for (int j = 0; j < vertexcount; j++) {
+		for (int j = 0; j < vertexcount; j++) { //DP: Might want to declare x and y outside loop
 			float X; reader >> X;
 			float Y; reader >> Y;
 			point vert(X, Y);
@@ -147,14 +161,14 @@ public:
 	}
 
 	//Initialize a shape by reading it from a file, telling it where to begin reading
-	shape(string filename, int begin) {
+	shape(string filename, int begin) { //DP: Pass string by ref, repetitive with func above
 		vector<string> shape_contents = unencrypted_contents(filename, "The Doors of Perception");
 		if (shape_contents.size() >= 1) {
 			///Container 0: vertices
 			stringstream reader(shape_contents[begin]);
 			int vertexcount;
 			reader >> vertexcount;
-			for (int j = 0; j < vertexcount; j++) {
+			for (int j = 0; j < vertexcount; j++) {//DP: Might want to declare x and y outside loop
 				float X; reader >> X;
 				float Y; reader >> Y;
 				point vert(X, Y);
