@@ -224,7 +224,7 @@ public:
 	int delay = 0; //Optional member, only useful if this graphic is in an animation.
 
 	//Set the origin for this graphic
-	void set_origin(point org) {
+	void set_origin(point org) { //DP: Pass by ref?
 		for (int i = 0; i < pieces.size(); i++) {
 			pieces[i].set_origin(org);
 		}
@@ -236,9 +236,9 @@ public:
 	}
 
 	//Initialize this graphic from a file
-	graphic(string filename) {
+	graphic(string filename) {  //DP: Pass by ref?
 		vector<string> contents = unencrypted_contents(filename, "The Doors of Perception");
-		if (contents.size() > 0) {
+		if (contents.size() > 0) {//DP: Don't need the if statement
 			for (string line : contents) {
 				pieces.emplace_back(shape(line));
 			}
@@ -246,7 +246,7 @@ public:
 	}
 
 	//Save this graphic to a file
-	void savetofile(string filename) {
+	void savetofile(string filename) { //DP: Pass by ref?
 		vector<string> lines;
 		for (shape piece : pieces) {
 			lines.emplace_back(piece.cryptogram());
@@ -357,3 +357,5 @@ public:
 #define domain_magenta "application"
 #define cl_violet metastat(255,0,127) /*Violet*/
 #define domain_violet "operation"
+
+//DP: Use constexpr over macro: https://stackoverflow.com/questions/42388077/constexpr-vs-macros
