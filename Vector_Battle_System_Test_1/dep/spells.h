@@ -32,9 +32,10 @@ public:
 	point terminalpoint;
 ///public:
 	//Constructor for some custom ray
-	ray(metastat col, point location, point heading, float leng, float fastness, float thickn) {
+	ray(metastat col, point location, point heading, float leng, float fastness, float thickn) { //DP: Pass by ref
 		bits.push_back(location);
 		bits.push_back(location);
+		//DP: bits = {location, location};
 		direction = unitvector(difference(heading, location));
 		speed = fastness;
 		nominal_length = leng;
@@ -51,6 +52,11 @@ public:
 			return scalarproduct(unitvector(difference(terminalpoint, bits[0])), speed);
 		else
 			return scalarproduct(unitvector(direction), speed);
+		//DP: return scalarproduct(unitvector((
+		//	(terminating)
+		//		?difference(terminalpoint, bits[0])
+		//		:direction)), 
+		//	speed);
 	}
 
 	//Returns the actual length of the vector, calculated by counting individual segment lengths
@@ -64,6 +70,10 @@ public:
 			cumulative += meas.length();
 			i += 1;
 		}
+		//DP:
+		//for (int i = 0; i < int(bits.size()) - 1; i++) {
+		//	cumulative += segment(bits[i], bits[i + 1]);
+		//}
 		return cumulative;
 	}
 	//Returns the length that this vector is supposed to have according to its definition
@@ -107,20 +117,20 @@ public:
 	bool gotBlue() { return !color.cog == 0; } //Bool: Is there a BLUE component to this ray?
 	bool deathtime() { return killme; }
 	//Tell the ray it is now terminating, and tell it where to terminate.
-	void terminate(point where) {
+	void terminate(point where) { //DP: Pass by ref
 		terminating = true;
 		terminalpoint = where;
 	}
-	bool checkcollision(segment surface) {
+	bool checkcollision(segment surface) { //DP Pass by ref, no need to create var
 		segment frontseg(bits[0], bits[1]);
 		return isintersect(frontseg, surface);
 	}
-	point wherehit(segment surface) {
+	point wherehit(segment surface) { //DP Pass by ref, no need to create var
 		segment frontseg(bits[0], bits[1]);
 		return intersection(frontseg, surface);
 	}
 	//Returns 0 (kill) 1 (bounce) or 2 (permit) based on this ray's compatability with a given material.
-	int permitted(metastat permittivity) {
+	int permitted(metastat permittivity) { //DP: Pass by ref
 		//These 3 lines of code return 0 (for 'kill') if any component of the ray is not permitted.
 		if (permittivity.som == 0 && gotRed()) return 0;
 		if (permittivity.emo == 0 && gotGreen()) return 0;
@@ -131,21 +141,29 @@ public:
 		if (permittivity.cog == 1 && gotBlue()) return 1;
 		//If no return has happened by now, the ray is permitted by this permittivity.
 		return 2;
+		//DP:
+		//if ((permittivity.som == 0 && gotRed()) ||
+		//	(permittivity.emo == 0 && gotGreen()) ||
+		//	(permittivity.cog == 0 && gotBlue())) return 0;
+		//else if ((permittivity.som == 1 && gotRed()) ||
+		//	(permittivity.emo == 1 && gotGreen()) ||
+		//	(permittivity.cog == 1 && gotBlue())) return 1;
+		//return 2;
 	}
 
 	//Doublechecks that there is a collision, then causes the ray to bounce off of the given surface
-	void bounce(segment surface) {
+	void bounce(segment surface) { //DP: Pass by ref
 		bool shouldbounce = true;
 		segment frontseg(bits[0], bits[1]);
 		point ints = intersection(frontseg, surface);
 		point intdiff = difference(bits[1], ints);
 		float intdist = intdiff.magnitude();
 		float errr = 0.00f;
-		if (bits.size() == 2)
+		if (bits.size() == 2) //DP: Merge into line above: float errr = (bits.size() == 2)? 0.01f : 0f;
 			errr = 0.01f;
 		//Debug:
 		if (intdist < errr) {
-			bool TAILINT_FLAG = true;
+			bool TAILINT_FLAG = true; //DP: ? Whats the purpose of this, because u created it within a scope, u can't use it anywhere else.
 		}
 		if (isintersect(frontseg, surface) && intdist > errr) {
 			bits.insert((bits.begin() + 1), intersection(frontseg, surface));
