@@ -46,7 +46,7 @@ sinusoid squ_harm(int term, float amplitude, float frequency) {
 
 //Returns a vector of sinusoids representing the fourier sine series for a square wave
 vector<sinusoid> squ_series(int terms, float amplitude, float frequency) {
-	vector<sinusoid> rets(0);
+	vector<sinusoid> rets(0); //DP: What's the 0 for?
 	for (unsigned int n = 1; n <= terms; n++) {
 		sinusoid component = squ_harm(n, amplitude, frequency);
 		rets.push_back(component);
@@ -112,3 +112,4 @@ float note_frequency(int key) { return pow(pow(2.0f, 1.0f / 12.0f), float(key - 
 int piano_key(float frequency) { return round(12 * log2(frequency / 440.0f) + 49); }
 
 //To-do list: Make some GLUT rendering functions for all this stuff
+//DP: Overall this code is really clean
