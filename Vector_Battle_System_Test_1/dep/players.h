@@ -1,8 +1,9 @@
 /* This class, player, is not the one used in battle. It keeps track of metastats outside of battle.
-It is possible that a join purpose will be be served by it, but for now, this is an outside-of-battle
+It is possible that a joint purpose will be be served by it, but for now, this is an outside-of-battle
 thing, to be called by the function that initiates battle */
 //Looks like this file will just be a general thing for my game.
-#define players
+#ifndef __players_h
+#define __players_h
 #include <vector>
 #include <fstream>
 #include "crypt.h"
@@ -359,3 +360,5 @@ public:
 #define domain_violet "operation"
 
 //DP: Use constexpr over macro: https://stackoverflow.com/questions/42388077/constexpr-vs-macros
+
+#endif

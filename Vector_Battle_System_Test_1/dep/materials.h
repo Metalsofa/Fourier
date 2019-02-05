@@ -1,6 +1,7 @@
 //Define the constants for material names, and define each of those materials
 #pragma once
-#define materials
+#ifndef __materials_h
+#define __materials_h
 
 class materialtype {
 public:
@@ -93,3 +94,5 @@ materialtype::materialtype(int MATERIAL_ID) { //DP: Might want to pull out the t
 
 
 }
+
+#endif

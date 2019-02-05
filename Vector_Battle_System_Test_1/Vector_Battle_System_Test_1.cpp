@@ -784,7 +784,7 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 		esc_down = false;
 	}
 	if (BATLEFIELD_DESIGN_MODE) {
-		vector<sinusoid> test_series = tri_series(floor(CursorPosition.y * 10)+1, 1, 0.25);
+		vector<sinusoid> test_series = saw_series(floor(CursorPosition.y * 10)+1, 1, 0.25);
 		glTranslatef(0.0f, 2.0f, 0.0f);
 		draw_series(test_series, 2*timer, 2*timer + 8, 30, false, false);
 		glTranslatef(0.0f, -2.0f, 0.0f);
@@ -793,7 +793,7 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 			if (clickdragtrail.length() != 0) {
 				if (!leftclicking) {
 					wall new_wall(clickdragtrail, SELECTED_MATERIAL, true);
-					clickdragtrail.define(0, 0, 0, 0);
+					clickdragtrail = segment(0, 0, 0, 0);
 					currentbattle.construct_wall(new_wall);
 				}
 				else {
@@ -804,7 +804,7 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 			if (rightclicktrail.length() != 0) {
 				if (!rightclicking) {
 					segment eraser = rightclicktrail;
-					rightclicktrail.define(0, 0, 0, 0);
+					rightclicktrail = segment (0, 0, 0, 0);
 					int wallID = 0;
 					for (int i = 0; i < currentbattle.map.walls.size(); i++) {
 						if (isintersect(eraser, currentbattle.map.walls[i].body))
@@ -823,8 +823,8 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 			if (clickdragtrail.length() != 0) {
 				if (!leftclicking) {
 					ray new_ray(randomhue(),clickdragtrail.p1,clickdragtrail.p2,clickdragtrail.length(), 
-						2.0f, 2);
-					clickdragtrail.define(0, 0, 0, 0);
+						6.0f, 2);
+					clickdragtrail = segment(0, 0, 0, 0);
 					currentbattle.spawn_ray(new_ray);
 				}
 				else {
@@ -856,7 +856,7 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 			if (clickdragtrail.length() != 0 || clickdragtrail.p1.x != 0.0f || clickdragtrail.p1.y != 0.0f) {
 				if (!leftclicking && !normal_keysdown['z']) {
 					art.pieces[Gindex].vertices.emplace_back(clickdragtrail.p2);
-					clickdragtrail.define(0, 0, 0, 0);
+					clickdragtrail = segment(0, 0, 0, 0);
 					draw_art_GUI();
 				}
 				else {

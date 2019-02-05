@@ -21,11 +21,13 @@ keyed vigenere cipher codebreaker program on the internet that could possible ha
 //Scrambling the alphabet now. Here's the old one: 
 //"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz;:[]{}<>', .?/!@#$%^&*()-_=+|`~";
 //Now for the new one, which includes the characters \ and " :
+const string cipher_old_alphabet =
+"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz;:[]{}<>', .?/!@#$%^&*()-_=+|`~";
 const string cipher_base_alphabet = 
 "+L~A0|J`F9Ir8?/O!t@E#u$NhiP7nQRS^(K)-_s1v[B]{M}<C>', .%wG&Hxyz;:=T*U6VWXY\\ZD5abcde4f\"gj3klmo2pq";
 
 
-string alphabet_shift(char new_firstletter, string base_alphabet) {
+string alphabet_shift(char& new_firstletter, const string base_alphabet) {
 	string new_alphabet = base_alphabet;
 	char inifinity_preventer = base_alphabet[0];
 	bool firsttry = true;
@@ -42,7 +44,7 @@ string alphabet_shift(char new_firstletter, string base_alphabet) {
 	return new_alphabet;
 }
 
-int letter_index(char letter, string alphabet) {
+int letter_index(char& letter, const string& alphabet) {
 	unsigned int i = 0;
 	while (i < alphabet.size()) {
 		if (alphabet[i] == letter)
@@ -52,11 +54,11 @@ int letter_index(char letter, string alphabet) {
 	return 0;
 }
 
-string encrypt(string message, string keyword) {
+string encrypt(const string& message, const string& keyword) {
 	string cipher = "";
 	int i = 0;
 	if (keyword == "")
-		keyword = "0";
+		return message;
 	for (char c : message) {
 		int letterindex = letter_index(c, cipher_base_alphabet);
 		int keyletternum = int(i % keyword.size());
@@ -69,7 +71,7 @@ string encrypt(string message, string keyword) {
 	return cipher;
 }
 
-string multi_encrypt(unsigned int depth, string message, string keyword) {
+string multi_encrypt(unsigned int depth,  string message, string keyword) {
 	unsigned int i = 0;
 	if (keyword == "")
 		keyword = "0";

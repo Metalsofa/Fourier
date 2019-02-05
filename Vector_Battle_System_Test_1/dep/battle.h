@@ -15,7 +15,7 @@ public:
 	bool fixed; //wave or no wave
 	int shape; //Circular, linear
 ///public:
-	segment getbody() { return body; }
+	segment& getbody() { return body; }
 	materialtype getmaterial() { return material; }
 	bool getfixed() { return fixed; }
 	wall (segment definingsegment, int wallmaterial, bool isfixed) {
@@ -40,7 +40,7 @@ public:
 ///public:
 	vector<point> intersections() {
 		vector<point> returnthis;
-		unsigned int i = 0;
+		/*
 		while (i < walls.size()) {
 			unsigned int j = 0;
 			while (j < walls.size()) {
@@ -62,14 +62,15 @@ public:
 				j++;
 			}
 			i++;
-		}
+		}*/
 		//DP: Below is a cleaner and slightly more efficient version of the loops you have above
-		/*for (int i = 0; i < walls.size(); i++) {
+		//DM:Implemented 1/31/19
+		for (int i = 0; i < walls.size(); i++) {
 			for (int j = i+1; j < walls.size(); j++) {
 				if (isintersect(walls[i].getbody(), walls[j].getbody())) {
 					point ints = intersection(walls[i].getbody(), walls[j].getbody());
 					bool add_it = true;
-					for (int k = 0; k < returnthis.size(), k++) {
+					for (int k = 0; k < returnthis.size(); k++) {
 						if (converges(returnthis[k], ints)) {
 							add_it = false;
 						}
@@ -78,12 +79,12 @@ public:
 						returnthis.emplace_back(ints);
 				}
 			}
-		}*/
+		}
 		return returnthis;
 	}
 
 	//returns the point (-100, -100) if there are no intersections.
-	point nearestintersection(point dot) { //DP: Pass by reference?
+	point nearestintersection(point& dot) { //DP: Pass by reference? DM: K
 		point nearest(-100, -100);
 		for (unsigned int i = 0; i < intersections().size(); i++) {
 			point comp = intersections()[i];
@@ -111,7 +112,7 @@ public:
 	vector<wall> getwalls() {
 		return walls;
 	}
-	void add_wall(wall new_wall) { //Consider overloading this to take a wall or to take multiple args   DP: Pass by ref?
+	void add_wall(wall& new_wall) { //Consider overloading this to take a wall or to take multiple args   DP: Pass by ref? DM: K
 		walls.push_back(new_wall);
 	}
 	void pop_wall(int wallID) { 
@@ -175,17 +176,17 @@ public:
 		return float(map.getheight());
 	}
 	//Pass this function two integers to change the size of the map.
-	void setmapsize(float wideness, float highness) {
+	void setmapsize(float& wideness, float& highness) {
 		map.setsize(wideness, highness);
 	}
-	void construct_wall(wall new_wall) { //Pass by ref?
+	void construct_wall(wall& new_wall) { //Pass by ref? K
 		map.add_wall(new_wall);
 	}
 	void destroy_wall(int wallID) {
 		map.pop_wall(wallID);
 	}
 	//Constructor for battlestate; takes a battle_preset
-	battlestate (battle_preset preset) { //Pass by ref?
+	battlestate (battle_preset& preset) { //Pass by ref? K
 		map = preset.map;
 	}
 	//Returns the number of travelling rays in existence
@@ -193,11 +194,11 @@ public:
 		return rays.size();
 	}
 	//Add a ray to the vector or travelling rays (this is a relic of when I had private members. I miss those days)
-	void spawn_ray(ray &spawnthis) {
+	void spawn_ray(ray& spawnthis) {
 		rays.push_back(spawnthis);
 	}
 	//Oh look there's another version of the previous function that works with const
-	void spawn_ray(const ray &spawnthis) {
+	void spawn_ray(const ray& spawnthis) {
 		rays.push_back(spawnthis);
 	}
 	/*This function is called every frame during battle unless the battle is paused; even then, It may still be best
@@ -271,7 +272,7 @@ public:
 								shouldbounce = false;
 						}
 						if (shouldbounce) {
-							///Check if at a corner
+							//Check if at a corner
 							bool atcorner = false;
 							if (converges(inters, map.nearestintersection(inters))) {
 								atcorner = true;
@@ -283,7 +284,7 @@ public:
 							}
 							if (equidist)
 								atcorner = true;
-							///If in a corner, turn serf into the appropriate bisector
+							//If in a corner, turn serf into the appropriate bisector
 							if (atcorner) {
 								//Determine point dot, the location of the previous intersection
 								point dot = rays[i].getbits()[1];

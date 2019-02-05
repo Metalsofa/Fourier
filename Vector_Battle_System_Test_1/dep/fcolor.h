@@ -2,6 +2,7 @@
 
 #ifndef __fcolor_h
 #define __fcolor_h
+#include <cmath>
 
 /*Attention Developoers:
 	This header file was developed for another project, so there are some namespace
@@ -15,28 +16,11 @@ private:
 	float B;
 	float A;
 	void caplevels() {
-		if (R > 1.0f)
-			R = 1.0f;
-		if (R < 0.0f)
-			R = 0.0f;
-		if (G > 1.0f)
-			G = 1.0f;
-		if (G < 0.0f)
-			G = 0.0f;
-		if (B > 1.0f)
-			B = 1.0f;
-		if (B < 0.0f)
-			B = 0.0f;
-		if (A > 1.0f)
-			A = 1.0f;
-		if (A < 0.0f)
-			A = 0.0f;
-		// DP: Can do it the way below:
-		/*R = fmod(R, 1.0);
+		R = fmod(R, 1.0);
 		G = fmod(G, 1.0);
 		B = fmod(B, 1.0);
-		A = fmod(A, 1.0);*/
-
+		A = fmod(A, 1.0);
+		//Thanks DP~
 	}
 public:
 	fcolor() { //DP: Simplified initalizer below
@@ -57,7 +41,7 @@ public:
 		caplevels();
 	}
 	//Accepted components are 'r', 'g', 'b', and 'a'.
-	float getlevel(char component) {
+	float get_level(char component) {
 		if (component == 'r')
 			return R;
 		if (component == 'g')
@@ -69,7 +53,7 @@ public:
 		return A;
 	}
 	//Accepted components are 'r', 'g', 'b', and 'a'.
-	void setlevel(char component, float level) {
+	void set_level(char component, float level) {
 		if (component == 'r')
 			R = level;
 		if (component == 'g')
@@ -81,7 +65,7 @@ public:
 		caplevels();
 	}
 	//Accepted components are 'r', 'g', 'b', and 'a'.
-	void alterlevel(char component, float level) {
+	void alter_level(char component, float level) {
 		if (component == 'r')
 			R += level;
 		if (component == 'g')
@@ -100,7 +84,7 @@ public:
 
 };
 
-fcolor fcolor_inverse(fcolor col) { //DP: Pass by reference?
+fcolor fcolor_inverse(fcolor& col) { //DP: Pass by reference?
 	col.invert();
 	return col;
 }

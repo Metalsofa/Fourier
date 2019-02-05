@@ -18,8 +18,8 @@ public:
 	}
 
 	sinusoid() {
-		amplitude = 1;
-		frequency = 1;
+		amplitude = 1.0f;
+		frequency = 1.0f;
 	}
 
 	sinusoid(float A, float f) {
@@ -112,3 +112,4 @@ float note_frequency(int key) { return pow(pow(2.0f, 1.0f / 12.0f), float(key - 
 int piano_key(float frequency) { return round(12 * log2(frequency / 440.0f) + 49); }
 
 //To-do list: Make some GLUT rendering functions for all this stuff
+//Update: Mostly done with that
