@@ -10,6 +10,8 @@ thing, to be called by the function that initiates battle */
 #include <sstream>
 #include <map>
 
+#include "geometry.h"
+
 using namespace std;
 
 
@@ -112,7 +114,7 @@ public:
 	}
 
 	//Write this shape's contents to a text file
-	void savetofile(string filename) { //DP: Seems to be repetitive with cryptogram, just make 1 function. Pass by ref
+	void savetofile(string& filename) { //DP: Seems to be repetitive with cryptogram, just make 1 function. Pass by ref
 		vector<string> translation(2, "");
 		translation[0] = to_string(vertices.size()); ///The first argument is an integer counting the number of verticies
 		for (int i = 0; i < vertices.size(); i++) {
@@ -185,13 +187,56 @@ public:
 			reader >> line_thickness;
 		}
 	}
-
+	//Translate every vertex relative to the origin
 	void set_origin(point org) {
 		for (int i = 0; i < vertices.size(); i++) {
 			vertices[i] = difference(vertices[i], org);
 		}
 	}
-	//Returns the GL drawing mode associated with this shape
+	//Scale this shape around the origin
+	void rescale(float scaling_factor) {
+		for (unsigned long i = 0; i < vertices.size(); i++) {
+			vertices[i] *= scaling_factor;
+		}
+	}
+	//Scale this shape strictly in the x-dimension around the origin
+	void rescale_x(float scaling_factor) {
+		for (unsigned long i = 0; i < vertices.size(); i++) {
+			vertices[i].x *= scaling_factor;
+		}
+	}
+	//Scale this shape strictly in the y-dimension around the origin
+	void rescale_y(float scaling_factor) {
+		for (unsigned long i = 0; i < vertices.size(); i++) {
+			vertices[i].y *= scaling_factor;
+		}
+	}
+	//Returns the diagonally-spanning segment for this shape
+	const segment bounds() const {
+		segment rets = segment(vertices[0],vertices[1]);
+		//Iterate through every point and set the bounding segment accordingly
+		for (unsigned int i = 0; i < vertices.size(); i++) {
+			//Check rightbounds
+			if (vertices[i].x > rets.p2.x) {
+				rets.p2.x = vertices[i].x;
+			}
+			//Check topbounds
+			if (vertices[i].y > rets.p2.y) {
+				rets.p2.y = vertices[i].y;
+			}
+			//Check leftbounds
+			if (vertices[i].x < rets.p1.x) {
+				rets.p1.x = vertices[i].x;
+			}
+			//Check bottombounds
+			if (vertices[i].y < rets.p1.y) {
+				rets.p1.y = vertices[i].y;
+			}
+		}
+		//Now rets is the bounding segment for this shape!
+		return rets;
+	}
+	//Returns the name of the GL drawing mode associated with this shape
 	string getGLMODE() {
 		switch (mode % 10) {
 		case 0:
@@ -216,7 +261,6 @@ public:
 			return "GL_POLYGON";
 		}
 	}
-	//Returns the diagonal segment making up the bounds of this shape
 };
 
 class graphic {
@@ -229,6 +273,114 @@ public:
 		for (int i = 0; i < pieces.size(); i++) {
 			pieces[i].set_origin(org);
 		}
+	}
+
+	//Rescale this graphic about the origin 
+	void rescale(float scaling_factor) {
+		//Iterate through this graphic's component shapes and rescale each one
+		for (unsigned long i = 0; i < pieces.size(); i++) {
+			pieces[i].rescale(scaling_factor);
+		}
+	}
+	
+	//Rescale this graphic only in the x-dimension about the origin
+	void rescale_x(float scaling_factor) {
+		//Iterate through this graphic's component shapes and rescale each one
+		for (unsigned long i = 0; i < pieces.size(); i++) {
+			pieces[i].rescale_x(scaling_factor);
+		}
+	}
+
+	//Rescale this graphic only in the y-dimension about the origin
+	void rescale_y(float scaling_factor) {
+		//Iterate through this graphic's component shapes and rescale each one
+		for (unsigned long i = 0; i < pieces.size(); i++) {
+			pieces[i].rescale_y(scaling_factor);
+		}
+	}
+
+	//Get this graphic's bounding box
+	const segment bounds() {
+		//Declare the segment to be returned
+		segment rets = pieces[0].bounds();
+		//Use each shape's bounding box to find this shape's bounding box!
+		for (unsigned int i = 0; i < pieces.size(); i++) {
+			//This way we don't have to keep calling 'bounds'
+			const segment checker = pieces[i].bounds();
+			//Check rightbounds
+			if (checker.p2.x > rets.p2.x) {
+				rets.p2.x = checker.p2.x;
+			}
+			//Check topbounds
+			if (checker.p2.y > rets.p2.y) {
+				rets.p2.y = checker.p2.y;
+			}
+			//Check leftbounds
+			if (checker.p1.x < rets.p1.x) {
+				rets.p1.x = checker.p1.x;
+			}
+			//Check bottombounds
+			if (checker.p1.y < rets.p1.y) {
+				rets.p1.y = checker.p1.y;
+			}
+		}
+		//Return the augmented segment
+		return rets;
+	}
+
+	//Squeezes this graphic between the lines y = 0 and y = 1, making it the standard width for one of these graphics
+	void standardize() {
+		//Make this graphic flush with the x and y axes
+		set_origin(bounds().p1);
+		//Rescale this graphic to be flush with y = 1
+		rescale(1 / (bounds().p2.x));
+	}
+
+	//Fit this object to a new bounding box, breaking aspect ratio as neccessary
+	void fit_stretch(segment new_bounds) {
+		//These calculatoins all work best from the origin point
+		standardize();
+		//Rescale horizontally
+		rescale_x(new_bounds.p2.x);
+		//Rescale vertically
+		rescale_y(new_bounds.p2.y);
+		set_origin(new_bounds.p1 * -1.0f);
+	}
+
+	//Fit this object within a new bounding box without breaking the aspect ratio
+	void fit_within(segment new_bounds) {
+		//These calculatoins all work best from the origin point
+		standardize();
+		//Rescale to fit with x
+		rescale(new_bounds.p2.x - new_bounds.p1.x);
+		//If it's too tall,
+		if (bounds().height() > new_bounds.height()) {
+			//Rescale rationally to correct height
+			rescale(new_bounds.height() / bounds().height());
+		}
+		//Move the object to where it goes
+		//First, let the object's origin be the center of its bounding box
+		set_origin(bounds().midpoint());
+		//Finally, move the graphic to where it belongs
+		set_origin(new_bounds.midpoint() * -1.0f);
+	}
+
+	//Fit this object to fill a new bounding box without breaking the aspect ratio
+	void fit_without(segment new_bounds) {
+		//These calculatoins all work best from the origin point
+		standardize();
+		//Rescale to fit with x
+		rescale(new_bounds.p2.x - new_bounds.p1.x);
+		//If it isn't tall enough,
+		if (bounds().height() < new_bounds.height()) {
+			//Rescale rationally to correct height
+			rescale(new_bounds.height() / bounds().height());
+		}
+		//Move the object to where it goes
+		//First, let the object's origin be the center of its bounding box
+		set_origin(bounds().midpoint());
+		//Finally, move the graphic to where it belongs
+		set_origin(new_bounds.midpoint() * -1.0f);
 	}
 
 	//Default constructor
@@ -284,6 +436,7 @@ public:
 	}
 };
 
+//To be included as a member in animated objects
 class spritesheet {
 public:
 	map<string, animation> animations;

@@ -170,6 +170,13 @@
     <ClInclude Include="dep\players.h" />
     <ClInclude Include="dep\spells.h" />
     <ClInclude Include="dep\waves.h" />
+    <ClInclude Include="resource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Vector_Battle_System_Test_1.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="marb.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

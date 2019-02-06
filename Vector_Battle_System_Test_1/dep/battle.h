@@ -40,6 +40,7 @@ public:
 ///public:
 	vector<point> intersections() {
 		vector<point> returnthis;
+		//Ded code
 		/*
 		while (i < walls.size()) {
 			unsigned int j = 0;
@@ -66,7 +67,7 @@ public:
 		//DP: Below is a cleaner and slightly more efficient version of the loops you have above
 		//DM:Implemented 1/31/19
 		for (int i = 0; i < walls.size(); i++) {
-			for (int j = i+1; j < walls.size(); j++) {
+			for (int j = i + 1; j < walls.size(); j++) {
 				if (isintersect(walls[i].getbody(), walls[j].getbody())) {
 					point ints = intersection(walls[i].getbody(), walls[j].getbody());
 					bool add_it = true;
@@ -84,7 +85,7 @@ public:
 	}
 
 	//returns the point (-100, -100) if there are no intersections.
-	point nearestintersection(point& dot) { //DP: Pass by reference? DM: K
+	point nearestintersection(point& dot) {
 		point nearest(-100, -100);
 		for (unsigned int i = 0; i < intersections().size(); i++) {
 			point comp = intersections()[i];
@@ -112,7 +113,7 @@ public:
 	vector<wall> getwalls() {
 		return walls;
 	}
-	void add_wall(wall& new_wall) { //Consider overloading this to take a wall or to take multiple args   DP: Pass by ref? DM: K
+	void add_wall(wall& new_wall) { //Consider overloading this to take a wall or to take multiple args
 		walls.push_back(new_wall);
 	}
 	void pop_wall(int wallID) { 
@@ -190,7 +191,7 @@ public:
 		map = preset.map;
 	}
 	//Returns the number of travelling rays in existence
-	int raycount() {
+	unsigned long raycount() {
 		return rays.size();
 	}
 	//Add a ray to the vector or travelling rays (this is a relic of when I had private members. I miss those days)

@@ -15,7 +15,7 @@
 #include "fcolor.h"
 
 void setcolor(fcolor col) { //DP: Ref?
-	glColor4f(col.getlevel('r'), col.getlevel('g'), col.getlevel('b'), col.getlevel('a'));
+	glColor4f(col.get_level('r'), col.get_level('g'), col.get_level('b'), col.get_level('a'));
 }
 
 void draw_text(point location, string text) {//DP: Ref?
