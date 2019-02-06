@@ -787,11 +787,13 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 		drawray(currentbattle.rays[i]);
 		i++;
 	}
-	if (esc_down) {//The availability of the console won't always be there, but it'll stay until a user-friendly menu is available
-		show_console = !show_console;
-		esc_down = false;
+	if (esc_down) {
+		exit(0);
 	}
-
+	if (normal_keysdown['`']) {//The availability of the console won't always be there, but it'll stay until a user-friendly menu is available
+		show_console = !show_console;
+		normal_keysdown['`'] = false;
+	}
 	//Controls for BATTLEFIELD_DESIGN_MODE
 	if (design_mode) {
 		//Draw mouse
