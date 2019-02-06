@@ -1,11 +1,19 @@
-#include<Windows.h> 
-#include<gl/glut.h>
-#include<cmath>
-#include"battle.h"
-#include<stdlib.h>
-#include<string>
-#include<map>
-#include<time.h>
+/*Main .cpp file for this RPG. Mainly handles graphics and iterative callbacks.
+The main function is rather short; the function 'renderscene' is the real 'main'
+function.*/
+
+#include <Windows.h> 
+#include "gl/glut.h"
+#include <cmath>
+#include <stdlib.h>
+#include <string>
+#include <map>
+#include <time.h>
+#include <vector>
+
+#include "players.h"
+#include "battle.h"
+#include "camera.h"
 
 using namespace std;
 
@@ -13,14 +21,14 @@ using namespace std;
 ///const float PI = 3.14159265358978f;
 
 //Global Variables for detecting mode
-bool OVERWORLD_MODE = false;
-bool BATTLE_MODE = true;
-bool BATLEFIELD_DESIGN_MODE = true;
+bool overworld_mode = false;
+bool battle_mode = true;
+bool design_mode = true;
 
-//Global Variables for if in OVERWORLD_MODE
+//Global Variables for if in overworld_mode
 
 
-//Global Variables for if in BATTLE_MODE
+//Global Variables for if in battle_mode
 battle_preset testpreset(10, 6); //Width, Height
 battlestate currentbattle(testpreset); //This holds the information about the current battle scene
 const int BoardDepth = 0; //Not sure about this. Probably will never change from 0.
@@ -31,7 +39,7 @@ float gamma = 1.0f; //Time dilation, from the viewer's refrence frame
 //Global Variables for BATTLEFIELD_DESIGN_MODE
 int DESIGN_FUNCTION = BD_MAKE_SHAPES;
 metastat CHOSEEN_COLOR = cl_cyan;
-int SELECTED_MATERIAL = MATERIALS_BASIC_REFLECTIVE;
+int SELECTED_MATERIAL = MATERIALS_DEFAULT;
 
 //Global Variables for the console
 bool show_console = false;
@@ -43,6 +51,7 @@ int console_scroll = 0;
 bool show_corners = false; ///Debug: Draw the corners formed by wall intersections?
 bool show_ticks = false; ///Finally found those annoying cursor ticks and made a setting for showing them.
 bool enable_persprot = false; ///fun: enable the user to rotate their perspective with the middle mouse button
+bool show_timer = false; ///Debug: Show the timer in the lower left
 
 //Global Variables for BD_MAKE_SHAPES
 bool show_layers = true; ///Art: Show the intuitive shape to explain what layer is being edited?
@@ -50,6 +59,7 @@ bool show_dots = true; ///Art: Show the dots in the currently edited shape
 graphic art;
 int Gindex = 0;
 int dragdot = -1;
+string current_graphic_name;
 
 
 //Global Camera Position Data
@@ -59,24 +69,10 @@ float LookPointZ = BoardDepth / 2.0f;
 const float PerspectiveRiseMax = PI / 2.0f - 0.0005f;
 float PerspectiveOrbit = 0.0f;
 float PerspectiveRise = PerspectiveRiseMax;
-float PerspectiveDist = 7.5f;
+float PerspectiveDist = 10.0f; //7.5f;
 
-//Global Custom Cursor Properties and Position
-float CursorX = currentbattle.BoardWidth() / 2.0f;
-float CursorY = currentbattle.BoardHeight() / 2.0f;
-point CursorPosition(currentbattle.BoardWidth() / 2.0f, currentbattle.BoardHeight() / 2.0f);
-const float CursorSensitivity = 0.3f;
-float CursorSnap = 0.0f;
-const float CursorTilt = PI / 4.0f;
-float CursorRot = 0.0f;
-const float CursorYaw = 0.0f; //0.2;
-const float CursorSpreadDefault = PI / 8.0f; // PI / 12;
-float CursorSpread = CursorSpreadDefault;
-const float CursorSize = 0.4f;
-float CursorRotSpeed = 0.3f; //0.05;
-float CursorRed = 1.0f;
-float CursorGreen = 1.0f;
-float CursorBlue = 1.0f;
+//Global Custom mouse. Properties and Position
+cursor mouse = cursor();
 
 //Global Key Detections
 const char keys[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ',
@@ -245,7 +241,7 @@ void draw_wave(sinusoid &wave, float leftbound, float rightbound, int resolution
 	glEnd();
 }
 
-//Like draw_wave but for a Fourier series ///Incomplete!!!!! ///May not do saw waves properly
+//Like draw_wave but for a Fourier series //Seems done to me. Haven't worked on it in a while
 void draw_series(vector<sinusoid> &series, float leftbound, float rightbound, int resolution, bool clamp_left, bool clamp_right) {
 	if (leftbound > rightbound) {
 		float temp = rightbound;
@@ -337,47 +333,49 @@ void drawshape(shape &obj) {
 	glEnd();
 }
 
-void drawcursor() {
+void drawcursor(cursor& curse) {
 	glLineWidth(1.0f);
 	//Draw the mouse-locator lines
 	if (show_ticks) {
 		float ticksize = 0.2f;
 		glLineWidth(1.0f);
 		glBegin(GL_LINES);
-		glVertex2f(CursorPosition.x, 0); glVertex2f(CursorPosition.x, ticksize);
-		glVertex2f(CursorPosition.x, currentbattle.BoardHeight()); glVertex2f(CursorPosition.x, currentbattle.BoardHeight() - ticksize);
-		glVertex2f(0, CursorPosition.y); glVertex2f(ticksize, CursorPosition.y);
-		glVertex2f(currentbattle.BoardWidth(), CursorPosition.y); glVertex2f(currentbattle.BoardWidth() - ticksize, CursorPosition.y); 
-		glColor3f(CursorRed, CursorGreen, CursorBlue); //OH THERE IT IS I FOUND THE CURSOR COLOR LINE FINALLY								DP: YAY
+		glVertex2f(curse.Position.x, 0); glVertex2f(curse.Position.x, ticksize);
+		glVertex2f(curse.Position.x, currentbattle.BoardHeight()); glVertex2f(curse.Position.x, currentbattle.BoardHeight() - ticksize);
+		glVertex2f(0, curse.Position.y); glVertex2f(ticksize, curse.Position.y);
+		glVertex2f(currentbattle.BoardWidth(), curse.Position.y); glVertex2f(currentbattle.BoardWidth() - ticksize, curse.Position.y);
 		glEnd();
 	}
+	glColor3f(curse.Red(), curse.Green(), curse.Blue()); //OH THERE IT IS I FOUND THE CURSOR COLOR LINE FINALLY		//DP: YAY
 	if (DESIGN_FUNCTION == BD_MAKE_SHAPES)
 		setcolor(inverse(art.pieces[Gindex].color), 1.0f);
 	glPushMatrix();
-	glTranslatef(CursorPosition.x, CursorPosition.y, 0);
-	glRotatef(-90 + CursorTilt * 180 / PI, 0, 1, 0);
-	glRotatef(CursorYaw * 180 / PI, 0, 0, 1);
-	glRotatef(CursorRot * 180 / PI, 1, 0, 0);
+	glTranslatef(curse.Position.x, curse.Position.y, 0); //Translate #1
+	glRotatef(-90 + curse.Tilt * 180 / PI, 0, 1, 0); //Rotate #1
+	glRotatef(curse.Yaw * 180 / PI, 0, 0, 1); //Rotate #2
+	glRotatef(curse.Rot * 180 / PI, 1, 0, 0); //Rotate #3
 	glBegin(GL_LINES);
 	glVertex2f(0, 0);
-	glVertex2f(CursorSize * cos(CursorSpread / 2), CursorSize * sin(CursorSpread / 2));
+	glVertex2f(curse.Size * cos(curse.Spread / 2), curse.Size * sin(curse.Spread / 2));
 	glVertex2f(0, 0);
-	glVertex2f(CursorSize * cos(CursorSpread / 2), CursorSize * -sin(CursorSpread / 2));
-	///These lines make it look kind of like a cone
+	glVertex2f(curse.Size * cos(curse.Spread / 2), curse.Size * -sin(curse.Spread / 2));
+	///These lines make it look kind of like a cone, so I commented them out.
 	//glVertex3f(0, 0, 0);
-	//glVertex3f(CursorSize * cos(CursorSpread / 2), 0, CursorSize * -sin(CursorSpread / 2));
+	//glVertex3f(curse.Size * cos(curse.Spread / 2), 0, curse.Size * -sin(curse.Spread / 2));
 	//glVertex3f(0, 0, 0);
-	//glVertex3f(CursorSize * cos(CursorSpread / 2), 0, CursorSize * sin(CursorSpread / 2));
-	glVertex2f(0.0f, 0.0f); glVertex2f(0.8f * CursorSize / CursorSpread, 0.0f);
-	glPopMatrix();
+	//glVertex3f(curse.Size * cos(curse.Spread / 2), 0, curse.Size * sin(curse.Spread / 2));
+	glVertex2f(0.0f, 0.0f); glVertex2f(0.8f * curse.Size / curse.Spread, 0.0f);
 	glLoadIdentity();
-	definecamera();
 	glEnd();
+	glPopMatrix();
+	//definecamera(); //For some reason, calling this here causes some weird things to happen
 }
 
-void ClearScreen() {glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);}
+//Clears the screen
+void ClearScreen() { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
 
-void drawwall(wall drawing_wall) { //DP: Pass by reference?
+//Takes a refrence to a wall and then draws it
+void drawwall(wall& drawing_wall) { //DP: Pass by reference?
 	glLineWidth(drawing_wall.material.thickness);
 	glBegin(GL_LINES);
 	glColor4f(
@@ -465,8 +463,7 @@ void drawfighter(combatant &fighter) { //DP: This is the coolest function I've e
 }
 
 void draw_art_GUI() { //Idea I just had: Every player metastat caps at 255; WHITE is the optimum in any area		DP: Cool Idea
-	string headerstring = "ART MODE: ";
-	rendertext(point(0.0f, currentbattle.map.height + 0.5f), headerstring);
+	rendertext(point(0.0f, currentbattle.map.height + 0.5f), "ART MODE: " + current_graphic_name);
 	for (unsigned int i = 0; i < art.pieces.size(); i++) {
 		drawshape(art.pieces[i]);
 		if (show_dots && (i == Gindex)) {
@@ -500,6 +497,7 @@ void draw_art_GUI() { //Idea I just had: Every player metastat caps at 255; WHIT
 	}
 }
 
+//Process an input string
 void handle_input(string &input) {
 	stringstream cons(input);
 	string arg;
@@ -547,7 +545,7 @@ void handle_input(string &input) {
 		}
 		else if (arg == "graphic") {//Load a grpahic file and replace the current one with it
 			cons >> arg;
-			art = graphic(arg);
+			art = graphic(arg + ".fgr");
 			output_console("Opened graphic " + arg);
 		}
 		else if (arg == "shape") { //Load a shape file into art.pieces
@@ -606,8 +604,23 @@ void handle_input(string &input) {
 			output_console("Invalid shape property: " + arg);
 	}
 	else if (arg == "graphic") {
+		cons >> arg;
+		if (arg == "standardize") {
+			art.standardize();
+		}
 		if (arg == "origin") {
-			
+			point O; cons >> O.x; cons >> O.y;
+			art.set_origin(O);
+		}
+		if (arg == "expand") {
+			//Rescale to take up most of the height of the canvas
+			art.fit_within(segment(currentbattle.BoardWidth() * 0.1, currentbattle.BoardHeight() * 0.1,
+				currentbattle.BoardWidth() * 0.9, currentbattle.BoardHeight() * 0.9));
+		}
+		if (arg == "clear") {
+			Gindex = 0;
+			art = graphic();
+			output_console("Cleared shapes of graphic");
 		}
 	}
 	else if (arg == "layer") {
@@ -735,16 +748,19 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 	drawaxes();
 
 	//Debug: Show timer
-	rendertext(point(0.0f, 0.0f), to_string(timer));
+	if (show_timer) {
+		rendertext(point(0.0f, 0.0f), to_string(timer));
+	}
 
 	//Draw Battlefield Geometry
 		//Draw Walls
 	int walliterator = 0;
 	while (walliterator < currentbattle.map.wallcount()) { //DP: Do you have to redraw everything every render? Is it possible to only do it when a wall is added or deleted?, applies for other things rendered here
-		drawwall(currentbattle.map.getwall(walliterator));
+		drawwall(currentbattle.map.getwalls()[walliterator]);
 		walliterator++;
 	}
-
+	
+	//Debug: Show the number of objects
 	if (show_corners) {
 		for (unsigned int i = 0; i < currentbattle.map.intersections().size(); i++) {
 			drawpoint(currentbattle.map.intersections()[i]);
@@ -771,25 +787,26 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 		drawray(currentbattle.rays[i]);
 		i++;
 	}
-
-	//Controls for BATTLEFIELD_DESIGN_MODE
-	if (normal_keysdown['h'] && !show_console) {
-		if (normal_keysdown['1'])
-			DESIGN_FUNCTION = BD_CREATE_WALLS;
-		if (normal_keysdown['2'])
-			DESIGN_FUNCTION = BD_MAKE_RAYS;
-	}
-	if (esc_down) {
+	if (esc_down) {//The availability of the console won't always be there, but it'll stay until a user-friendly menu is available
 		show_console = !show_console;
 		esc_down = false;
 	}
-	if (BATLEFIELD_DESIGN_MODE) {
-		vector<sinusoid> test_series = saw_series(floor(CursorPosition.y * 10)+1, 1, 0.25);
-		glTranslatef(0.0f, 2.0f, 0.0f);
-		draw_series(test_series, 2*timer, 2*timer + 8, 30, false, false);
-		glTranslatef(0.0f, -2.0f, 0.0f);
+
+	//Controls for BATTLEFIELD_DESIGN_MODE
+	if (design_mode) {
+		//Draw mouse
+		drawcursor(mouse);
+		mouse.Rot += (mouse.RotSpeed / mouse.Spread) * increment;
+		//Quickly switch between design functions
+		if (normal_keysdown['h'] && !show_console) {
+			if (normal_keysdown['1'])
+				DESIGN_FUNCTION = BD_CREATE_WALLS;
+			if (normal_keysdown['2'])
+				DESIGN_FUNCTION = BD_MAKE_RAYS;
+		}
+		//Controls based on design function
 		switch (DESIGN_FUNCTION) {
-		case BD_CREATE_WALLS:
+		case BD_CREATE_WALLS: //These are the controls for if 'making walls' is the current design function
 			if (clickdragtrail.length() != 0) {
 				if (!leftclicking) {
 					wall new_wall(clickdragtrail, SELECTED_MATERIAL, true);
@@ -817,9 +834,9 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 				}
 			}
 			break;
-		case BD_ERASE_WALLS:
+		case BD_ERASE_WALLS: //No controls implemented for erasing walls; these controls are in 'make walls'
 			break;
-		case BD_MAKE_RAYS:
+		case BD_MAKE_RAYS: //Design controls for making rays
 			if (clickdragtrail.length() != 0) {
 				if (!leftclicking) {
 					ray new_ray(randomhue(),clickdragtrail.p1,clickdragtrail.p2,clickdragtrail.length(), 
@@ -833,26 +850,27 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 				}
 			}
 			break;
-		case BD_MAKE_SHAPES:
+		case BD_MAKE_SHAPES: //Design controls for making graphics. Deceptively named!
 			if (rightclicking) {
 				for (int i = 0; i < art.pieces[Gindex].vertices.size(); i++) {
-					if (difference(CursorPosition, art.pieces[Gindex].vertices[i]).magnitude() < 0.05) {
+					if (difference(mouse.Position, art.pieces[Gindex].vertices[i]).magnitude() < 0.05) {
 						art.pieces[Gindex].vertices.erase(art.pieces[Gindex].vertices.begin() + i);
 						i--;
 					}
 				}
 			}
-			if (normal_keysdown['z']) {
+			if (normal_keysdown['z']) { //Hold 'z' to move a point
 				for (int i = 0; i < art.pieces[Gindex].vertices.size(); i++) {
-					if (difference(CursorPosition, art.pieces[Gindex].vertices[i]).magnitude() < 0.05) {
+					if (difference(mouse.Position, art.pieces[Gindex].vertices[i]).magnitude() < 0.05) {
 						dragdot = i;
 					}
 				}
 				if (dragdot != -1)
-					art.pieces[Gindex].vertices[dragdot] = CursorPosition;
+					art.pieces[Gindex].vertices[dragdot] = mouse.Position;
 			}
 			else
 				dragdot = -1;
+			//Add a point by releasing the mouse
 			if (clickdragtrail.length() != 0 || clickdragtrail.p1.x != 0.0f || clickdragtrail.p1.y != 0.0f) {
 				if (!leftclicking && !normal_keysdown['z']) {
 					art.pieces[Gindex].vertices.emplace_back(clickdragtrail.p2);
@@ -879,11 +897,7 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 	if (show_console)
 		draw_console();
 
-	//Draw Cursor
-	drawcursor();
-	CursorRot += (CursorRotSpeed / CursorSpread) * increment;
-
-	glutSwapBuffers();
+	glutSwapBuffers(); //This is the function that refreshes the canvas and implements everythiing we've drawn
 
 	//Process Iterative Behaviour
 	if (down_down)
@@ -955,8 +969,8 @@ void MouseClick(int button, int state, int x, int y) { //Note that this is good 
 	if (button == GLUT_LEFT_BUTTON) {
 		if (state == GLUT_DOWN) {
 			leftclicking = true;
-			clickdragtrail.p1 = CursorPosition;
-			clickdragtrail.p2 = CursorPosition;
+			clickdragtrail.p1 = mouse.Position;
+			clickdragtrail.p2 = mouse.Position;
 		}
 		else
 		{
@@ -966,7 +980,7 @@ void MouseClick(int button, int state, int x, int y) { //Note that this is good 
 	if (button == GLUT_RIGHT_BUTTON) {
 		if (state == GLUT_DOWN) {
 			rightclicking = true;
-			rightclicktrail.p1 = CursorPosition;
+			rightclicktrail.p1 = mouse.Position;
 		}
 		else
 			rightclicking = false;
@@ -999,46 +1013,46 @@ void ActiveMouseMove(int x, int y) { //DP: something I didn't put for the draw f
 
 void PassiveMouseMove(int x, int y) {
 	int mousebase = 300;
-	CursorSnap = 0;
+	mouse.Snap = 0;
 	if (normal_keysdown['1'])
-		CursorSnap = 1.0f;
+		mouse.Snap = 1.0f;
 	else if (normal_keysdown['2'])
-		CursorSnap = 1.0f / 2.0f;
+		mouse.Snap = 1.0f / 2.0f;
 	else if (normal_keysdown['3'])
-		CursorSnap = 1.0f / 4.0f;
+		mouse.Snap = 1.0f / 4.0f;
 	else if (normal_keysdown['4'])
-		CursorSnap = 1.0f / 8.0f;
-	float deltax = (x - mousebase) * CursorSensitivity / 30;
-	float deltay = (mousebase - y) * CursorSensitivity / 30;
-	if (CursorSnap != 0) {
+		mouse.Snap = 1.0f / 8.0f;
+	float deltax = (x - mousebase) * mouse.Sensitivity / 30;
+	float deltay = (mousebase - y) * mouse.Sensitivity / 30;
+	if (mouse.Snap != 0) {
 		deltax *= 2;
 		deltay *= 2;
 	}
-	if (CursorSnap != 0) {
-		CursorPosition.x = roundf(CursorPosition.x / CursorSnap) * CursorSnap;
-		CursorPosition.y = roundf(CursorPosition.y / CursorSnap) * CursorSnap;
+	if (mouse.Snap != 0) {
+		mouse.Position.x = roundf(mouse.Position.x / mouse.Snap) * mouse.Snap;
+		mouse.Position.y = roundf(mouse.Position.y / mouse.Snap) * mouse.Snap;
 	}
 	if (!(middleclicking && enable_persprot)) {
-		CursorPosition.x += deltax * cos(PerspectiveOrbit) - deltay * sin(PerspectiveOrbit);
-		CursorPosition.y += deltay * cos(PerspectiveOrbit) + deltax * sin(PerspectiveOrbit);
-		if (CursorPosition.x < 0)
-			CursorPosition.x = 0;
-		if (CursorPosition.x > currentbattle.BoardWidth())
-			CursorPosition.x = currentbattle.BoardWidth();
-		if (CursorPosition.y < 0)
-			CursorPosition.y = 0;
-		if (CursorPosition.y > currentbattle.BoardHeight())
-			CursorPosition.y = currentbattle.BoardHeight();
+		mouse.Position.x += deltax * cos(PerspectiveOrbit) - deltay * sin(PerspectiveOrbit);
+		mouse.Position.y += deltay * cos(PerspectiveOrbit) + deltax * sin(PerspectiveOrbit);
+		if (mouse.Position.x < 0)
+			mouse.Position.x = 0;
+		if (mouse.Position.x > currentbattle.BoardWidth())
+			mouse.Position.x = currentbattle.BoardWidth();
+		if (mouse.Position.y < 0)
+			mouse.Position.y = 0;
+		if (mouse.Position.y > currentbattle.BoardHeight())
+			mouse.Position.y = currentbattle.BoardHeight();
 	}
 	if (middleclicking && enable_persprot) {
 		PerspectiveOrbit -= deltax;
 		PerspectiveRise -= deltay;
 	}
 	if (leftclicking) {
-		clickdragtrail.p2 = CursorPosition;
+		clickdragtrail.p2 = mouse.Position;
 	}
 	if (rightclicking) {
-		rightclicktrail.p2 = CursorPosition;
+		rightclicktrail.p2 = mouse.Position;
 	}
 	glutWarpPointer(mousebase, mousebase);
 }
@@ -1047,9 +1061,37 @@ void PassiveMouseMove(int x, int y) {
 int main(int argc, char **argv) {
 	//For development purposes
 	///Tumbleweeds
-
+	//Console welcome
 	output_console("Welcome to the Vector_Battle_System_Test_1.cpp Console");
 	output_console("Type help for a list of commands.");
+
+	//If this program was opened with arguments:
+	if (argc > 1) {
+		string filename = argv[1];
+		string extention = "";
+		bool ext = false;
+		//Get the file extention
+		for (unsigned int c = 0; c < filename.size(); c++) {
+			if (ext) {
+				extention.push_back(filename[c]);
+			}
+			if (filename[c] == '.') {
+				ext = true;
+			}
+		}
+		for (unsigned int i = 0; i <= extention.size(); i++) {
+			filename.pop_back();
+		}
+		if (extention == "fgr") {
+			art = graphic(filename + '.' + extention);
+			current_graphic_name = filename;
+			design_mode = true;
+			battle_mode = true;
+			overworld_mode = false;
+			DESIGN_FUNCTION = BD_MAKE_SHAPES;
+			output_console("Opened graphic file " + filename);
+		}
+	}
 
 	//DP: Initialize rand
 	srand(time(NULL));
@@ -1063,7 +1105,7 @@ int main(int argc, char **argv) {
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 
 	//Create the Window
-	glutCreateWindow("GLUTwindow");
+	glutCreateWindow("Fourier");
 	glutFullScreen();
 
 	//Some settings

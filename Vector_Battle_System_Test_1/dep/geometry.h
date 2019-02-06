@@ -1,6 +1,7 @@
 //We'll include things like triangles and other fun geometric functions in this one.
 #pragma once
-#define geometry
+#ifndef __geometry_h
+#define __geometry_h
 #include <cmath>
 #include <string>
 #include <vector>
@@ -206,16 +207,21 @@ public:
 		p1 = point1;
 		p2 = point2;
 	}
-	point midpoint() {//DP: Again, no need to create a var
-		float mx = (p1.x + p2.x) / 2;
-		float my = (p1.y + p2.y) / 2;
-		point mid(mx, my);
-		return mid;
+	const point midpoint() const {//DP: Again, no need to create a var
+		return point(mean(p1.x,p2.x),mean(p1.y,p2.y));
 	}
 	float length() {
 		float leng;
 		leng = pyth(p1.x - p2.x, p1.y - p2.y);
 		return leng;
+	}
+	//Height of box bounded by this segment. Can be negative.
+	const float height() const {
+		return (p2.y - p1.y);
+	}
+	//Width of box bounded by this segment. Can be negative.
+	const float width() const {
+		return (p2.x - p1.x);
 	}
 	segment() {
 		p1 = point(0.0f,0.0f);
@@ -487,3 +493,6 @@ public:
 			return fermM;
 	}
 };
+
+
+#endif
