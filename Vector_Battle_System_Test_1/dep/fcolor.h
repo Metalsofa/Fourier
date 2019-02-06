@@ -16,10 +16,10 @@ private:
 	float B;
 	float A;
 	void caplevels() {
-		R = fmod(R, 1.0);
-		G = fmod(G, 1.0);
-		B = fmod(B, 1.0);
-		A = fmod(A, 1.0);
+		R = fmodf(R, 1.0);
+		G = fmodf(G, 1.0);
+		B = fmodf(B, 1.0);
+		A = fmodf(A, 1.0);
 		//Thanks DP~
 	}
 public:

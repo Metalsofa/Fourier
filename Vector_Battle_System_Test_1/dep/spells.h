@@ -79,10 +79,7 @@ public:
 	//Returns the length that this vector is supposed to have according to its definition
 	float length_nominal() { return nominal_length; }
 	//Advance the motion of the ray in accordance to its properties
-	void advance(float inc /*Incremental Time*/) { /*Something is very wrong with the termination process.
-												   It only actually kills a ray if it's short enough,
-												   probably because of some interaction with the if
-												   statment that concerns length.*/
+	void advance(float inc /*Incremental Time*/) { 
 		if (!terminating) {
 			point frontarb = combine(bits[0], scalarproduct(movevector(), inc));
 			point unitback = unitvector(difference(bits[bits.size() - 2], bits.back()));

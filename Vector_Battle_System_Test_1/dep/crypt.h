@@ -1,7 +1,12 @@
 #pragma once
+
+#ifndef __crypt_h
+#define __crypt_h
+
 #include <string>
 #include <vector>
 #include <fstream>
+#include <iostream> //Helps with debug stuff
 
 using namespace std;
 
@@ -21,12 +26,12 @@ keyed vigenere cipher codebreaker program on the internet that could possible ha
 //Scrambling the alphabet now. Here's the old one: 
 //"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz;:[]{}<>', .?/!@#$%^&*()-_=+|`~";
 //Now for the new one, which includes the characters \ and " :
-const string cipher_old_alphabet =
+const string cipher_old_alphabet = //not for use
 "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz;:[]{}<>', .?/!@#$%^&*()-_=+|`~";
-const string cipher_base_alphabet = 
+const string cipher_base_alphabet = //very tough to decode
 "+L~A0|J`F9Ir8?/O!t@E#u$NhiP7nQRS^(K)-_s1v[B]{M}<C>', .%wG&Hxyz;:=T*U6VWXY\\ZD5abcde4f\"gj3klmo2pq";
 
-
+//Returns a shifted alphabet for the keyed vigenere cipher
 string alphabet_shift(char& new_firstletter, const string base_alphabet) {
 	string new_alphabet = base_alphabet;
 	char inifinity_preventer = base_alphabet[0];
@@ -114,6 +119,9 @@ string multi_unencrypt(unsigned int depth, string cipher, string key) {
 vector<string> unencrypted_contents(string filename, string keyword) {
 	ifstream textfile;
 	textfile.open(filename);
+	if (!textfile.good()) {
+		cerr << "ERROR | crypt.h | Could not open file | " << filename << endl;
+	}
 	vector<string> contents;
 	string line;
 	if (textfile.is_open()) {
@@ -128,7 +136,7 @@ vector<string> unencrypted_contents(string filename, string keyword) {
 	return contents;
 }
 
-void encrypt_and_overwrite(vector<string> contents, string filename, string keyword) {
+void encrypt_and_overwrite(vector<string>& contents, string& filename, string keyword) {
 	ofstream writefile;
 	writefile.open(filename, ios::trunc);
 	if (writefile.is_open()) {
@@ -138,3 +146,5 @@ void encrypt_and_overwrite(vector<string> contents, string filename, string keyw
 		writefile.close();
 	}
 }
+
+#endif

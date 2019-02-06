@@ -1,6 +1,7 @@
 /*This header file contains classes and methods relating to the chord, note, and wave logic of this game*/
 #pragma once
-#define waves
+#ifndef __waves_h
+#define __waves_h
 #include <cmath>
 #include <vector>
 #include "geometry.h"
@@ -47,7 +48,7 @@ sinusoid squ_harm(int term, float amplitude, float frequency) {
 //Returns a vector of sinusoids representing the fourier sine series for a square wave
 vector<sinusoid> squ_series(int terms, float amplitude, float frequency) {
 	vector<sinusoid> rets(0); //DP: What's the 0 for?
-	for (unsigned int n = 1; n <= terms; n++) {
+	for (int n = 1; n <= terms; n++) {
 		sinusoid component = squ_harm(n, amplitude, frequency);
 		rets.push_back(component);
 	}
@@ -68,7 +69,7 @@ sinusoid saw_harm(int term, float amplitude, float frequency) {
 //Returns a vector of sinusoids representing the fourier sine series for a saw wave
 vector<sinusoid> saw_series(int terms, float amplitude, float frequency) {
 	vector<sinusoid> rets(0);
-	for (unsigned int n = 1; n <= terms; n++) {
+	for (int n = 1; n <= terms; n++) {
 		sinusoid component = saw_harm(n, amplitude, frequency);
 		rets.push_back(component);
 	}
@@ -81,7 +82,7 @@ float tri(float x) { return abs(saw(2.0f * x)); } //Triangle wave function
 //Returns the nth sinusoid for the modulation of a triangle wave with amplitude 1 and frequency 1
 sinusoid tri_harm(int term, float amplitude, float frequency) {
 	sinusoid ret;
-	ret.amplitude = pow(-1, term + 1) / pow((2 * term - 1), 2) * amplitude;
+	ret.amplitude = powf(-1.0f, term + 1.0f) / powf((2.0f * term - 1.0f), 2.0f) * amplitude;
 	ret.frequency = (2 * term - 1) * frequency; ///Not so sure this is correct
 	return ret;
 }
@@ -89,7 +90,7 @@ sinusoid tri_harm(int term, float amplitude, float frequency) {
 //Returns a vector of sinusoids representing the fourier sine series for a triangle wave
 vector<sinusoid> tri_series(int terms, float amplitude, float frequency) {
 	vector<sinusoid> rets(0);
-	for (unsigned int n = 1; n <= terms; n++) {
+	for (int n = 1; n <= terms; n++) {
 		sinusoid component = tri_harm(n, amplitude, frequency);
 		rets.push_back(component);
 	}
@@ -113,3 +114,5 @@ int piano_key(float frequency) { return round(12 * log2(frequency / 440.0f) + 49
 
 //To-do list: Make some GLUT rendering functions for all this stuff
 //DP: Overall this code is really clean
+
+#endif
