@@ -8,8 +8,8 @@ c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle
 c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(492): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
 c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(622): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
 c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(621): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(792): warning C4018: '<': signed/unsigned mismatch
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(1007): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(1106): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(795): warning C4018: '<': signed/unsigned mismatch
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(1009): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(1108): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
 c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(263): warning C4715: 'shape::getGLMODE': not all control paths return a value
   Vector_Battle_System_Test_1.vcxproj -> C:\Users\dp\Documents\GitHub\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe

@@ -737,8 +737,11 @@ void draw_console() {
 
 
 void renderScene(void) { //The custom function that tells openGL what to do when it refreshes
+	//Sleep(int((increment * 1000.0f * gamma)));
 	while (st.ElapsedMilliseconds() < double(increment * 1000.0f * gamma)) {}
+	cout << "TIME: " << st.ElapsedMilliseconds() << endl;
 	st.Stop();
+	st.Start();
 	timer += increment;
 
 	// Clear Color and Depth Buffers
@@ -899,7 +902,6 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 			break;
 
 		}
-		st.Start();
 	}
 
 	//Draw console
