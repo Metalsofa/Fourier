@@ -50,6 +50,9 @@
     <ClInclude Include="resource.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="dep\stopwatch.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Vector_Battle_System_Test_1.rc">
@@ -60,5 +63,10 @@
     <Image Include="marb.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\AppData\Local\Temp\Rar$DRa10236.32037\StopwatchWin32-master\LICENSE.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

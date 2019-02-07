@@ -169,6 +169,7 @@
     <ClInclude Include="dep\materials.h" />
     <ClInclude Include="dep\players.h" />
     <ClInclude Include="dep\spells.h" />
+    <ClInclude Include="dep\stopwatch.h" />
     <ClInclude Include="dep\waves.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
@@ -177,6 +178,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="marb.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\AppData\Local\Temp\Rar$DRa10236.32037\StopwatchWin32-master\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

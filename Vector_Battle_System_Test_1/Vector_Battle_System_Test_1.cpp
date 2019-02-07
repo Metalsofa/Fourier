@@ -11,11 +11,13 @@ function.*/
 #include <time.h>
 #include <vector>
 
+#include "Stopwatch.h" 
 #include "players.h"
 #include "battle.h"
 #include "camera.h"
 
 using namespace std;
+using win32::Stopwatch;
 
 //Global Constants
 ///const float PI = 3.14159265358978f;
@@ -100,6 +102,8 @@ bool rightclicking = false;
 bool middleclicking = false;
 segment clickdragtrail(0.0f, 0.0f, 0.0f, 0.0f);
 segment rightclicktrail(0.0f, 0.0f, 0.0f, 0.0f);
+
+Stopwatch st;
 
 void changeSize(int width, int height) {
 	//To avoid divide by zero:
@@ -731,8 +735,10 @@ void draw_console() {
 
 }
 
+
 void renderScene(void) { //The custom function that tells openGL what to do when it refreshes
-	Sleep(int(increment * 1000.0f * gamma));
+	while (st.ElapsedMilliseconds() < double(increment * 1000.0f * gamma)) {}
+	st.Stop();
 	timer += increment;
 
 	// Clear Color and Depth Buffers
@@ -893,6 +899,7 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 			break;
 
 		}
+		st.Start();
 	}
 
 	//Draw console
@@ -1127,6 +1134,7 @@ int main(int argc, char **argv) {
 	glutPassiveMotionFunc(PassiveMouseMove); //Callback for mouse movement with no button down
 
 	//enter GLUT event processing cycle
+	st.Start();
 	glutMainLoop();
 
 	return 1;
