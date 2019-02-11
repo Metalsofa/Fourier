@@ -528,14 +528,19 @@ void handle_input(string &input) {
 
 		}
 		else if (arg == "graphic") {
-			cons >> arg;
-			art.savetofile(arg);
-			output_console("Wrote graphic to file " + arg);
+			if (cons >> arg) {
+				art.savetofile(arg + ".fgr");
+				output_console("Wrote graphic to file " + arg + ".fgr");
+			}
+			else {
+				art.savetofile(current_graphic_name + ".fgr");
+				output_console("Graphic saved");
+			}
 		}
 		else if (arg == "shape") { //Save the currently designed shape to a shape file
 			cons >> arg;
 			art.pieces[Gindex].savetofile(arg);
-			output_console("Wrote shape #" + to_string(Gindex) + " to file " + arg);
+			output_console("Wrote shape #" + to_string(Gindex) + " to file " + arg + ".fgr");
 		}
 	}
 	else if (arg == "load" || arg == "open") {
@@ -547,10 +552,11 @@ void handle_input(string &input) {
 			cons >> arg;
 			art = graphic(arg + ".fgr");
 			output_console("Opened graphic " + arg);
+			current_graphic_name = arg;
 		}
 		else if (arg == "shape") { //Load a shape file into art.pieces
 			cons >> arg;
-			art.pieces.push_back(shape(arg, 0));
+			art.pieces.push_back(shape(arg + ".fgr", 0));
 			output_console("Opened shape" + arg + " at end of Graphic shape vector");
 		}
 	}
@@ -794,9 +800,6 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 
 	//Controls for BATTLEFIELD_DESIGN_MODE
 	if (design_mode) {
-		//Draw mouse
-		drawcursor(mouse);
-		mouse.Rot += (mouse.RotSpeed / mouse.Spread) * increment;
 		//Quickly switch between design functions
 		if (normal_keysdown['h'] && !show_console) {
 			if (normal_keysdown['1'])
@@ -891,6 +894,12 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 			break;
 
 		}
+	}
+
+	//Draw mouse
+	if (design_mode) {
+		drawcursor(mouse);
+		mouse.Rot += (mouse.RotSpeed / mouse.Spread) * increment;
 	}
 
 	//Draw console
