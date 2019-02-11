@@ -11,11 +11,13 @@ function.*/
 #include <time.h>
 #include <vector>
 
+#include "Stopwatch.h" 
 #include "players.h"
 #include "battle.h"
 #include "camera.h"
 
 using namespace std;
+using win32::Stopwatch;
 
 //Global Constants
 ///const float PI = 3.14159265358978f;
@@ -100,6 +102,8 @@ bool rightclicking = false;
 bool middleclicking = false;
 segment clickdragtrail(0.0f, 0.0f, 0.0f, 0.0f);
 segment rightclicktrail(0.0f, 0.0f, 0.0f, 0.0f);
+
+Stopwatch st;
 
 void changeSize(int width, int height) {
 	//To avoid divide by zero:
@@ -737,8 +741,13 @@ void draw_console() {
 
 }
 
+
 void renderScene(void) { //The custom function that tells openGL what to do when it refreshes
-	Sleep(int(increment * 1000.0f * gamma));
+	//Sleep(int((increment * 1000.0f * gamma)));
+	while (st.ElapsedMilliseconds() < double(increment * 1000.0f * gamma)) {}
+	cout << "TIME: " << st.ElapsedMilliseconds() << endl;
+	st.Stop();
+	st.Start();
 	timer += increment;
 
 	// Clear Color and Depth Buffers
@@ -793,11 +802,13 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 		drawray(currentbattle.rays[i]);
 		i++;
 	}
-	if (esc_down) {//The availability of the console won't always be there, but it'll stay until a user-friendly menu is available
-		show_console = !show_console;
-		esc_down = false;
+	if (esc_down) {
+		exit(0);
 	}
-
+	if (normal_keysdown['`']) {//The availability of the console won't always be there, but it'll stay until a user-friendly menu is available
+		show_console = !show_console;
+		normal_keysdown['`'] = false;
+	}
 	//Controls for BATTLEFIELD_DESIGN_MODE
 	if (design_mode) {
 		//Quickly switch between design functions
@@ -1134,6 +1145,7 @@ int main(int argc, char **argv) {
 	glutPassiveMotionFunc(PassiveMouseMove); //Callback for mouse movement with no button down
 
 	//enter GLUT event processing cycle
+	st.Start();
 	glutMainLoop();
 
 	return 1;

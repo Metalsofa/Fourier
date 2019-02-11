@@ -1,3 +1,4 @@
-# GameProj1
-This repository is for all the assets related to a collaborative RPG Project
-Also it's a working title give me a break
+# Fourier (Working title)
+*An optics-based Role-Playing Game*
+
+This repository is for all the assets related to the collaborative JRPG currently being developed by RPI students David Medlock and Devak Patel.
