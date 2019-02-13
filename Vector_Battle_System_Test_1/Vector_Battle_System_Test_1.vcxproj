@@ -162,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dep\battle.h" />
+    <ClInclude Include="dep\camera.h" />
     <ClInclude Include="dep\fcolor.h" />
     <ClInclude Include="dep\crypt.h" />
     <ClInclude Include="dep\customGL.h" />

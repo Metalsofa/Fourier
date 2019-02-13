@@ -53,6 +53,9 @@
     <ClInclude Include="dep\stopwatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="dep\camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Vector_Battle_System_Test_1.rc">

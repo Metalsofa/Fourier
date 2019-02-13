@@ -41,7 +41,7 @@ float gamma = 1.0f; //Time dilation, from the viewer's refrence frame
 //Global Variables for BATTLEFIELD_DESIGN_MODE
 int DESIGN_FUNCTION = BD_MAKE_SHAPES;
 metastat CHOSEEN_COLOR = cl_cyan;
-int SELECTED_MATERIAL = MATERIALS_DEFAULT;
+int SELECTED_MATERIAL = MATERIALS_BASIC_REFLECTIVE;
 
 //Global Variables for the console
 bool show_console = false;
@@ -745,10 +745,11 @@ void draw_console() {
 void renderScene(void) { //The custom function that tells openGL what to do when it refreshes
 	//Sleep(int((increment * 1000.0f * gamma)));
 	while (st.ElapsedMilliseconds() < double(increment * 1000.0f * gamma)) {}
-	cout << "TIME: " << st.ElapsedMilliseconds() << endl;
+	if (st.ElapsedMilliseconds() > 12.0f)
+		cout << "@frame " << int(timer) << " - TIME: " << st.ElapsedMilliseconds() << endl;
+	timer += increment * 100;
 	st.Stop();
 	st.Start();
-	timer += increment;
 
 	// Clear Color and Depth Buffers
 	ClearScreen();
