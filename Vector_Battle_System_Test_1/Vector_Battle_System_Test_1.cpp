@@ -38,10 +38,12 @@ float timer = 0; //We'll see if this ends up being necessary
 float increment = 0.01f; //Incremental time in seconds
 float gamma = 1.0f; //Time dilation, from the viewer's refrence frame
 
+
+
 //Global Variables for BATTLEFIELD_DESIGN_MODE
 int DESIGN_FUNCTION = BD_MAKE_SHAPES;
 metastat CHOSEEN_COLOR = cl_cyan;
-int SELECTED_MATERIAL = MATERIALS_BASIC_REFLECTIVE;
+Material SELECTED_MATERIAL = BASIC_REFLECTIVE;
 
 //Global Variables for the console
 bool show_console = false;
@@ -844,7 +846,7 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 					}
 				}
 				else {
-					wall new_wall(rightclicktrail, MATERIALS_ERASER, true);
+					wall new_wall(rightclicktrail, ERASER, true);
 					drawwall(new_wall);
 				}
 			}

@@ -18,7 +18,7 @@ public:
 	segment& getbody() { return body; }
 	materialtype getmaterial() { return material; }
 	bool getfixed() { return fixed; }
-	wall (segment definingsegment, int wallmaterial, bool isfixed) {
+	wall (segment definingsegment, Material wallmaterial, bool isfixed) {
 		body = definingsegment;
 		materialtype defining_material(wallmaterial);
 		material = defining_material;
