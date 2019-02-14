@@ -28,7 +28,7 @@ public:
 	float getThickness() { return thickness; }
 	metastat getPermittivity_Spells() { return permittivity_spells; }
 	//Always use this constructor; it takes an integer corresponding to a material.
-	materialtype(int MATERIAL_ID);
+	materialtype(Material MATERIAL_ID);
 	materialtype() {
 		hitpoints.define(0, 0, 0);
 		permittivity_spells.define(0, 0, 0);
@@ -50,7 +50,7 @@ public:
 //#define MATERIALS_ERASER 3
 //DP: I like the lightbulbs idea of making these contexpr, or just make these constants, or enums. Preprocessor stuff scares me.
 
-materialtype::materialtype(int MATERIAL_ID) { //DP: Might want to pull out the things that all 3 have in common so it is more clear what separates these things ex: permittivity_spells, color, thickness, etc.
+materialtype::materialtype(Material MATERIAL_ID) { //DP: Might want to pull out the things that all 3 have in common so it is more clear what separates these things ex: permittivity_spells, color, thickness, etc.
 	switch (MATERIAL_ID) {
 	case DEFAULT:
 		hitpoints.define(0, 0, 0);
