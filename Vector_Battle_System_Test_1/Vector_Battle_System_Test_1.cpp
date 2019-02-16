@@ -1,7 +1,7 @@
 /*Main .cpp file for this RPG. Mainly handles graphics and iterative callbacks.
 The main function is rather short; the function 'renderscene' is the real 'main'
 function.*/
-
+//Test commit comment line
 #include <Windows.h> 
 #include "gl/glut.h"
 #include <cmath>
