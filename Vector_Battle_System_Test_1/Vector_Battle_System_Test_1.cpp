@@ -467,12 +467,23 @@ void drawray(ray &drawing_ray) {
 }
 
 void drawfighter(combatant &fighter) { //DP: This is the coolest function I've ever read
+	//glPushMatrix();
+	glTranslatef(fighter.position.x, fighter.position.y, 0);
 	glBegin(GL_LINE_LOOP);
-	for (int i = 0; i < 360; i += 2) {
+	for (int i = 0; i < 360; i += 2) { //Doing only half the work with i += 2
 		float theta = PI*i / 90;
-		glVertex2f(0.5f*cosf(theta) + fighter.position.x, 0.5f*sinf(theta) + fighter.position.y);
+		glVertex2f(0.5f*cosf(theta), 0.5f*sinf(theta));
 	}
 	glEnd();
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i < 360; i += 10) {
+		float theta = PI * i / 90;
+		glVertex2f(0.01f*cosf(theta) + fighter.direction.x, 0.01f*sinf(theta) + fighter.direction.y);
+	}
+	glEnd();
+	glTranslatef(-1 * fighter.position.x, -1 * fighter.position.y, 0);
+	
+	//glPopMatrix();
 }
 
 void draw_art_GUI() { //Idea I just had: Every player metastat caps at 255; WHITE is the optimum in any area		DP: Cool Idea
@@ -772,7 +783,20 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 	//Axis drawing code
 	drawaxes();
 
-	//Drawing a player:
+	//Moving players:
+	float dY = 0;
+	float dX = 0;
+	if (up_down) { dY += .01; }
+	if (down_down) { dY -= .01; }
+	if (right_down) { dX += .01; }
+	if (left_down) { dX -= .01; }
+	if (normal_keysdown['q']) {
+		currentbattle.fighters[0].position.y += dY;
+		currentbattle.fighters[0].position.x += dX;
+	} else if(dY != 0 || dX != 0) {
+		float dir = atan2f(dY , dX);
+		currentbattle.fighters[0].turn(dir);
+	}
 
 
 	//Debug: Show timer
@@ -937,11 +961,11 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 
 	glutSwapBuffers(); //This is the function that refreshes the canvas and implements everythiing we've drawn
 
-	//Process Iterative Behaviour
-	if (down_down)
-		PerspectiveRise -= 0.1f;
-	if (up_down)
-		PerspectiveRise += 0.1f;
+	//Process Iterative Behaviour 
+	//if (down_down) //DP: COMMENTED THESE OUT BECAUSE I NEED THE ARROW KEYS
+	//	PerspectiveRise -= 0.1f;
+	//if (up_down)
+	//	PerspectiveRise += 0.1f;
 	currentbattle.iterate(increment);
 }
 
