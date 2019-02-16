@@ -265,6 +265,7 @@ segment equilateral_bisector(segment seg) { //Bisector protrudes from left, if p
 	return perp;
 }
 
+
 point intersection(segment& sega, segment& segb) { //Figured this out using Cramer's Rule DP: pass by ref 
 	float dxa = sega.p2.x - sega.p1.x;
 	float dxb = segb.p2.x - segb.p1.x;
@@ -309,8 +310,18 @@ bool isintersect(segment& sega, segment& segb) { //DP: Pass by reference?
 	//	eval = false;
 	//if (!ybeval)
 	//	eval = false;
+	/*if (eval) { 
+		cerr << "SOMETHING IS WRONG" << endl
+			<< (eval? "TRUE" : "FALSE") << endl
+			<< ((onSegment(sega.p1, ints, sega.p2) && onSegment(segb.p1, ints, segb.p2)) ? "TRUE" : "FALSE") << endl
+			<< "Seg 1: (" << sega.p1.x << ", " << sega.p1.y << "), ("  << sega.p2.x << ", " << sega.p2.y << ")" << endl
+			<< "Seg 2: (" << segb.p1.x << ", " << segb.p1.y << "), (" << segb.p2.x << ", " << segb.p2.y << ")" << endl;
+		exit(1);
+	}*/
 	return eval;
 }
+
+
 
 bool isperpintersect(point p, segment v) {//DP: pass by ref 
 	point diff_vp = difference(v.p1, p);

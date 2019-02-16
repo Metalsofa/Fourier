@@ -18,7 +18,7 @@ public:
 	segment& getbody() { return body; }
 	materialtype getmaterial() { return material; }
 	bool getfixed() { return fixed; }
-	wall (segment definingsegment, int wallmaterial, bool isfixed) {
+	wall (segment definingsegment, Material wallmaterial, bool isfixed) {
 		body = definingsegment;
 		materialtype defining_material(wallmaterial);
 		material = defining_material;
@@ -203,7 +203,7 @@ public:
 		rays.push_back(spawnthis);
 	}
 	/*This function is called every frame during battle unless the battle is paused; even then, It may still be best
-	to call it and simply because certain animations might look cool cycling in the background when the battle is
+	to call it and simply because certain animations might look cool cycling in the background when the battle is //DP: If u want to do that we should isolate the animation from movement
 	awaiting user input. All iterative battle behaviour and logic goes in here, or is called from in here.*/
 	void iterate(float &inc /*incremental time*/) {
 		//Iterate Rays
