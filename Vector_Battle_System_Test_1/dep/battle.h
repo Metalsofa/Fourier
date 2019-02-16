@@ -159,6 +159,8 @@ public:
 	vector<ray> rays;
 	//Other spells
 	//vector of sinks/sources
+
+	//Vector of current combatants
 	vector<combatant> fighters;
 	//vector of portals
 
@@ -210,15 +212,36 @@ public:
 		for (unsigned int i = 0; i < rays.size(); i++) {
 			rays[i].advance(inc);
 			//Now we check for collisions
-			unsigned int j = 0;
-			for (wall surface : map.walls) {
-				if (rays[i].checkcollision(surface.getbody())) {
-					int permit = rays[i].permitted(surface.getmaterial().getPermittivity_Spells());
+			///unsigned int j = 0;
+			//Iterate though every wall to see if any collide
+			vector<int> colliding_walls;
+			for (unsigned long w = 0; w < map.walls.size(); w++) {
+				if (rays[i].checkcollision(map.walls[w].getbody())) {
+					colliding_walls.push_back(w);
+				}
+			}
+			//Figure out which of these walls should theoretically have collided 'first'
+			int priorID = 0;
+			for (unsigned int w = 0; w < colliding_walls.size(); w++) {
+				//If this wall is closer to bits[1],
+				if (distancetoseg(rays[i].getbits()[1], map.walls[colliding_walls[priorID]].getbody())
+					>
+					distancetoseg(rays[i].getbits()[1], map.walls[colliding_walls[w]].getbody())) {
+					priorID = w;
+				}
+			}
+			int w;
+			//If there was a collision,
+			if (colliding_walls.size() != 0) {
+				w = colliding_walls[priorID];
+				//Double-check that this ray is intersecting,
+				if (rays[i].checkcollision(map.walls[w].getbody())) {
+					int permit = rays[i].permitted(map.walls[w].getmaterial().getPermittivity_Spells());
 					if (permit == 1) {
 						bool shouldbounce = true;
 						bool equidist = false; //True if the nearest two walls are equidistant to bits[1]
 						segment frontseg(rays[i].getbits()[0], rays[i].bits[1]);
-						segment serf = surface.getbody();
+						segment serf = map.walls[w].getbody();
 						point inters = intersection(frontseg, serf);
 						unsigned int k = 0;
 						unsigned int closestID = 0; //The ID of the closest wall
@@ -229,10 +252,10 @@ public:
 								closestID = k;
 							k++;
 						}
-						if (!closestID == j)
-							shouldbounce = false; /* From now on it's fair to assume that j is the ID of
-												  the closest wall to inters */
-
+						///if (!closestID == j)
+						///	shouldbounce = false; 
+						/* From now on it's fair to assume that j is the ID of
+						the closest wall to inters */
 						/*The following logic is for judging whether the current intersection is actually
 						the same as the previous */
 						if (rays[i].getbits().size() > 2) {
@@ -267,7 +290,7 @@ public:
 							the closest wall to previnter*/
 							float err = 0.01f; //Used to be 0.01f;
 							int prevwallID = closestID;
-							int currentwallID = j;
+							int currentwallID = w;
 							if (prevwallID == currentwallID
 								&& difference(inters, previnter).magnitude() < err)
 								shouldbounce = false;
@@ -330,9 +353,12 @@ public:
 						}
 					}
 					if (permit == 0 && !rays[i].terminating)
-						rays[i].terminate(rays[i].wherehit(surface.getbody()));
+						rays[i].terminate(rays[i].wherehit(map.walls[w].getbody()));
 				}
-				j++;
+				else {
+				cerr << "ERROR:battle.h:collision logic - disagreement in collision-checking" << endl;
+				}
+				///j++;
 			}
 			//Erase this ray if it's out of bounds or dead
 			if (abs(rays[i].getbits().back().x - map.getwidth() / 2) > map.getwidth()

@@ -118,9 +118,13 @@ public:
 		terminating = true;
 		terminalpoint = where;
 	}
-	bool checkcollision(segment surface) { //DP Pass by ref, no need to create var
+	bool checkcollision(segment& surface) { //DP Pass by ref, no need to create var
 		segment frontseg(bits[0], bits[1]);
-		return isintersect(frontseg, surface);
+		point ints = intersection(frontseg, surface);
+		point intdiff = difference(bits[1], ints);
+		float intdist = intdiff.magnitude();
+		float errr = (bits.size() == 2) ? 0.00f : 0.01f;
+		return (isintersect(frontseg, surface) && intdist > errr);
 	}
 	point wherehit(segment surface) { //DP Pass by ref, no need to create var
 		segment frontseg(bits[0], bits[1]);
@@ -149,19 +153,14 @@ public:
 	}
 
 	//Doublechecks that there is a collision, then causes the ray to bounce off of the given surface
-	void bounce(segment surface) { //DP: Pass by ref
+	void bounce(segment& surface) { //DP: Pass by ref
 		bool shouldbounce = true;
 		segment frontseg(bits[0], bits[1]);
 		point ints = intersection(frontseg, surface);
 		point intdiff = difference(bits[1], ints);
 		float intdist = intdiff.magnitude();
-		float errr = 0.00f;
-		if (bits.size() == 2) //DP: Merge into line above: float errr = (bits.size() == 2)? 0.01f : 0f;
-			errr = 0.01f;
+		float errr = (bits.size() == 2) ? 0.00f : 0.01f;
 		//Debug:
-		if (intdist < errr) {
-			bool TAILINT_FLAG = true; //DP: ? Whats the purpose of this, because u created it within a scope, u can't use it anywhere else.
-		}
 		if (isintersect(frontseg, surface) && intdist > errr) {
 			bits.insert((bits.begin() + 1), intersection(frontseg, surface));
 			bits[0] = reflection(bits[0], surface);
