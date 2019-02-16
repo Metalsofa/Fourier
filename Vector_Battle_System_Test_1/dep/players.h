@@ -479,10 +479,15 @@ class combatant {
 public:
 	player statblock;
 	point position;
+	point direction; //Direction as a unit vector
 	//Sprites
 	
 	//Each segment represents a hitbox; p1 is lower left, p2 is upper right.
 	vector<segment> hitboxes;
+
+	void turn(float angle) { //Changes direction based on angle(in radians)
+		direction = unitfromangle(angle);
+	}
 };
 
 #define cl_white metastat(255, 255, 255) /*White*/

@@ -27,6 +27,8 @@ bool overworld_mode = false;
 bool battle_mode = true;
 bool design_mode = true;
 
+bool key_mode = false; //Whether using keyboard controls (BETA)
+
 //Global Variables for if in overworld_mode
 
 
@@ -465,7 +467,12 @@ void drawray(ray &drawing_ray) {
 }
 
 void drawfighter(combatant &fighter) { //DP: This is the coolest function I've ever read
-
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i < 360; i += 2) {
+		float theta = PI*i / 90;
+		glVertex2f(0.5f*cosf(theta) + fighter.position.x, 0.5f*sinf(theta) + fighter.position.y);
+	}
+	glEnd();
 }
 
 void draw_art_GUI() { //Idea I just had: Every player metastat caps at 255; WHITE is the optimum in any area		DP: Cool Idea
@@ -765,6 +772,9 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 	//Axis drawing code
 	drawaxes();
 
+	//Drawing a player:
+
+
 	//Debug: Show timer
 	if (show_timer) {
 		rendertext(point(0.0f, 0.0f), to_string(timer));
@@ -824,32 +834,37 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 		//Controls based on design function
 		switch (DESIGN_FUNCTION) {
 		case BD_CREATE_WALLS: //These are the controls for if 'making walls' is the current design function
-			if (clickdragtrail.length() != 0) {
-				if (!leftclicking) {
-					wall new_wall(clickdragtrail, SELECTED_MATERIAL, true);
-					clickdragtrail = segment(0, 0, 0, 0);
-					currentbattle.construct_wall(new_wall);
-				}
-				else {
-					wall new_wall(clickdragtrail, SELECTED_MATERIAL, true);
-					drawwall(new_wall);
-				}
-			}
-			if (rightclicktrail.length() != 0) {
-				if (!rightclicking) {
-					segment eraser = rightclicktrail;
-					rightclicktrail = segment (0, 0, 0, 0);
-					int wallID = 0;
-					for (int i = 0; i < currentbattle.map.walls.size(); i++) {
-						if (isintersect(eraser, currentbattle.map.walls[i].body))
-							currentbattle.destroy_wall(i--);
+			if (!key_mode) {
+				if (clickdragtrail.length() != 0) {
+					if (!leftclicking) {
+						wall new_wall(clickdragtrail, SELECTED_MATERIAL, true);
+						clickdragtrail = segment(0, 0, 0, 0);
+						currentbattle.construct_wall(new_wall);
+					}
+					else {
+						wall new_wall(clickdragtrail, SELECTED_MATERIAL, true);
+						drawwall(new_wall);
 					}
 				}
-				else {
-					wall new_wall(rightclicktrail, ERASER, true);
-					drawwall(new_wall);
+				if (rightclicktrail.length() != 0) {
+					if (!rightclicking) {
+						segment eraser = rightclicktrail;
+						rightclicktrail = segment(0, 0, 0, 0);
+						int wallID = 0;
+						for (int i = 0; i < currentbattle.map.walls.size(); i++) {
+							if (isintersect(eraser, currentbattle.map.walls[i].body))
+								currentbattle.destroy_wall(i--);
+						}
+					}
+					else {
+						wall new_wall(rightclicktrail, ERASER, true);
+						drawwall(new_wall);
+					}
 				}
+			} else {
+
 			}
+			
 			break;
 		case BD_ERASE_WALLS: //No controls implemented for erasing walls; these controls are in 'make walls'
 			break;
@@ -1146,6 +1161,13 @@ int main(int argc, char **argv) {
 	glutMouseFunc(MouseClick); //Callback for mouse clicks
 	glutMotionFunc(PassiveMouseMove); //Callback for mouse movement with button down
 	glutPassiveMotionFunc(PassiveMouseMove); //Callback for mouse movement with no button down
+
+
+	//Setup battle:
+	combatant plyr1;
+	plyr1.position = point(5, 3);
+	plyr1.turn(0);
+	currentbattle.fighters.push_back(plyr1);
 
 	//enter GLUT event processing cycle
 	st.Start();
