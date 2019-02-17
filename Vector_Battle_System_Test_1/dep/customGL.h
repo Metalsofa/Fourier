@@ -480,4 +480,67 @@ void drawfighter(combatant &fighter) { //DP: This is the coolest function I've e
 }
 
 
+//////////DEBUG/DESIGN ORIENTED STUFF/////////
+
+void draw_art_GUI() { //Idea I just had: Every player metastat caps at 255; WHITE is the optimum in any area		DP: Cool Idea
+	rendertext(point(0.0f, currentbattle.map.height + 0.5f), "ART MODE: " + current_graphic_name);
+	for (unsigned int i = 0; i < art.pieces.size(); i++) {
+		drawshape(art.pieces[i]);
+		if (show_dots && (i == Gindex)) {
+			setcolor(inverse(art.pieces[i].color), 1.0f);
+			glLineWidth(2.0f);
+			glPointSize(5.0f);
+			glBegin(GL_LINE_STRIP);
+			for (point dot : art.pieces[i].vertices) {
+				glVertex2f(dot.x, dot.y);
+			}
+			glEnd();
+			glBegin(GL_POINTS);
+			for (point dot : art.pieces[i].vertices) {
+				glVertex2f(dot.x, dot.y);
+			}
+			glEnd();
+		}
+		if (show_layers) {
+			point lay_disp_pos(0.05f, 5.0f);
+			glTranslatef(lay_disp_pos.x + i * 0.1f, lay_disp_pos.y - i * 0.1f, 0.0f);
+			if (i == Gindex)
+				glColor3f(1, 0.1, 0);
+			else
+				glColor3f(1, 1, 1);
+			glBegin(GL_LINE_LOOP);
+			glVertex2f(0.0f, 0.0f);  glVertex2f(0.4f, 0.0f);
+			glVertex2f(0.4f, -0.4f); glVertex2f(0.0f, -0.4f);
+			glEnd();
+			glTranslatef(-lay_disp_pos.x - i * 0.1f, -lay_disp_pos.y + i * 0.1f, 0.0f);
+		}
+	}
+}
+
+/////////////////////WARNING: MOSTLY BORING STUFF AFTER THIS LINE/////////////////////////
+
+void changeSize(int width, int height) {
+	//To avoid divide by zero:
+	if (height == 0)
+		height = 1;
+
+	float ratio = 1.0f * width / height;
+
+	//Use the Projection Matrix
+	glMatrixMode(GL_PROJECTION);
+
+	//Reset Matrix
+	glLoadIdentity();
+
+	//Set viewport to be the entire window
+	glViewport(0, 0, width, height);
+
+	//Set the correct perspective
+	gluPerspective(45, ratio, 1, 100);
+
+	//Get back to the modelview
+	glMatrixMode(GL_MODELVIEW);
+
+}
+
 #endif

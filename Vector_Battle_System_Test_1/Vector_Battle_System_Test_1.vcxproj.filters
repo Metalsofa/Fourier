@@ -59,6 +59,9 @@
     <ClInclude Include="console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="controls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Vector_Battle_System_Test_1.rc">

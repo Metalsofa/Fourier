@@ -1,6 +1,5 @@
 /*This header file is home to a lot of console, design, and debug functionality.
 In theory, nothing that the player will need during gameplay should be in here.*/
-
 #pragma once
 #ifndef __console_h
 #define __console_h
@@ -9,48 +8,26 @@ In theory, nothing that the player will need during gameplay should be in here.*
 #include "battle.h"
 #include "customGL.h"
 #include "players.h"
+#include "controls.h"
 
 
-
+void feedkeyboardinput(string &field) {
+	for (char c : keys) { //Not sure how to eliminate this for loop
+		if (normal_keysdown[c]) {
+			normal_keysdown[c] = false;
+			field += c;
+		}
+	}
+	if (backspace_down) {
+		backspace_down = false;
+		if (field.size() > 0)
+			field.pop_back();
+	}
+}
 
 void output_console(string output) {
 	//console_history.insert(console_history.begin(), output); //Trying something else less intensive
 	cout << output << endl;
-}
-
-void draw_art_GUI() { //Idea I just had: Every player metastat caps at 255; WHITE is the optimum in any area		DP: Cool Idea
-	rendertext(point(0.0f, currentbattle.map.height + 0.5f), "ART MODE: " + current_graphic_name);
-	for (unsigned int i = 0; i < art.pieces.size(); i++) {
-		drawshape(art.pieces[i]);
-		if (show_dots && (i == Gindex)) {
-			setcolor(inverse(art.pieces[i].color), 1.0f);
-			glLineWidth(2.0f);
-			glPointSize(5.0f);
-			glBegin(GL_LINE_STRIP);
-			for (point dot : art.pieces[i].vertices) {
-				glVertex2f(dot.x, dot.y);
-			}
-			glEnd();
-			glBegin(GL_POINTS);
-			for (point dot : art.pieces[i].vertices) {
-				glVertex2f(dot.x, dot.y);
-			}
-			glEnd();
-		}
-		if (show_layers) {
-			point lay_disp_pos(0.05f, 5.0f);
-			glTranslatef(lay_disp_pos.x + i * 0.1f, lay_disp_pos.y - i * 0.1f, 0.0f);
-			if (i == Gindex)
-				glColor3f(1, 0.1, 0);
-			else
-				glColor3f(1, 1, 1);
-			glBegin(GL_LINE_LOOP);
-			glVertex2f(0.0f, 0.0f);  glVertex2f(0.4f, 0.0f);
-			glVertex2f(0.4f, -0.4f); glVertex2f(0.0f, -0.4f);
-			glEnd();
-			glTranslatef(-lay_disp_pos.x - i * 0.1f, -lay_disp_pos.y + i * 0.1f, 0.0f);
-		}
-	}
 }
 
 //Process an input string
@@ -259,6 +236,18 @@ void handle_input(string &input) {
 	}
 	else {
 		output_console("Invalid command: " + arg); //DP: Should probably add "type help for a list of commands"
+	}
+}
+
+//Pause the game and activate the exterior console for user input.
+void exterior_console() {
+	string inp;
+	while (true) {
+		if (inp == "q" || inp == "b" || inp == "back") {
+			break;
+		}
+		getline(cin, inp);
+		handle_input(inp);
 	}
 }
 
