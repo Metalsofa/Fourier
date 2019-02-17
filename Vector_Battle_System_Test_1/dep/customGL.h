@@ -13,6 +13,7 @@
 #include "fcolor.h"
 #include "waves.h"
 #include "players.h"
+#include "camera.h"
 
 #include <string>
 
@@ -47,8 +48,6 @@ void glVertexTriangle(triangle tri) {//DP: Ref?
 void glVertexFermatPoint(triangle tri) {//DP: Ref?
 	glVertexPoint(tri.fermatpoint(0));
 }
-
-//what is the point of glVertexPoint and glVertexFermatPoint, it just seems to be an unecessary function call, when u use these, you could just use that one line?
 
 void draw_point(point dot, float size, bool label) {
 	glPointSize(size);
@@ -459,8 +458,8 @@ void drawray(ray &drawing_ray) {
 	}
 }
 
-void drawfighter(combatant &fighter) { //DP: This is the coolest function I've ever read
-	//glPushMatrix();
+void draw_combatant(combatant &fighter) { //DP: This is the coolest function I've ever read
+	glColor3f(1.0f, 1.0f, 1.0f);
 	glTranslatef(fighter.position.x, fighter.position.y, 0);
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < 360; i += 2) { //Doing only half the work with i += 2

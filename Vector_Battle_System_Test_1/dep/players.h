@@ -15,7 +15,6 @@ thing, to be called by the function that initiates battle */
 using namespace std;
 
 
-
 //Here we define the class metastat, which holds three values, in RGB order.
 
 class metastat {

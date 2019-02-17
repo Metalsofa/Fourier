@@ -3,7 +3,26 @@
 #ifndef __controls_h
 #define __controls_h
 
-#include "console.h"
+bool key_mode = false; //Whether using keyboard controls (BETA)
+
+//Global Variables for if in overworld_mode
+///I hear cactuses hurt to step on
+
+//Global Variables for if in battle_mode
+battle_preset testpreset(10, 6); //Width, Height
+battlestate currentbattle(testpreset); //This holds the information about the current battle scene
+const int BoardDepth = 0; //Not sure about this. Probably will never change from 0.
+float timer = 0; //We'll see if this ends up being necessary
+float increment = 0.01f; //Incremental time in seconds
+float gamma = 1.0f; //Time dilation, from the viewer's refrence frame
+int rain = 0; //This is really just for fun; good for iterating through a rainbow for no good reason
+
+//Global Variables for BATTLEFIELD_DESIGN_MODE
+int DESIGN_FUNCTION = BD_MAKE_RAYS;
+metastat CHOSEEN_COLOR = cl_cyan;
+Material SELECTED_MATERIAL = BtoG;
+
+
 
 //Global Key Detections
 const char keys[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ',
@@ -36,6 +55,8 @@ bool rightclicking = false;
 bool middleclicking = false;
 segment clickdragtrail(0.0f, 0.0f, 0.0f, 0.0f);
 segment rightclicktrail(0.0f, 0.0f, 0.0f, 0.0f);
+
+#include "customGL.h"
 
 using namespace std;
 

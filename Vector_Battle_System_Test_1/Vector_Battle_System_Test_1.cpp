@@ -1,13 +1,11 @@
 /*Main .cpp file for this RPG. Mainly handles graphics and iterative callbacks.
 The main function is rather short; the function 'renderscene' is the real 'main'
-function.*/
-//Test commit comment line
+function. It may be prudent to later change what it is called.*/
 
 #include "gl/glut.h"
 #include "Stopwatch.h" 
 #include "players.h"
 #include "battle.h"
-#include "camera.h"
 
 #include <Windows.h> 
 #include <cmath>
@@ -28,31 +26,6 @@ bool overworld_mode = false;
 bool battle_mode = true;
 bool battlefield_design_mode = true;
 
-bool key_mode = false; //Whether using keyboard controls (BETA)
-
-//Global Variables for if in overworld_mode
-
-
-//Global Variables for if in battle_mode
-battle_preset testpreset(10, 6); //Width, Height
-battlestate currentbattle(testpreset); //This holds the information about the current battle scene
-const int BoardDepth = 0; //Not sure about this. Probably will never change from 0.
-float timer = 0; //We'll see if this ends up being necessary
-float increment = 0.01f; //Incremental time in seconds
-float gamma = 1.0f; //Time dilation, from the viewer's refrence frame
-int rain = 0;
-
-
-//Global Variables for BATTLEFIELD_DESIGN_MODE
-int DESIGN_FUNCTION = BD_MAKE_RAYS;
-metastat CHOSEEN_COLOR = cl_cyan;
-Material SELECTED_MATERIAL = BtoG;
-
-//Global Variables for the console
-bool show_console = false;
-//vector<string> console_history;
-string user_input = "";
-int console_scroll = 0;
 
 //Global settings (mostly debug)
 bool show_corners = false; ///Debug: Draw the corners formed by wall intersections?
@@ -68,26 +41,14 @@ int Gindex = 0;
 int dragdot = -1;
 string current_graphic_name;
 
-
-//Global Camera Position Data
-float LookPointX = float(currentbattle.BoardWidth()) / 2.0f;
-float LookPointY = float(currentbattle.BoardHeight()) / 2.0f;
-float LookPointZ = BoardDepth / 2.0f;
-const float PerspectiveRiseMax = PI / 2.0f - 0.0005f;
-float PerspectiveOrbit = 0.0f;
-float PerspectiveRise = PerspectiveRiseMax;
-float PerspectiveDist = 10.0f; //7.5f;
-
-//Global Custom mouse. Properties and Position
-cursor mouse = cursor();
-
 //Global stopwatch
 Stopwatch st;
 
 //Be careful; certain headers should only be included after global declaration
-#include "customGL.h"
 #include "console.h"
 #include "controls.h"
+#include "camera.h"
+#include "customGL.h"
 
 
 //Utilizes a timer to keep te clocks spinning at the right pace
@@ -101,66 +62,7 @@ void clocksync() {
 	st.Start();
 }
 
-//Called every time the screen refreshes; also just so happens to handle all iterative things.
-void renderScene(void) { 
-
-	//Make sure we aren't dropping frames unneccesarily
-	clocksync();
-
-	// Clear Color and Depth Buffers
-	ClearScreen();
-
-	// Reset transformations
-	glLoadIdentity();
-
-	// Set the camera to look at the appropriate spot (usually center of the board)
-	definecamera();
-
-	//Axis drawing code
-	drawaxes();
-	
-	//Debug: Show timer
-	if (show_timer) {
-		rendertext(point(0.0f, 0.0f), to_string(timer));
-	}
-
-	//Draw Battlefield Geometry
-		//Draw Walls
-	int walliterator = 0;
-	while (walliterator < currentbattle.map.wallcount()) { 
-		drawwall(currentbattle.map.getwalls()[walliterator]);
-		walliterator++;
-	}
-	
-	//Debug: Show the number of objects
-	if (show_corners) {
-		for (unsigned int i = 0; i < currentbattle.map.intersections().size(); i++) {
-			drawpoint(currentbattle.map.intersections()[i]);
-			glColor3f(1, 1, 1);
-		}
-	}
-		//Debug: object counts
-	const bool show_objectcounts = false;
-	if (show_objectcounts) {
-		rendertext(point(0.0f, 4.0f), to_string(currentbattle.map.wallcount()) + " walls.");
-		rendertext(point(0.0f, 5.0f), to_string(currentbattle.raycount()) + " rays.");
-	}
-
-	//Draw Combatants
-	for (int i = 0; i < currentbattle.fighters.size(); i++) {
-		drawfighter(currentbattle.fighters[i]);
-	}
-
-	//Draw Spells
-
-	//Draw Rays
-	int i = 0;
-	while (i < currentbattle.raycount()) {
-		drawray(currentbattle.rays[i]);
-		i++;
-	}
-
-	//////////----Control Handling----//////////
+void handle_controls() {
 
 	//Some controls will always be available, for now, like closing the program.
 	evergreen_keychecks();
@@ -180,21 +82,86 @@ void renderScene(void) {
 		art_keychecks();
 	}
 
-	//Draw mouse
+}
+
+//Contains all gl-code; there should be no need to have any outside of this function
+void renderScene(void) {
+
+	////Screen-cleanup
+	// Clear Color and Depth Buffers
+	ClearScreen();
+	// Reset transformations
+	glLoadIdentity();
+	// Set the camera to look at the appropriate spot (usually center of the board)
+	definecamera();
+
+	//////Call all of our screen-rendering functions
+	////Draw Battlefield Geometry
+	drawaxes();
+	//Draw Walls
+	int walliterator = 0;
+	while (walliterator < currentbattle.map.wallcount()) { 
+		drawwall(currentbattle.map.getwalls()[walliterator]);
+		walliterator++;
+	}
+	////Draw Combatants
+	for (int i = 0; i < currentbattle.fighters.size(); i++) {
+		draw_combatant(currentbattle.fighters[i]);
+	}
+
+	//Draw Spells
+
+	//Draw Rays
+	int i = 0;
+	while (i < currentbattle.raycount()) {
+		drawray(currentbattle.rays[i]);
+		i++;
+	}
+	////Debug-only drawing
+	//Debug: Show the number of objects
+	if (show_corners) {
+		for (unsigned int i = 0; i < currentbattle.map.intersections().size(); i++) {
+			drawpoint(currentbattle.map.intersections()[i]);
+			glColor3f(1, 1, 1);
+		}
+	}
+	//Debug: object counts
+	const bool show_objectcounts = false;
+	if (show_objectcounts) {
+		rendertext(point(0.0f, 4.0f), to_string(currentbattle.map.wallcount()) + " walls.");
+		rendertext(point(0.0f, 5.0f), to_string(currentbattle.raycount()) + " rays.");
+	}
+	//Debug: Show timer
+	if (show_timer) {
+		rendertext(point(0.0f, 0.0f), to_string(timer));
+	}
+	////Draw console //Not sure we really do that anymore
+	if (show_console)
+		draw_console();
+	////Draw mouse
 	if (battlefield_design_mode && !key_mode) {
 		drawcursor(mouse);
 		mouse.Rot += (mouse.RotSpeed / mouse.Spread) * increment;
 	}
-
-	//Draw console //Not sure we really do that anymore
-	if (show_console)
-		draw_console();
-
 	//This is the function that refreshes the canvas and implements everything we've 'drawn'
-	glutSwapBuffers(); 
+	glutSwapBuffers();
+}
+
+//This function is called every time the application is left idle, and handles all forms of iteration
+void iterate_game() {
+
+	//Make sure we aren't dropping frames unneccesarily
+	clocksync();
+
+	//Render everything
+	renderScene();
+
+	//Check all the controls deemed neccessary by global booleans
+	handle_controls();
 
 	//Iterative behavior
 	currentbattle.iterate(increment);
+
 }
 
 //main function; exists to set up a few things and then enter the glut-main-loop
@@ -255,7 +222,7 @@ int main(int argc, char **argv) {
 	//register callbacks
 	glutDisplayFunc(renderScene); //Callback for when we refresh
 	glutReshapeFunc(changeSize); //Callback for when window is resized
-	glutIdleFunc(renderScene); //Callback for when the programs is idle (this will happen continuousCameraLookingY)
+	glutIdleFunc(iterate_game); //Callback for when the programs is idle (this will happen continuously)
 	glutKeyboardFunc(ProcessNormalKeys); //Callback pressing a "normal" key
 	glutSpecialFunc(ProcessSpecialKeys); //Callback for a "special" key
 	glutKeyboardUpFunc(ReleaseNormalKeys); //Callback for releasing "normal" keys

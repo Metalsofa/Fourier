@@ -4,11 +4,18 @@ In theory, nothing that the player will need during gameplay should be in here.*
 #ifndef __console_h
 #define __console_h
 
+//Global Variables for the console.
+/*NOTE: Some of these go unusied right now. May be subject to future cleanup.*/
+bool show_console = false;
+//vector<string> console_history;
+string user_input = "";
+int console_scroll = 0;
+
 #include "gl/glut.h"
 #include "battle.h"
-#include "customGL.h"
 #include "players.h"
 #include "controls.h"
+#include "customGL.h"
 
 
 void feedkeyboardinput(string &field) {
