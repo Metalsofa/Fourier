@@ -490,6 +490,10 @@ public:
 		direction = unitfromangle(angle);
 	}
 };
+//enum Color {cl_white = 0xFFFFFF, cl_black = 0x0, cl_red = 0xFF0000, cl_orange = 0xFF7F00, cl_yellow = 0xFFFF00,
+//	cl_lime = 0x7FFF00, cl_green = 0x00FF, cl_teal = 0x00FF7F, cl_cyan = 0x00FFFF, cl_indigo = 0x007FFF, cl_blue = 0x0000FF,
+//	cl_purple = 0x7F00FF, cl_magenta = 0xFF00FF, cl_violet = 0xFF007F
+//};
 
 #define cl_white metastat(255, 255, 255) /*White*/
 #define cl_black metastat(0, 0, 0) /*Black*/
