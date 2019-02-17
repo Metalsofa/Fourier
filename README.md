@@ -2,3 +2,5 @@
 *An optics-based Role-Playing Game*
 
 This repository is for all the assets related to the collaborative JRPG currently being developed by RPI students David Medlock and Devak Patel.
+
+If you clone this and expect it to compile on your computer, you'll have to update a few project properties (namely the c++ include/library directories) in the visual studio project properties settings tab so that they are specific to your local repository. Additionally you'll have to make sure you have glut.dll in your Windows directory (for the time being, anyway; this might not be neccessary in the future).
