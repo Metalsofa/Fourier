@@ -15,7 +15,6 @@ thing, to be called by the function that initiates battle */
 using namespace std;
 
 
-
 //Here we define the class metastat, which holds three values, in RGB order.
 
 class metastat {
@@ -260,6 +259,8 @@ public:
 		case 9:
 			return "GL_POLYGON";
 		}
+		cerr << "Something happened in players.h/shape/getGLMODE that isn't supposed to..." << endl;
+		return "ERR_NOT_GLMODE";
 	}
 };
 

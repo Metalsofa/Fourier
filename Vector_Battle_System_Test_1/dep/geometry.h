@@ -41,7 +41,7 @@ bool between(float A, float X, float B) {
 	//DP: You can use or:
 	//return ((A < X && X < B) || (B < X && X < A));
 	//or...
-	return (min(A,B) < X && X < max(A,B)); 
+	return (fminf(A,B) < X && X < fmaxf(A,B)); 
 	//The second one looks better, but the first one might be barely faster due to a function call
 	//DM: Thx implemented (this code was written embarassingly long ago my dude)
 }

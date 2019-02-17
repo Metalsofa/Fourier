@@ -98,7 +98,7 @@ materialtype::materialtype(Material MATERIAL_ID) { //DP: Might want to pull out 
 		permittivity_enemies.define(0, 0, 0);
 		harmfulness_players.define(0, 0, 0);
 		harmfulness_enemies.define(0, 0, 0);
-		color.define(100, 100, 100);
+		color.define(100, 200, 200);
 		thickness = 2.0f;
 		opacity = 1;
 		tension = 1; //Workshop this to the perfect value

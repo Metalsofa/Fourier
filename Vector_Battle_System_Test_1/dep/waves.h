@@ -110,7 +110,7 @@ float eval_series(vector<sinusoid> &series, float x) {
 float note_frequency(int key) { return pow(pow(2.0f, 1.0f / 12.0f), float(key - 49)) * 440.0f; }
 
 //Returns the piano note key index corresponding to a particular frequency
-int piano_key(float frequency) { return round(12 * log2(frequency / 440.0f) + 49); }
+int piano_key(float frequency) { return int(round(12 * log2(frequency / 440.0f) + 49)); }
 
 //To-do list: Make some GLUT rendering functions for all this stuff
 //DP: Overall this code is really clean

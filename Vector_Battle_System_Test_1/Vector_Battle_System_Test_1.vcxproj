@@ -77,8 +77,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include;C:\Users\medlod\source\repos\Metalsofa\GameProj1\Vector_Battle_System_Test_1\freeglut\include;C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep;C:\Users\medlod\source\repos\Metalsofa\GameProj1\Vector_Battle_System_Test_1\dep;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\lib\x64;C:\Users\medlod\source\repos\Metalsofa\GameProj1\Vector_Battle_System_Test_1\freeglut\lib\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include;C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\freeglut\include;C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep;C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\lib\x64;C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\freeglut\lib\x64;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -161,6 +161,8 @@
     <ClCompile Include="Vector_Battle_System_Test_1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="console.h" />
+    <ClInclude Include="controls.h" />
     <ClInclude Include="dep\battle.h" />
     <ClInclude Include="dep\camera.h" />
     <ClInclude Include="dep\fcolor.h" />

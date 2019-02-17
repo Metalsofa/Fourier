@@ -106,7 +106,7 @@ public:
 	float getheight() {
 		return height;
 	}
-	int wallcount() { return walls.size(); }
+	size_t wallcount() { return walls.size(); }
 	wall getwall(int wallID) {
 		return walls[wallID];
 	}
@@ -191,7 +191,7 @@ public:
 		map = preset.map;
 	}
 	//Returns the number of travelling rays in existence
-	unsigned long raycount() {
+	size_t raycount() {
 		return rays.size();
 	}
 	//Add a ray to the vector or travelling rays (this is a relic of when I had private members. I miss those days)
