@@ -2,19 +2,21 @@
 The main function is rather short; the function 'renderscene' is the real 'main'
 function.*/
 //Test commit comment line
-#include <Windows.h> 
+
+#include "customGL.h"
 #include "gl/glut.h"
+#include "Stopwatch.h" 
+#include "players.h"
+#include "battle.h"
+#include "camera.h"
+
+#include <Windows.h> 
 #include <cmath>
 #include <stdlib.h>
 #include <string>
 #include <map>
 #include <time.h>
 #include <vector>
-
-#include "Stopwatch.h" 
-#include "players.h"
-#include "battle.h"
-#include "camera.h"
 
 using namespace std;
 using win32::Stopwatch;
@@ -47,7 +49,7 @@ Material SELECTED_MATERIAL = BASIC_REFLECTIVE;
 
 //Global Variables for the console
 bool show_console = false;
-vector<string> console_history;
+//vector<string> console_history;
 string user_input = "";
 int console_scroll = 0;
 
@@ -131,48 +133,6 @@ void changeSize(int width, int height) {
 
 }
 
-
-metastat colorfromID(int colorID) {
-	switch (colorID) {
-	case 0:
-		return cl_black;
-	case 1:
-		return cl_red;
-		break;
-	case 2:
-		return cl_orange;
-	case 3:
-		return cl_yellow;
-	case 4:
-		return cl_lime;
-	case 5:
-		return cl_green;
-	case 6:
-		return cl_teal;
-	case 7:
-		return cl_cyan;
-	case 8:
-		return cl_indigo;
-	case 9:
-		return cl_blue;
-	case 10:
-		return cl_purple;
-	case 11:
-		return cl_magenta;
-	case 12:
-		return cl_violet;
-	case 13:
-		return cl_white;
-	}
-	return cl_black;
-}
-
-
-metastat randomhue() { 
-	int hueID = rand() % 12 + 1; //DP: Not good random, should seed random in main, I did it on line 1065 and also included time.h
-	return colorfromID(hueID);
-}
-
 void definecamera() {
 	if (PerspectiveRise > PerspectiveRiseMax)
 		PerspectiveRise = PerspectiveRiseMax;
@@ -187,32 +147,13 @@ void definecamera() {
 }
 
 void output_console(string output) {
-	console_history.insert(console_history.begin(), output);
-}
-
-void drawpoint(point &dot) {
-	glColor3f(1, 1, 1);
-	glTranslatef(dot.x, dot.y, 0.0f);
-	glutSolidSphere(0.05, 10, 10);
-	glTranslatef(-dot.x, -dot.y, 0.0f);
-	glColor3f(0, 0, 0);
-	glTranslatef(dot.x, dot.y, 0.0f);
-	glutSolidSphere(0.025, 10, 10);
-	glTranslatef(-dot.x, -dot.y, 0.0f);
-}
-
-void drawsegment(segment &seg) {
-	glBegin(GL_LINES);
-	glVertex2f(seg.p1.x, seg.p1.y);
-	glVertex2f(seg.p2.x, seg.p2.y);
-	glEnd();
+	//console_history.insert(console_history.begin(), output); //Trying something else less intensive
+	cout << output << endl;
 }
 
 void rendertext(point location, string text) {  //DP: IF glRasterPos2f doesn't edit the inputs, you might want to pass location in by reference and not create dot;
-	point dot = location;
-	
-	// set position to text    
-	glRasterPos2f(dot.x, dot.y);
+		// set position to text    
+	glRasterPos2f(location.x, location.y);
 
 	for (unsigned int i = 0; i < text.size(); i++)
 	{
@@ -220,54 +161,6 @@ void rendertext(point location, string text) {  //DP: IF glRasterPos2f doesn't e
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
 	}
 	//glTranslatef(-dot.x, -dot.y, 0.0f);
-}
-
-/*Always at (0,0) in the matrix, drawn along the x-axis, left bound is like the phase angle.
-Resolution represents the number of points used to paint a single crest/trough. Appears clamped by bounds for aesthetic,
-but only if passed TRUE for the clamping of that bound.*/
-void draw_wave(sinusoid &wave, float leftbound, float rightbound, int resolution, bool clamp_left, bool clamp_right) {
-	if (leftbound > rightbound) {
-		float temp = rightbound;
-		rightbound = leftbound;
-		leftbound = temp;
-	}
-	float cycles = wave.frequency * (rightbound - leftbound);
-	int nodes = floor(2 * cycles * (1 + resolution));
-	float spacing = ( (1 / wave.frequency) / 2 ) / (resolution + 1);
-	//float beginningoffset = 1.0f / wave.frequency - fmod(leftbound, 1.0f / wave.frequency);
-	float beginningoffset = spacing - fmod(leftbound, spacing);
-	if (beginningoffset = spacing)
-		beginningoffset = 0;
-	glBegin(GL_LINE_STRIP);
-	glVertex2f(0.0f, (wave.eval(leftbound) * !clamp_left));
-	for (int i = 0; i < nodes; i++) {
-		glVertex2f(float(i) * spacing + beginningoffset, wave.eval(leftbound + float(i) * spacing + beginningoffset));
-	}
-	glVertex2f(rightbound - leftbound, wave.eval(rightbound) * !clamp_right);
-	glEnd();
-}
-
-//Like draw_wave but for a Fourier series //Seems done to me. Haven't worked on it in a while
-void draw_series(vector<sinusoid> &series, float leftbound, float rightbound, int resolution, bool clamp_left, bool clamp_right) {
-	if (leftbound > rightbound) {
-		float temp = rightbound;
-		rightbound = leftbound;
-		leftbound = temp;
-	}
-	float cycles = series[0].frequency * (rightbound - leftbound);
-	int nodes = floor(2 * cycles * (1 + resolution));
-	float spacing = ((1 / series[0].frequency) / 2) / (resolution + 1);
-	//float beginningoffset = 1.0f / wave.frequency - fmod(leftbound, 1.0f / wave.frequency);
-	float beginningoffset = spacing - fmod(leftbound, spacing);
-	if (beginningoffset = spacing)
-		beginningoffset = 0;
-	glBegin(GL_LINE_STRIP);
-	glVertex2f(0.0f, eval_series(series, leftbound) * !clamp_left);
-	for (int i = 0; i < nodes; i++) {
-		glVertex2f(float(i) * spacing + beginningoffset, eval_series(series, leftbound + float(i) * spacing + beginningoffset));
-	}
-	glVertex2f(rightbound - leftbound, eval_series(series, rightbound) * !clamp_right);
-	glEnd();
 }
 
 void feedkeyboardinput(string &field) {
@@ -713,6 +606,7 @@ void handle_input(string &input) {
 }
 
 void draw_console() {
+	/*
 	float consolespacing = 0.2f;
 	int i = console_scroll;
 	while (i < console_history.size()) {
@@ -729,6 +623,7 @@ void draw_console() {
 		rendertext(point(0.0f, float(i - console_scroll + 1) * consolespacing), line);
 		i++;
 	}
+	*/
 	//glColor3f(0.0f, 0.5f, 0.0f); //Input background
 	//rendertext(point(0.53f, -0.03f), ">" + user_input);
 	glColor3f(0.8f, 0.8f, 0.8f); //Input foreground
@@ -736,7 +631,7 @@ void draw_console() {
 	feedkeyboardinput(user_input);
 	if (enter_down) { //Submit the commandline input if enter is hit
 		enter_down = false;
-		console_history.insert(console_history.begin(), ">" + user_input);
+		//console_history.insert(console_history.begin(), ">" + user_input);
 		handle_input(user_input);
 		user_input = "";
 	}
@@ -809,7 +704,15 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 		exit(0);
 	}
 	if (normal_keysdown['`']) {//The availability of the console won't always be there, but it'll stay until a user-friendly menu is available
-		show_console = !show_console;
+		//show_console = !show_console;
+		string inp;
+		while (true) {
+			if (inp == "q" || inp == "b" || inp == "back") {
+				break;
+			}
+			getline(cin, inp);
+			handle_input(inp);
+		}
 		normal_keysdown['`'] = false;
 	}
 	//Controls for BATTLEFIELD_DESIGN_MODE
@@ -1015,18 +918,22 @@ void MouseClick(int button, int state, int x, int y) { //Note that this is good 
 			middleclicking = false;
 	}
 	if (button == 3 && state == GLUT_DOWN) { //4 means scrolling down
+		/*
 		if (show_console) {
 			console_scroll++;
 			if (console_scroll > console_history.size() - 1)
 				console_scroll = console_history.size() - 1;
 		}
+		*/
 	}
 	if (button == 4 && state == GLUT_DOWN) { //3 means scrolling up
+		/*
 		if (show_console) {
 			console_scroll--;
 			if (console_scroll < 0)
 				console_scroll = 0;
 		}
+		*/
 	}
 }
 
@@ -1151,5 +1058,5 @@ int main(int argc, char **argv) {
 	st.Start();
 	glutMainLoop();
 
-	return 1;
+	return 0;
 }

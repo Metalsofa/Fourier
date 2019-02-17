@@ -2,6 +2,7 @@
 
 #ifndef __fcolor_h
 #define __fcolor_h
+
 #include <cmath>
 
 /*Attention Developoers:
@@ -16,10 +17,10 @@ private:
 	float B;
 	float A;
 	void caplevels() {
-		R = min(fabsf(R), 1.0);
-		G = min(fabsf(G), 1.0);
-		B = min(fabsf(B), 1.0);
-		A = min(fabsf(A), 1.0);
+		R = fminf(fabsf(R), 1.0);
+		G = fminf(fabsf(G), 1.0);
+		B = fminf(fabsf(B), 1.0);
+		A = fminf(fabsf(A), 1.0);
 		//Thanks DP~
 	}
 public:

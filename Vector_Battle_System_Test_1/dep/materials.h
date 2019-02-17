@@ -3,6 +3,7 @@
 #ifndef __materials_h
 #define __materials_h
 
+
 enum Material { DEFAULT, BASIC_REFLECTIVE, ERASER };
 
 class materialtype {
