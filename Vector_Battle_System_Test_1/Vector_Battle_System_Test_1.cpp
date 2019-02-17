@@ -39,13 +39,13 @@ const int BoardDepth = 0; //Not sure about this. Probably will never change from
 float timer = 0; //We'll see if this ends up being necessary
 float increment = 0.01f; //Incremental time in seconds
 float gamma = 1.0f; //Time dilation, from the viewer's refrence frame
-
+int rain = 0;
 
 
 //Global Variables for BATTLEFIELD_DESIGN_MODE
 int DESIGN_FUNCTION = BD_MAKE_SHAPES;
 metastat CHOSEEN_COLOR = cl_cyan;
-Material SELECTED_MATERIAL = BASIC_REFLECTIVE;
+Material SELECTED_MATERIAL = BtoG;
 
 //Global Variables for the console
 bool show_console = false;
@@ -94,6 +94,11 @@ bool up_down = false; //DP: Instead of _down, _press might be less confusing
 bool left_down = false;
 bool down_down = false;
 bool right_down = false;
+int up_buf;
+int down_buf;
+int left_buf;
+int right_buf;
+const int keyBuf = 2;
 bool esc_down = false;
 bool enter_down = false;
 bool space_down = false;
@@ -431,7 +436,7 @@ void drawray(ray &drawing_ray) {
 	}
 
 	//Draw Arrowhead
-	if (!drawing_ray.terminating) {
+	if (!drawing_ray.terminating && false) {
 		glTranslatef(drawing_ray.getbits()[0].x, drawing_ray.getbits()[0].y, 0.0f);
 
 		glRotatef(atan2f(drawing_ray.movevector().y, drawing_ray.movevector().x) * 180 / PI, 0, 0, 1);
@@ -770,6 +775,11 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 	timer += increment * 100;
 	st.Stop();
 	st.Start();
+	
+	if (up_buf && !up_down) { up_buf--; }
+	if (down_buf && !down_down) { down_buf--; }
+	if (left_buf && !left_down) { left_buf--; }
+	if (right_buf && !right_down) { right_buf--; }
 
 	// Clear Color and Depth Buffers
 	ClearScreen();
@@ -784,19 +794,23 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 	drawaxes();
 
 	//Moving players:
-	float dY = 0;
-	float dX = 0;
-	if (up_down) { dY += .01; }
-	if (down_down) { dY -= .01; }
-	if (right_down) { dX += .01; }
-	if (left_down) { dX -= .01; }
-	if (normal_keysdown['q']) {
-		currentbattle.fighters[0].position.y += dY;
-		currentbattle.fighters[0].position.x += dX;
-	} else if(dY != 0 || dX != 0) {
-		float dir = atan2f(dY , dX);
-		currentbattle.fighters[0].turn(dir);
+	if (up_down || down_down || right_down || left_down) {
+		float dY = 0;
+		float dX = 0;
+		if (up_down || (up_buf && !normal_keysdown['q'])) { dY += .01; }
+		if (down_down || (down_buf && !normal_keysdown['q'])) { dY -= .01; }
+		if (right_down || (right_buf && !normal_keysdown['q'])) { dX += .01; }
+		if (left_down || (left_buf && !normal_keysdown['q'])) { dX -= .01; }
+		if (normal_keysdown['q']) {
+			currentbattle.fighters[0].position.y += dY;
+			currentbattle.fighters[0].position.x += dX;
+		}
+		else if (dY != 0 || dX != 0) {
+			float dir = atan2f(dY, dX);
+			currentbattle.fighters[0].turn(dir);
+		}
 	}
+	
 
 
 	//Debug: Show timer
@@ -855,6 +869,10 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 			if (normal_keysdown['2'])
 				DESIGN_FUNCTION = BD_MAKE_RAYS;
 		}
+		if (normal_keysdown['k']) {
+			key_mode = !key_mode;
+			normal_keysdown['k'] = false;
+		}
 		//Controls based on design function
 		switch (DESIGN_FUNCTION) {
 		case BD_CREATE_WALLS: //These are the controls for if 'making walls' is the current design function
@@ -893,18 +911,28 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 		case BD_ERASE_WALLS: //No controls implemented for erasing walls; these controls are in 'make walls'
 			break;
 		case BD_MAKE_RAYS: //Design controls for making rays
-			if (clickdragtrail.length() != 0) {
-				if (!leftclicking) {
-					ray new_ray(randomhue(),clickdragtrail.p1,clickdragtrail.p2,clickdragtrail.length(), 
-						6.0f, 2);
-					clickdragtrail = segment(0, 0, 0, 0);
-					currentbattle.spawn_ray(new_ray);
+			if (!key_mode) {
+				if (clickdragtrail.length() != 0) {
+					if (!leftclicking) {
+						ray new_ray(randomhue(), clickdragtrail.p1, clickdragtrail.p2, clickdragtrail.length(),
+							6.0f, 2);
+						clickdragtrail = segment(0, 0, 0, 0);
+						currentbattle.spawn_ray(new_ray);
+					}
+					else {
+						wall new_wall(clickdragtrail, SELECTED_MATERIAL, true);
+						drawwall(new_wall);
+					}
 				}
-				else {
-					wall new_wall(clickdragtrail, SELECTED_MATERIAL, true);
-					drawwall(new_wall);
+			} else {
+				if (normal_keysdown[' ']) {
+					ray new_ray(colorfromID(rain++ % 12 + 1), currentbattle.fighters[0].position, currentbattle.fighters[0].position + currentbattle.fighters[0].direction, 2.0f,
+						6.0f, 2);
+					currentbattle.spawn_ray(new_ray);
+					normal_keysdown[' '] = false;
 				}
 			}
+			
 			break;
 		case BD_MAKE_SHAPES: //Design controls for making graphics. Deceptively named!
 			if (rightclicking) {
@@ -950,7 +978,7 @@ void renderScene(void) { //The custom function that tells openGL what to do when
 	}
 
 	//Draw mouse
-	if (design_mode) {
+	if (design_mode && !key_mode) {
 		drawcursor(mouse);
 		mouse.Rot += (mouse.RotSpeed / mouse.Spread) * increment;
 	}
@@ -1013,15 +1041,19 @@ void ReleaseSpecialKeys(int key, int x, int y) {
 void ProcessSpecialKeys(int key, int x, int y) {
 	switch (key) {
 	case GLUT_KEY_UP:
+		up_buf = keyBuf;
 		up_down = true;
 		break;
 	case GLUT_KEY_DOWN:
+		down_buf = keyBuf;
 		down_down = true;
 		break;
 	case GLUT_KEY_RIGHT:
+		right_buf = keyBuf;
 		right_down = true;
 		break;
 	case GLUT_KEY_LEFT:
+		left_buf = keyBuf;
 		left_down = true;
 		break;
 	}

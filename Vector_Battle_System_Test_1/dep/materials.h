@@ -3,7 +3,7 @@
 #ifndef __materials_h
 #define __materials_h
 
-enum Material { DEFAULT, BASIC_REFLECTIVE, ERASER };
+enum Material { DEFAULT, BASIC_REFLECTIVE, ERASER, BtoG };
 
 class materialtype {
 public:
@@ -87,6 +87,19 @@ materialtype::materialtype(Material MATERIAL_ID) { //DP: Might want to pull out 
 		harmfulness_enemies.define(0, 0, 0);
 		color.define(130, 100, 100);
 		thickness = 1.5f;
+		opacity = 1;
+		tension = 1; //Workshop this to the perfect value
+		dens = 1;
+		break;
+	case BtoG:
+		hitpoints.define(0, 0, 0);
+		permittivity_spells.define(1, 2, 2);
+		permittivity_players.define(0, 0, 0);
+		permittivity_enemies.define(0, 0, 0);
+		harmfulness_players.define(0, 0, 0);
+		harmfulness_enemies.define(0, 0, 0);
+		color.define(100, 100, 100);
+		thickness = 2.0f;
 		opacity = 1;
 		tension = 1; //Workshop this to the perfect value
 		dens = 1;
