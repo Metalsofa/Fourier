@@ -71,6 +71,78 @@ void draw_segment(segment &seg, float &thickness, bool &endpoints, bool &labels)
 
 }
 
+void definecamera() {
+	if (PerspectiveRise > PerspectiveRiseMax)
+		PerspectiveRise = PerspectiveRiseMax;
+	if (PerspectiveRise < 0)
+		PerspectiveRise = 0;
+	float CameraXpos = cos(PerspectiveOrbit - PI / 2) * cos(PerspectiveRise) * PerspectiveDist + LookPointX;
+	float CameraYpos = sin(PerspectiveOrbit - PI / 2) * cos(PerspectiveRise) * PerspectiveDist + LookPointY;
+	float CameraZpos = (sin(PerspectiveRise) * PerspectiveDist + LookPointZ) * (1.0f + 0.7f * abs(sin(PerspectiveOrbit)));
+	gluLookAt(CameraXpos, CameraYpos, CameraZpos, //Eye Position
+		LookPointX, LookPointY, LookPointZ, //Looking at this point
+		0.0f, 0.0f, 1.0f); //Vector that defines the "up" direction
+}
+
+void setcolor(metastat col, float opacity) { //DP: May want to pass by reference
+	float R = float(col.som) / 255.0f;
+	float G = float(col.emo) / 255.0f;
+	float B = float(col.cog) / 255.0f;
+	glColor4f(R, G, B, opacity);
+}
+
+void rendertext(point location, string text) {  //DP: IF glRasterPos2f doesn't edit the inputs, you might want to pass location in by reference and not create dot;
+		// set position to text    
+	glRasterPos2f(location.x, location.y);
+
+	for (unsigned int i = 0; i < text.size(); i++)
+	{
+		// draw each character    
+		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
+	}
+	//glTranslatef(-dot.x, -dot.y, 0.0f);
+}
+
+
+
+void drawaxes() {
+	glLineWidth(0.0f);
+	//Draw Grey Backdrop
+	glBegin(GL_QUADS);
+	glColor3f(.1f, .1f, .1f);
+	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(currentbattle.BoardWidth(), 0.0f, 0.0f);
+	glVertex3f(currentbattle.BoardWidth(), currentbattle.BoardHeight(), 0); glVertex3f(0, currentbattle.BoardHeight(), 0);
+	glEnd();
+
+	//Gridlines
+	glBegin(GL_LINES);
+	float tickiterator = 0.0f;
+	glColor3f(0.4f, 0.4f, 0.4f);
+	while (tickiterator < currentbattle.BoardWidth() - 1)
+	{
+		tickiterator++;
+		glVertex3f(tickiterator, currentbattle.BoardHeight(), 0.0f); glVertex3f(tickiterator, 0.0f, 0.0f); //X along y
+		glVertex3f(tickiterator, 0.0f, 0.0f); glVertex3f(tickiterator, 0.0f, float(BoardDepth)); //X along Z
+	}
+	tickiterator = 0.0f;
+	while (tickiterator < currentbattle.BoardHeight() - 1) {
+		tickiterator++;
+		glVertex3f(currentbattle.BoardWidth(), tickiterator, 0.0f); glVertex3f(0.0f, tickiterator, 0.0f); //Y along x
+		glVertex3f(0.0f, tickiterator, float(BoardDepth)); glVertex3f(0.0f, tickiterator, 0.0f); //Y along z
+	}
+	glEnd();
+
+	//White Border
+	glBegin(GL_LINE_STRIP);
+	//glColor3f(1, 1, 1);
+	glVertex3f(0, 0, 0); glVertex3f(currentbattle.BoardWidth(), 0, 0);
+	glVertex3f(currentbattle.BoardWidth(), currentbattle.BoardHeight(), 0); glVertex3f(0, currentbattle.BoardHeight(), 0);
+	glVertex3f(0, 0, 0);
+	glEnd();
+
+	glColor3f(1, 1, 1);
+}
+
 void draw_triangle(triangle &tri, bool filled, bool vertices, float pointsize, bool labels,
 	bool fermat_point) {
 	if (filled)
@@ -249,6 +321,162 @@ void draw_series(vector<sinusoid> &series, float leftbound, float rightbound, in
 	}
 	glVertex2f(rightbound - leftbound, eval_series(series, rightbound) * !clamp_right);
 	glEnd();
+}
+
+void drawshape(shape &obj) {
+	setcolor(obj.color, obj.opacity);
+	glLineWidth(obj.line_thickness);
+	glBegin(obj.mode);
+	for (int i = 0; i < obj.vertices.size(); i++) {
+		glVertex2f(obj.vertices[i].x, obj.vertices[i].y);
+	}
+	glEnd();
+}
+
+void drawcursor(cursor& curse) {
+	glLineWidth(1.0f);
+	//Draw the mouse-locator lines
+	if (show_ticks) {
+		float ticksize = 0.2f;
+		glLineWidth(1.0f);
+		glBegin(GL_LINES);
+		glVertex2f(curse.Position.x, 0); glVertex2f(curse.Position.x, ticksize);
+		glVertex2f(curse.Position.x, currentbattle.BoardHeight()); glVertex2f(curse.Position.x, currentbattle.BoardHeight() - ticksize);
+		glVertex2f(0, curse.Position.y); glVertex2f(ticksize, curse.Position.y);
+		glVertex2f(currentbattle.BoardWidth(), curse.Position.y); glVertex2f(currentbattle.BoardWidth() - ticksize, curse.Position.y);
+		glEnd();
+	}
+	glColor3f(curse.Red(), curse.Green(), curse.Blue()); //OH THERE IT IS I FOUND THE CURSOR COLOR LINE FINALLY		//DP: YAY
+	if (DESIGN_FUNCTION == BD_MAKE_SHAPES)
+		setcolor(inverse(art.pieces[Gindex].color), 1.0f);
+	glPushMatrix();
+	glTranslatef(curse.Position.x, curse.Position.y, 0); //Translate #1
+	glRotatef(-90 + curse.Tilt * 180 / PI, 0, 1, 0); //Rotate #1
+	glRotatef(curse.Yaw * 180 / PI, 0, 0, 1); //Rotate #2
+	glRotatef(curse.Rot * 180 / PI, 1, 0, 0); //Rotate #3
+	glBegin(GL_LINES);
+	glVertex2f(0, 0);
+	glVertex2f(curse.Size * cos(curse.Spread / 2), curse.Size * sin(curse.Spread / 2));
+	glVertex2f(0, 0);
+	glVertex2f(curse.Size * cos(curse.Spread / 2), curse.Size * -sin(curse.Spread / 2));
+	///These lines make it look kind of like a cone, so I commented them out.
+	//glVertex3f(0, 0, 0);
+	//glVertex3f(curse.Size * cos(curse.Spread / 2), 0, curse.Size * -sin(curse.Spread / 2));
+	//glVertex3f(0, 0, 0);
+	//glVertex3f(curse.Size * cos(curse.Spread / 2), 0, curse.Size * sin(curse.Spread / 2));
+	glVertex2f(0.0f, 0.0f); glVertex2f(0.8f * curse.Size / curse.Spread, 0.0f);
+	glLoadIdentity();
+	glEnd();
+	glPopMatrix();
+	//definecamera(); //For some reason, calling this here causes some weird things to happen
+}
+
+//Clears the screen
+void ClearScreen() { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
+
+//Takes a refrence to a wall and then draws it
+void drawwall(wall& drawing_wall) { //DP: Pass by reference?
+	glLineWidth(drawing_wall.material.thickness);
+	glBegin(GL_LINES);
+	glColor4f(
+		drawing_wall.material.getRed(),
+		drawing_wall.material.getGreen(),
+		drawing_wall.material.getBlue(),
+		drawing_wall.material.getAlpha()
+	);
+	glVertex2f(drawing_wall.getbody().p1.x, drawing_wall.getbody().p1.y);
+	glVertex2f(drawing_wall.getbody().p2.x, drawing_wall.getbody().p2.y);
+	glEnd();
+	glLineWidth(1.0f);
+}
+
+/* //This function should theoretically be devoid of purpose.
+void rendertext(float x, float y, float z, void *font, string text) { //DP: It might be slightly faster to use glutBitmapString https://stackoverflow.com/questions/544079/how-do-i-use-glutbitmapstring-in-c-to-draw-text-to-the-screen
+	glRasterPos3f(x, y, z);
+	for (char c : text)
+		glutBitmapCharacter(font, c);
+}
+*/
+void drawray(ray &drawing_ray) {
+	glColor3f(drawing_ray.getRed(), drawing_ray.getGreen(), drawing_ray.getBlue());
+	glLineWidth(drawing_ray.getthickness());
+	glBegin(GL_LINE_STRIP);
+	for (point dot : drawing_ray.getbits()) {
+		glVertex2f(dot.x, dot.y);
+	}
+	glEnd();
+
+	//Draw the joints (mainly for debug purposes)
+	bool showjoints = false;
+	if (showjoints) {
+		unsigned int i = 1;
+		for (point dot : drawing_ray.getbits()) { //DP: if you are already using an index, it might be better to do what I put on line 420
+			drawpoint(dot);
+			glColor3f(drawing_ray.getRed(), drawing_ray.getGreen(), drawing_ray.getBlue());
+			rendertext(dot, to_string(i));
+			i++;
+		}
+		/*for (unsigned int i = 1; i <= drawing_ray.getbits(); i++) {
+			drawpoint(drawing_ray.getbits()[i-1]);
+			glColor3f(drawing_ray.getRed(), drawing_ray.getGreen(), drawing_ray.getBlue());
+			rendertext(drawing_ray.getbits()[i - 1], to_string(i));
+		}*/
+	}
+
+	//Draw Arrowhead
+	if (!drawing_ray.terminating && false) {
+		glTranslatef(drawing_ray.getbits()[0].x, drawing_ray.getbits()[0].y, 0.0f);
+
+		glRotatef(atan2f(drawing_ray.movevector().y, drawing_ray.movevector().x) * 180 / PI, 0, 0, 1);
+		glBegin(GL_POLYGON);
+		float arrow_width = 0.1f;
+		float arrow_height = 0.2f;
+		glVertex2f(0.0f, 0.0f);
+		glVertex2f(-arrow_height, arrow_width / 2.0f);
+		glVertex2f(-arrow_height * 0.5f, 0.0f);
+		glVertex2f(-arrow_height, -arrow_width / 2.0f);
+		glEnd();
+	}
+	//Reset transformations
+	glLoadIdentity();
+	definecamera();
+
+	//Draw tail sphere. This is really just for fun.
+	bool draw_tail_sphere = false;
+	if (draw_tail_sphere) {
+		float excesslength = drawing_ray.length() - drawing_ray.length_nominal();
+		float unborn = -excesslength;
+		if (unborn > 0) {
+			float desired_area = unborn * drawing_ray.getthickness() * 0.001f;
+			glTranslatef(drawing_ray.getbits().back().x, drawing_ray.getbits().back().y, 0);
+			point unitback = unitvector(difference(drawing_ray.getbits()[drawing_ray.getbits().size() - 2],
+				drawing_ray.getbits().back()));
+			glRotatef(unborn * 20, unitback.x, unitback.y, 0);
+			glutSolidSphere(sqrt(desired_area / PI), 10, 10);
+			glLoadIdentity();
+			definecamera();
+		}
+	}
+}
+
+void drawfighter(combatant &fighter) { //DP: This is the coolest function I've ever read
+	//glPushMatrix();
+	glTranslatef(fighter.position.x, fighter.position.y, 0);
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i < 360; i += 2) { //Doing only half the work with i += 2
+		float theta = PI * i / 90;
+		glVertex2f(0.5f*cosf(theta), 0.5f*sinf(theta));
+	}
+	glEnd();
+	glBegin(GL_LINE_LOOP);
+	for (int i = 0; i < 360; i += 10) {
+		float theta = PI * i / 90;
+		glVertex2f(0.01f*cosf(theta) + fighter.direction.x, 0.01f*sinf(theta) + fighter.direction.y);
+	}
+	glEnd();
+	glTranslatef(-1 * fighter.position.x, -1 * fighter.position.y, 0);
+
+	//glPopMatrix();
 }
 
 

@@ -161,6 +161,7 @@
     <ClCompile Include="Vector_Battle_System_Test_1.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="console.h" />
     <ClInclude Include="dep\battle.h" />
     <ClInclude Include="dep\camera.h" />
     <ClInclude Include="dep\fcolor.h" />
