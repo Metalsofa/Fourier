@@ -1,27 +1,23 @@
 ﻿  Vector_Battle_System_Test_1.cpp
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\waves.h(113): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(109): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(111): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(113): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(115): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(117): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(119): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(121): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(123): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(128): warning C4244: 'initializing': conversion from 'unsigned int' to 'float', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(130): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(131): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(134): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(135): warning C4244: 'argument': conversion from 'double' to 'GLfloat', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(214): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\customgl.h(239): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\battle.h(109): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\battle.h(195): warning C4267: 'return': conversion from 'size_t' to 'unsigned long', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\vector_battle_system_test_1.cpp(89): warning C4129: '/': unrecognized character escape sequence
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\vector_battle_system_test_1.cpp(387): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\vector_battle_system_test_1.cpp(523): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\vector_battle_system_test_1.cpp(522): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\vector_battle_system_test_1.cpp(699): warning C4018: '<': signed/unsigned mismatch
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\vector_battle_system_test_1.cpp(1027): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\dep\players.h(263): warning C4715: 'shape::getGLMODE': not all control paths return a value
-  Vector_Battle_System_Test_1.vcxproj -> C:\Users\medlod\Source\Repos\Fourier\x64\Debug\Vector_Battle_System_Test_1.exe
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\waves.h(113): warning C4244: 'return': conversion from 'float' to 'int', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\battle.h(109): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\battle.h(195): warning C4267: 'return': conversion from 'size_t' to 'unsigned long', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\fcolor.h(19): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\fcolor.h(20): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\fcolor.h(21): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\fcolor.h(22): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(89): warning C4129: '/': unrecognized character escape sequence
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(242): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(265): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(517): warning C4305: 'argument': truncation from 'double' to 'GLfloat'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(653): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(652): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(800): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(801): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(802): warning C4305: '+=': truncation from 'double' to 'float'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(803): warning C4305: '-=': truncation from 'double' to 'float'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(852): warning C4018: '<': signed/unsigned mismatch
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(1092): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(1191): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(263): warning C4715: 'shape::getGLMODE': not all control paths return a value
+  Vector_Battle_System_Test_1.vcxproj -> C:\Users\dp\Documents\GitHub\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe
