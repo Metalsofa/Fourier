@@ -259,6 +259,8 @@ public:
 		case 9:
 			return "GL_POLYGON";
 		}
+		cerr << "Something happened in players.h/shape/getGLMODE that isn't supposed to..." << endl;
+		return "ERR_NOT_GLMODE";
 	}
 };
 

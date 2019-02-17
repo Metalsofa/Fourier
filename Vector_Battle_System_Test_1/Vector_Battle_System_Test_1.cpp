@@ -100,7 +100,7 @@ void renderScene(void) {
 	drawaxes();
 	//Draw Walls
 	int walliterator = 0;
-	while (walliterator < currentbattle.map.wallcount()) { 
+	while (walliterator < int(currentbattle.map.wallcount())) { 
 		drawwall(currentbattle.map.getwalls()[walliterator]);
 		walliterator++;
 	}
@@ -112,10 +112,8 @@ void renderScene(void) {
 	//Draw Spells
 
 	//Draw Rays
-	int i = 0;
-	while (i < currentbattle.raycount()) {
+	for (unsigned int i = 0; i < currentbattle.raycount(); i++) {
 		drawray(currentbattle.rays[i]);
-		i++;
 	}
 	////Debug-only drawing
 	//Debug: Show the number of objects
@@ -201,7 +199,7 @@ int main(int argc, char **argv) {
 	}
 
 	//DP: Initialize rand
-	srand(time(NULL));
+	srand(unsigned int(time(NULL)));
 
 	//Initialize GLUT
 	glutInit(&argc, argv);

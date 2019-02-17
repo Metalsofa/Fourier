@@ -30,7 +30,7 @@ const char keys[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ',
 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F',
 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
 'W', 'X', 'Y', 'Z', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_',
-'+', '=', '{', '}', '[', ']', '\\', '|', ';', ':', '"', '\'', ',', '<', '.', '>', '?', '\/', '`', '~' };
+'+', '=', '{', '}', '[', ']', '\\', '|', ';', ':', '"', '\'', ',', '<', '.', '>', '?', '/', '`', '~' };
 map<char, bool> normal_keysdown;
 
 ///Special and other keys
@@ -220,10 +220,10 @@ void battle_keychecks() {
 	if (up_down || down_down || right_down || left_down) {
 		float dY = 0;
 		float dX = 0;
-		if (up_down || (up_buf && !normal_keysdown['q'])) { dY += .01; }
-		if (down_down || (down_buf && !normal_keysdown['q'])) { dY -= .01; }
-		if (right_down || (right_buf && !normal_keysdown['q'])) { dX += .01; }
-		if (left_down || (left_buf && !normal_keysdown['q'])) { dX -= .01; }
+		if (up_down || (up_buf && !normal_keysdown['q'])) { dY += .01f; }
+		if (down_down || (down_buf && !normal_keysdown['q'])) { dY -= .01f; }
+		if (right_down || (right_buf && !normal_keysdown['q'])) { dX += .01f; }
+		if (left_down || (left_buf && !normal_keysdown['q'])) { dX -= .01f; }
 		if (normal_keysdown['q']) {
 			currentbattle.fighters[0].position.y += dY;
 			currentbattle.fighters[0].position.x += dX;

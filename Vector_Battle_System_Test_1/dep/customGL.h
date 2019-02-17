@@ -177,33 +177,33 @@ void draw_XYgrid(segment bounds, unsigned int levels) {
 		}
 		int xfirst, xlast, yfirst, ylast;
 		if (bounds.p1.x < 0)
-			xfirst = floor(bounds.p1.x);
+			xfirst = int(floor(bounds.p1.x));
 		else
-			xfirst = ceil(bounds.p1.x);
+			xfirst = int(ceil(bounds.p1.x));
 		if (bounds.p1.y < 0)
-			yfirst = floor(bounds.p1.y);
+			yfirst = int(floor(bounds.p1.y));
 		else
-			yfirst = ceil(bounds.p1.y);
+			yfirst = int(ceil(bounds.p1.y));
 		if (bounds.p2.x > 0)
-			xlast = floor(bounds.p2.x);
+			xlast = int(floor(bounds.p2.x));
 		else
-			xlast = ceil(bounds.p2.x);
+			xlast = int(ceil(bounds.p2.x));
 		if (bounds.p2.y > 0)
-			ylast = floor(bounds.p2.y);
+			ylast = int(floor(bounds.p2.y));
 		else
-			ylast = ceil(bounds.p2.y);
+			ylast = int(ceil(bounds.p2.y));
 		for (unsigned int i = 1; i < level; i++) {
 			bounds.p1.x /= 2; bounds.p1.y /= 2;
 			bounds.p2.x /= 2; bounds.p2.y /= 2;
 		}
-		float lv = level;
+		float lv = float(level);
 		for (int i = xfirst; i <= xlast; i++) {
-			float it = i;
-			glVertex2f(it / pow(2, lv - 1), bounds.p1.y); glVertex2f(it / pow(2, lv - 1), bounds.p2.y);
+			float it = float(i);
+			glVertex2f(it / powf(2, lv - 1), bounds.p1.y); glVertex2f(it / powf(2, lv - 1), bounds.p2.y);
 		}
 		for (int i = yfirst; i <= ylast; i++) {
-			float it = i;
-			glVertex2f(bounds.p1.x, it / pow(2, lv - 1)); glVertex2f(bounds.p2.x, it / pow(2, lv - 1));
+			float it = float(i);
+			glVertex2f(bounds.p1.x, it / powf(2, lv - 1)); glVertex2f(bounds.p2.x, it / powf(2, lv - 1));
 		}
 		glEnd();
 		level++;
@@ -282,7 +282,7 @@ void draw_wave(sinusoid &wave, float leftbound, float rightbound, int resolution
 		leftbound = temp;
 	}
 	float cycles = wave.frequency * (rightbound - leftbound);
-	int nodes = floor(2 * cycles * (1 + resolution));
+	int nodes = int(floor(2 * cycles * (1 + resolution)));
 	float spacing = ((1 / wave.frequency) / 2) / (resolution + 1);
 	//float beginningoffset = 1.0f / wave.frequency - fmod(leftbound, 1.0f / wave.frequency);
 	float beginningoffset = spacing - fmod(leftbound, spacing);
@@ -307,7 +307,7 @@ void draw_series(vector<sinusoid> &series, float leftbound, float rightbound, in
 		leftbound = temp;
 	}
 	float cycles = series[0].frequency * (rightbound - leftbound);
-	int nodes = floor(2 * cycles * (1 + resolution));
+	int nodes = int(floor(2 * cycles * (1 + resolution)));
 	float spacing = ((1 / series[0].frequency) / 2) / (resolution + 1);
 	//float beginningoffset = 1.0f / wave.frequency - fmod(leftbound, 1.0f / wave.frequency);
 	float beginningoffset = spacing - fmod(leftbound, spacing);
@@ -504,9 +504,9 @@ void draw_art_GUI() { //Idea I just had: Every player metastat caps at 255; WHIT
 			point lay_disp_pos(0.05f, 5.0f);
 			glTranslatef(lay_disp_pos.x + i * 0.1f, lay_disp_pos.y - i * 0.1f, 0.0f);
 			if (i == Gindex)
-				glColor3f(1, 0.1, 0);
+				glColor3f(1.0f, 0.1f, 0.0f);
 			else
-				glColor3f(1, 1, 1);
+				glColor3f(1.0f, 1.0f, 1.0f);
 			glBegin(GL_LINE_LOOP);
 			glVertex2f(0.0f, 0.0f);  glVertex2f(0.4f, 0.0f);
 			glVertex2f(0.4f, -0.4f); glVertex2f(0.0f, -0.4f);

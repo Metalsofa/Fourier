@@ -160,8 +160,8 @@ void handle_input(string &input) {
 		}
 		if (arg == "expand") {
 			//Rescale to take up most of the height of the canvas
-			art.fit_within(segment(currentbattle.BoardWidth() * 0.1, currentbattle.BoardHeight() * 0.1,
-				currentbattle.BoardWidth() * 0.9, currentbattle.BoardHeight() * 0.9));
+			art.fit_within(segment(currentbattle.BoardWidth() * 0.1f, currentbattle.BoardHeight() * 0.1f,
+				currentbattle.BoardWidth() * 0.9f, currentbattle.BoardHeight() * 0.9f));
 		}
 		if (arg == "clear") {
 			Gindex = 0;
