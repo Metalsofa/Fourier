@@ -19,10 +19,10 @@ int console_scroll = 0;
 
 
 void feedkeyboardinput(string &field) {
-	for (char c : keys) { //Not sure how to eliminate this for loop
-		if (normal_keysdown[c]) {
-			normal_keysdown[c] = false;
-			field += c;
+	for (map<char, bool>::iterator itr = normal_keysdown.begin(); itr != normal_keysdown.end(); itr++) {
+		if (itr->second) {
+			itr->second = false;
+			field += itr->first;
 		}
 	}
 	if (backspace_down) {

@@ -5,7 +5,6 @@ function. It may be prudent to later change what it is called.*/
 #include "gl/glut.h"
 #include "Stopwatch.h" 
 #include "players.h"
-#include "battle.h"
 
 #include <Windows.h> 
 #include <cmath>
@@ -41,10 +40,12 @@ int Gindex = 0;
 int dragdot = -1;
 string current_graphic_name;
 
+
 //Global stopwatch
 Stopwatch st;
 
 //Be careful; certain headers should only be included after global declaration
+#include "battle.h"
 #include "console.h"
 #include "controls.h"
 #include "camera.h"
@@ -86,8 +87,7 @@ void handle_controls() {
 
 //Contains all gl-code; there should be no need to have any outside of this function
 void renderScene(void) {
-
-	////Screen-cleanup
+	//Screen-cleanup
 	// Clear Color and Depth Buffers
 	ClearScreen();
 	// Reset transformations
@@ -100,7 +100,7 @@ void renderScene(void) {
 	drawaxes();
 	//Draw Walls
 	int walliterator = 0;
-	while (walliterator < int(currentbattle.map.wallcount())) { 
+	while (walliterator < int(currentbattle.map.wallcount())) {
 		drawwall(currentbattle.map.getwalls()[walliterator]);
 		walliterator++;
 	}
@@ -159,7 +159,6 @@ void iterate_game() {
 
 	//Iterative behavior
 	currentbattle.iterate(increment);
-
 }
 
 //main function; exists to set up a few things and then enter the glut-main-loop
@@ -232,9 +231,24 @@ int main(int argc, char **argv) {
 
 	//Setup battle:
 	combatant plyr1;
-	plyr1.position = point(5, 3);
+	plyr1.position = point(6, 3);
 	plyr1.turn(0);
 	currentbattle.fighters.push_back(plyr1);
+
+	combatant plyr2;
+	plyr2.position = point(5, 4);
+	plyr2.turn(0);
+	currentbattle.fighters.push_back(plyr2);
+
+	combatant plyr3;
+	plyr3.position = point(4, 3);
+	plyr3.turn(0);
+	currentbattle.fighters.push_back(plyr3);
+
+	combatant plyr4;
+	plyr4.position = point(5, 2);
+	plyr4.turn(0);
+	currentbattle.fighters.push_back(plyr4);
 
 	//enter GLUT event processing cycle
 	st.Start();

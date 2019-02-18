@@ -25,12 +25,6 @@ Material SELECTED_MATERIAL = BtoG;
 
 
 //Global Key Detections
-const char keys[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ',
-'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F',
-'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-'W', 'X', 'Y', 'Z', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_',
-'+', '=', '{', '}', '[', ']', '\\', '|', ';', ':', '"', '\'', ',', '<', '.', '>', '?', '/', '`', '~' };
 map<char, bool> normal_keysdown;
 
 ///Special and other keys
@@ -42,7 +36,7 @@ int up_buf;
 int down_buf;
 int left_buf;
 int right_buf;
-const int keyBuf = 2;
+const int keyBuf = 5;
 bool esc_down = false;
 bool enter_down = false;
 bool space_down = false;
