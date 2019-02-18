@@ -464,7 +464,7 @@ void draw_combatant(combatant &fighter) { //DP: This is the coolest function I'v
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < 360; i += 2) { //Doing only half the work with i += 2
 		float theta = PI * i / 90;
-		glVertex2f(0.5f*cosf(theta), 0.5f*sinf(theta));
+		glVertex2f(0.25f*cosf(theta), 0.25f*sinf(theta));
 	}
 	glEnd();
 	glBegin(GL_LINE_LOOP);
