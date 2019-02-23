@@ -25,12 +25,6 @@ Material SELECTED_MATERIAL = BtoG;
 
 
 //Global Key Detections
-const char keys[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', ' ',
-'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p',
-'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F',
-'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-'W', 'X', 'Y', 'Z', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '-', '_',
-'+', '=', '{', '}', '[', ']', '\\', '|', ';', ':', '"', '\'', ',', '<', '.', '>', '?', '/', '`', '~' };
 map<char, bool> normal_keysdown;
 
 ///Special and other keys
@@ -42,7 +36,7 @@ int up_buf;
 int down_buf;
 int left_buf;
 int right_buf;
-const int keyBuf = 2;
+const int keyBuf = 5;
 bool esc_down = false;
 bool enter_down = false;
 bool space_down = false;
@@ -218,19 +212,26 @@ void battle_keychecks() {
 
 	//Moving players (presently only handles one player):
 	if (up_down || down_down || right_down || left_down) {
+		vector<int> moves;
+		if (normal_keysdown['q']) { moves.push_back(0); }
+		if (normal_keysdown['w']) { moves.push_back(1); }
+		if (normal_keysdown['e']) { moves.push_back(2); }
+		if (normal_keysdown['r']) { moves.push_back(3); }
 		float dY = 0;
 		float dX = 0;
-		if (up_down || (up_buf && !normal_keysdown['q'])) { dY += .01f; }
-		if (down_down || (down_buf && !normal_keysdown['q'])) { dY -= .01f; }
-		if (right_down || (right_buf && !normal_keysdown['q'])) { dX += .01f; }
-		if (left_down || (left_buf && !normal_keysdown['q'])) { dX -= .01f; }
-		if (normal_keysdown['q']) {
-			currentbattle.fighters[0].position.y += dY;
-			currentbattle.fighters[0].position.x += dX;
+		if (up_down || (up_buf && !moves.size())) { dY += .01f; }
+		if (down_down || (down_buf && !moves.size())) { dY -= .01f; }
+		if (right_down || (right_buf && !moves.size())) { dX += .01f; }
+		if (left_down || (left_buf && !moves.size())) { dX -= .01f; }
+		
+
+		for (int i : moves) {
+			currentbattle.fighters[i].position.y += dY;
+			currentbattle.fighters[i].position.x += dX;
 		}
-		else if (dY != 0 || dX != 0) {
+		if (moves.size() == 0 && (dY != 0 || dX != 0)) {
 			float dir = atan2f(dY, dX);
-			currentbattle.fighters[0].turn(dir);
+			for (auto &x : currentbattle.fighters) { x.turn(dir); }
 		}
 	}
 
