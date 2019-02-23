@@ -3,11 +3,11 @@ The main function is rather short; the function 'renderscene' is the real 'main'
 function. It may be prudent to later change what it is called.*/
 
 #include "gl/glut.h"
-#include "Stopwatch.h" 
+#include "Stopwatch.h"
 #include "players.h"
 #include "battle.h"
 
-#include <Windows.h> 
+#include <Windows.h>
 #include <cmath>
 #include <stdlib.h>
 #include <string>
@@ -100,7 +100,7 @@ void renderScene(void) {
 	drawaxes();
 	//Draw Walls
 	int walliterator = 0;
-	while (walliterator < int(currentbattle.map.wallcount())) { 
+	while (walliterator < int(currentbattle.map.wallcount())) {
 		drawwall(currentbattle.map.getwalls()[walliterator]);
 		walliterator++;
 	}
