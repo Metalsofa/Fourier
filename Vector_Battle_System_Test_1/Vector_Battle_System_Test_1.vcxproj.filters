@@ -56,10 +56,19 @@
     <ClInclude Include="dep\camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="console.h">
+    <ClInclude Include="dep\console.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="controls.h">
+    <ClInclude Include="dep\controls.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dep\room.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dep\graphics.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dep\art.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
