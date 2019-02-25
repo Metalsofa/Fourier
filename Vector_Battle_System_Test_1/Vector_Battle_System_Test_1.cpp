@@ -182,6 +182,7 @@ int main(int argc, char **argv) {
 			filename.pop_back();
 		}
 		if (extention == "fgr") {
+			art_mode = true;
 			art = graphic(filename + '.' + extention);
 			current_graphic_name = filename;
 			battlefield_design_mode = true;
@@ -229,24 +230,32 @@ int main(int argc, char **argv) {
 	plyr1.position = point(6, 3);
 	plyr1.turn(0);
 	plyr1.tog = false;
+	plyr1.sprite = graphic("alpha.fgr");
+	plyr1.width = .4;
 	currentbattle.fighters.push_back(plyr1);
 
 	combatant plyr2;
 	plyr2.position = point(5, 4);
 	plyr2.turn(0);
 	plyr2.tog = false;
+	plyr2.sprite = graphic("beta.fgr");
+	plyr2.width = .4;
 	currentbattle.fighters.push_back(plyr2);
 
 	combatant plyr3;
 	plyr3.position = point(4, 3);
 	plyr3.turn(0);
 	plyr3.tog = false;
+	plyr3.sprite = graphic("gamma.fgr");
+	plyr3.width = .4;
 	currentbattle.fighters.push_back(plyr3);
 
 	combatant plyr4;
 	plyr4.position = point(5, 2);
 	plyr4.turn(0);
 	plyr4.tog = false;
+	plyr4.sprite = graphic("delta.fgr");
+	plyr4.width = .4;
 	currentbattle.fighters.push_back(plyr4);
 
 	//enter GLUT event processing cycle

@@ -36,6 +36,7 @@ private:
 
 	//Abilities also need to somehow appear
 public:
+	graphic sprite;
 	int Hitpoints(int comp)					{ return HP.component(comp); }
 	int MaxHitpoints(int comp)				{ return maxHP.component(comp); }
 	int HitpointsFraction(int comp)			{ return Hitpoints(comp) / MaxHitpoints(comp); }
@@ -53,13 +54,20 @@ public:
 //all players AND enemies are one of these
 class combatant {
 public:
+	combatant() {
+
+	}
+
 	bool tog;
 
 	player statblock;
 	point position;
 	point direction; //Direction as a unit vector
 	//Sprites
-	
+	graphic sprite;
+	float width;
+
+
 	//Each segment represents a hitbox; p1 is lower left, p2 is upper right.
 	vector<segment> hitboxes;
 

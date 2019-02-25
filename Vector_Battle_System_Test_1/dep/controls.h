@@ -3,8 +3,9 @@
 #ifndef __controls_h
 #define __controls_h
 
-bool key_mode = false; //Whether using keyboard controls (BETA)
 
+bool key_mode = false; //Whether using keyboard controls (BETA)
+void exterior_console();
 //Global Variables for if in overworld_mode
 ///I hear cactuses hurt to step on
 
@@ -74,6 +75,7 @@ void debug_keychecks() {
 
 	//Opening the console
 	if (normal_keysdown['`']) {
+		exterior_console();
 		//show_console = !show_console; //relic of a time long past
 		normal_keysdown['`'] = false;
 	}
