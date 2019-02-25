@@ -26,6 +26,7 @@ bool art_mode = false;
 bool overworld_mode = false;
 bool battle_mode = true;
 bool battlefield_design_mode = true;
+bool debug_mode = true;
 
 
 //Global settings (mostly debug)
@@ -78,6 +79,11 @@ void handle_controls() {
 		art_keychecks();
 	}
 
+	//Controls for debug mode
+	if (debug_mode) {
+		debug_keychecks();
+	}
+
 }
 
 //Contains all gl-code; there should be no need to have any outside of this function
@@ -99,16 +105,16 @@ void renderScene(void) {
 		drawwall(currentbattle.map.getwalls()[walliterator]);
 		walliterator++;
 	}
-	////Draw Combatants
-	for (int i = 0; i < currentbattle.fighters.size(); i++) {
-		draw_combatant(currentbattle.fighters[i]);
-	}
 
 	//Draw Spells
 
 	//Draw Rays
 	for (unsigned int i = 0; i < currentbattle.raycount(); i++) {
 		drawray(currentbattle.rays[i]);
+	}
+	////Draw Combatants
+	for (int i = 0; i < currentbattle.fighters.size(); i++) {
+		draw_combatant(currentbattle.fighters[i]);
 	}
 	////Debug-only drawing
 	//Debug: Show the number of objects
@@ -225,7 +231,7 @@ int main(int argc, char **argv) {
 	glutPassiveMotionFunc(PassiveMouseMove); //Callback for mouse movement with no button down
 
 
-	//Setup battle:
+	//Setup battle: Initialize combatants
 	combatant plyr1;
 	plyr1.position = point(6, 3);
 	plyr1.turn(0);

@@ -16,9 +16,6 @@ thing, to be called by the function that initiates battle */
 using namespace std;
 
 
-
-
-
 //This version of player is for overworld logic and battle initiation
 class player {
 private:

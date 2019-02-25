@@ -1,4 +1,5 @@
-
+/*This file contains a great many custom rendering functions that
+take advantage of freeGlut*/
 #ifndef __customGL_h
 #define __customGL_h
 
@@ -464,8 +465,14 @@ void drawray(ray &drawing_ray) {
 	}
 }
 
-void draw_combatant(combatant &fighter) { //DP: This is the coolest function I've ever read
-	//drawGraphic(fighter.sprite);
+void draw_combatant(combatant& fighter) { //DP: This is the coolest function I've ever read
+	glPushMatrix();
+	glTranslatef(fighter.position.x, fighter.position.y, 0.0f);
+	glRotatef(180 * fighter.direction.angle() / PI, 0, 0, 1);
+	glScalef(fighter.width, fighter.width, fighter.width);
+	glTranslatef(-0.5f, -0.5f, 0.0f);
+	drawGraphic(fighter.sprite);
+	glPopMatrix();
 	if (fighter.tog) {
 		glColor3f(1.0f, 1.0f, 1.0f);
 	} else {

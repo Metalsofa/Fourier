@@ -4,6 +4,8 @@ In theory, nothing that the player will need during gameplay should be in here.*
 #ifndef __console_h
 #define __console_h
 
+#include <string>
+
 //Global Variables for the console.
 /*NOTE: Some of these go unusied right now. May be subject to future cleanup.*/
 bool show_console = false;
