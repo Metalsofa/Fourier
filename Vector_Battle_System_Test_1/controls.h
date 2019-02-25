@@ -95,9 +95,9 @@ void battlefield_design_keychecks() {
 	}
 
 	//Entering/leaving 'key_mode'
-	if (normal_keysdown['k']) {
+	if (normal_keysdown['0']) {
 		key_mode = !key_mode;
-		normal_keysdown['k'] = false;
+		normal_keysdown['0'] = false;
 	}
 
 	//Controls based on design function
@@ -149,9 +149,13 @@ void battlefield_design_keychecks() {
 		}
 		else {
 			if (normal_keysdown[' ']) {
-				ray new_ray(colorfromID(rain++ % 12 + 1), currentbattle.fighters[0].position, currentbattle.fighters[0].position + currentbattle.fighters[0].direction, 2.0f,
-					6.0f, 2);
-				currentbattle.spawn_ray(new_ray);
+				for (combatant& b : currentbattle.fighters) {
+					if (b.tog) {
+						ray new_ray(colorfromID(rain++ % 12 + 1), b.position, b.position + b.direction, 2.0f,
+							6.0f, 2);
+						currentbattle.spawn_ray(new_ray);
+					}
+				}
 				normal_keysdown[' '] = false;
 			}
 		}
