@@ -406,6 +406,21 @@ public:
 		}
 		encrypt_and_overwrite(lines, filename, "The Doors of Perception");
 	}
+
+	//Translate this graphic into a string
+	string filestring() {
+		vector<string> sublines;
+		for (unsigned int i = 0; i < pieces.size(); i++) {
+			sublines.push_back(pieces[i].cryptogram());
+		}
+		string rets = "{\n";
+		for (unsigned int i = 0; i < sublines.size(); i++) {
+			rets += "\t\t" + sublines[i] + ";\n";
+		}
+		rets.push_back('\t');
+		rets.push_back('}');
+		return rets;
+	}
 };
 
 /*Structures multiple graphics into an animated sprite*/
@@ -439,6 +454,24 @@ public:
 			}
 		}
 	}
+
+	//Translate this animation to an (unencrypted) string
+	string filestring() {
+		vector<string> graphica;
+		for (unsigned int i = 0; i < frames.size(); i++) {
+			graphica.push_back(frames[i].filestring());
+		}
+		string rets = "{\n";
+		for (unsigned int i = 0; i < graphica.size(); i++) {
+			rets += "\t" + graphica[i] + '\n';
+		}
+		rets.push_back('}');
+	}
+
+	//Translate an unencrypted string into an animation
+	animation(string fstring) {
+
+	}
 };
 
 
@@ -447,6 +480,12 @@ class spritesheet {
 public:
 	map<string, animation> animations;
 	map<string, graphic> graphics;
+
+	//Translate this entire spritesheet into a big (unencrypted) string
+	string cryptogram() {
+		/*Uh oh I have no Idea how to iterate through maps*/
+		
+	}
 };
 
 
