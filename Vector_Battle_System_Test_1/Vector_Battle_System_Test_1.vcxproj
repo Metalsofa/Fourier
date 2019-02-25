@@ -161,16 +161,19 @@
     <ClCompile Include="Vector_Battle_System_Test_1.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="console.h" />
-    <ClInclude Include="controls.h" />
+    <ClInclude Include="dep\art.h" />
+    <ClInclude Include="dep\graphics.h" />
     <ClInclude Include="dep\battle.h" />
     <ClInclude Include="dep\camera.h" />
+    <ClInclude Include="dep\console.h" />
+    <ClInclude Include="dep\controls.h" />
     <ClInclude Include="dep\fcolor.h" />
     <ClInclude Include="dep\crypt.h" />
     <ClInclude Include="dep\customGL.h" />
     <ClInclude Include="dep\geometry.h" />
     <ClInclude Include="dep\materials.h" />
     <ClInclude Include="dep\players.h" />
+    <ClInclude Include="dep\room.h" />
     <ClInclude Include="dep\spells.h" />
     <ClInclude Include="dep\stopwatch.h" />
     <ClInclude Include="dep\waves.h" />

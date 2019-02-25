@@ -4,6 +4,8 @@ function. It may be prudent to later change what it is called.*/
 
 #include "gl/glut.h"
 #include "Stopwatch.h"
+#include "graphics.h"
+#include "art.h"
 #include "players.h"
 
 #include <Windows.h>
@@ -32,19 +34,12 @@ bool show_ticks = false; ///Finally found those annoying cursor ticks and made a
 bool enable_persprot = false; ///fun: enable the user to rotate their perspective with the middle mouse button
 bool show_timer = false; ///Debug: Show the timer in the lower left
 
-//Global Variables for art mode
-bool show_layers = true; ///Art: Show the intuitive shape to explain what layer is being edited?
-bool show_dots = true; ///Art: Show the dots in the currently edited shape
-graphic art;
-int Gindex = 0;
-int dragdot = -1;
-string current_graphic_name;
-
 
 //Global stopwatch
 Stopwatch st;
 
 //Be careful; certain headers should only be included after global declaration
+#include "art.h"
 #include "battle.h"
 #include "console.h"
 #include "controls.h"
