@@ -478,6 +478,8 @@ public:
 //all players AND enemies are one of these
 class combatant {
 public:
+	bool tog;
+
 	player statblock;
 	point position;
 	point direction; //Direction as a unit vector

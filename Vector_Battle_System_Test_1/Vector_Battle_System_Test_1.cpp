@@ -233,21 +233,25 @@ int main(int argc, char **argv) {
 	combatant plyr1;
 	plyr1.position = point(6, 3);
 	plyr1.turn(0);
+	plyr1.tog = false;
 	currentbattle.fighters.push_back(plyr1);
 
 	combatant plyr2;
 	plyr2.position = point(5, 4);
 	plyr2.turn(0);
+	plyr2.tog = false;
 	currentbattle.fighters.push_back(plyr2);
 
 	combatant plyr3;
 	plyr3.position = point(4, 3);
 	plyr3.turn(0);
+	plyr3.tog = false;
 	currentbattle.fighters.push_back(plyr3);
 
 	combatant plyr4;
 	plyr4.position = point(5, 2);
 	plyr4.turn(0);
+	plyr4.tog = false;
 	currentbattle.fighters.push_back(plyr4);
 
 	//enter GLUT event processing cycle

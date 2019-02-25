@@ -205,33 +205,36 @@ void art_keychecks() {
 void battle_keychecks() {
 
 	//Handle key-depression buffer decrement
-	if (up_buf && !up_down) { up_buf--; }
-	if (down_buf && !down_down) { down_buf--; }
-	if (left_buf && !left_down) { left_buf--; }
-	if (right_buf && !right_down) { right_buf--; }
+	if (up_buf && !normal_keysdown['i']) { up_buf--; }
+	if (down_buf && !normal_keysdown['k']) { down_buf--; }
+	if (left_buf && !normal_keysdown['j']) { left_buf--; }
+	if (right_buf && !normal_keysdown['l']) { right_buf--; }
 
 	//Moving players (presently only handles one player):
-	if (up_down || down_down || right_down || left_down) {
-		vector<int> moves;
-		if (normal_keysdown['q']) { moves.push_back(0); }
-		if (normal_keysdown['w']) { moves.push_back(1); }
-		if (normal_keysdown['e']) { moves.push_back(2); }
-		if (normal_keysdown['r']) { moves.push_back(3); }
-		float dY = 0;
-		float dX = 0;
-		if (up_down || (up_buf && !moves.size())) { dY += .01f; }
-		if (down_down || (down_buf && !moves.size())) { dY -= .01f; }
-		if (right_down || (right_buf && !moves.size())) { dX += .01f; }
-		if (left_down || (left_buf && !moves.size())) { dX -= .01f; }
-		
-
-		for (int i : moves) {
-			currentbattle.fighters[i].position.y += dY;
-			currentbattle.fighters[i].position.x += dX;
+	//
+	float dY = 0;
+	float dX = 0;
+	if (normal_keysdown['w']) { dY += .01f; }
+	if (normal_keysdown['a']) { dX -= .01f; }
+	if (normal_keysdown['s']) { dY -= .01f; }
+	if (normal_keysdown['d']) { dX += .01f; }
+	for (combatant& x : currentbattle.fighters) {
+		if (x.tog) {
+			x.position.y += dY;
+			x.position.x += dX;
 		}
-		if (moves.size() == 0 && (dY != 0 || dX != 0)) {
+	}
+	if (normal_keysdown['i'] || normal_keysdown['j'] || normal_keysdown['k'] || normal_keysdown['l']) {
+		dY = dX = 0;
+		if (normal_keysdown['i'] || up_buf) { dY += .01f; }
+		if (normal_keysdown['k'] || down_buf) { dY -= .01f; }
+		if (normal_keysdown['l'] || right_buf) { dX += .01f; }
+		if (normal_keysdown['j'] || left_buf) { dX -= .01f; }
+		if (dY != 0 || dX != 0) {
 			float dir = atan2f(dY, dX);
-			for (auto &x : currentbattle.fighters) { x.turn(dir); }
+			for (combatant &x : currentbattle.fighters) { 
+				if (x.tog) { x.turn(dir); }
+			}
 		}
 	}
 
@@ -256,6 +259,18 @@ void ProcessNormalKeys(unsigned char key, int x, int y) {
 		enter_down = true;
 	if (key == 8)
 		backspace_down = true;
+	if (key == 'i') {
+		up_buf = keyBuf;
+	} else if (key == 'j') {
+		left_buf = keyBuf;
+	} else if (key == 'k') {
+		down_buf = keyBuf;
+	} else if (key == 'l') {
+		right_buf = keyBuf;
+	}
+	if (key >= '1' && key <= '4') {
+		currentbattle.fighters[key - '1'].tog = !(currentbattle.fighters[key - '1'].tog);
+	}
 	normal_keysdown[key] = true;
 }
 
@@ -276,19 +291,15 @@ void ReleaseNormalKeys(unsigned char key, int x, int y) {
 void ProcessSpecialKeys(int key, int x, int y) {
 	switch (key) {
 	case GLUT_KEY_UP:
-		up_buf = keyBuf;
 		up_down = true;
 		break;
 	case GLUT_KEY_DOWN:
-		down_buf = keyBuf;
 		down_down = true;
 		break;
 	case GLUT_KEY_RIGHT:
-		right_buf = keyBuf;
 		right_down = true;
 		break;
 	case GLUT_KEY_LEFT:
-		left_buf = keyBuf;
 		left_down = true;
 		break;
 	}
