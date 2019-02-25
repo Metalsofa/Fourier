@@ -332,6 +332,12 @@ void drawshape(shape &obj) {
 	glEnd();
 }
 
+void drawGraphic(graphic& obj) {
+	for (shape& s : obj.pieces) {
+		drawshape(s);
+	}
+}
+
 void drawcursor(cursor& curse) {
 	glLineWidth(1.0f);
 	//Draw the mouse-locator lines
@@ -459,6 +465,7 @@ void drawray(ray &drawing_ray) {
 }
 
 void draw_combatant(combatant &fighter) { //DP: This is the coolest function I've ever read
+	//drawGraphic(fighter.sprite);
 	if (fighter.tog) {
 		glColor3f(1.0f, 1.0f, 1.0f);
 	} else {
