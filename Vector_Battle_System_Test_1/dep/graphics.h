@@ -454,7 +454,6 @@ public:
 			}
 		}
 	}
-
 	//Translate this animation to an (unencrypted) string
 	string filestring() {
 		vector<string> graphica;
