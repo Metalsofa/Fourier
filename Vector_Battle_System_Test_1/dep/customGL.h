@@ -333,9 +333,7 @@ void drawshape(shape &obj) {
 }
 
 void drawGraphic(graphic& obj) {
-	for (shape& s : obj.pieces) {
-		drawshape(s);
-	}
+	for (shape& s : obj.pieces) { drawshape(s);}
 }
 
 void drawcursor(cursor& curse) {
