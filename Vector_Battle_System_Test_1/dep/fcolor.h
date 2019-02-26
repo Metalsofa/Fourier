@@ -42,7 +42,7 @@ public:
 		caplevels();
 	}
 	//Accepted components are 'r', 'g', 'b', and 'a'.
-	float get_level(char component) {
+	float getLevel(char component) {
 		if (component == 'r')
 			return R;
 		if (component == 'g')
@@ -54,7 +54,7 @@ public:
 		return A;
 	}
 	//Accepted components are 'r', 'g', 'b', and 'a'.
-	void set_level(char component, float level) {
+	void setLevel(char component, float level) {
 		if (component == 'r')
 			R = level;
 		if (component == 'g')
@@ -66,7 +66,7 @@ public:
 		caplevels();
 	}
 	//Accepted components are 'r', 'g', 'b', and 'a'.
-	void alter_level(char component, float level) {
+	void alterLevel(char component, float level) {
 		if (component == 'r')
 			R += level;
 		if (component == 'g')
@@ -85,13 +85,13 @@ public:
 
 };
 
-fcolor fcolor_inverse(fcolor& col) { //DP: Pass by reference?
+fcolor fcolorInverse(fcolor& col) { //DP: Pass by reference?
 	col.invert();
 	return col;
 }
 
 //This function is presently incomplete
-fcolor fcolor_fromHSV(float hue, float saturation, float value) {
+fcolor fcolorFromHSV(float hue, float saturation, float value) {
 	fcolor col;
 	//Incomplete
 	return col;

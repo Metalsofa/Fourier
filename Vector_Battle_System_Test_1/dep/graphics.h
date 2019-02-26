@@ -20,10 +20,10 @@ public:
 	int som;
 	int emo;
 	int cog;
-	metastat(int somatic_value, int emotional_value, int cognitive_value) {
-		som = somatic_value;
-		emo = emotional_value;
-		cog = cognitive_value;
+	metastat(int somaticValue, int emotionalValue, int cognitiveValue) {
+		som = somaticValue;
+		emo = emotionalValue;
+		cog = cognitiveValue;
 	}
 
 	metastat() {
@@ -32,10 +32,10 @@ public:
 		cog = 0;
 	}
 
-	void define(int new_som, int new_emo, int new_cog) {
-		som = new_som;
-		emo = new_emo;
-		cog = new_cog;
+	void define(int newSom, int newEmo, int newCog) {
+		som = newSom;
+		emo = newEmo;
+		cog = newCog;
 	}
 
 	//Returns the sum of all stat components
@@ -77,7 +77,7 @@ public:
 	metastat color;
 	float opacity;
 	int mode;
-	float line_thickness;
+	float lineThickness;
 
 	//Returns the shape's encrypted string
 	string cryptogram() {
@@ -100,7 +100,7 @@ public:
 		translation += to_string(color.cog) + " ";
 		translation += to_string(opacity) + " ";
 		translation += to_string(mode) + " ";
-		translation += to_string(line_thickness) + " ";
+		translation += to_string(lineThickness) + " ";
 		return translation;
 		//DP: return translation + " "
 			//+ to_string(color.som) + " "
@@ -108,7 +108,7 @@ public:
 			//+ to_string(color.cog) + " "
 			//+ to_string(opacity) + " "
 			//+ to_string(mode) + " "
-			//+ to_string(line_thickness) + " ";
+			//+ to_string(lineThickness) + " ";
 	}
 
 	//Write this shape's contents to a text file
@@ -127,8 +127,8 @@ public:
 		translation[0] += to_string(color.cog) + " ";
 		translation[0] += to_string(opacity) + " ";
 		translation[0] += to_string(mode) + " ";
-		translation[0] += to_string(line_thickness) + " ";
-		encrypt_and_overwrite(translation, filename, "The Doors of Perception");
+		translation[0] += to_string(lineThickness) + " ";
+		encryptAndOverwrite(translation, filename, "The Doors of Perception");
 	}
 
 	//Default constructor
@@ -136,7 +136,7 @@ public:
 		color = metastat(60, 60, 60);
 		opacity = 1.0f;
 		mode = 5;
-		line_thickness = 1.0f;
+		lineThickness = 1.0f;
 	}
 
 	//Initialize a shape by reading it from a string
@@ -157,16 +157,16 @@ public:
 		reader >> opacity;
 		///Extract mode
 		reader >> mode;
-		///Extract line_thickness
-		reader >> line_thickness;
+		///Extract lineThickness
+		reader >> lineThickness;
 	}
 
 	//Initialize a shape by reading it from a file, telling it where to begin reading
 	shape(string filename, int begin) { //DP: Pass string by ref, repetitive with func above
-		vector<string> shape_contents = unencrypted_contents(filename, "The Doors of Perception");
-		if (shape_contents.size() >= 1) {
+		vector<string> shapeContents = unencryptedContents(filename, "The Doors of Perception");
+		if (shapeContents.size() >= 1) {
 			///Container 0: vertices
-			stringstream reader(shape_contents[begin]);
+			stringstream reader(shapeContents[begin]);
 			int vertexcount;
 			reader >> vertexcount;
 			for (int j = 0; j < vertexcount; j++) {//DP: Might want to declare x and y outside loop
@@ -181,32 +181,32 @@ public:
 			reader >> opacity;
 			///Extract mode
 			reader >> mode;
-			///Extract line_thickness
-			reader >> line_thickness;
+			///Extract lineThickness
+			reader >> lineThickness;
 		}
 	}
 	//Translate every vertex relative to the origin
-	void set_origin(point org) {
+	void setOrigin(point org) {
 		for (int i = 0; i < vertices.size(); i++) {
 			vertices[i] = difference(vertices[i], org);
 		}
 	}
 	//Scale this shape around the origin
-	void rescale(float scaling_factor) {
+	void rescale(float scalingFactor) {
 		for (unsigned long i = 0; i < vertices.size(); i++) {
-			vertices[i] *= scaling_factor;
+			vertices[i] *= scalingFactor;
 		}
 	}
 	//Scale this shape strictly in the x-dimension around the origin
-	void rescale_x(float scaling_factor) {
+	void rescaleX(float scalingFactor) {
 		for (unsigned long i = 0; i < vertices.size(); i++) {
-			vertices[i].x *= scaling_factor;
+			vertices[i].x *= scalingFactor;
 		}
 	}
 	//Scale this shape strictly in the y-dimension around the origin
-	void rescale_y(float scaling_factor) {
+	void rescaleY(float scalingFactor) {
 		for (unsigned long i = 0; i < vertices.size(); i++) {
-			vertices[i].y *= scaling_factor;
+			vertices[i].y *= scalingFactor;
 		}
 	}
 	//Returns the diagonally-spanning segment for this shape
@@ -269,33 +269,33 @@ public:
 	int delay = 0; //Optional member, only useful if this graphic is in an animation.
 
 	//Set the origin for this graphic
-	void set_origin(point org) { //DP: Pass by ref?
+	void setOrigin(point org) { //DP: Pass by ref?
 		for (int i = 0; i < pieces.size(); i++) {
-			pieces[i].set_origin(org);
+			pieces[i].setOrigin(org);
 		}
 	}
 
 	//Rescale this graphic about the origin 
-	void rescale(float scaling_factor) {
+	void rescale(float scalingFactor) {
 		//Iterate through this graphic's component shapes and rescale each one
 		for (unsigned long i = 0; i < pieces.size(); i++) {
-			pieces[i].rescale(scaling_factor);
+			pieces[i].rescale(scalingFactor);
 		}
 	}
 
 	//Rescale this graphic only in the x-dimension about the origin
-	void rescale_x(float scaling_factor) {
+	void rescaleX(float scalingFactor) {
 		//Iterate through this graphic's component shapes and rescale each one
 		for (unsigned long i = 0; i < pieces.size(); i++) {
-			pieces[i].rescale_x(scaling_factor);
+			pieces[i].rescaleX(scalingFactor);
 		}
 	}
 
 	//Rescale this graphic only in the y-dimension about the origin
-	void rescale_y(float scaling_factor) {
+	void rescaleY(float scalingFactor) {
 		//Iterate through this graphic's component shapes and rescale each one
 		for (unsigned long i = 0; i < pieces.size(); i++) {
-			pieces[i].rescale_y(scaling_factor);
+			pieces[i].rescaleY(scalingFactor);
 		}
 	}
 
@@ -331,56 +331,56 @@ public:
 	//Squeezes this graphic between the lines y = 0 and y = 1, making it the standard width for one of these graphics
 	void standardize() {
 		//Make this graphic flush with the x and y axes
-		set_origin(bounds().p1);
+		setOrigin(bounds().p1);
 		//Rescale this graphic to be flush with y = 1
 		rescale(1 / (bounds().p2.x));
 	}
 
 	//Fit this object to a new bounding box, breaking aspect ratio as neccessary
-	void fit_stretch(segment new_bounds) {
+	void fitStretch(segment newBounds) {
 		//These calculatoins all work best from the origin point
 		standardize();
 		//Rescale horizontally
-		rescale_x(new_bounds.p2.x);
+		rescaleX(newBounds.p2.x);
 		//Rescale vertically
-		rescale_y(new_bounds.p2.y);
-		set_origin(new_bounds.p1 * -1.0f);
+		rescaleY(newBounds.p2.y);
+		setOrigin(newBounds.p1 * -1.0f);
 	}
 
 	//Fit this object within a new bounding box without breaking the aspect ratio
-	void fit_within(segment new_bounds) {
+	void fitWithin(segment newBounds) {
 		//These calculatoins all work best from the origin point
 		standardize();
 		//Rescale to fit with x
-		rescale(new_bounds.p2.x - new_bounds.p1.x);
+		rescale(newBounds.p2.x - newBounds.p1.x);
 		//If it's too tall,
-		if (bounds().height() > new_bounds.height()) {
+		if (bounds().height() > newBounds.height()) {
 			//Rescale rationally to correct height
-			rescale(new_bounds.height() / bounds().height());
+			rescale(newBounds.height() / bounds().height());
 		}
 		//Move the object to where it goes
 		//First, let the object's origin be the center of its bounding box
-		set_origin(bounds().midpoint());
+		setOrigin(bounds().midpoint());
 		//Finally, move the graphic to where it belongs
-		set_origin(new_bounds.midpoint() * -1.0f);
+		setOrigin(newBounds.midpoint() * -1.0f);
 	}
 
 	//Fit this object to fill a new bounding box without breaking the aspect ratio
-	void fit_without(segment new_bounds) {
+	void fitWithout(segment newBounds) {
 		//These calculatoins all work best from the origin point
 		standardize();
 		//Rescale to fit with x
-		rescale(new_bounds.p2.x - new_bounds.p1.x);
+		rescale(newBounds.p2.x - newBounds.p1.x);
 		//If it isn't tall enough,
-		if (bounds().height() < new_bounds.height()) {
+		if (bounds().height() < newBounds.height()) {
 			//Rescale rationally to correct height
-			rescale(new_bounds.height() / bounds().height());
+			rescale(newBounds.height() / bounds().height());
 		}
 		//Move the object to where it goes
 		//First, let the object's origin be the center of its bounding box
-		set_origin(bounds().midpoint());
+		setOrigin(bounds().midpoint());
 		//Finally, move the graphic to where it belongs
-		set_origin(new_bounds.midpoint() * -1.0f);
+		setOrigin(newBounds.midpoint() * -1.0f);
 	}
 
 	//Default constructor
@@ -390,7 +390,7 @@ public:
 
 	//Initialize this graphic from a file
 	graphic(string filename) {  //DP: Pass by ref?
-		vector<string> contents = unencrypted_contents(filename, "The Doors of Perception");
+		vector<string> contents = unencryptedContents(filename, "The Doors of Perception");
 		if (contents.size() > 0) {//DP: Don't need the if statement
 			for (string line : contents) {
 				pieces.emplace_back(shape(line));
@@ -404,7 +404,7 @@ public:
 		for (shape piece : pieces) {
 			lines.emplace_back(piece.cryptogram());
 		}
-		encrypt_and_overwrite(lines, filename, "The Doors of Perception");
+		encryptAndOverwrite(lines, filename, "The Doors of Perception");
 	}
 
 	//Translate this graphic into a string

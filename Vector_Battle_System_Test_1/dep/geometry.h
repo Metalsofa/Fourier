@@ -178,7 +178,7 @@ point rotate90(point poi) {//DP: Again, no need to create a var
 	return pot;
 }
 
-point point_sum(vector<point> &points) {
+point pointSum(vector<point> &points) {
 	point result = point(0.0f,0.0f);
 	for (point bit : points) {
 		result = combine(result, bit);
@@ -257,7 +257,7 @@ segment rotate90about(int pointID, segment& seg) { //DP: pass by ref
 
 }
 
-segment equilateral_bisector(segment seg) { //Bisector protrudes from left, if p1 is bottom and p2 is top DP: pass by ref 
+segment equilateralBisector(segment seg) { //Bisector protrudes from left, if p1 is bottom and p2 is top DP: pass by ref 
 	segment perp;
 	perp.p1 = seg.midpoint();
 	point diffp = difference(perp.p2, perp.p1);
@@ -324,10 +324,10 @@ bool isintersect(segment& sega, segment& segb) { //DP: Pass by reference?
 
 
 bool isperpintersect(point p, segment v) {//DP: pass by ref 
-	point diff_vp = difference(v.p1, p);
-	point diff_vv = difference(v.p2, v.p1);
-	float numerator = dotproduct(diff_vp, diff_vv);
-	float denominator = dotproduct(diff_vv, diff_vv);
+	point diffVp = difference(v.p1, p);
+	point diffVv = difference(v.p2, v.p1);
+	float numerator = dotproduct(diffVp, diffVv);
+	float denominator = dotproduct(diffVv, diffVv);
 	float t = -numerator / denominator;
 	if (0 <= t && t <= 1)
 		return true;
@@ -337,10 +337,10 @@ bool isperpintersect(point p, segment v) {//DP: pass by ref
 }
 
 float distancetoline(point p, segment v) { //DP: pass by ref 
-	point diff_pv = difference(v.p1, p);
-	point diff_vv = difference(v.p2, v.p1);
-	float numerator = abs(flatcrossproduct(diff_vv, diff_pv));
-	float denominator = diff_vv.magnitude();
+	point diffPv = difference(v.p1, p);
+	point diffVv = difference(v.p2, v.p1);
+	float numerator = abs(flatcrossproduct(diffVv, diffPv));
+	float denominator = diffVv.magnitude();
 	float distance = numerator / denominator;
 	return distance;
 }
@@ -377,7 +377,7 @@ point reflection(point &dot, segment &mirror) { //DP: Don't have to create all t
 
 /*Returns the appropriate reflective bisector at a given intersection that reflects an incedent ray as if
 it reflected at that corner, given a point that lies on the incedent ray.*/
-segment reflective_bisector(point &dot, segment &sega, segment &segb) {
+segment reflectiveBisector(point &dot, segment &sega, segment &segb) {
 	point corner = intersection(sega, segb);
 	point A = sega.p1;
 	point B = segb.p1;
@@ -403,36 +403,36 @@ segment reflective_bisector(point &dot, segment &sega, segment &segb) {
 		angleC += PI * 2.0f;
 	if (angleC > PI)
 		angleC -= PI;
-	float bisector_angle_1 = mean(angleA, angleB);
-	bool use_angle1 = !between(angleA, angleC, angleB);
+	float bisectorAngle1 = mean(angleA, angleB);
+	bool useAngle1 = !between(angleA, angleC, angleB);
 	angleB += PI;
 	if (angleB > PI * 2.0f)
 		angleB -= PI * 2.0f;
-	float bisector_angle_2 = mean(angleA, angleB);
-	if (bisector_angle_1 > PI)
-		bisector_angle_1 -= PI;
-	if (bisector_angle_2 > PI)
-		bisector_angle_2 -= PI;
-	float diff1 = abs(bisector_angle_1 - angleC);
-	float diff2 = abs(bisector_angle_2 - angleC);
-	float proper_angle;
+	float bisectorAngle2 = mean(angleA, angleB);
+	if (bisectorAngle1 > PI)
+		bisectorAngle1 -= PI;
+	if (bisectorAngle2 > PI)
+		bisectorAngle2 -= PI;
+	float diff1 = abs(bisectorAngle1 - angleC);
+	float diff2 = abs(bisectorAngle2 - angleC);
+	float properAngle;
 	if (diff1 > diff2)
-		proper_angle = bisector_angle_1;
+		properAngle = bisectorAngle1;
 	else
-		proper_angle = bisector_angle_2;
-	//DP: proper_angle = (diff1>diff2)? bisector_angle_1: bisector_angle_2;
+		properAngle = bisectorAngle2;
+	//DP: properAngle = (diff1>diff2)? bisectorAngle1: bisectorAngle2;
 	//New logic
-	if (use_angle1)
-		proper_angle = bisector_angle_1;
+	if (useAngle1)
+		properAngle = bisectorAngle1;
 	else
-		proper_angle = bisector_angle_2;
-	//DP: proper_angle = (use_angle1)? bisector_angle_1: bisector_angle_2;
-	point bisector_unit = unitfromangle(proper_angle);
-	point bisector_p1 = bisector_unit;
-	point bisector_p2 = scalarproduct(bisector_unit, -1.0f);
-	bisector_p1 = combine(bisector_p1, corner);
-	bisector_p2 = combine(bisector_p2, corner);
-	segment bisector(bisector_p1, bisector_p2);
+		properAngle = bisectorAngle2;
+	//DP: properAngle = (useAngle1)? bisectorAngle1: bisectorAngle2;
+	point bisectorUnit = unitfromangle(properAngle);
+	point bisectorP1 = bisectorUnit;
+	point bisectorP2 = scalarproduct(bisectorUnit, -1.0f);
+	bisectorP1 = combine(bisectorP1, corner);
+	bisectorP2 = combine(bisectorP2, corner);
+	segment bisector(bisectorP1, bisectorP2);
 	return bisector;
 }
 
@@ -480,9 +480,9 @@ public:
 		point fermB;
 		point fermC;
 		point fermM;
-		point A = equilateral_bisector(s1()).p2;
-		point B = equilateral_bisector(s2()).p2;
-		point C = equilateral_bisector(s3()).p2;
+		point A = equilateralBisector(s1()).p2;
+		point B = equilateralBisector(s2()).p2;
+		point C = equilateralBisector(s3()).p2;
 		segment finder1;
 		finder1.define(p1, A);
 		segment finder2;

@@ -18,14 +18,14 @@ take advantage of freeGlut*/
 
 #include <string>
 
-enum discrete_hue {red, orange, yellow, lime, green, teal, cyan, indigo, blue, purple, magenta, violet};
+enum discreteHue {red, orange, yellow, lime, green, teal, cyan, indigo, blue, purple, magenta, violet};
 
 
 void setcolor(fcolor col) { //DP: Ref?
-	glColor4f(col.get_level('r'), col.get_level('g'), col.get_level('b'), col.get_level('a'));
+	glColor4f(col.getLevel('r'), col.getLevel('g'), col.getLevel('b'), col.getLevel('a'));
 }
 
-void draw_text(point location, string text) {//DP: Ref?
+void drawText(point location, string text) {//DP: Ref?
 	point dot = location;
 	glRasterPos2f(dot.x, dot.y);
 	for (unsigned int i = 0; i < text.size(); i++) { //glutBitmapString() https://stackoverflow.com/questions/544079/how-do-i-use-glutbitmapstring-in-c-to-draw-text-to-the-screen
@@ -50,23 +50,23 @@ void glVertexFermatPoint(triangle tri) {//DP: Ref?
 	glVertexPoint(tri.fermatpoint(0));
 }
 
-void draw_point(point dot, float size, bool label) {
+void drawPoint(point dot, float size, bool label) {
 	glPointSize(size);
 	glBegin(GL_POINTS);
 	glVertexPoint(dot);
 	glEnd();
 	if (label)
-		draw_text(dot, dot.label());
+		drawText(dot, dot.label());
 }
 
-void draw_segment(segment &seg, float &thickness, bool &endpoints, bool &labels) {
+void drawSegment(segment &seg, float &thickness, bool &endpoints, bool &labels) {
 	glLineWidth(thickness);
 	glBegin(GL_LINES);
 	glVertexSegment(seg);
 	glEnd();
 	if (endpoints) {
-		draw_point(seg.p1, thickness * 2.0f, labels);
-		draw_point(seg.p2, thickness * 2.0f, labels);
+		drawPoint(seg.p1, thickness * 2.0f, labels);
+		drawPoint(seg.p2, thickness * 2.0f, labels);
 	}
 
 }
@@ -110,24 +110,24 @@ void drawaxes() {
 	//Draw Grey Backdrop
 	glBegin(GL_QUADS);
 	glColor3f(.1f, .1f, .1f);
-	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(currentbattle.BoardWidth(), 0.0f, 0.0f);
-	glVertex3f(currentbattle.BoardWidth(), currentbattle.BoardHeight(), 0); glVertex3f(0, currentbattle.BoardHeight(), 0);
+	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(currentbattle.boardWidth(), 0.0f, 0.0f);
+	glVertex3f(currentbattle.boardWidth(), currentbattle.boardHeight(), 0); glVertex3f(0, currentbattle.boardHeight(), 0);
 	glEnd();
 
 	//Gridlines
 	glBegin(GL_LINES);
 	float tickiterator = 0.0f;
 	glColor3f(0.4f, 0.4f, 0.4f);
-	while (tickiterator < currentbattle.BoardWidth() - 1)
+	while (tickiterator < currentbattle.boardWidth() - 1)
 	{
 		tickiterator++;
-		glVertex3f(tickiterator, currentbattle.BoardHeight(), 0.0f); glVertex3f(tickiterator, 0.0f, 0.0f); //X along y
+		glVertex3f(tickiterator, currentbattle.boardHeight(), 0.0f); glVertex3f(tickiterator, 0.0f, 0.0f); //X along y
 		glVertex3f(tickiterator, 0.0f, 0.0f); glVertex3f(tickiterator, 0.0f, float(BoardDepth)); //X along Z
 	}
 	tickiterator = 0.0f;
-	while (tickiterator < currentbattle.BoardHeight() - 1) {
+	while (tickiterator < currentbattle.boardHeight() - 1) {
 		tickiterator++;
-		glVertex3f(currentbattle.BoardWidth(), tickiterator, 0.0f); glVertex3f(0.0f, tickiterator, 0.0f); //Y along x
+		glVertex3f(currentbattle.boardWidth(), tickiterator, 0.0f); glVertex3f(0.0f, tickiterator, 0.0f); //Y along x
 		glVertex3f(0.0f, tickiterator, float(BoardDepth)); glVertex3f(0.0f, tickiterator, 0.0f); //Y along z
 	}
 	glEnd();
@@ -135,16 +135,16 @@ void drawaxes() {
 	//White Border
 	glBegin(GL_LINE_STRIP);
 	//glColor3f(1, 1, 1);
-	glVertex3f(0, 0, 0); glVertex3f(currentbattle.BoardWidth(), 0, 0);
-	glVertex3f(currentbattle.BoardWidth(), currentbattle.BoardHeight(), 0); glVertex3f(0, currentbattle.BoardHeight(), 0);
+	glVertex3f(0, 0, 0); glVertex3f(currentbattle.boardWidth(), 0, 0);
+	glVertex3f(currentbattle.boardWidth(), currentbattle.boardHeight(), 0); glVertex3f(0, currentbattle.boardHeight(), 0);
 	glVertex3f(0, 0, 0);
 	glEnd();
 
 	glColor3f(1, 1, 1);
 }
 
-void draw_triangle(triangle &tri, bool filled, bool vertices, float pointsize, bool labels,
-	bool fermat_point) {
+void drawTriangle(triangle &tri, bool filled, bool vertices, float pointsize, bool labels,
+	bool fermatPoint) {
 	if (filled)
 		glBegin(GL_TRIANGLES);
 	else
@@ -155,17 +155,17 @@ void draw_triangle(triangle &tri, bool filled, bool vertices, float pointsize, b
 		glBegin(GL_POINTS);
 		glVertexTriangle(tri);
 		glEnd();
-		draw_point(tri.p1, pointsize, labels);
-		draw_point(tri.p2, pointsize, labels);
-		draw_point(tri.p3, pointsize, labels);
+		drawPoint(tri.p1, pointsize, labels);
+		drawPoint(tri.p2, pointsize, labels);
+		drawPoint(tri.p3, pointsize, labels);
 	}
-	if (fermat_point) {
-		draw_point(tri.fermatpoint(0),pointsize,labels);
+	if (fermatPoint) {
+		drawPoint(tri.fermatpoint(0),pointsize,labels);
 	}
 }
 
 //bounds.p1 is bottom-left, bounds.p2 is top-right.
-void draw_XYgrid(segment bounds, unsigned int levels) {
+void drawXYgrid(segment bounds, unsigned int levels) {
 	unsigned int level = 1;
 	while (level <= levels) {
 		glLineWidth(float(levels) - float(level) + 1.0f);
@@ -213,7 +213,7 @@ void draw_XYgrid(segment bounds, unsigned int levels) {
 
 //The following sections added after Feb 16 to clean up the main file
 
-void drawpoint(point &dot) {
+void drawPoint(point &dot) {
 	glColor3f(1, 1, 1);
 	glTranslatef(dot.x, dot.y, 0.0f);
 	glutSolidSphere(0.05, 10, 10);
@@ -239,36 +239,36 @@ but only if passed TRUE for the clamping of that bound.*/
 metastat colorfromID(int colorID) {
 	switch (colorID) {
 	case 0:
-		return cl_black;
+		return clBlack;
 	case 1:
-		return cl_red;
+		return clRed;
 		break;
 	case 2:
-		return cl_orange;
+		return clOrange;
 	case 3:
-		return cl_yellow;
+		return clYellow;
 	case 4:
-		return cl_lime;
+		return clLime;
 	case 5:
-		return cl_green;
+		return clGreen;
 	case 6:
-		return cl_teal;
+		return clTeal;
 	case 7:
-		return cl_cyan;
+		return clCyan;
 	case 8:
-		return cl_indigo;
+		return clIndigo;
 	case 9:
-		return cl_blue;
+		return clBlue;
 	case 10:
-		return cl_purple;
+		return clPurple;
 	case 11:
-		return cl_magenta;
+		return clMagenta;
 	case 12:
-		return cl_violet;
+		return clViolet;
 	case 13:
-		return cl_white;
+		return clWhite;
 	}
-	return cl_black;
+	return clBlack;
 }
 
 
@@ -276,7 +276,7 @@ metastat randomhue() {
 	int hueID = rand() % 12 + 1; //DP: Not good random, should seed random in main, I did it on line 1065 and also included time.h
 	return colorfromID(hueID);
 }
-void draw_wave(sinusoid &wave, float leftbound, float rightbound, int resolution, bool clamp_left, bool clamp_right) {
+void drawWave(sinusoid &wave, float leftbound, float rightbound, int resolution, bool clampLeft, bool clampRight) {
 	if (leftbound > rightbound) {
 		float temp = rightbound;
 		rightbound = leftbound;
@@ -290,18 +290,18 @@ void draw_wave(sinusoid &wave, float leftbound, float rightbound, int resolution
 	if (beginningoffset = spacing)
 		beginningoffset = 0;
 	glBegin(GL_LINE_STRIP);
-	glVertex2f(0.0f, (wave.eval(leftbound) * !clamp_left));
+	glVertex2f(0.0f, (wave.eval(leftbound) * !clampLeft));
 	for (int i = 0; i < nodes; i++) {
 		glVertex2f(float(i) * spacing + beginningoffset, wave.eval(leftbound + float(i) * spacing + beginningoffset));
 	}
-	glVertex2f(rightbound - leftbound, wave.eval(rightbound) * !clamp_right);
+	glVertex2f(rightbound - leftbound, wave.eval(rightbound) * !clampRight);
 	glEnd();
 }
 
 
 
-//Like draw_wave but for a Fourier series //Seems done to me. Haven't worked on it in a while
-void draw_series(vector<sinusoid> &series, float leftbound, float rightbound, int resolution, bool clamp_left, bool clamp_right) {
+//Like drawWave but for a Fourier series //Seems done to me. Haven't worked on it in a while
+void drawSeries(vector<sinusoid> &series, float leftbound, float rightbound, int resolution, bool clampLeft, bool clampRight) {
 	if (leftbound > rightbound) {
 		float temp = rightbound;
 		rightbound = leftbound;
@@ -315,17 +315,17 @@ void draw_series(vector<sinusoid> &series, float leftbound, float rightbound, in
 	if (beginningoffset = spacing)
 		beginningoffset = 0;
 	glBegin(GL_LINE_STRIP);
-	glVertex2f(0.0f, eval_series(series, leftbound) * !clamp_left);
+	glVertex2f(0.0f, evalSeries(series, leftbound) * !clampLeft);
 	for (int i = 0; i < nodes; i++) {
-		glVertex2f(float(i) * spacing + beginningoffset, eval_series(series, leftbound + float(i) * spacing + beginningoffset));
+		glVertex2f(float(i) * spacing + beginningoffset, evalSeries(series, leftbound + float(i) * spacing + beginningoffset));
 	}
-	glVertex2f(rightbound - leftbound, eval_series(series, rightbound) * !clamp_right);
+	glVertex2f(rightbound - leftbound, evalSeries(series, rightbound) * !clampRight);
 	glEnd();
 }
 
 void drawshape(shape &obj) {
 	setcolor(obj.color, obj.opacity);
-	glLineWidth(obj.line_thickness);
+	glLineWidth(obj.lineThickness);
 	glBegin(obj.mode);
 	for (int i = 0; i < obj.vertices.size(); i++) {
 		glVertex2f(obj.vertices[i].x, obj.vertices[i].y);
@@ -337,17 +337,17 @@ void drawGraphic(graphic& obj) {
 	for (shape& s : obj.pieces) { drawshape(s);}
 }
 
-void drawcursor(cursor& curse) {
+void drawCursor(cursor& curse) {
 	glLineWidth(1.0f);
 	//Draw the mouse-locator lines
-	if (show_ticks) {
+	if (showTicks) {
 		float ticksize = 0.2f;
 		glLineWidth(1.0f);
 		glBegin(GL_LINES);
 		glVertex2f(curse.Position.x, 0); glVertex2f(curse.Position.x, ticksize);
-		glVertex2f(curse.Position.x, currentbattle.BoardHeight()); glVertex2f(curse.Position.x, currentbattle.BoardHeight() - ticksize);
+		glVertex2f(curse.Position.x, currentbattle.boardHeight()); glVertex2f(curse.Position.x, currentbattle.boardHeight() - ticksize);
 		glVertex2f(0, curse.Position.y); glVertex2f(ticksize, curse.Position.y);
-		glVertex2f(currentbattle.BoardWidth(), curse.Position.y); glVertex2f(currentbattle.BoardWidth() - ticksize, curse.Position.y);
+		glVertex2f(currentbattle.boardWidth(), curse.Position.y); glVertex2f(currentbattle.boardWidth() - ticksize, curse.Position.y);
 		glEnd();
 	}
 	glColor3f(curse.Red(), curse.Green(), curse.Blue()); //OH THERE IT IS I FOUND THE CURSOR COLOR LINE FINALLY		//DP: YAY
@@ -360,15 +360,15 @@ void drawcursor(cursor& curse) {
 	glRotatef(curse.Rot * 180 / PI, 1, 0, 0); //Rotate #3
 	glBegin(GL_LINES);
 	glVertex2f(0, 0);
-	glVertex2f(curse.Size * cos(curse.Spread / 2), curse.Size * sin(curse.Spread / 2));
+	glVertex2f(curse.Size * cos(curse.spread / 2), curse.Size * sin(curse.spread / 2));
 	glVertex2f(0, 0);
-	glVertex2f(curse.Size * cos(curse.Spread / 2), curse.Size * -sin(curse.Spread / 2));
+	glVertex2f(curse.Size * cos(curse.spread / 2), curse.Size * -sin(curse.spread / 2));
 	///These lines make it look kind of like a cone, so I commented them out.
 	//glVertex3f(0, 0, 0);
-	//glVertex3f(curse.Size * cos(curse.Spread / 2), 0, curse.Size * -sin(curse.Spread / 2));
+	//glVertex3f(curse.Size * cos(curse.spread / 2), 0, curse.Size * -sin(curse.spread / 2));
 	//glVertex3f(0, 0, 0);
-	//glVertex3f(curse.Size * cos(curse.Spread / 2), 0, curse.Size * sin(curse.Spread / 2));
-	glVertex2f(0.0f, 0.0f); glVertex2f(0.8f * curse.Size / curse.Spread, 0.0f);
+	//glVertex3f(curse.Size * cos(curse.spread / 2), 0, curse.Size * sin(curse.spread / 2));
+	glVertex2f(0.0f, 0.0f); glVertex2f(0.8f * curse.Size / curse.spread, 0.0f);
 	glLoadIdentity();
 	glEnd();
 	glPopMatrix();
@@ -379,17 +379,17 @@ void drawcursor(cursor& curse) {
 void ClearScreen() { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
 
 //Takes a refrence to a wall and then draws it
-void drawwall(wall& drawing_wall) { //DP: Pass by reference?
-	glLineWidth(drawing_wall.material.thickness);
+void drawwall(wall& drawingWall) { //DP: Pass by reference?
+	glLineWidth(drawingWall.material.thickness);
 	glBegin(GL_LINES);
 	glColor4f(
-		drawing_wall.material.getRed(),
-		drawing_wall.material.getGreen(),
-		drawing_wall.material.getBlue(),
-		drawing_wall.material.getAlpha()
+		drawingWall.material.getRed(),
+		drawingWall.material.getGreen(),
+		drawingWall.material.getBlue(),
+		drawingWall.material.getAlpha()
 	);
-	glVertex2f(drawing_wall.getbody().p1.x, drawing_wall.getbody().p1.y);
-	glVertex2f(drawing_wall.getbody().p2.x, drawing_wall.getbody().p2.y);
+	glVertex2f(drawingWall.getbody().p1.x, drawingWall.getbody().p1.y);
+	glVertex2f(drawingWall.getbody().p2.x, drawingWall.getbody().p2.y);
 	glEnd();
 	glLineWidth(1.0f);
 }
@@ -401,11 +401,11 @@ void rendertext(float x, float y, float z, void *font, string text) { //DP: It m
 		glutBitmapCharacter(font, c);
 }
 */
-void drawray(ray &drawing_ray) {
-	glColor3f(drawing_ray.getRed(), drawing_ray.getGreen(), drawing_ray.getBlue());
-	glLineWidth(drawing_ray.getthickness());
+void drawray(ray &drawingRay) {
+	glColor3f(drawingRay.getRed(), drawingRay.getGreen(), drawingRay.getBlue());
+	glLineWidth(drawingRay.getthickness());
 	glBegin(GL_LINE_STRIP);
-	for (point dot : drawing_ray.getbits()) {
+	for (point dot : drawingRay.getbits()) {
 		glVertex2f(dot.x, dot.y);
 	}
 	glEnd();
@@ -414,31 +414,31 @@ void drawray(ray &drawing_ray) {
 	bool showjoints = false;
 	if (showjoints) {
 		unsigned int i = 1;
-		for (point dot : drawing_ray.getbits()) { //DP: if you are already using an index, it might be better to do what I put on line 420
-			drawpoint(dot);
-			glColor3f(drawing_ray.getRed(), drawing_ray.getGreen(), drawing_ray.getBlue());
+		for (point dot : drawingRay.getbits()) { //DP: if you are already using an index, it might be better to do what I put on line 420
+			drawPoint(dot);
+			glColor3f(drawingRay.getRed(), drawingRay.getGreen(), drawingRay.getBlue());
 			rendertext(dot, to_string(i));
 			i++;
 		}
-		/*for (unsigned int i = 1; i <= drawing_ray.getbits(); i++) {
-			drawpoint(drawing_ray.getbits()[i-1]);
-			glColor3f(drawing_ray.getRed(), drawing_ray.getGreen(), drawing_ray.getBlue());
-			rendertext(drawing_ray.getbits()[i - 1], to_string(i));
+		/*for (unsigned int i = 1; i <= drawingRay.getbits(); i++) {
+			drawPoint(drawingRay.getbits()[i-1]);
+			glColor3f(drawingRay.getRed(), drawingRay.getGreen(), drawingRay.getBlue());
+			rendertext(drawingRay.getbits()[i - 1], to_string(i));
 		}*/
 	}
 
 	//Draw Arrowhead
-	if (!drawing_ray.terminating && false) {
-		glTranslatef(drawing_ray.getbits()[0].x, drawing_ray.getbits()[0].y, 0.0f);
+	if (!drawingRay.terminating && false) {
+		glTranslatef(drawingRay.getbits()[0].x, drawingRay.getbits()[0].y, 0.0f);
 
-		glRotatef(atan2f(drawing_ray.movevector().y, drawing_ray.movevector().x) * 180 / PI, 0, 0, 1);
+		glRotatef(atan2f(drawingRay.movevector().y, drawingRay.movevector().x) * 180 / PI, 0, 0, 1);
 		glBegin(GL_POLYGON);
-		float arrow_width = 0.1f;
-		float arrow_height = 0.2f;
+		float arrowWidth = 0.1f;
+		float arrowHeight = 0.2f;
 		glVertex2f(0.0f, 0.0f);
-		glVertex2f(-arrow_height, arrow_width / 2.0f);
-		glVertex2f(-arrow_height * 0.5f, 0.0f);
-		glVertex2f(-arrow_height, -arrow_width / 2.0f);
+		glVertex2f(-arrowHeight, arrowWidth / 2.0f);
+		glVertex2f(-arrowHeight * 0.5f, 0.0f);
+		glVertex2f(-arrowHeight, -arrowWidth / 2.0f);
 		glEnd();
 	}
 	//Reset transformations
@@ -446,24 +446,24 @@ void drawray(ray &drawing_ray) {
 	definecamera();
 
 	//Draw tail sphere. This is really just for fun.
-	bool draw_tail_sphere = false;
-	if (draw_tail_sphere) {
-		float excesslength = drawing_ray.length() - drawing_ray.length_nominal();
+	bool drawTailSphere = false;
+	if (drawTailSphere) {
+		float excesslength = drawingRay.length() - drawingRay.lengthNominal();
 		float unborn = -excesslength;
 		if (unborn > 0) {
-			float desired_area = unborn * drawing_ray.getthickness() * 0.001f;
-			glTranslatef(drawing_ray.getbits().back().x, drawing_ray.getbits().back().y, 0);
-			point unitback = unitvector(difference(drawing_ray.getbits()[drawing_ray.getbits().size() - 2],
-				drawing_ray.getbits().back()));
+			float desiredArea = unborn * drawingRay.getthickness() * 0.001f;
+			glTranslatef(drawingRay.getbits().back().x, drawingRay.getbits().back().y, 0);
+			point unitback = unitvector(difference(drawingRay.getbits()[drawingRay.getbits().size() - 2],
+				drawingRay.getbits().back()));
 			glRotatef(unborn * 20, unitback.x, unitback.y, 0);
-			glutSolidSphere(sqrt(desired_area / PI), 10, 10);
+			glutSolidSphere(sqrt(desiredArea / PI), 10, 10);
 			glLoadIdentity();
 			definecamera();
 		}
 	}
 }
 
-void draw_combatant(combatant& fighter) { //DP: This is the coolest function I've ever read
+void drawCombatant(combatant& fighter) { //DP: This is the coolest function I've ever read
 	glPushMatrix();
 	glTranslatef(fighter.position.x, fighter.position.y, 0.0f);
 	glRotatef(180 * fighter.direction.angle() / PI, 0, 0, 1);
@@ -497,11 +497,11 @@ void draw_combatant(combatant& fighter) { //DP: This is the coolest function I'v
 
 //////////DEBUG/DESIGN ORIENTED STUFF/////////
 
-void draw_art_GUI() { //Idea I just had: Every player metastat caps at 255; WHITE is the optimum in any area		DP: Cool Idea
-	rendertext(point(0.0f, currentbattle.map.height + 0.5f), "ART MODE: " + current_graphic_name);
+void drawArtGUI() { //Idea I just had: Every player metastat caps at 255; WHITE is the optimum in any area		DP: Cool Idea
+	rendertext(point(0.0f, currentbattle.map.height + 0.5f), "ART MODE: " + currentGraphicName);
 	for (unsigned int i = 0; i < art.pieces.size(); i++) {
 		drawshape(art.pieces[i]);
-		if (show_dots && (i == Gindex)) {
+		if (showDots && (i == Gindex)) {
 			setcolor(inverse(art.pieces[i].color), 1.0f);
 			glLineWidth(2.0f);
 			glPointSize(5.0f);
@@ -516,9 +516,9 @@ void draw_art_GUI() { //Idea I just had: Every player metastat caps at 255; WHIT
 			}
 			glEnd();
 		}
-		if (show_layers) {
-			point lay_disp_pos(0.05f, 5.0f);
-			glTranslatef(lay_disp_pos.x + i * 0.1f, lay_disp_pos.y - i * 0.1f, 0.0f);
+		if (showLayers) {
+			point layDispPos(0.05f, 5.0f);
+			glTranslatef(layDispPos.x + i * 0.1f, layDispPos.y - i * 0.1f, 0.0f);
 			if (i == Gindex)
 				glColor3f(1.0f, 0.1f, 0.0f);
 			else
@@ -527,7 +527,7 @@ void draw_art_GUI() { //Idea I just had: Every player metastat caps at 255; WHIT
 			glVertex2f(0.0f, 0.0f);  glVertex2f(0.4f, 0.0f);
 			glVertex2f(0.4f, -0.4f); glVertex2f(0.0f, -0.4f);
 			glEnd();
-			glTranslatef(-lay_disp_pos.x - i * 0.1f, -lay_disp_pos.y + i * 0.1f, 0.0f);
+			glTranslatef(-layDispPos.x - i * 0.1f, -layDispPos.y + i * 0.1f, 0.0f);
 		}
 	}
 }

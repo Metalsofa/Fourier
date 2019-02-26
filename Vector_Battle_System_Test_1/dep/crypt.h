@@ -26,30 +26,30 @@ keyed vigenere cipher codebreaker program on the internet that could possible ha
 //Scrambling the alphabet now. Here's the old one: 
 //"0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz;:[]{}<>', .?/!@#$%^&*()-_=+|`~";
 //Now for the new one, which includes the characters \ and " :
-const string cipher_old_alphabet = //not for use
+const string cipherOldAlphabet = //not for use
 "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz;:[]{}<>', .?/!@#$%^&*()-_=+|`~";
-const string cipher_base_alphabet = //very tough to decode
+const string cipherBaseAlphabet = //very tough to decode
 "+L~A0|J`F9Ir8?/O!t@E#u$NhiP7nQRS^(K)-_s1v[B]{M}<C>', .%wG&Hxyz;:=T*U6VWXY\\ZD5abcde4f\"gj3klmo2pq";
 
 //Returns a shifted alphabet for the keyed vigenere cipher
-string alphabet_shift(char& new_firstletter, const string base_alphabet) {
-	string new_alphabet = base_alphabet;
-	char inifinity_preventer = base_alphabet[0];
+string alphabetShift(char& newFirstletter, const string baseAlphabet) {
+	string newAlphabet = baseAlphabet;
+	char infinityPreventer = baseAlphabet[0];
 	bool firsttry = true;
-	while (new_alphabet[0] != new_firstletter) {
-		if (new_alphabet[0] == inifinity_preventer && !firsttry) {
+	while (newAlphabet[0] != newFirstletter) {
+		if (newAlphabet[0] == infinityPreventer && !firsttry) {
 			break;
 		}
-		if (new_alphabet[0] == inifinity_preventer) {
+		if (newAlphabet[0] == infinityPreventer) {
 			firsttry = false;
 		}
-		new_alphabet = new_alphabet + new_alphabet[0];
-		new_alphabet.erase(new_alphabet.begin());
+		newAlphabet = newAlphabet + newAlphabet[0];
+		newAlphabet.erase(newAlphabet.begin());
 	}
-	return new_alphabet;
+	return newAlphabet;
 }
 
-int letter_index(char& letter, const string& alphabet) {
+int letterIndex(char& letter, const string& alphabet) {
 	unsigned int i = 0;
 	while (i < alphabet.size()) {
 		if (alphabet[i] == letter)
@@ -65,10 +65,10 @@ string encrypt(const string& message, const string& keyword) {
 	if (keyword == "")
 		return message;
 	for (char c : message) {
-		int letterindex = letter_index(c, cipher_base_alphabet);
+		int letterindex = letterIndex(c, cipherBaseAlphabet);
 		int keyletternum = int(i % keyword.size());
 		char keyletter = keyword[keyletternum];
-		string shiftebet = alphabet_shift(keyletter, cipher_base_alphabet);
+		string shiftebet = alphabetShift(keyletter, cipherBaseAlphabet);
 		char newletter = shiftebet[letterindex];
 		cipher = cipher + newletter;
 		i++;
@@ -76,7 +76,7 @@ string encrypt(const string& message, const string& keyword) {
 	return cipher;
 }
 
-string multi_encrypt(unsigned int depth,  string message, string keyword) {
+string multiEncrypt(unsigned int depth,  string message, string keyword) {
 	unsigned int i = 0;
 	if (keyword == "")
 		keyword = "0";
@@ -95,16 +95,16 @@ string unencrypt(string cryptogram, string keyword) {
 	for (char c : cryptogram) {
 		int keyletternum = int(i % keyword.size());
 		char keyletter = keyword[keyletternum];
-		string shiftebet = alphabet_shift(keyletter, cipher_base_alphabet);
-		int letterindex = letter_index(c, shiftebet);
-		char newletter = cipher_base_alphabet[letterindex];
+		string shiftebet = alphabetShift(keyletter, cipherBaseAlphabet);
+		int letterindex = letterIndex(c, shiftebet);
+		char newletter = cipherBaseAlphabet[letterindex];
 		message = message + newletter;
 		i++;
 	}
 	return message;
 }
 
-string multi_unencrypt(unsigned int depth, string cipher, string key) {
+string multiUnencrypt(unsigned int depth, string cipher, string key) {
 	unsigned int i = 0;
 	if (key == "")
 		key = "0";
@@ -116,7 +116,7 @@ string multi_unencrypt(unsigned int depth, string cipher, string key) {
 }
 
 //Takes a filename and returns a vector where each line is an uncrypted line from the file.
-vector<string> unencrypted_contents(string filename, string keyword) {
+vector<string> unencryptedContents(string filename, string keyword) {
 	ifstream textfile;
 	textfile.open(filename);
 	if (!textfile.good()) {
@@ -136,7 +136,7 @@ vector<string> unencrypted_contents(string filename, string keyword) {
 	return contents;
 }
 
-void encrypt_and_overwrite(vector<string>& contents, string& filename, string keyword) {
+void encryptAndOverwrite(vector<string>& contents, string& filename, string keyword) {
 	ofstream writefile;
 	writefile.open(filename, ios::trunc);
 	if (writefile.is_open()) {

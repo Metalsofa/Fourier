@@ -38,7 +38,7 @@ wave to get the corrected value. Default amplitude is 1 and default frequency is
 float squ(float x) { return (sin(x) / abs(sin(x))); }
 
 //Returns the nth sinusoid for the modulation of a square wave with amplitude 1 and frequency 1
-sinusoid squ_harm(int term, float amplitude, float frequency) {
+sinusoid squHarm(int term, float amplitude, float frequency) {
 	sinusoid ret;
 	ret.amplitude = (4.0f / PI) / (2.0f * term - 1.0f) * amplitude;
 	ret.frequency = float((2 * term - 1)) * frequency;
@@ -46,10 +46,10 @@ sinusoid squ_harm(int term, float amplitude, float frequency) {
 }
 
 //Returns a vector of sinusoids representing the fourier sine series for a square wave
-vector<sinusoid> squ_series(int terms, float amplitude, float frequency) {
+vector<sinusoid> squSeries(int terms, float amplitude, float frequency) {
 	vector<sinusoid> rets(0); //DP: What's the 0 for?
 	for (int n = 1; n <= terms; n++) {
-		sinusoid component = squ_harm(n, amplitude, frequency);
+		sinusoid component = squHarm(n, amplitude, frequency);
 		rets.push_back(component);
 	}
 	return rets;
@@ -59,7 +59,7 @@ vector<sinusoid> squ_series(int terms, float amplitude, float frequency) {
 float saw(float x) { return fmod((x / PI), 1.0f); }
 
 //Returns the nth sinusoid for the modulation of a saw wave with amplitude 1 and frequency 1
-sinusoid saw_harm(int term, float amplitude, float frequency) {
+sinusoid sawHarm(int term, float amplitude, float frequency) {
 	sinusoid ret;
 	ret.amplitude = -(2.0f / PI) * pow(-1.0f, term) / term * amplitude;
 	ret.frequency = term * frequency;
@@ -67,10 +67,10 @@ sinusoid saw_harm(int term, float amplitude, float frequency) {
 }
 
 //Returns a vector of sinusoids representing the fourier sine series for a saw wave
-vector<sinusoid> saw_series(int terms, float amplitude, float frequency) {
+vector<sinusoid> sawSeries(int terms, float amplitude, float frequency) {
 	vector<sinusoid> rets(0);
 	for (int n = 1; n <= terms; n++) {
-		sinusoid component = saw_harm(n, amplitude, frequency);
+		sinusoid component = sawHarm(n, amplitude, frequency);
 		rets.push_back(component);
 	}
 	return rets;
@@ -98,7 +98,7 @@ vector<sinusoid> tri_series(int terms, float amplitude, float frequency) {
 }
 
 //Evaluate a series (vector) of sinusoids at a given x
-float eval_series(vector<sinusoid> &series, float x) {
+float evalSeries(vector<sinusoid> &series, float x) {
 	float ret = 0.0f;
 	for (unsigned int n = 0; n < series.size(); n++) {
 		ret += series[n].eval(x);
@@ -107,10 +107,10 @@ float eval_series(vector<sinusoid> &series, float x) {
 }
 
 //Returns the note frequency of a piano note given its index
-float note_frequency(int key) { return pow(pow(2.0f, 1.0f / 12.0f), float(key - 49)) * 440.0f; }
+float noteFrequency(int key) { return pow(pow(2.0f, 1.0f / 12.0f), float(key - 49)) * 440.0f; }
 
 //Returns the piano note key index corresponding to a particular frequency
-int piano_key(float frequency) { return int(round(12 * log2(frequency / 440.0f) + 49)); }
+int pianoKey(float frequency) { return int(round(12 * log2(frequency / 440.0f) + 49)); }
 
 //To-do list: Make some GLUT rendering functions for all this stuff
 //DP: Overall this code is really clean

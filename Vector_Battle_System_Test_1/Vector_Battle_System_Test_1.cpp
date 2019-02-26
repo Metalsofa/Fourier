@@ -22,18 +22,18 @@ using win32::Stopwatch;
 
 
 //Global Variables for detecting mode
-bool art_mode = false;
-bool overworld_mode = false;
-bool battle_mode = true;
-bool battlefield_design_mode = true;
-bool debug_mode = true;
+bool artMode = false;
+bool overworldMode = false;
+bool battleMode = true;
+bool battlefieldDesignMode = true;
+bool debugMode = true;
 
 
 //Global settings (mostly debug)
-bool show_corners = false; ///Debug: Draw the corners formed by wall intersections?
-bool show_ticks = false; ///Finally found those annoying cursor ticks and made a setting for showing them.
-bool enable_persprot = false; ///fun: enable the user to rotate their perspective with the middle mouse button
-bool show_timer = false; ///Debug: Show the timer in the lower left
+bool showCorners = false; ///Debug: Draw the corners formed by wall intersections?
+bool showTicks = false; ///Finally found those annoying cursor ticks and made a setting for showing them.
+bool enablePersprot = false; ///fun: enable the user to rotate their perspective with the middle mouse button
+bool showTimer = false; ///Debug: Show the timer in the lower left
 
 
 //Global stopwatch
@@ -59,29 +59,29 @@ void clocksync() {
 	st.Start();
 }
 
-void handle_controls() {
+void handleControls() {
 
 	//Some controls will always be available, for now, like closing the program.
-	evergreen_keychecks();
+	evergreenKeychecks();
 
 	//Controls for battle mode
-	if (battle_mode) {
-		battle_keychecks();
+	if (battleMode) {
+		battleKeychecks();
 	}
 
 	//Controls for battlefield design mode
-	if (battlefield_design_mode) {
-		battlefield_design_keychecks();
+	if (battlefieldDesignMode) {
+		battlefieldDesignKeychecks();
 	}
 
 	//Controls for art mode
-	if (art_mode) {
-		art_keychecks();
+	if (artMode) {
+		artKeychecks();
 	}
 
 	//Controls for debug mode
-	if (debug_mode) {
-		debug_keychecks();
+	if (debugMode) {
+		debugKeychecks();
 	}
 
 }
@@ -101,53 +101,53 @@ void renderScene(void) {
 	drawaxes();
 	//Draw Walls
 	int walliterator = 0;
-	while (walliterator < int(currentbattle.map.wallcount())) {
-		drawwall(currentbattle.map.getwalls()[walliterator]);
+	while (walliterator < int(currentbattle.map.wallCount())) {
+		drawwall(currentbattle.map.getWalls()[walliterator]);
 		walliterator++;
 	}
 
 	//Draw Spells
 
 	//Draw Rays
-	for (unsigned int i = 0; i < currentbattle.raycount(); i++) {
+	for (unsigned int i = 0; i < currentbattle.rayCount(); i++) {
 		drawray(currentbattle.rays[i]);
 	}
 	////Draw Combatants
 	for (int i = 0; i < currentbattle.fighters.size(); i++) {
-		draw_combatant(currentbattle.fighters[i]);
+		drawCombatant(currentbattle.fighters[i]);
 	}
 	////Debug-only drawing
 	//Debug: Show the number of objects
-	if (show_corners) {
+	if (showCorners) {
 		for (unsigned int i = 0; i < currentbattle.map.intersections().size(); i++) {
-			drawpoint(currentbattle.map.intersections()[i]);
+			drawPoint(currentbattle.map.intersections()[i]);
 			glColor3f(1, 1, 1);
 		}
 	}
 	//Debug: object counts
-	const bool show_objectcounts = false;
-	if (show_objectcounts) {
-		rendertext(point(0.0f, 4.0f), to_string(currentbattle.map.wallcount()) + " walls.");
-		rendertext(point(0.0f, 5.0f), to_string(currentbattle.raycount()) + " rays.");
+	const bool showObjectCounts = false;
+	if (showObjectCounts) {
+		rendertext(point(0.0f, 4.0f), to_string(currentbattle.map.wallCount()) + " walls.");
+		rendertext(point(0.0f, 5.0f), to_string(currentbattle.rayCount()) + " rays.");
 	}
 	//Debug: Show timer
-	if (show_timer) {
+	if (showTimer) {
 		rendertext(point(0.0f, 0.0f), to_string(timer));
 	}
 	////Draw console //Not sure we really do that anymore
-	if (show_console)
-		draw_console();
+	if (showConsole)
+		drawConsole();
 	////Draw mouse
-	if (battlefield_design_mode && !key_mode) {
-		drawcursor(mouse);
-		mouse.Rot += (mouse.RotSpeed / mouse.Spread) * increment;
+	if (battlefieldDesignMode && !keyMode) {
+		drawCursor(mouse);
+		mouse.Rot += (mouse.rotSpeed / mouse.spread) * increment;
 	}
 	//This is the function that refreshes the canvas and implements everything we've 'drawn'
 	glutSwapBuffers();
 }
 
 //This function is called every time the application is left idle, and handles all forms of iteration
-void iterate_game() {
+void iterateGame() {
 
 	//Make sure we aren't dropping frames unneccesarily
 	clocksync();
@@ -156,7 +156,7 @@ void iterate_game() {
 	renderScene();
 
 	//Check all the controls deemed neccessary by global booleans
-	handle_controls();
+	handleControls();
 
 	//Iterative behavior
 	currentbattle.iterate(increment);
@@ -167,8 +167,8 @@ int main(int argc, char **argv) {
 	//For development purposes
 	///Tumbleweeds
 	//Console welcome
-	output_console("Welcome to the Vector_Battle_System_Test_1.cpp Console");
-	output_console("Type help for a list of commands.");
+	outputConsole("Welcome to the Vector_Battle_System_Test_1.cpp Console");
+	outputConsole("Type help for a list of commands.");
 
 	//If this program was opened with arguments:
 	if (argc > 1) {
@@ -188,14 +188,14 @@ int main(int argc, char **argv) {
 			filename.pop_back();
 		}
 		if (extention == "fgr") {
-			art_mode = true;
+			artMode = true;
 			art = graphic(filename + '.' + extention);
-			current_graphic_name = filename;
-			battlefield_design_mode = true;
-			battle_mode = true;
-			overworld_mode = false;
+			currentGraphicName = filename;
+			battlefieldDesignMode = true;
+			battleMode = true;
+			overworldMode = false;
 			DESIGN_FUNCTION = BD_MAKE_SHAPES;
-			output_console("Opened graphic file " + filename);
+			outputConsole("Opened graphic file " + filename);
 		}
 	}
 
@@ -221,7 +221,7 @@ int main(int argc, char **argv) {
 	//register callbacks
 	glutDisplayFunc(renderScene); //Callback for when we refresh
 	glutReshapeFunc(changeSize); //Callback for when window is resized
-	glutIdleFunc(iterate_game); //Callback for when the programs is idle (this will happen continuously)
+	glutIdleFunc(iterateGame); //Callback for when the programs is idle (this will happen continuously)
 	glutKeyboardFunc(ProcessNormalKeys); //Callback pressing a "normal" key
 	glutSpecialFunc(ProcessSpecialKeys); //Callback for a "special" key
 	glutKeyboardUpFunc(ReleaseNormalKeys); //Callback for releasing "normal" keys

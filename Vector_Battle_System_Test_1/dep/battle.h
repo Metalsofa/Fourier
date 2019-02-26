@@ -20,14 +20,14 @@ public:
 	bool getfixed() { return fixed; }
 	wall (segment definingsegment, Material wallmaterial, bool isfixed) {
 		body = definingsegment;
-		materialtype defining_material(wallmaterial);
-		material = defining_material;
+		materialtype definingMatarial(wallmaterial);
+		material = definingMatarial;
 		fixed = isfixed;
 	}
 	wall() {} //DP: You don't need default values?
 };
 
-//A battlefield is one of the members of battle_preset and battlestate; it contains the "terrain" of the battle, if you will.
+//A battlefield is one of the members of battlePreset and battlestate; it contains the "terrain" of the battle, if you will.
 class battlefield { 
 public:
 	float width;
@@ -48,15 +48,15 @@ public:
 				if (i != j) {
 					if (isintersect(walls[i].getbody(), walls[j].getbody())) {
 						point ints = intersection(walls[i].getbody(), walls[j].getbody());
-						bool add_it = true;
+						bool addIt = true;
 						unsigned int k = 0;
 						while (k < returnthis.size()) {
 							if (converges(returnthis[k], ints)) {
-								add_it = false;
+								addIt = false;
 							}
 							k++;
 						}
-						if (add_it)
+						if (addIt)
 							returnthis.emplace_back(ints);
 					}
 				}
@@ -70,13 +70,13 @@ public:
 			for (int j = i + 1; j < walls.size(); j++) {
 				if (isintersect(walls[i].getbody(), walls[j].getbody())) {
 					point ints = intersection(walls[i].getbody(), walls[j].getbody());
-					bool add_it = true;
+					bool addIt = true;
 					for (int k = 0; k < returnthis.size(); k++) {
 						if (converges(returnthis[k], ints)) {
-							add_it = false;
+							addIt = false;
 						}
 					}
-					if (add_it)
+					if (addIt)
 						returnthis.emplace_back(ints);
 				}
 			}
@@ -96,27 +96,27 @@ public:
 		}
 		return nearest;
 	}
-	void setsize(float wide, float high) {
+	void setSize(float wide, float high) {
 		width = wide;
 		height = high;
 	}
-	float getwidth() {
+	float getWidth() {
 		return width;
 	}
-	float getheight() {
+	float getHeight() {
 		return height;
 	}
-	size_t wallcount() { return walls.size(); }
-	wall getwall(int wallID) {
+	size_t wallCount() { return walls.size(); }
+	wall getWall(int wallID) {
 		return walls[wallID];
 	}
-	vector<wall> getwalls() {
+	vector<wall> getWalls() {
 		return walls;
 	}
-	void add_wall(wall& new_wall) { //Consider overloading this to take a wall or to take multiple args
-		walls.push_back(new_wall);
+	void addWall(wall& newWall) { //Consider overloading this to take a wall or to take multiple args
+		walls.push_back(newWall);
 	}
-	void pop_wall(int wallID) { 
+	void popWall(int wallID) { 
 		swap(walls[wallID], walls.back());
 		return walls.pop_back();
 	}
@@ -125,7 +125,7 @@ public:
 
 /*pre-defined battles, ready to be called on when battle is initiated. These can be read from files
 by the game when it plays, or written to files by me when I make battles in my battle design interface*/
-class battle_preset {
+class battlePreset {
 public:
 	battlefield map;
 	//Enemies and their positions
@@ -137,8 +137,8 @@ public:
 	///}
 
 	//constructor for testing purposes
-	battle_preset(float width, float height) {
-		map.setsize(width, height);
+	battlePreset(float width, float height) {
+		map.setSize(width, height);
 	}
 
 	//Function to read a txt file and define this battle preset accordingly
@@ -169,37 +169,37 @@ public:
 	///	return map;
 	///}
 	//Returns a FLOAT of the battlefield's width, just for convineince.
-	float BoardWidth() {
-		return float(map.getwidth());
+	float boardWidth() {
+		return float(map.getWidth());
 	}
 	//Returns a FLOAT of the battlefield's height, just for convineince.
-	float BoardHeight() {
-		return float(map.getheight());
+	float boardHeight() {
+		return float(map.getHeight());
 	}
 	//Pass this function two integers to change the size of the map.
 	void setmapsize(float& wideness, float& highness) {
-		map.setsize(wideness, highness);
+		map.setSize(wideness, highness);
 	}
-	void construct_wall(wall& new_wall) { //Pass by ref? K
-		map.add_wall(new_wall);
+	void constructWall(wall& newWall) { //Pass by ref? K
+		map.addWall(newWall);
 	}
-	void destroy_wall(int wallID) {
-		map.pop_wall(wallID);
+	void destroyWall(int wallID) {
+		map.popWall(wallID);
 	}
-	//Constructor for battlestate; takes a battle_preset
-	battlestate (battle_preset& preset) { //Pass by ref? K
+	//Constructor for battlestate; takes a battlePreset
+	battlestate (battlePreset& preset) { //Pass by ref? K
 		map = preset.map;
 	}
 	//Returns the number of travelling rays in existence
-	size_t raycount() {
+	size_t rayCount() {
 		return rays.size();
 	}
 	//Add a ray to the vector or travelling rays (this is a relic of when I had private members. I miss those days)
-	void spawn_ray(ray& spawnthis) {
+	void spawnRay(ray& spawnthis) {
 		rays.push_back(spawnthis);
 	}
 	//Oh look there's another version of the previous function that works with const
-	void spawn_ray(const ray& spawnthis) {
+	void spawnRay(const ray& spawnthis) {
 		rays.push_back(spawnthis);
 	}
 	/*This function is called every frame during battle unless the battle is paused; even then, It may still be best
@@ -213,7 +213,7 @@ public:
 			unsigned int j = 0;
 			for (wall surface : map.walls) {
 				if (rays[i].checkcollision(surface.getbody())) {
-					int permit = rays[i].permitted(surface.getmaterial().getPermittivity_Spells());
+					int permit = rays[i].permitted(surface.getmaterial().getPermittivitySpells());
 					if (permit == 1) {
 						bool shouldbounce = true;
 						bool equidist = false; //True if the nearest two walls are equidistant to bits[1]
@@ -223,8 +223,8 @@ public:
 						unsigned int k = 0;
 						unsigned int closestID = 0; //The ID of the closest wall
 						//DP: Might want to store the distance of the closest so it doensn't have to keep recalculating
-						while (k < map.getwalls().size()) {
-							segment comparator = map.getwall(k).getbody();
+						while (k < map.getWalls().size()) {
+							segment comparator = map.getWall(k).getbody();
 							if (distancetoseg(inters, comparator) <= distancetoseg(inters, serf))
 								closestID = k;
 							k++;
@@ -246,8 +246,8 @@ public:
 							int closestID = -1; //DP: Didn't you already calculate the closest above? also known as j? This is pretty confusing, you'll have to explain it to me
 							int secondclosestID = -1;
 							//DP: Might want to store the distance of the first and second closest so it doensn't have to keep recalculating
-							while (k < map.getwalls().size()) {
-								segment comparator = map.getwall(k).getbody();
+							while (k < map.getWalls().size()) {
+								segment comparator = map.getWall(k).getbody();
 								if (distancetoseg(previnter, comparator) <= distancetoseg(previnter, serf)) {
 									secondclosestID = closestID;
 									closestID = k;
@@ -257,8 +257,8 @@ public:
 							if (closestID == secondclosestID)
 								k++;
 							if (closestID != -1 && secondclosestID != -1) {
-								if (distancetoseg(previnter, map.getwall(closestID).getbody()) ==
-									distancetoseg(previnter, map.getwall(secondclosestID).getbody())
+								if (distancetoseg(previnter, map.getWall(closestID).getbody()) ==
+									distancetoseg(previnter, map.getWall(secondclosestID).getbody())
 									&& closestID != secondclosestID) {
 									equidist = true;
 								}
@@ -292,37 +292,37 @@ public:
 								point head = rays[i].getbits()[0];
 								point corner = map.nearestintersection(inters);
 								//Determine the closest walls: WALL_A and WALL_B (really just their indices)
-								int closestID_A = -1;
-								int closestID_B = -1;
+								int closestIDa = -1;
+								int closestIDb = -1;
 								unsigned int i = 0;
-								vector<wall> wals = map.getwalls();
+								vector<wall> wals = map.getWalls();
 								while (i < wals.size()) {
-									if (closestID_A == -1) {
-										closestID_A = i++;
+									if (closestIDa == -1) {
+										closestIDa = i++;
 										continue;
 									}
 									segment comparator = wals[i].getbody();
-									segment currentclosest = wals[closestID_A].getbody();
-									float distance_comparator = distancetoseg(head, comparator);
-									float distance_currentclosest = distancetoseg(head, currentclosest);
+									segment currentclosest = wals[closestIDa].getbody();
+									float distanceComparator = distancetoseg(head, comparator);
+									float distanceCurrentClosest = distancetoseg(head, currentclosest);
 									/*This if statement compares the current furthest wall to the comparator,
 									and sets the new closest if it beats the current one. The old closest
 									is set to the second closest.*/
-									if (distance_comparator < distance_currentclosest) {
-										closestID_B = closestID_A;
-										closestID_A = i;
+									if (distanceComparator < distanceCurrentClosest) {
+										closestIDb = closestIDa;
+										closestIDa = i;
 									}
-									else if (closestID_B == -1 || distance_comparator <
-										distancetoseg(head, wals[closestID_B].getbody())) {
-										closestID_B = i;
+									else if (closestIDb == -1 || distanceComparator <
+										distancetoseg(head, wals[closestIDb].getbody())) {
+										closestIDb = i;
 									}
 									i++;
 								}
 								//Extract sega and segb from WALL_A and WALL_B
-								segment sega = wals[closestID_A].getbody();
-								segment segb = wals[closestID_B].getbody();
+								segment sega = wals[closestIDa].getbody();
+								segment segb = wals[closestIDb].getbody();
 								//Find the appropriate bisector given sega, segb, and dot
-								segment cornermirror = reflective_bisector(dot, sega, segb);
+								segment cornermirror = reflectiveBisector(dot, sega, segb);
 								//Turn serf into that bisector
 								serf = cornermirror;
 							}
@@ -335,14 +335,14 @@ public:
 				j++;
 			}
 			//Erase this ray if it's out of bounds or dead
-			if (abs(rays[i].getbits().back().x - map.getwidth() / 2) > map.getwidth()
-				|| abs(rays[i].getbits().back().y - map.getheight() / 2) > map.getheight() || rays[i].deathtime()) {
+			if (abs(rays[i].getbits().back().x - map.getWidth() / 2) > map.getWidth()
+				|| abs(rays[i].getbits().back().y - map.getHeight() / 2) > map.getHeight() || rays[i].deathtime()) {
 				rays.erase(rays.begin() + i);
 				i--; //Appropriately adjust our iterator
 			}
 		}
 	}
-	//Constructor to read a "battle_preset.txt" and define this battlestate accordingly
+	//Constructor to read a "battlePreset.txt" and define this battlestate accordingly
 
 };
 
