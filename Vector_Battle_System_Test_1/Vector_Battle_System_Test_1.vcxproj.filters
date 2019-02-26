@@ -41,9 +41,6 @@
     <ClInclude Include="dep\crypt.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dep\customGL.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="dep\fcolor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -69,6 +66,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dep\art.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dep\customGL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
