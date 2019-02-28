@@ -14,7 +14,7 @@ battlePreset testpreset(10, 6); //Width, Height
 battlestate currentbattle(testpreset); //This holds the information about the current battle scene
 const int BoardDepth = 0; //Not sure about this. Probably will never change from 0.
 float timer = 0; //We'll see if this ends up being necessary
-float increment = 0.01f; //Incremental time in seconds
+float increment = float(1.0f / 60.0f);//0.01f; //Incremental time in seconds
 float gamma = 1.0f; //Time dilation, from the viewer's refrence frame
 int rain = 0; //This is really just for fun; good for iterating through a rainbow for no good reason
 
@@ -218,28 +218,26 @@ void battleKeychecks() {
 
 	//Moving players (presently only handles one player):
 	//
-	float dY = 0;
-	float dX = 0;
-	if (normalKeysdown['w']) { dY += .01f; }
-	if (normalKeysdown['a']) { dX -= .01f; }
-	if (normalKeysdown['s']) { dY -= .01f; }
-	if (normalKeysdown['d']) { dX += .01f; }
+	point d(0.0f, 0.0f); //The differential of this player's movement
+	if (normalKeysdown['w']) { d.y += increment; }
+	if (normalKeysdown['a']) { d.x -= increment; }
+	if (normalKeysdown['s']) { d.y -= increment; }
+	if (normalKeysdown['d']) { d.x += increment; }
 	for (combatant& x : currentbattle.fighters) {
 		if (x.tog) {
-			x.position.y += dY;
-			x.position.x += dX;
+			x.position.y += d.y;
+			x.position.x += d.x;
 		}
 	}
 	if (normalKeysdown['i'] || normalKeysdown['j'] || normalKeysdown['k'] || normalKeysdown['l']) {
-		dY = dX = 0;
-		if (normalKeysdown['i'] || upBuf) { dY += .01f; }
-		if (normalKeysdown['k'] || downBuf) { dY -= .01f; }
-		if (normalKeysdown['l'] || rightBuf) { dX += .01f; }
-		if (normalKeysdown['j'] || leftBuf) { dX -= .01f; }
-		if (dY != 0 || dX != 0) {
-			float dir = atan2f(dY, dX);
-			for (combatant &x : currentbattle.fighters) { 
-				if (x.tog) { x.turn(dir); }
+		d.y = d.x = 0;
+		if (normalKeysdown['i'] || upBuf) { d.y += increment; }
+		if (normalKeysdown['k'] || downBuf) { d.y -= increment; }
+		if (normalKeysdown['l'] || rightBuf) { d.x += increment; }
+		if (normalKeysdown['j'] || leftBuf) { d.x -= increment; }
+		if (d.y != 0 || d.x != 0) {
+			for (unsigned int i = 0; i < 4; i++) {
+				if (currentbattle.fighters[i].tog) { currentbattle.fighters[i].turn(d.angle()); }
 			}
 		}
 	}

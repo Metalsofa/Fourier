@@ -35,7 +35,7 @@ bool showTicks = false; ///Finally found those annoying cursor ticks and made a 
 bool enablePersprot = false; ///fun: enable the user to rotate their perspective with the middle mouse button
 bool showTimer = false; ///Debug: Show the timer in the lower left
 bool showFPS = true;
-int FPS = 0;
+int FPS = 0; ///Calculated and frequently-updated FPS
 
 //Global stopwatch
 Stopwatch st;
@@ -52,9 +52,9 @@ Stopwatch st;
 //Utilizes a timer to keep te clocks spinning at the right pace
 void clocksync() {
 	//Sleep(int((increment * 1000.0f * gamma)));
-	while (st.ElapsedMilliseconds() < double(increment * 1000.0f * gamma)) {}
-	if (st.ElapsedMilliseconds() > 12.0f)
+	if (st.ElapsedMilliseconds() > increment * 1.2f * 1000.0f * gamma)
 		cout << "@frame " << int(timer) << " - TIME: " << st.ElapsedMilliseconds() << endl;
+	while (st.ElapsedMilliseconds() < double(increment * 1000.0f * gamma)) {}
 	FPS = 1000 / st.ElapsedMilliseconds();
 	timer += increment * 100;
 	st.Stop();
