@@ -149,7 +149,7 @@ public:
 			float X; reader >> X;
 			float Y; reader >> Y;
 			point vert(X, Y);
-			vertices.emplace_back(vert);
+			vertices.push_back(vert);
 		}
 		///Extract color
 		reader >> color.som; reader >> color.emo; reader >> color.cog;
@@ -173,7 +173,7 @@ public:
 				float X; reader >> X;
 				float Y; reader >> Y;
 				point vert(X, Y);
-				vertices.emplace_back(vert);
+				vertices.push_back(vert);
 			}
 			///Extract color
 			reader >> color.som; reader >> color.emo; reader >> color.cog;
@@ -385,7 +385,7 @@ public:
 
 	//Default constructor
 	graphic() {
-		pieces.emplace_back(shape());
+		pieces.push_back(shape());
 	}
 
 	//Initialize this graphic from a file
@@ -393,7 +393,7 @@ public:
 		vector<string> contents = unencryptedContents(filename, "The Doors of Perception");
 		if (contents.size() > 0) {//DP: Don't need the if statement
 			for (string line : contents) {
-				pieces.emplace_back(shape(line));
+				pieces.push_back(shape(line));
 			}
 		}
 	}
@@ -402,7 +402,7 @@ public:
 	void savetofile(string filename) { //DP: Pass by ref?
 		vector<string> lines;
 		for (shape piece : pieces) {
-			lines.emplace_back(piece.cryptogram());
+			lines.push_back(piece.cryptogram());
 		}
 		encryptAndOverwrite(lines, filename, "The Doors of Perception");
 	}
@@ -435,6 +435,7 @@ public:
 		framenumber = 0;
 		frameclock = 0;
 		cycle = true;
+		frames.push_back(graphic());
 	}
 
 	graphic& operator[] (int frame) {
