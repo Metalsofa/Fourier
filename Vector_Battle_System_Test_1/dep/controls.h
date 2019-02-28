@@ -80,21 +80,23 @@ void debugKeychecks() {
 		normalKeysdown['`'] = false;
 	}
 
-}
-
-//These controls are active only in battlefield-design mode
-void battlefieldDesignKeychecks() {
 	//Quickly switch between design functions
 	if (normalKeysdown['h'] && !showConsole) {
 		if (normalKeysdown['1'])
 			DESIGN_FUNCTION = BD_CREATE_WALLS;
 		if (normalKeysdown['2'])
 			DESIGN_FUNCTION = BD_MAKE_RAYS;
-		if (normalKeysdown['s']) {
+		if (normalKeysdown['3']) {
+			normalKeysdown['3'] = false;
 			artMode = !artMode;
 			battlefieldDesignMode = !battlefieldDesignMode;
 		}
 	}
+
+}
+
+//These controls are active only in battlefield-design mode
+void battlefieldDesignKeychecks() {
 
 	//Entering/leaving 'keyMode'
 	if (normalKeysdown['0']) {
