@@ -42,9 +42,9 @@ Stopwatch st;
 
 //Be careful; certain headers should only be included after global declaration
 #include "art.h"
-#include "battle.h"
 #include "console.h"
 #include "controls.h"
+#include "battle.h"
 #include "camera.h"
 #include "customGL.h"
 

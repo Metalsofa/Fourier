@@ -1,7 +1,7 @@
 ﻿  Vector_Battle_System_Test_1.cpp
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\vector_battle_system_test_1.cpp(58): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\vector_battle_system_test_1.cpp(246): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\vector_battle_system_test_1.cpp(254): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\vector_battle_system_test_1.cpp(262): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\vector_battle_system_test_1.cpp(270): warning C4305: '=': truncation from 'double' to 'float'
-  Vector_Battle_System_Test_1.vcxproj -> C:\Users\medlod\Source\Repos\Fourier\x64\Debug\Vector_Battle_System_Test_1.exe
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(58): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(246): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(254): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(262): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(270): warning C4305: '=': truncation from 'double' to 'float'
+  Vector_Battle_System_Test_1.vcxproj -> C:\Users\dp\Documents\GitHub\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe

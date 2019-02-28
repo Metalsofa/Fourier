@@ -99,6 +99,7 @@ public:
 			else
 				bits.back() = combine(bits.back(), moveback);
 			bits[0] = frontarb;
+			nominalLength = length();
 			if (converges(bits[0], bits.back()) && converges(bits[0], terminalpoint))
 				killme = true;
 		}
@@ -117,6 +118,13 @@ public:
 	void terminate(point where) { //DP: Pass by ref
 		terminating = true;
 		terminalpoint = where;
+	}
+	int checkcollision(combatant& c) { 
+		float dist0 = (bits[0] - c.position).magnitude();
+		float dist1 = (bits[1] - c.position).magnitude();
+		if (dist0 < c.width / 2) { return 1; } //.25 NEEDS TO BE CHANGED IF PLAYER SIZE CHANGES
+		if (dist1 < c.width / 2) { return 2; }
+		return 0;
 	}
 	bool checkcollision(segment surface) { //DP Pass by ref, no need to create var
 		segment frontseg(bits[0], bits[1]);

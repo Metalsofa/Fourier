@@ -211,8 +211,17 @@ public:
 			rays[i].advance(inc);
 			//Now we check for collisions
 			unsigned int j = 0;
+			bool term = false;
+			for (combatant& x : fighters) {
+				int hit = rays[i].checkcollision(x);
+				if (hit) {
+					rays[i].terminate(rays[i].bits[hit-1]); //http://mathworld.wolfram.com/Circle-LineIntersection.html
+					term = true;
+				}
+			}
 			for (wall& surface : map.walls) {
 				if (rays[i].checkcollision(surface.getbody())) {
+					term = true;
 					int permit = rays[i].permitted(surface.getmaterial().getPermittivitySpells());
 					if (permit == 1) {
 						bool shouldbounce = true;
@@ -334,6 +343,7 @@ public:
 				}
 				j++;
 			}
+			if (!term) { rays[i].terminating = false; }
 			//Erase this ray if it's out of bounds or dead
 			if (abs(rays[i].getbits().back().x - map.getWidth() / 2) > map.getWidth()
 				|| abs(rays[i].getbits().back().y - map.getHeight() / 2) > map.getHeight() || rays[i].deathtime()) {
