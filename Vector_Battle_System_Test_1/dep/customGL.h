@@ -427,11 +427,11 @@ void drawray(ray &drawingRay) {
 		}*/
 	}
 
-	//Draw Arrowhead
-	if (!drawingRay.terminating && false) {
+	////Draw Arrowhead
+	//if (!drawingRay.terminating ) {
 		glTranslatef(drawingRay.getbits()[0].x, drawingRay.getbits()[0].y, 0.0f);
-
-		glRotatef(atan2f(drawingRay.movevector().y, drawingRay.movevector().x) * 180 / PI, 0, 0, 1);
+		point unit = unitvector(difference(drawingRay.getbits()[0], drawingRay.getbits()[1]));
+		glRotatef(atan2f(unit.y, unit.x) * 180 / PI, 0, 0, 1);
 		glBegin(GL_POLYGON);
 		float arrowWidth = 0.1f;
 		float arrowHeight = 0.2f;
@@ -440,7 +440,7 @@ void drawray(ray &drawingRay) {
 		glVertex2f(-arrowHeight * 0.5f, 0.0f);
 		glVertex2f(-arrowHeight, -arrowWidth / 2.0f);
 		glEnd();
-	}
+	//}
 	//Reset transformations
 	glLoadIdentity();
 	definecamera();
@@ -478,13 +478,13 @@ void drawCombatant(combatant& fighter) { //DP: This is the coolest function I've
 	}
 	glTranslatef(fighter.position.x, fighter.position.y, 0);
 	glBegin(GL_LINE_LOOP);
-	for (int i = 0; i < 360; i += 2) { //Doing only half the work with i += 2
+	for (int i = 0; i < 360; i += 10) { //Doing only half the work with i += 2
 		float theta = PI * i / 90;
 		glVertex2f(0.25f*cosf(theta), 0.25f*sinf(theta));
 	}
 	glEnd();
 	glBegin(GL_LINE_LOOP);
-	for (int i = 0; i < 360; i += 10) {
+	for (int i = 0; i < 360; i += 50) {
 		float theta = PI * i / 90;
 		glVertex2f(0.01f*cosf(theta) + fighter.direction.x, 0.01f*sinf(theta) + fighter.direction.y);
 	}

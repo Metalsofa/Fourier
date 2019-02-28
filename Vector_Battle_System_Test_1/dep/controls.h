@@ -21,7 +21,7 @@ int rain = 0; //This is really just for fun; good for iterating through a rainbo
 //Global Variables for battlefieldDesignMode
 int DESIGN_FUNCTION = BD_MAKE_RAYS;
 metastat CHOSEEN_COLOR = clCyan;
-Material SELECTED_MATERIAL = BtoG;
+Material SELECTED_MATERIAL = DEFAULT;
 
 
 

@@ -34,7 +34,8 @@ bool showCorners = false; ///Debug: Draw the corners formed by wall intersection
 bool showTicks = false; ///Finally found those annoying cursor ticks and made a setting for showing them.
 bool enablePersprot = false; ///fun: enable the user to rotate their perspective with the middle mouse button
 bool showTimer = false; ///Debug: Show the timer in the lower left
-
+bool showFPS = true;
+int FPS = 0;
 
 //Global stopwatch
 Stopwatch st;
@@ -54,6 +55,7 @@ void clocksync() {
 	while (st.ElapsedMilliseconds() < double(increment * 1000.0f * gamma)) {}
 	if (st.ElapsedMilliseconds() > 12.0f)
 		cout << "@frame " << int(timer) << " - TIME: " << st.ElapsedMilliseconds() << endl;
+	FPS = 1000 / st.ElapsedMilliseconds();
 	timer += increment * 100;
 	st.Stop();
 	st.Start();
@@ -133,6 +135,10 @@ void renderScene(void) {
 	//Debug: Show timer
 	if (showTimer) {
 		rendertext(point(0.0f, 0.0f), to_string(timer));
+	}
+
+	if (showFPS) {
+		rendertext(point(0.0f, -0.5), to_string(FPS) + " FPS");
 	}
 	////Draw console //Not sure we really do that anymore
 	if (showConsole)

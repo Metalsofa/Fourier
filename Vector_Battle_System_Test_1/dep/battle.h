@@ -211,7 +211,7 @@ public:
 			rays[i].advance(inc);
 			//Now we check for collisions
 			unsigned int j = 0;
-			for (wall surface : map.walls) {
+			for (wall& surface : map.walls) {
 				if (rays[i].checkcollision(surface.getbody())) {
 					int permit = rays[i].permitted(surface.getmaterial().getPermittivitySpells());
 					if (permit == 1) {
