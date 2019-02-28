@@ -4,13 +4,13 @@
 #define __controls_h
 
 
-bool key_mode = false; //Whether using keyboard controls (BETA)
-void exterior_console();
-//Global Variables for if in overworld_mode
+bool keyMode = false; //Whether using keyboard controls (BETA)
+void exteriorConsole();
+//Global Variables for if in overworldMode
 ///I hear cactuses hurt to step on
 
-//Global Variables for if in battle_mode
-battle_preset testpreset(10, 6); //Width, Height
+//Global Variables for if in battleMode
+battlePreset testpreset(10, 6); //Width, Height
 battlestate currentbattle(testpreset); //This holds the information about the current battle scene
 const int BoardDepth = 0; //Not sure about this. Probably will never change from 0.
 float timer = 0; //We'll see if this ends up being necessary
@@ -18,30 +18,30 @@ float increment = 0.01f; //Incremental time in seconds
 float gamma = 1.0f; //Time dilation, from the viewer's refrence frame
 int rain = 0; //This is really just for fun; good for iterating through a rainbow for no good reason
 
-//Global Variables for BATTLEFIELD_DESIGN_MODE
+//Global Variables for battlefieldDesignMode
 int DESIGN_FUNCTION = BD_MAKE_RAYS;
-metastat CHOSEEN_COLOR = cl_cyan;
-Material SELECTED_MATERIAL = BtoG;
+metastat CHOSEEN_COLOR = clCyan;
+Material SELECTED_MATERIAL = DEFAULT;
 
 
 
 //Global Key Detections
-map<char, bool> normal_keysdown;
+map<char, bool> normalKeysdown;
 
 ///Special and other keys
-bool up_down = false; //DP: Instead of _down, _press might be less confusing
-bool left_down = false;
-bool down_down = false;
-bool right_down = false;
-int up_buf;
-int down_buf;
-int left_buf;
-int right_buf;
+bool upPress = false; //DP: Instead of Press, _press might be less confusing
+bool leftPress = false;
+bool downPress = false;
+bool rightPress = false;
+int upBuf;
+int downBuf;
+int leftBuf;
+int rightBuf;
 const int keyBuf = 5;
-bool esc_down = false;
-bool enter_down = false;
-bool space_down = false;
-bool backspace_down = false;
+bool escPress = false;
+bool enterPress = false;
+bool spacePress = false;
+bool backspacePress = false;
 ///For Numerals in Particular
 
 //Global MouseButton Detections
@@ -62,59 +62,59 @@ under a given scenario, calling the appropriate functions if neccessary.*/
 
 
 //These controls will always be active
-void evergreen_keychecks() {
+void evergreenKeychecks() {
 	//Closing the application
-	if (esc_down) {
+	if (escPress) {
 		exit(0);
 	}
 
 }
 
 //These controls are active only in debug mode
-void debug_keychecks() {
+void debugKeychecks() {
 
 	//Opening the console
-	if (normal_keysdown['`']) {
-		exterior_console();
-		//show_console = !show_console; //relic of a time long past
-		normal_keysdown['`'] = false;
+	if (normalKeysdown['`']) {
+		exteriorConsole();
+		//showConsole = !showConsole; //relic of a time long past
+		normalKeysdown['`'] = false;
 	}
 
 }
 
 //These controls are active only in battlefield-design mode
-void battlefield_design_keychecks() {
+void battlefieldDesignKeychecks() {
 	//Quickly switch between design functions
-	if (normal_keysdown['h'] && !show_console) {
-		if (normal_keysdown['1'])
+	if (normalKeysdown['h'] && !showConsole) {
+		if (normalKeysdown['1'])
 			DESIGN_FUNCTION = BD_CREATE_WALLS;
-		if (normal_keysdown['2'])
+		if (normalKeysdown['2'])
 			DESIGN_FUNCTION = BD_MAKE_RAYS;
-		if (normal_keysdown['s']) {
-			art_mode = !art_mode;
-			battlefield_design_mode = !battlefield_design_mode;
+		if (normalKeysdown['s']) {
+			artMode = !artMode;
+			battlefieldDesignMode = !battlefieldDesignMode;
 		}
 	}
 
-	//Entering/leaving 'key_mode'
-	if (normal_keysdown['0']) {
-		key_mode = !key_mode;
-		normal_keysdown['0'] = false;
+	//Entering/leaving 'keyMode'
+	if (normalKeysdown['0']) {
+		keyMode = !keyMode;
+		normalKeysdown['0'] = false;
 	}
 
 	//Controls based on design function
 	switch (DESIGN_FUNCTION) {
 	case BD_CREATE_WALLS: //These are the controls for if 'making walls' is the current design function
-		if (!key_mode) {
+		if (!keyMode) {
 			if (clickdragtrail.length() != 0) {
 				if (!leftclicking) {
-					wall new_wall(clickdragtrail, SELECTED_MATERIAL, true);
+					wall newWall(clickdragtrail, SELECTED_MATERIAL, true);
 					clickdragtrail = segment(0, 0, 0, 0);
-					currentbattle.construct_wall(new_wall);
+					currentbattle.constructWall(newWall);
 				}
 				else {
-					wall new_wall(clickdragtrail, SELECTED_MATERIAL, true);
-					drawwall(new_wall);
+					wall newWall(clickdragtrail, SELECTED_MATERIAL, true);
+					drawwall(newWall);
 				}
 			}
 			if (rightclicktrail.length() != 0) {
@@ -124,41 +124,41 @@ void battlefield_design_keychecks() {
 					int wallID = 0;
 					for (int i = 0; i < currentbattle.map.walls.size(); i++) {
 						if (isintersect(eraser, currentbattle.map.walls[i].body))
-							currentbattle.destroy_wall(i--);
+							currentbattle.destroyWall(i--);
 					}
 				}
 				else {
-					wall new_wall(rightclicktrail, ERASER, true);
-					drawwall(new_wall);
+					wall newWall(rightclicktrail, ERASER, true);
+					drawwall(newWall);
 				}
 			}
 		}
 		break;
 	case BD_MAKE_RAYS: //Design controls for making rays
-		if (!key_mode) {
+		if (!keyMode) {
 			if (clickdragtrail.length() != 0) {
 				if (!leftclicking) {
-					ray new_ray(randomhue(), clickdragtrail.p1, clickdragtrail.p2, clickdragtrail.length(),
+					ray newRay(randomhue(), clickdragtrail.p1, clickdragtrail.p2, clickdragtrail.length(),
 						6.0f, 2);
 					clickdragtrail = segment(0, 0, 0, 0);
-					currentbattle.spawn_ray(new_ray);
+					currentbattle.spawnRay(newRay);
 				}
 				else {
-					wall new_wall(clickdragtrail, SELECTED_MATERIAL, true);
-					drawwall(new_wall);
+					wall newWall(clickdragtrail, SELECTED_MATERIAL, true);
+					drawwall(newWall);
 				}
 			}
 		}
 		else {
-			if (normal_keysdown[' ']) {
+			if (normalKeysdown[' ']) {
 				for (combatant& b : currentbattle.fighters) {
 					if (b.tog) {
-						ray new_ray(colorfromID(rain++ % 12 + 1), b.position, b.position + b.direction, 2.0f,
+						ray newRay(colorfromID(rain++ % 12 + 1), b.position, b.position + b.direction, 2.0f,
 							6.0f, 2);
-						currentbattle.spawn_ray(new_ray);
+						currentbattle.spawnRay(newRay);
 					}
 				}
-				normal_keysdown[' '] = false;
+				normalKeysdown[' '] = false;
 			}
 		}
 		break;
@@ -166,7 +166,7 @@ void battlefield_design_keychecks() {
 }
 
 //These controls are active only in art mode
-void art_keychecks() {
+void artKeychecks() {
 	if (rightclicking) {
 		for (int i = 0; i < art.pieces[Gindex].vertices.size(); i++) {
 			if (difference(mouse.Position, art.pieces[Gindex].vertices[i]).magnitude() < 0.05) {
@@ -175,7 +175,7 @@ void art_keychecks() {
 			}
 		}
 	}
-	if (normal_keysdown['z']) { //Hold 'z' to move a point
+	if (normalKeysdown['z']) { //Hold 'z' to move a point
 		for (int i = 0; i < art.pieces[Gindex].vertices.size(); i++) {
 			if (difference(mouse.Position, art.pieces[Gindex].vertices[i]).magnitude() < 0.05) {
 				dragdot = i;
@@ -188,54 +188,54 @@ void art_keychecks() {
 		dragdot = -1;
 	//Add a point by releasing the mouse
 	if (clickdragtrail.length() != 0 || clickdragtrail.p1.x != 0.0f || clickdragtrail.p1.y != 0.0f) {
-		if (!leftclicking && !normal_keysdown['z']) {
+		if (!leftclicking && !normalKeysdown['z']) {
 			art.pieces[Gindex].vertices.emplace_back(clickdragtrail.p2);
 			clickdragtrail = segment(0, 0, 0, 0);
-			draw_art_GUI();
+			drawArtGUI();
 		}
 		else {
 			if (dragdot != -1)
 				dragdot = -1;
 			art.pieces[Gindex].vertices.emplace_back(clickdragtrail.p2);
-			draw_art_GUI();
+			drawArtGUI();
 			art.pieces[Gindex].vertices.pop_back();
 		}
 	}
 	else {
-		draw_art_GUI();
+		drawArtGUI();
 	}
 
 }
 
 //These controls are active only in battle mode
-void battle_keychecks() {
+void battleKeychecks() {
 
 	//Handle key-depression buffer decrement
-	if (up_buf && !normal_keysdown['i']) { up_buf--; }
-	if (down_buf && !normal_keysdown['k']) { down_buf--; }
-	if (left_buf && !normal_keysdown['j']) { left_buf--; }
-	if (right_buf && !normal_keysdown['l']) { right_buf--; }
+	if (upBuf && !normalKeysdown['i']) { upBuf--; }
+	if (downBuf && !normalKeysdown['k']) { downBuf--; }
+	if (leftBuf && !normalKeysdown['j']) { leftBuf--; }
+	if (rightBuf && !normalKeysdown['l']) { rightBuf--; }
 
 	//Moving players (presently only handles one player):
 	//
 	float dY = 0;
 	float dX = 0;
-	if (normal_keysdown['w']) { dY += .01f; }
-	if (normal_keysdown['a']) { dX -= .01f; }
-	if (normal_keysdown['s']) { dY -= .01f; }
-	if (normal_keysdown['d']) { dX += .01f; }
+	if (normalKeysdown['w']) { dY += .01f; }
+	if (normalKeysdown['a']) { dX -= .01f; }
+	if (normalKeysdown['s']) { dY -= .01f; }
+	if (normalKeysdown['d']) { dX += .01f; }
 	for (combatant& x : currentbattle.fighters) {
 		if (x.tog) {
 			x.position.y += dY;
 			x.position.x += dX;
 		}
 	}
-	if (normal_keysdown['i'] || normal_keysdown['j'] || normal_keysdown['k'] || normal_keysdown['l']) {
+	if (normalKeysdown['i'] || normalKeysdown['j'] || normalKeysdown['k'] || normalKeysdown['l']) {
 		dY = dX = 0;
-		if (normal_keysdown['i'] || up_buf) { dY += .01f; }
-		if (normal_keysdown['k'] || down_buf) { dY -= .01f; }
-		if (normal_keysdown['l'] || right_buf) { dX += .01f; }
-		if (normal_keysdown['j'] || left_buf) { dX -= .01f; }
+		if (normalKeysdown['i'] || upBuf) { dY += .01f; }
+		if (normalKeysdown['k'] || downBuf) { dY -= .01f; }
+		if (normalKeysdown['l'] || rightBuf) { dX += .01f; }
+		if (normalKeysdown['j'] || leftBuf) { dX -= .01f; }
 		if (dY != 0 || dX != 0) {
 			float dir = atan2f(dY, dX);
 			for (combatant &x : currentbattle.fighters) { 
@@ -247,7 +247,7 @@ void battle_keychecks() {
 }
 
 //These controls are active only in overworld mode
-void overworld_keychecks() {
+void overworldKeychecks() {
 
 }
 
@@ -258,55 +258,55 @@ void overworld_keychecks() {
 //Called when a 'normal' key becomes pressed
 void ProcessNormalKeys(unsigned char key, int x, int y) {
 	if (key == 27)
-		esc_down = true;
+		escPress = true;
 	//if (key == 32)
-		//space_down = true;
+		//spacePress = true;
 	if (key == 13)
-		enter_down = true;
+		enterPress = true;
 	if (key == 8)
-		backspace_down = true;
+		backspacePress = true;
 	if (key == 'i') {
-		up_buf = keyBuf;
+		upBuf = keyBuf;
 	} else if (key == 'j') {
-		left_buf = keyBuf;
+		leftBuf = keyBuf;
 	} else if (key == 'k') {
-		down_buf = keyBuf;
+		downBuf = keyBuf;
 	} else if (key == 'l') {
-		right_buf = keyBuf;
+		rightBuf = keyBuf;
 	}
 	if (key >= '1' && key <= '4') {
 		currentbattle.fighters[key - '1'].tog = !(currentbattle.fighters[key - '1'].tog);
 	}
-	normal_keysdown[key] = true;
+	normalKeysdown[key] = true;
 }
 
 //Called when a 'normal' key becomes no longer pressed
 void ReleaseNormalKeys(unsigned char key, int x, int y) {
 	if (key == 27)
-		esc_down = false;
+		escPress = false;
 	//if (key == 32)
-		//space_down = false;
+		//spacePress = false;
 	if (key == 13)
-		enter_down = false;
+		enterPress = false;
 	if (key == 8)
-		backspace_down = false;
-	normal_keysdown[key] = false;
+		backspacePress = false;
+	normalKeysdown[key] = false;
 }
 
 //Called when a 'special' key becomes pressed
 void ProcessSpecialKeys(int key, int x, int y) {
 	switch (key) {
 	case GLUT_KEY_UP:
-		up_down = true;
+		upPress = true;
 		break;
 	case GLUT_KEY_DOWN:
-		down_down = true;
+		downPress = true;
 		break;
 	case GLUT_KEY_RIGHT:
-		right_down = true;
+		rightPress = true;
 		break;
 	case GLUT_KEY_LEFT:
-		left_down = true;
+		leftPress = true;
 		break;
 	}
 }
@@ -315,16 +315,16 @@ void ProcessSpecialKeys(int key, int x, int y) {
 void ReleaseSpecialKeys(int key, int x, int y) {
 	switch (key) {
 	case GLUT_KEY_UP:
-		up_down = false;
+		upPress = false;
 		break;
 	case GLUT_KEY_LEFT:
-		left_down = false;
+		leftPress = false;
 		break;
 	case GLUT_KEY_DOWN:
-		down_down = false;
+		downPress = false;
 		break;
 	case GLUT_KEY_RIGHT:
-		right_down = false;
+		rightPress = false;
 		break;
 	}
 }
@@ -357,19 +357,19 @@ void MouseClick(int button, int state, int x, int y) { //Note that this is good 
 	}
 	if (button == 3 && state == GLUT_DOWN) { //4 means scrolling down
 		/*
-		if (show_console) {
-			console_scroll++;
-			if (console_scroll > console_history.size() - 1)
-				console_scroll = console_history.size() - 1;
+		if (showConsole) {
+			consoleScroll++;
+			if (consoleScroll > console_history.size() - 1)
+				consoleScroll = console_history.size() - 1;
 		}
 		*/
 	}
 	if (button == 4 && state == GLUT_DOWN) { //3 means scrolling up
 		/*
-		if (show_console) {
-			console_scroll--;
-			if (console_scroll < 0)
-				console_scroll = 0;
+		if (showConsole) {
+			consoleScroll--;
+			if (consoleScroll < 0)
+				consoleScroll = 0;
 		}
 		*/
 	}
@@ -382,13 +382,13 @@ void ActiveMouseMove(int x, int y) { //DP: something I didn't put for the draw f
 void PassiveMouseMove(int x, int y) {
 	int mousebase = 300;
 	mouse.Snap = 0;
-	if (normal_keysdown['1'])
+	if (normalKeysdown['1'])
 		mouse.Snap = 1.0f;
-	else if (normal_keysdown['2'])
+	else if (normalKeysdown['2'])
 		mouse.Snap = 1.0f / 2.0f;
-	else if (normal_keysdown['3'])
+	else if (normalKeysdown['3'])
 		mouse.Snap = 1.0f / 4.0f;
-	else if (normal_keysdown['4'])
+	else if (normalKeysdown['4'])
 		mouse.Snap = 1.0f / 8.0f;
 	float deltax = (x - mousebase) * mouse.Sensitivity / 30;
 	float deltay = (mousebase - y) * mouse.Sensitivity / 30;
@@ -400,19 +400,19 @@ void PassiveMouseMove(int x, int y) {
 		mouse.Position.x = roundf(mouse.Position.x / mouse.Snap) * mouse.Snap;
 		mouse.Position.y = roundf(mouse.Position.y / mouse.Snap) * mouse.Snap;
 	}
-	if (!(middleclicking && enable_persprot)) {
+	if (!(middleclicking && enablePersprot)) {
 		mouse.Position.x += deltax * cos(PerspectiveOrbit) - deltay * sin(PerspectiveOrbit);
 		mouse.Position.y += deltay * cos(PerspectiveOrbit) + deltax * sin(PerspectiveOrbit);
 		if (mouse.Position.x < 0)
 			mouse.Position.x = 0;
-		if (mouse.Position.x > currentbattle.BoardWidth())
-			mouse.Position.x = currentbattle.BoardWidth();
+		if (mouse.Position.x > currentbattle.boardWidth())
+			mouse.Position.x = currentbattle.boardWidth();
 		if (mouse.Position.y < 0)
 			mouse.Position.y = 0;
-		if (mouse.Position.y > currentbattle.BoardHeight())
-			mouse.Position.y = currentbattle.BoardHeight();
+		if (mouse.Position.y > currentbattle.boardHeight())
+			mouse.Position.y = currentbattle.boardHeight();
 	}
-	if (middleclicking && enable_persprot) {
+	if (middleclicking && enablePersprot) {
 		PerspectiveOrbit -= deltax;
 		PerspectiveRise -= deltay;
 	}

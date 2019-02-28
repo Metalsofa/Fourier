@@ -25,7 +25,7 @@ public:
 	int kindness; //Let's just do a scale of -10 to 10, from Cruel to Kind
 	point direction; //This "point" is really functioning as a unit vector in two dimensions.
 	float speed; //In battlefield units per second
-	float nominal_length; //The actuall length may change, but this is what it's supposed to be.
+	float nominalLength; //The actuall length may change, but this is what it's supposed to be.
 	bool killme = false;
 	bool terminating = false;
 	float thickness;
@@ -38,7 +38,7 @@ public:
 		//DP: bits = {location, location};
 		direction = unitvector(difference(heading, location));
 		speed = fastness;
-		nominal_length = leng;
+		nominalLength = leng;
 		thickness = thickn;
 		color = col;
 	}
@@ -77,14 +77,14 @@ public:
 		return cumulative;
 	}
 	//Returns the length that this vector is supposed to have according to its definition
-	float length_nominal() { return nominal_length; }
+	float lengthNominal() { return nominalLength; }
 	//Advance the motion of the ray in accordance to its properties
 	void advance(float inc /*Incremental Time*/) { 
 		if (!terminating) {
 			point frontarb = combine(bits[0], scalarproduct(movevector(), inc));
 			point unitback = unitvector(difference(bits[bits.size() - 2], bits.back()));
 			bits[0] = frontarb;
-			if (length() >= nominal_length)
+			if (length() >= nominalLength)
 				bits.back() = combine(bits.back(), scalarproduct(unitback, inc * speed));
 		}
 		else {
