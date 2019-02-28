@@ -29,24 +29,28 @@ float pyth(const float &a, const float &b) { //DP: Again, no need to create a va
 
 //Boolean for whether X lies between A and B. Think A < X < B.
 bool between(float A, float X, float B) {
-/*	if (B < A) {
-		float oldA = A;
-		A = B;
-		B = oldA;
-	}
-	if (A < X && X < B)
-		return true;
-	else
-		return false;*/ //Oksobasically oldcode
-	//DP: You can use or:
 	//return ((A < X && X < B) || (B < X && X < A));
 	//or...
 	return (fminf(A,B) < X && X < fmaxf(A,B)); 
 	//The second one looks better, but the first one might be barely faster due to a function call
-	//DM: Thx implemented (this code was written embarassingly long ago my dude)
 }
 
 class point {
+private:
+	//Remembers its value to make some calculations faster
+	float angCache;
+	float magCache;
+	float xCache;
+	float yCache;
+	//Checks if the cache-values for x and y are up-to-date, updates them if not
+	void updateCache() {
+		if (xCache != x || yCache != y) {
+			xCache = x;
+			yCache = y;
+			angCache = atan2(y, x);
+			magCache = pyth(x, y);
+		}
+	}
 public:
 	float x;
 	float y;
@@ -66,38 +70,40 @@ public:
 		return *this;
 	}
 	// + overload
-	friend point operator+(point lhs, const point& rhs) {
+	friend point operator +(point lhs, const point& rhs) {
 		lhs += rhs;
 		return lhs;
 	}
 	// -= overload
-	point& operator -=(const point& rhs) {
+	point& operator-= (const point& rhs) {
 		x -= rhs.x;
 		y -= rhs.y;
 		return *this;
 	}
 	// - overload
-	friend point operator-(point lhs, const point& rhs) {
+	friend point operator- (point lhs, const point& rhs) {
 		lhs -= rhs;
 		return lhs;
 	}
 	// *= overload
-	point& operator *=(const float& rhs) {
+	point& operator*= (const float& rhs) {
 		x *= rhs;
 		y *= rhs;
 		return *this;
 	}
 	// * overload
-	friend point operator*(point lhs, const float& rhs) {
+	friend point operator* (point lhs, const float& rhs) {
 		lhs *= rhs;
 		return lhs;
 	}
 	float magnitude() {
-		return pyth(x, y);
+		updateCache();
+		return magCache;
 	}
 	//The angle formed by this point's vector from the origin with respect to the x-axis
 	float angle() {
-		return atan2(y, x);
+		updateCache();
+		return angCache;
 	}
 	//Returns a nice label for this point for debug/gui purposes
 	string label() {
@@ -113,12 +119,10 @@ bool converges(point PointA, point PointB) { //DP: Overwrite == and != for a poi
 }
 
 point scalarproduct(point &pointe, float &coefficient) { //DP: Again, no need to create a var
-	point retp(pointe.x * coefficient, pointe.y * coefficient);
 	return pointe * coefficient;
 }
 
 point scalarproduct(const point &pointe, const float &coefficient) {//DP: Again, no need to create a var
-	point retp(pointe.x * coefficient, pointe.y * coefficient);
 	return pointe * coefficient;
 }
 
