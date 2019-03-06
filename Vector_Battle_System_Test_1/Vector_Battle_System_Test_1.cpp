@@ -2,6 +2,12 @@
 The main function is rather short; the function 'renderscene' is the real 'main'
 function. It may be prudent to later change what it is called.*/
 
+//Design function macros
+#define BD_CREATE_WALLS 1
+#define BD_ERASE_WALLS 2
+#define BD_MAKE_RAYS 3
+#define BD_MAKE_SHAPES 4
+
 #include "gl/glut.h"
 #include "Stopwatch.h"
 #include "graphics.h"
@@ -220,13 +226,17 @@ int main(int argc, char **argv) {
 	glutInit(&argc, argv);
 
 	//Choose some settings for our Window
-	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(900, 500);
-	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+	if (!debugMode)
+		glutEnterGameMode();
+	else {
+		glutInitWindowPosition(100, 100);
+		glutInitWindowSize(900, 500);
+		glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
 
-	//Create the Window
-	glutCreateWindow("Fourier");
-	glutFullScreen();
+		//Create the Window
+		glutCreateWindow("Fourier");
+		glutFullScreen();
+	}
 
 	//Some settings
 	glutIgnoreKeyRepeat(1);
@@ -281,6 +291,9 @@ int main(int argc, char **argv) {
 	//enter GLUT event processing cycle
 	st.Start();
 	glutMainLoop();
+	if (debugMode) {
+		glutLeaveGameMode();
+	}
 
 	return 0;
 }

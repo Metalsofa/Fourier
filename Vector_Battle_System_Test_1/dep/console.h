@@ -81,8 +81,8 @@ void handleInput(string &input) {
 		}
 		else if (arg == "shape") { //Save the currently designed shape to a shape file
 			cons >> arg;
-			art.pieces[Gindex].savetofile(arg);
-			outputConsole("Wrote shape #" + to_string(Gindex) + " to file " + arg + ".fgr");
+			art.pieces[editingLayer].savetofile(arg);
+			outputConsole("Wrote shape #" + to_string(editingLayer) + " to file " + arg + ".fgr");
 		}
 	}
 	else if (arg == "load" || arg == "open") {
@@ -104,7 +104,7 @@ void handleInput(string &input) {
 	}
 	else if (arg == "canvas") {
 		outputConsole("    " + to_string(art.pieces.size()) + " shapes");
-		outputConsole("    Currently editing Shape #" + to_string(Gindex));
+		outputConsole("    Currently editing Shape #" + to_string(editingLayer));
 		for (unsigned int i = 0; i < art.pieces.size(); i++) {
 			outputConsole("Shape #" + to_string(i));
 			outputConsole("    Verticies: " + to_string(art.pieces[i].vertices.size()));
@@ -118,34 +118,34 @@ void handleInput(string &input) {
 	else if (arg == "shape") {
 		cons >> arg;
 		if (arg == "color") {
-			cons >> art.pieces[Gindex].color.som;
-			cons >> art.pieces[Gindex].color.emo;
-			cons >> art.pieces[Gindex].color.cog;
-			outputConsole("Set Shape #" + to_string(Gindex) + "'s color to " + to_string(art.pieces[Gindex].color.som) +
-				" " + to_string(art.pieces[Gindex].color.emo) + " " + to_string(art.pieces[Gindex].color.cog));
+			cons >> art.pieces[editingLayer].color.som;
+			cons >> art.pieces[editingLayer].color.emo;
+			cons >> art.pieces[editingLayer].color.cog;
+			outputConsole("Set Shape #" + to_string(editingLayer) + "'s color to " + to_string(art.pieces[editingLayer].color.som) +
+				" " + to_string(art.pieces[editingLayer].color.emo) + " " + to_string(art.pieces[editingLayer].color.cog));
 		}
 		else if (arg == "lineThickness") {
-			cons >> art.pieces[Gindex].lineThickness;
-			outputConsole("Set Shape #" + to_string(Gindex) + "'s lineThickness to "
-				+ to_string(art.pieces[Gindex].lineThickness));
+			cons >> art.pieces[editingLayer].lineThickness;
+			outputConsole("Set Shape #" + to_string(editingLayer) + "'s lineThickness to "
+				+ to_string(art.pieces[editingLayer].lineThickness));
 		}
 		else if (arg == "opacity") {
-			cons >> art.pieces[Gindex].opacity;
-			outputConsole("Set Shape #" + to_string(Gindex) + "'s opacity to "
-				+ to_string(art.pieces[Gindex].opacity));
+			cons >> art.pieces[editingLayer].opacity;
+			outputConsole("Set Shape #" + to_string(editingLayer) + "'s opacity to "
+				+ to_string(art.pieces[editingLayer].opacity));
 		}
 		else if (arg == "mode") {
-			cons >> art.pieces[Gindex].mode;
-			outputConsole("Set Shape #" + to_string(Gindex) + "'s drawing mode to "
-				+ art.pieces[Gindex].getGLMODE());
+			cons >> art.pieces[editingLayer].mode;
+			outputConsole("Set Shape #" + to_string(editingLayer) + "'s drawing mode to "
+				+ art.pieces[editingLayer].getGLMODE());
 		}
 		else if (arg == "clear") {
-			art.pieces[Gindex].vertices.clear();
-			outputConsole("Cleared vertecies of Shape #" + to_string(Gindex));
+			art.pieces[editingLayer].vertices.clear();
+			outputConsole("Cleared vertecies of Shape #" + to_string(editingLayer));
 		}
 		else if (arg == "origin") {
 			point O; cons >> O.x; cons >> O.y;
-			art.pieces[Gindex].setOrigin(O);
+			art.pieces[editingLayer].setOrigin(O);
 			outputConsole("Set origin to " + O.label());
 		}
 		else
@@ -166,15 +166,15 @@ void handleInput(string &input) {
 				currentbattle.boardWidth() * 0.9f, currentbattle.boardHeight() * 0.9f));
 		}
 		if (arg == "clear") {
-			Gindex = 0;
+			editingLayer = 0;
 			art = graphic();
 			outputConsole("Cleared shapes of graphic");
 		}
 	}
 	else if (arg == "layer") {
-		cons >> Gindex;
-		Gindex %= art.pieces.size();
-		outputConsole("Now editing Shape #" + to_string(Gindex));
+		cons >> editingLayer;
+		editingLayer %= art.pieces.size();
+		outputConsole("Now editing Shape #" + to_string(editingLayer));
 	}
 	else if (arg == "perspective") {
 		cons >> arg;
@@ -194,8 +194,8 @@ void handleInput(string &input) {
 		cons >> arg;
 		if (arg == "shape") {
 			int loc; cons >> loc; loc %= art.pieces.size() + 1;
-			if (loc <= Gindex)
-				Gindex++;
+			if (loc <= editingLayer)
+				editingLayer++;
 			art.pieces.emplace(art.pieces.begin() + loc, shape());
 			outputConsole("Added new Shape at position " + to_string(loc));
 		}

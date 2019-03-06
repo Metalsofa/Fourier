@@ -57,7 +57,7 @@ public:
 							k++;
 						}
 						if (addIt)
-							returnthis.emplace_back(ints);
+							returnthis.push_back(ints);
 					}
 				}
 				j++;
@@ -77,7 +77,7 @@ public:
 						}
 					}
 					if (addIt)
-						returnthis.emplace_back(ints);
+						returnthis.push_back(ints);
 				}
 			}
 		}
@@ -356,8 +356,4 @@ public:
 
 };
 
-//Battlefield design stuff
-#define BD_CREATE_WALLS 1
-#define BD_ERASE_WALLS 2
-#define BD_MAKE_RAYS 3
-#define BD_MAKE_SHAPES 4
+

@@ -14,7 +14,7 @@ battlePreset testpreset(10, 6); //Width, Height
 battlestate currentbattle(testpreset); //This holds the information about the current battle scene
 const int BoardDepth = 0; //Not sure about this. Probably will never change from 0.
 float timer = 0; //We'll see if this ends up being necessary
-float increment = float(1.0f / 60.0f);//0.01f; //Incremental time in seconds
+float increment = float(1.0f / 65.0f);//0.01f; //Incremental time in seconds, the denominator is nominal FPS
 float gamma = 1.0f; //Time dilation, from the viewer's refrence frame
 int rain = 0; //This is really just for fun; good for iterating through a rainbow for no good reason
 
@@ -170,37 +170,86 @@ void battlefieldDesignKeychecks() {
 //These controls are active only in art mode
 void artKeychecks() {
 	if (rightclicking) {
-		for (int i = 0; i < art.pieces[Gindex].vertices.size(); i++) {
-			if (difference(mouse.Position, art.pieces[Gindex].vertices[i]).magnitude() < 0.05) {
-				art.pieces[Gindex].vertices.erase(art.pieces[Gindex].vertices.begin() + i);
+		for (int i = 0; i < animart[editingFrame].pieces[editingLayer].vertices.size(); i++) {
+			if (difference(mouse.Position, animart[editingFrame].pieces[editingLayer].vertices[i]).magnitude() < 0.05) {
+				animart[editingFrame].pieces[editingLayer].vertices.erase(animart[editingFrame].pieces[editingLayer].vertices.begin() + i);
 				i--;
 			}
 		}
 	}
+	if (normalKeysdown['H']) {
+		normalKeysdown['H'] = false;
+		animart.frames.insert(animart.frames.begin() + editingFrame++, graphic());
+		while (animart[editingFrame - 1].pieces.size() < animart[editingFrame].pieces.size()) {
+			animart[editingFrame - 1].pieces.push_back(shape());
+		}
+	}
+	if (normalKeysdown['L']) {
+		normalKeysdown['L'] = false;
+		animart.frames.insert(animart.frames.begin() + editingFrame + 1, graphic());
+		while (animart[editingFrame + 1].pieces.size() < animart[editingFrame].pieces.size()) {
+			animart[editingFrame + 1].pieces.push_back(shape());
+		}
+	}
+	if (normalKeysdown['J']) {
+		normalKeysdown['J'] = false;
+		for (unsigned int i = 0; i < animart.frames.size(); i++) {
+			animart[i].pieces.insert(animart[i].pieces.begin() + editingLayer + 1, shape());
+		}
+	}
+	if (normalKeysdown['K']) {
+		normalKeysdown['K'] = false;
+		editingLayer++;
+		for (unsigned int i = 0; i < animart.frames.size(); i++) {
+			animart[i].pieces.insert(animart[i].pieces.begin() + editingLayer, shape());
+		}
+	}
+	if (normalKeysdown['h']) {
+		normalKeysdown['h'] = false;
+		if (editingFrame > 0)
+			editingFrame--;
+	}
+	if (normalKeysdown['l']) {
+		normalKeysdown['l'] = false;
+		if (editingFrame < animart.frames.size() - 1) {
+			editingFrame++;
+		}
+	}
+	if (normalKeysdown['k']) {
+		normalKeysdown['k'] = false;
+		if (editingLayer > 0)
+			editingLayer--;
+	}
+	if (normalKeysdown['j']) {
+		normalKeysdown['j'] = false;
+		if (editingLayer < animart[editingFrame].pieces.size() - 1) {
+			editingLayer++;
+		}
+	}
 	if (normalKeysdown['z']) { //Hold 'z' to move a point
-		for (int i = 0; i < art.pieces[Gindex].vertices.size(); i++) {
-			if (difference(mouse.Position, art.pieces[Gindex].vertices[i]).magnitude() < 0.05) {
+		for (int i = 0; i < animart[editingFrame].pieces[editingLayer].vertices.size(); i++) {
+			if (difference(mouse.Position, animart[editingFrame].pieces[editingLayer].vertices[i]).magnitude() < 0.05) {
 				dragdot = i;
 			}
 		}
 		if (dragdot != -1)
-			art.pieces[Gindex].vertices[dragdot] = mouse.Position;
+			animart[editingFrame].pieces[editingLayer].vertices[dragdot] = mouse.Position;
 	}
 	else
 		dragdot = -1;
 	//Add a point by releasing the mouse
 	if (clickdragtrail.length() != 0 || clickdragtrail.p1.x != 0.0f || clickdragtrail.p1.y != 0.0f) {
 		if (!leftclicking && !normalKeysdown['z']) {
-			art.pieces[Gindex].vertices.emplace_back(clickdragtrail.p2);
+			animart[editingFrame].pieces[editingLayer].vertices.push_back(clickdragtrail.p2);
 			clickdragtrail = segment(0, 0, 0, 0);
 			drawArtGUI();
 		}
 		else {
 			if (dragdot != -1)
 				dragdot = -1;
-			art.pieces[Gindex].vertices.emplace_back(clickdragtrail.p2);
+			animart[editingFrame].pieces[editingLayer].vertices.push_back(clickdragtrail.p2);
 			drawArtGUI();
-			art.pieces[Gindex].vertices.pop_back();
+			animart[editingFrame].pieces[editingLayer].vertices.pop_back();
 		}
 	}
 	else {

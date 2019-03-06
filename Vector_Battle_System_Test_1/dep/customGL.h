@@ -59,6 +59,11 @@ void drawPoint(point dot, float size, bool label) {
 		drawText(dot, dot.label());
 }
 
+//Like glTranslatef, but it takes a single argument: a point
+void glTranslatePoint(point& offset) {
+	glTranslatef(offset.x, offset.y, 0.0f);
+}
+
 void drawSegment(segment &seg, float &thickness, bool &endpoints, bool &labels) {
 	glLineWidth(thickness);
 	glBegin(GL_LINES);
@@ -352,7 +357,7 @@ void drawCursor(cursor& curse) {
 	}
 	glColor3f(curse.Red(), curse.Green(), curse.Blue()); //OH THERE IT IS I FOUND THE CURSOR COLOR LINE FINALLY		//DP: YAY
 	if (DESIGN_FUNCTION == BD_MAKE_SHAPES)
-		setcolor(inverse(art.pieces[Gindex].color), 1.0f);
+		setcolor(inverse(art.pieces[editingLayer].color), 1.0f);
 	glPushMatrix();
 	glTranslatef(curse.Position.x, curse.Position.y, 0); //Translate #1
 	glRotatef(-90 + curse.Tilt * 180 / PI, 0, 1, 0); //Rotate #1
@@ -499,35 +504,40 @@ void drawCombatant(combatant& fighter) { //DP: This is the coolest function I've
 
 void drawArtGUI() { //Idea I just had: Every player metastat caps at 255; WHITE is the optimum in any area		DP: Cool Idea
 	rendertext(point(0.0f, currentbattle.map.height + 0.5f), "ART MODE: " + currentGraphicName);
-	for (unsigned int i = 0; i < art.pieces.size(); i++) {
-		drawshape(art.pieces[i]);
-		if (showDots && (i == Gindex)) {
-			setcolor(inverse(art.pieces[i].color), 1.0f);
-			glLineWidth(2.0f);
-			glPointSize(5.0f);
-			glBegin(GL_LINE_STRIP);
-			for (point dot : art.pieces[i].vertices) {
-				glVertex2f(dot.x, dot.y);
+	//For each frame...
+	drawGraphic(animart[editingFrame]);
+	for (unsigned int f = 0; f < animart.frames.size(); f++) {
+		//For each layer...
+		for (unsigned int i = 0; i < animart[f].pieces.size(); i++) {
+			if (showDots && (i == editingLayer)) {
+				setcolor(inverse(animart[f].pieces[i].color), 1.0f);
+				glLineWidth(2.0f);
+				glPointSize(5.0f);
+				glBegin(GL_LINE_STRIP);
+				for (point& dot : animart[f].pieces[i].vertices) {
+					glVertex2f(dot.x, dot.y);
+				}
+				glEnd();
+				glBegin(GL_POINTS);
+				for (point& dot : animart[f].pieces[i].vertices) {
+					glVertex2f(dot.x, dot.y);
+				}
+				glEnd();
 			}
-			glEnd();
-			glBegin(GL_POINTS);
-			for (point dot : art.pieces[i].vertices) {
-				glVertex2f(dot.x, dot.y);
+			if (showLayers) {
+				glPushMatrix();
+				glTranslatePoint(layDispPos);
+				glTranslatef(f * ladDispSize, -(i * ladDispSize), 0);
+				if (i == editingLayer && f == editingFrame)
+					glColor3f(1.0f, 0.1f, 0.0f);
+				else
+					glColor3f(1.0f, 1.0f, 1.0f);
+				glBegin(GL_LINE_LOOP);
+				glVertex2f(0.0f, 0.0f);  glVertex2f(0.4f, 0.0f);
+				glVertex2f(0.4f, -0.4f); glVertex2f(0.0f, -0.4f);
+				glEnd();
+				glPopMatrix();
 			}
-			glEnd();
-		}
-		if (showLayers) {
-			point layDispPos(0.05f, 5.0f);
-			glTranslatef(layDispPos.x + i * 0.1f, layDispPos.y - i * 0.1f, 0.0f);
-			if (i == Gindex)
-				glColor3f(1.0f, 0.1f, 0.0f);
-			else
-				glColor3f(1.0f, 1.0f, 1.0f);
-			glBegin(GL_LINE_LOOP);
-			glVertex2f(0.0f, 0.0f);  glVertex2f(0.4f, 0.0f);
-			glVertex2f(0.4f, -0.4f); glVertex2f(0.0f, -0.4f);
-			glEnd();
-			glTranslatef(-layDispPos.x - i * 0.1f, -layDispPos.y + i * 0.1f, 0.0f);
 		}
 	}
 }
