@@ -155,7 +155,7 @@ void battlefieldDesignKeychecks() {
 			if (normalKeysdown[' ']) {
 				for (combatant& b : currentbattle.fighters) {
 					if (b.tog) {
-						ray newRay(colorfromID(rain++ % 12 + 1), b.position, b.position + b.direction, 2.0f,
+						ray newRay(colorfromID(rain++ % 12 + 1), b.position + b.direction, b.position + b.direction + b.direction, 2.0f,
 							6.0f, 2);
 						currentbattle.spawnRay(newRay);
 					}
