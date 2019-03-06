@@ -106,7 +106,7 @@ void rendertext(point location, string text) {  //DP: IF glRasterPos2f doesn't e
 
 
 void drawaxes() {
-	glLineWidth(0.0f);
+	glLineWidth(1.0f);
 	//Draw Grey Backdrop
 	glBegin(GL_QUADS);
 	glColor3f(.1f, .1f, .1f);

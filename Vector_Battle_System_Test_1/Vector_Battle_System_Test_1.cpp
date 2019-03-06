@@ -100,23 +100,27 @@ void renderScene(void) {
 
 	//////Call all of our screen-rendering functions
 	////Draw Battlefield Geometry
-	drawaxes();
-	//Draw Walls
-	int walliterator = 0;
-	while (walliterator < int(currentbattle.map.wallCount())) {
-		drawwall(currentbattle.map.getWalls()[walliterator]);
-		walliterator++;
-	}
+	if (battleMode) {
+		drawaxes();
+		//Draw Walls
+		int walliterator = 0;
+		while (walliterator < int(currentbattle.map.wallCount())) {
+			drawwall(currentbattle.map.getWalls()[walliterator]);
+			walliterator++;
+		}
 
-	//Draw Spells
+		//Draw Spells
 
-	//Draw Rays
-	for (unsigned int i = 0; i < currentbattle.rayCount(); i++) {
-		drawray(currentbattle.rays[i]);
-	}
-	////Draw Combatants
-	for (int i = 0; i < currentbattle.fighters.size(); i++) {
-		drawCombatant(currentbattle.fighters[i]);
+		//Draw Rays
+		for (unsigned int i = 0; i < currentbattle.rayCount(); i++) {
+			drawray(currentbattle.rays[i]);
+		}
+		////Draw Combatants
+		if (battleMode && !artMode) {
+			for (int i = 0; i < currentbattle.fighters.size(); i++) {
+				drawCombatant(currentbattle.fighters[i]);
+			}
+		}
 	}
 	////Debug-only drawing
 	//Debug: Show the number of objects
@@ -143,8 +147,12 @@ void renderScene(void) {
 	////Draw console //Not sure we really do that anymore
 	if (showConsole)
 		drawConsole();
+	////Draw art GUI if in art mode
+	if (artMode) {
+		artKeychecks();
+	}
 	////Draw mouse
-	if (battlefieldDesignMode && !keyMode) {
+	if ((battlefieldDesignMode && !keyMode) || artMode) {
 		drawCursor(mouse);
 		mouse.Rot += (mouse.rotSpeed / mouse.spread) * increment;
 	}
