@@ -91,6 +91,12 @@ public:
 		y *= rhs;
 		return *this;
 	}
+	bool operator== (point& p) {
+		return ((x == p.x) && (y == p.y));
+	}
+	bool operator!= (point& p) {
+		return !(*this == p);
+	}
 	// * overload
 	friend point operator* (point lhs, const float& rhs) {
 		lhs *= rhs;
