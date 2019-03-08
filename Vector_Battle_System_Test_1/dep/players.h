@@ -33,7 +33,7 @@ private:
 
 	//Abilities also need to somehow appear
 public:
-	graphic sprite;
+	graphic sprite; //DP: I think we only need one sprite in the combatant class
 	int Hitpoints(int comp)					{ return HP.component(comp); }
 	int MaxHitpoints(int comp)				{ return maxHP.component(comp); }
 	int HitpointsFraction(int comp)			{ return Hitpoints(comp) / MaxHitpoints(comp); }

@@ -54,20 +54,14 @@ public:
 			return cog;
 		if (comp == 4)
 			return mean();
-		else //DP: sum()? mean()*3?
-			return (som + emo + cog);
+		else 
+			return sum();
 	}
 };
 
 //255 - each stat's value for 
 metastat inverse(metastat &base) {
-	metastat inv;
-	inv.som = 255 - base.som;
-	inv.emo = 255 - base.emo;
-	inv.cog = 255 - base.cog;
-	return inv;
-	//DP: concise ver:
-	//return metastat(255-base.som, 255-base.emo, 255-base.cog);
+	return metastat(255-base.som, 255-base.emo, 255-base.cog);
 }
 
 
@@ -84,35 +78,22 @@ public:
 		string translation;
 		translation = to_string(vertices.size()); ///The first argument is an integer counting the number of verticies
 		for (int i = 0; i < vertices.size(); i++) {
-			translation += " ";
-			translation += to_string(vertices[i].x);
-			translation += " ";
-			translation += to_string(vertices[i].y);
-			//DP:
-			//translation += " "
-			//	+ to_string(vertices[i].x)
-			//	+ " "
-			//	+ to_string(vertices[i].y);
+			translation += " "
+				+ to_string(vertices[i].x)
+				+ " "
+				+ to_string(vertices[i].y);
 		}
-		translation += " ";
-		translation += to_string(color.som) + " ";
-		translation += to_string(color.emo) + " ";
-		translation += to_string(color.cog) + " ";
-		translation += to_string(opacity) + " ";
-		translation += to_string(mode) + " ";
-		translation += to_string(lineThickness) + " ";
-		return translation;
-		//DP: return translation + " "
-			//+ to_string(color.som) + " "
-			//+ to_string(color.emo) + " "
-			//+ to_string(color.cog) + " "
-			//+ to_string(opacity) + " "
-			//+ to_string(mode) + " "
-			//+ to_string(lineThickness) + " ";
+		return translation + " "
+			+ to_string(color.som) + " "
+			+ to_string(color.emo) + " "
+			+ to_string(color.cog) + " "
+			+ to_string(opacity) + " "
+			+ to_string(mode) + " "
+			+ to_string(lineThickness) + " ";
 	}
 
 	//Write this shape's contents to a text file
-	void savetofile(string& filename) { //DP: Seems to be repetitive with cryptogram, just make 1 function. Pass by ref
+	void savetofile(string& filename) { //DP: Seems to be repetitive with cryptogram, just make 1 function.
 		vector<string> translation(2, "");
 		translation[0] = to_string(vertices.size()); ///The first argument is an integer counting the number of verticies
 		for (int i = 0; i < vertices.size(); i++) {
@@ -140,12 +121,12 @@ public:
 	}
 
 	//Initialize a shape by reading it from a string
-	shape(string text) { //DP: Good use of stringstream, pass by ref
+	shape(string& text) {
 		///Container 0: vertices
 		stringstream reader(text);
 		int vertexcount;
 		reader >> vertexcount;
-		for (int j = 0; j < vertexcount; j++) { //DP: Might want to declare x and y outside loop
+		for (int j = 0; j < vertexcount; j++) {
 			float X; reader >> X;
 			float Y; reader >> Y;
 			point vert(X, Y);
@@ -162,14 +143,14 @@ public:
 	}
 
 	//Initialize a shape by reading it from a file, telling it where to begin reading
-	shape(string filename, int begin) { //DP: Pass string by ref, repetitive with func above
+	shape(string filename, int begin) { //DP: repetitive with func above
 		vector<string> shapeContents = unencryptedContents(filename, "The Doors of Perception");
 		if (shapeContents.size() >= 1) {
 			///Container 0: vertices
 			stringstream reader(shapeContents[begin]);
 			int vertexcount;
 			reader >> vertexcount;
-			for (int j = 0; j < vertexcount; j++) {//DP: Might want to declare x and y outside loop
+			for (int j = 0; j < vertexcount; j++) {
 				float X; reader >> X;
 				float Y; reader >> Y;
 				point vert(X, Y);
@@ -269,7 +250,7 @@ public:
 	int delay = 0; //Optional member, only useful if this graphic is in an animation.
 
 	//Set the origin for this graphic
-	void setOrigin(point org) { //DP: Pass by ref?
+	void setOrigin(point org) {
 		for (int i = 0; i < pieces.size(); i++) {
 			pieces[i].setOrigin(org);
 		}
@@ -389,19 +370,17 @@ public:
 	}
 
 	//Initialize this graphic from a file
-	graphic(string filename) {  //DP: Pass by ref?
+	graphic(string filename) {
 		vector<string> contents = unencryptedContents(filename, "The Doors of Perception");
-		if (contents.size() > 0) {//DP: Don't need the if statement
-			for (string line : contents) {
-				pieces.push_back(shape(line));
-			}
+		for (string& line : contents) {
+			pieces.push_back(shape(line));
 		}
 	}
 
 	//Save this graphic to a file
-	void savetofile(string filename) { //DP: Pass by ref?
+	void savetofile(string filename) {
 		vector<string> lines;
-		for (shape piece : pieces) {
+		for (shape& piece : pieces) {
 			lines.push_back(piece.cryptogram());
 		}
 		encryptAndOverwrite(lines, filename, "The Doors of Perception");

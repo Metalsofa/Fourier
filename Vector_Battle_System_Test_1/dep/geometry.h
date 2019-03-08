@@ -5,24 +5,22 @@
 #include <cmath>
 #include <string>
 #include <vector>
+#include <algorithm>
+
 using namespace std;
 
 const float  PI = 3.14159265358979f;
 
 template <class number>
 number mean(number &num1, number &num2) {
-	//DP: Why not:
 	return (num1 + num2) / 2;
-	//It would save the creation of 1 var every time u call this function
-	//DM: Lol yeah 
-	///Implemented suggested fix 1/31/1/19
 }
 
-float pyth(float &a, float &b) { //DP: Again, no need to create a var DM: K
+float pyth(float &a, float &b) {
 	return sqrt(pow(a, 2) + pow(b, 2));
 }
 
-float pyth(const float &a, const float &b) { //DP: Again, no need to create a var DM: K
+float pyth(const float &a, const float &b) {
 	return sqrt(pow(a, 2) + pow(b, 2));
 }
 
@@ -117,40 +115,35 @@ public:
 	}
 };
 
-bool converges(point PointA, point PointB) { //DP: Overwrite == and != for a point, but actually it might be already overloaded to do what ur doing, but I can't find anything online about it
-	if (PointA.x == PointB.x && PointA.y == PointB.y)
-		return true;
-	else
-		return false;
+bool converges(point PointA, point PointB) {
+	return (PointA.x == PointB.x && PointA.y == PointB.y);
 }
 
-point scalarproduct(point &pointe, float &coefficient) { //DP: Again, no need to create a var
+point scalarproduct(point &pointe, float &coefficient) {
 	return pointe * coefficient;
 }
 
-point scalarproduct(const point &pointe, const float &coefficient) {//DP: Again, no need to create a var
+point scalarproduct(const point &pointe, const float &coefficient) {
 	return pointe * coefficient;
 }
 
-float dotproduct(point r1, point r2) {
+float dotproduct(point& r1, point& r2) {
 	return (r1.x * r2.x + r1.y * r2.y);
 }
 
 //Returns a float, since this product will by definition be in the z-direction
-float flatcrossproduct(point r1, point r2) { //DP: Again, no need to create a var DM: K
+float flatcrossproduct(point& r1, point& r2) {
 	return r1.x * r2.y - r1.y * r2.x;
 }
 
-point unitvector(point po) {//DP: Again, no need to create a var
+point unitvector(point po) {
 	if (po.magnitude() == 0)
 		return point(1.0f, 0.0f);
 	return scalarproduct(po, ( 1 / po.magnitude() ) );
-	//DP: Like below
-	// return scalarproduct(po, (1/po.magnitude())); //THanks implemented :>
 }
 
 //Returns the unit vector corresponding to an angle in radians.
-point unitfromangle(float &angle) {//DP: Again, no need to create a var
+point unitfromangle(float &angle) {
 	point unit;
 	unit.x = cos(angle);
 	unit.y = sin(angle);
@@ -158,34 +151,25 @@ point unitfromangle(float &angle) {//DP: Again, no need to create a var
 	return unit;
 }
 
-point combine(point &point1, point &point2) {//DP: Again, no need to create a var
-	point comb;
-	comb.x = point1.x + point2.x;
-	comb.y = point1.y + point2.y;
-	return comb;
+point combine(point &point1, point &point2) {
+	return point(point1.x + point2.x, point1.y + point2.y);
 }
 
-point combine(const point &point1, const point &point2) {//DP: Again, no need to create a var 
-	point comb;
-	comb.x = point1.x + point2.x;
-	comb.y = point1.y + point2.y;
-	return comb;
+point combine(const point &point1, const point &point2) {
+	return point(point1.x + point2.x, point1.y + point2.y);
 }
 
 //Point 1 - Point 2
-point difference(point& point1, point& point2) {//DP: Again, no need to create a var
+point difference(point& point1, point& point2) {
 	return point1 - point2;
 }
-point difference(const point& point1, const point& point2) {//DP: Again, no need to create a var
+point difference(const point& point1, const point& point2) {
 	return point1 - point2;
 }
 
-//DP: I don't get what the point of the const versions from above are, but just overload the +, -, +=, and -= operator;
-//DM: Yeah I wrote these functions long before I learned how to overload operators. I'll implement them now.
 
-point rotate90(point poi) {//DP: Again, no need to create a var
-	point pot(0 - poi.y, poi.x);
-	return pot;
+point rotate90(point poi) {
+	return point(0 - poi.y, poi.x);
 }
 
 point pointSum(vector<point> &points) {
@@ -213,11 +197,11 @@ class segment {
 public:
 	point p1;
 	point p2;
-	void define(point& point1, point& point2) { //DP: Why not create constructors? + Pass by ref
+	void define(point& point1, point& point2) {
 		p1 = point1;
 		p2 = point2;
 	}
-	const point midpoint() const {//DP: Again, no need to create a var
+	const point midpoint() const {
 		return point(mean(p1.x,p2.x),mean(p1.y,p2.y));
 	}
 	float length() {
@@ -241,18 +225,15 @@ public:
 		p1 = point(x1, y1);
 		p2 = point(x2, y2);
 	}
-	segment(point P1, point P2) { //DP: Pass by ref?
+	segment(point P1, point P2) {
 		p1 = P1;
 		p2 = P2;
 	}
 };
 
-//DP: If you don't use the defines outside of the class, there is no point in them, as they are redundant, but if you want to use them outside the class, why aren't the constructors calling them?
-//DM: Because, if you'll believe it, I didn't know what a 'constructor' was when I made these functions back in november, then I implemented some when I learned about them. But yeah it would be best to cut them out now. I'm trying to clean it up now
-
-segment rotate90about(int pointID, segment& seg) { //DP: pass by ref 
-	segment nseg; // segment nseg = (pointID == 1)?seg:segment(seg.p2, seg.p1);
-	if (pointID == 1) //DP: ALWAYS TRUE???? DM:CHanged...
+segment rotate90about(int pointID, segment& seg) { 
+	segment nseg;
+	if (pointID == 1) 
 		nseg = seg;
 	else
 		nseg.define(seg.p2, seg.p1);
@@ -267,7 +248,7 @@ segment rotate90about(int pointID, segment& seg) { //DP: pass by ref
 
 }
 
-segment equilateralBisector(segment seg) { //Bisector protrudes from left, if p1 is bottom and p2 is top DP: pass by ref 
+segment equilateralBisector(segment seg) { //Bisector protrudes from left, if p1 is bottom and p2 is top
 	segment perp;
 	perp.p1 = seg.midpoint();
 	point diffp = difference(perp.p2, perp.p1);
@@ -276,7 +257,7 @@ segment equilateralBisector(segment seg) { //Bisector protrudes from left, if p1
 }
 
 
-point intersection(segment& sega, segment& segb) { //Figured this out using Cramer's Rule DP: pass by ref 
+point intersection(segment& sega, segment& segb) { //Figured this out using Cramer's Rule 
 	float dxa = sega.p2.x - sega.p1.x;
 	float dxb = segb.p2.x - segb.p1.x;
 	float dya = sega.p2.y - sega.p1.y;
@@ -297,7 +278,7 @@ point intersection(segment& sega, segment& segb) { //Figured this out using Cram
 }
 
 //This is showing some REALLY weird behavior when one of the segments is perfectly vertical or horizontal
-bool isintersect(segment& sega, segment& segb) { //DP: Pass by reference?
+bool isintersect(segment& sega, segment& segb) {
 	point ints = intersection(sega, segb);
 	bool eval = true;
 	bool xaeval = (ints.x < sega.p1.x) == (ints.x > sega.p2.x);
@@ -333,46 +314,38 @@ bool isintersect(segment& sega, segment& segb) { //DP: Pass by reference?
 
 
 
-bool isperpintersect(point p, segment v) {//DP: pass by ref 
+bool isperpintersect(point& p, segment& v) {
 	point diffVp = difference(v.p1, p);
 	point diffVv = difference(v.p2, v.p1);
 	float numerator = dotproduct(diffVp, diffVv);
 	float denominator = dotproduct(diffVv, diffVv);
 	float t = -numerator / denominator;
-	if (0 <= t && t <= 1)
-		return true;
-	else
-		return false;
-	//DP: return  (0 <= t && t <= 1);
+	return  (0 <= t && t <= 1);
 }
 
-float distancetoline(point p, segment v) { //DP: pass by ref 
+float distancetoline(point& p, segment& v) {
 	point diffPv = difference(v.p1, p);
 	point diffVv = difference(v.p2, v.p1);
 	float numerator = abs(flatcrossproduct(diffVv, diffPv));
 	float denominator = diffVv.magnitude();
-	float distance = numerator / denominator;
-	return distance;
+	return numerator / denominator;
 }
 
 //Returns a position vector representing the shortest path from a point to a segment
-float distancetoseg(point dot, segment seg) { //DP: pass by ref 
+float distancetoseg(point& dot, segment& seg) {
 	//First we see if the perpendicular line to the segment even hits it.
 	if (!isperpintersect(dot, seg)) {
-		point r1 = difference(dot, seg.p1);
-		point r2 = difference(dot, seg.p2);
-		float shortest = (r1.magnitude() < r2.magnitude()) ? r1.magnitude() : r2.magnitude();
-		return shortest;
-		//DP: conscise version:
-		//return min(difference(dot, seg.p1).magnitude(), difference(dot, seg.p2).magnitude());
+		return min(
+				difference(dot, seg.p1).magnitude(), 
+				difference(dot, seg.p2).magnitude()
+			);
 	}
 	//Otherwise we find the perpendicular path to the segment
-	float r = distancetoline(dot, seg);
-	return r;
+	return distancetoline(dot, seg);
 }
 
 //Returns the given point after refection about an axis defined by a given segment
-point reflection(point &dot, segment &mirror) { //DP: Don't have to create all these vars
+point reflection(point &dot, segment &mirror) {
 	point transform = mirror.midpoint(); //Bring the process to the origin
 	dot = difference(dot, transform);
 	point mir = difference(mirror.p1,transform);
@@ -425,18 +398,9 @@ segment reflectiveBisector(point &dot, segment &sega, segment &segb) {
 		bisectorAngle2 -= PI;
 	float diff1 = abs(bisectorAngle1 - angleC);
 	float diff2 = abs(bisectorAngle2 - angleC);
-	float properAngle;
-	if (diff1 > diff2)
-		properAngle = bisectorAngle1;
-	else
-		properAngle = bisectorAngle2;
-	//DP: properAngle = (diff1>diff2)? bisectorAngle1: bisectorAngle2;
+	//float properAngle = (diff1>diff2)? bisectorAngle1: bisectorAngle2;
 	//New logic
-	if (useAngle1)
-		properAngle = bisectorAngle1;
-	else
-		properAngle = bisectorAngle2;
-	//DP: properAngle = (useAngle1)? bisectorAngle1: bisectorAngle2;
+	float properAngle = (useAngle1)? bisectorAngle1: bisectorAngle2;
 	point bisectorUnit = unitfromangle(properAngle);
 	point bisectorP1 = bisectorUnit;
 	point bisectorP2 = scalarproduct(bisectorUnit, -1.0f);
@@ -454,7 +418,7 @@ public:
 		center = point(0, 0);
 		radius = 0.0f;
 	}
-	circle(point centre, float rad) { //DP: Pass by ref?
+	circle(point& centre, float rad) {
 		center = centre;
 		radius = rad;
 	}

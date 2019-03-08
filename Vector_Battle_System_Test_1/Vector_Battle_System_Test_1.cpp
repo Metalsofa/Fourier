@@ -219,7 +219,7 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	//DP: Initialize rand
+	//Initialize rand
 	srand(unsigned int(time(NULL)));
 
 	//Initialize GLUT

@@ -29,7 +29,7 @@ Material SELECTED_MATERIAL = DEFAULT;
 map<char, bool> normalKeysdown;
 
 ///Special and other keys
-bool upPress = false; //DP: Instead of Press, _press might be less confusing
+bool upPress = false; 
 bool leftPress = false;
 bool downPress = false;
 bool rightPress = false;
@@ -424,8 +424,8 @@ void MouseClick(int button, int state, int x, int y) { //Note that this is good 
 	}
 }
 
-void ActiveMouseMove(int x, int y) { //DP: something I didn't put for the draw fighter function, even though it is void, when we optimize, it will break if we don't return (I think)
-
+void ActiveMouseMove(int x, int y) { 
+	return;
 }
 
 void PassiveMouseMove(int x, int y) {
