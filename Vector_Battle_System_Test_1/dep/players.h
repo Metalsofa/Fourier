@@ -16,8 +16,8 @@ thing, to be called by the function that initiates battle */
 using namespace std;
 
 
-//This version of player is for overworld logic and battle initiation
-class player {
+//This version of stats is for overworld logic and battle initiation
+class stats {
 private:
 	//Player metastats cap out at 255
 	metastat maxHP; //maximum HP
@@ -54,10 +54,7 @@ public:
 	combatant() {
 
 	}
-
-	bool tog;
-
-	player statblock;
+	stats statblock;
 	point position;
 	point direction; //Direction as a unit vector
 	//Sprites
@@ -72,6 +69,13 @@ public:
 		direction = unitfromangle(angle);
 	}
 };
+
+class player: public combatant {
+public:
+	bool tog;
+
+};
+
 //enum Color {clWhite = 0xFFFFFF, clBlack = 0x0, clRed = 0xFF0000, clOrange = 0xFF7F00, clYellow = 0xFFFF00,
 //	clLime = 0x7FFF00, clGreen = 0x00FF, clTeal = 0x00FF7F, clCyan = 0x00FFFF, clIndigo = 0x007FFF, clBlue = 0x0000FF,
 //	clPurple = 0x7F00FF, clMagenta = 0xFF00FF, clViolet = 0xFF007F

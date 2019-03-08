@@ -159,7 +159,7 @@ public:
 	vector<ray> rays;
 	//Other spells
 	//vector of sinks/sources
-	vector<combatant> fighters;
+	vector<player> fighters;
 	//vector of portals
 
 
@@ -351,6 +351,14 @@ public:
 				i--; //Appropriately adjust our iterator
 			}
 		}
+
+		//Iterate AI:
+		//for (Enemy& e : vectorofEnemies) {
+		//	if (e.moving) {
+		//		e.position += unitvector(e.dest - e.position) * SPEED;
+		//	}
+		//	e.act();
+		//}
 	}
 	//Constructor to read a "battlePreset.txt" and define this battlestate accordingly
 

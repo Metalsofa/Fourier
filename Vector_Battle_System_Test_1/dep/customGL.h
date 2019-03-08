@@ -476,11 +476,11 @@ void drawCombatant(combatant& fighter) { //DP: This is the coolest function I've
 	glTranslatef(-0.5f, -0.5f, 0.0f);
 	drawGraphic(fighter.sprite);
 	glPopMatrix();
-	if (fighter.tog) {
+	//if (fighter.tog) {
 		glColor3f(1.0f, 1.0f, 1.0f);
-	} else {
+	/*} else {
 		glColor3f(.5f, .5f, .5f);
-	}
+	}*/
 	glTranslatef(fighter.position.x, fighter.position.y, 0);
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < 360; i += 10) { //Doing only half the work with i += 2

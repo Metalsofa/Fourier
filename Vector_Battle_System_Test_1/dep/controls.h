@@ -153,7 +153,7 @@ void battlefieldDesignKeychecks() {
 		}
 		else {
 			if (normalKeysdown[' ']) {
-				for (combatant& b : currentbattle.fighters) {
+				for (player& b : currentbattle.fighters) {
 					if (b.tog) {
 						ray newRay(colorfromID(rain++ % 12 + 1), b.position + b.direction, b.position + b.direction + b.direction, 2.0f,
 							6.0f, 2);
@@ -274,7 +274,7 @@ void battleKeychecks() {
 	if (normalKeysdown['a']) { d.x -= increment; }
 	if (normalKeysdown['s']) { d.y -= increment; }
 	if (normalKeysdown['d']) { d.x += increment; }
-	for (combatant& x : currentbattle.fighters) {
+	for (player& x : currentbattle.fighters) {
 		if (x.tog) {
 			x.position.y += d.y;
 			x.position.x += d.x;

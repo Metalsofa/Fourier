@@ -4,8 +4,7 @@
 #include "time.h"
 
 using namespace std;
-class Enemy {
-	combatant data;
+class Enemy : public combatant{
 
 	list<point> path;
 	list<point>::iterator itr;
@@ -15,7 +14,7 @@ class Enemy {
 	point dest;
 
 	int behavior;
-	Enemy(combatant& d, int b):data(d), behavior(b) {
+	Enemy(int b): combatant(), behavior(b) {
 		srand(unsigned int(time(NULL)));
 		itr = path.begin();
 		dir = true;
@@ -23,10 +22,18 @@ class Enemy {
 	}
 
 	void addWaypoint(point& p, int ind) { //Adds to path vector at index
-
+		list<point>::iterator iter;
+		if (ind < path.size() / 2) {
+			iter = path.begin();
+			for (int i = 0; i < ind; i++) { iter++; }
+		} else {
+			iter = path.end();
+			for (int i = 0; i < (path.size() - ind); i++) { iter--; }
+		}
+		path.insert(iter, p);
 	}
 
-	void act() {
+	void act() {	//Decides which AI to implement
 		if (moving) { return; }
 		switch (behavior) {
 		case 1:

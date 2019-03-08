@@ -256,7 +256,7 @@ int main(int argc, char **argv) {
 
 
 	//Setup battle: Initialize combatants
-	combatant plyr1;
+	player plyr1;
 	plyr1.position = point(6, 3);
 	plyr1.turn(0);
 	plyr1.tog = false;
@@ -264,7 +264,7 @@ int main(int argc, char **argv) {
 	plyr1.width = .4;
 	currentbattle.fighters.push_back(plyr1);
 
-	combatant plyr2;
+	player plyr2;
 	plyr2.position = point(5, 4);
 	plyr2.turn(0);
 	plyr2.tog = false;
@@ -272,7 +272,7 @@ int main(int argc, char **argv) {
 	plyr2.width = .4;
 	currentbattle.fighters.push_back(plyr2);
 
-	combatant plyr3;
+	player plyr3;
 	plyr3.position = point(4, 3);
 	plyr3.turn(0);
 	plyr3.tog = false;
@@ -280,7 +280,7 @@ int main(int argc, char **argv) {
 	plyr3.width = .4;
 	currentbattle.fighters.push_back(plyr3);
 
-	combatant plyr4;
+	player plyr4;
 	plyr4.position = point(5, 2);
 	plyr4.turn(0);
 	plyr4.tog = false;
