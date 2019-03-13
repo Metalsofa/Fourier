@@ -1,4 +1,5 @@
 ﻿  Vector_Battle_System_Test_1.cpp
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(77): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(64): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
 c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(264): warning C4305: '=': truncation from 'double' to 'float'
 c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(272): warning C4305: '=': truncation from 'double' to 'float'

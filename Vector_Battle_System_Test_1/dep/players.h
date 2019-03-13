@@ -73,7 +73,10 @@ public:
 class player: public combatant {
 public:
 	bool tog;
-
+	void toggle() {
+		for (shape& sh : sprite.pieces) { sh.lineThickness = (tog? 1 : 2); }
+		tog = !tog;
+	}
 };
 
 //enum Color {clWhite = 0xFFFFFF, clBlack = 0x0, clRed = 0xFF0000, clOrange = 0xFF7F00, clYellow = 0xFFFF00,

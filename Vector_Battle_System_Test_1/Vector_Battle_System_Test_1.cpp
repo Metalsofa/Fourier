@@ -260,7 +260,7 @@ int main(int argc, char **argv) {
 	plyr1.position = point(6, 3);
 	plyr1.turn(0);
 	plyr1.tog = false;
-	plyr1.sprite = graphic("alpha.fgr");
+	plyr1.sprite = (graphic("alpha.fgr"));
 	plyr1.width = .4;
 	currentbattle.fighters.push_back(plyr1);
 
@@ -268,7 +268,7 @@ int main(int argc, char **argv) {
 	plyr2.position = point(5, 4);
 	plyr2.turn(0);
 	plyr2.tog = false;
-	plyr2.sprite = graphic("beta.fgr");
+	plyr2.sprite = (graphic("beta.fgr"));
 	plyr2.width = .4;
 	currentbattle.fighters.push_back(plyr2);
 
@@ -276,7 +276,7 @@ int main(int argc, char **argv) {
 	plyr3.position = point(4, 3);
 	plyr3.turn(0);
 	plyr3.tog = false;
-	plyr3.sprite = graphic("gamma.fgr");
+	plyr3.sprite = (graphic("gamma.fgr"));
 	plyr3.width = .4;
 	currentbattle.fighters.push_back(plyr3);
 
@@ -284,7 +284,7 @@ int main(int argc, char **argv) {
 	plyr4.position = point(5, 2);
 	plyr4.turn(0);
 	plyr4.tog = false;
-	plyr4.sprite = graphic("delta.fgr");
+	plyr4.sprite = (graphic("delta.fgr"));
 	plyr4.width = .4;
 	currentbattle.fighters.push_back(plyr4);
 

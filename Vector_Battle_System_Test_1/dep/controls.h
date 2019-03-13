@@ -324,7 +324,7 @@ void ProcessNormalKeys(unsigned char key, int x, int y) {
 		rightBuf = keyBuf;
 	}
 	if (key >= '1' && key <= '4') {
-		currentbattle.fighters[key - '1'].tog = !(currentbattle.fighters[key - '1'].tog);
+		currentbattle.fighters[key - '1'].toggle();
 	}
 	normalKeysdown[key] = true;
 }
