@@ -71,9 +71,6 @@
     <ClInclude Include="dep\customGL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Vector_Battle_System_Test_1.rc">

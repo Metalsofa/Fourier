@@ -133,7 +133,8 @@ public:
 	vector<ray> rays;
 	//Other spells
 	//vector of sinks/sources
-	vector<player> fighters;
+	vector<player> protags;
+	vector<Enemy> antags;
 	//vector of portals
 
 
@@ -186,7 +187,7 @@ public:
 			//Now we check for collisions
 			unsigned int j = 0;
 			bool term = false;
-			for (combatant& x : fighters) {
+			for (combatant& x : protags) {
 				int hit = rays[i].checkcollision(x);
 				if (hit) {
 					rays[i].terminate(rays[i].bits[hit-1]); //http://mathworld.wolfram.com/Circle-LineIntersection.html
@@ -327,12 +328,18 @@ public:
 		}
 
 		//Iterate AI:
-		//for (Enemy& e : vectorofEnemies) {
-		//	if (e.moving) {
-		//		e.position += unitvector(e.dest - e.position) * SPEED;
-		//	}
-		//	e.act();
-		//}
+		for (Enemy& e : antags) {
+			if (e.moving) {
+				point dir = (e.dest - e.position);
+				if (dir.magnitude() < .05) {
+					e.moving = false;
+				} else {
+					e.position += unitvector(dir)*.02;
+				}
+			} else {
+				e.act();
+			}
+		}
 	}
 	//Constructor to read a "battlePreset.txt" and define this battlestate accordingly
 

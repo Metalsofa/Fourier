@@ -177,7 +177,6 @@
     <ClInclude Include="dep\spells.h" />
     <ClInclude Include="dep\stopwatch.h" />
     <ClInclude Include="dep\waves.h" />
-    <ClInclude Include="Enemy.h" />
     <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>

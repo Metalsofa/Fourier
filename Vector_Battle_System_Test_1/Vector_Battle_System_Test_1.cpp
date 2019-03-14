@@ -12,7 +12,6 @@ function. It may be prudent to later change what it is called.*/
 #include "Stopwatch.h"
 #include "graphics.h"
 #include "art.h"
-#include "players.h"
 
 #include <Windows.h>
 #include <cmath>
@@ -53,6 +52,7 @@ Stopwatch st;
 #include "battle.h"
 #include "camera.h"
 #include "customGL.h"
+#include "players.h"
 
 
 //Utilizes a timer to keep te clocks spinning at the right pace
@@ -123,8 +123,11 @@ void renderScene(void) {
 		}
 		////Draw Combatants
 		if (battleMode && !artMode) {
-			for (int i = 0; i < currentbattle.fighters.size(); i++) {
-				drawCombatant(currentbattle.fighters[i]);
+			for (combatant& c : currentbattle.protags) {
+				drawCombatant(c);
+			}
+			for (combatant& c : currentbattle.antags) {
+				drawCombatant(c);
 			}
 		}
 	}
@@ -262,7 +265,7 @@ int main(int argc, char **argv) {
 	plyr1.tog = false;
 	plyr1.sprite = (graphic("alpha.fgr"));
 	plyr1.width = .4;
-	currentbattle.fighters.push_back(plyr1);
+	currentbattle.protags.push_back(plyr1);
 
 	player plyr2;
 	plyr2.position = point(5, 4);
@@ -270,7 +273,7 @@ int main(int argc, char **argv) {
 	plyr2.tog = false;
 	plyr2.sprite = (graphic("beta.fgr"));
 	plyr2.width = .4;
-	currentbattle.fighters.push_back(plyr2);
+	currentbattle.protags.push_back(plyr2);
 
 	player plyr3;
 	plyr3.position = point(4, 3);
@@ -278,7 +281,7 @@ int main(int argc, char **argv) {
 	plyr3.tog = false;
 	plyr3.sprite = (graphic("gamma.fgr"));
 	plyr3.width = .4;
-	currentbattle.fighters.push_back(plyr3);
+	currentbattle.protags.push_back(plyr3);
 
 	player plyr4;
 	plyr4.position = point(5, 2);
@@ -286,7 +289,15 @@ int main(int argc, char **argv) {
 	plyr4.tog = false;
 	plyr4.sprite = (graphic("delta.fgr"));
 	plyr4.width = .4;
-	currentbattle.fighters.push_back(plyr4);
+	currentbattle.protags.push_back(plyr4);
+
+	Enemy e1(1);
+	e1.position = point(7, 4);
+	e1.width = .4;
+	plyr4.sprite = (graphic("delta.fgr"));
+	e1.addWaypoint(point(7, 2));
+	e1.addWaypoint(point(7, 4));
+	currentbattle.antags.push_back(e1);
 
 	//enter GLUT event processing cycle
 	st.Start();
