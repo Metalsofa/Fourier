@@ -295,9 +295,9 @@ int main(int argc, char **argv) {
 	e1.position = point(7, 4);
 	e1.width = .4;
 	plyr4.sprite = (graphic("delta.fgr"));
-	e1.addWaypoint(point(7, 2));
-	e1.addWaypoint(point(7, 4));
 	currentbattle.antags.push_back(e1);
+	currentbattle.antags[0].addWaypoint(point(7, 2));
+	currentbattle.antags[0].addWaypoint(point(7, 4));
 
 	//enter GLUT event processing cycle
 	st.Start();

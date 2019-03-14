@@ -81,42 +81,44 @@ public:
 };
 
 class Enemy : public combatant {
-public:
-	list<point> path;
-	list<point>::iterator itr;
+private:
+	vector<point> path;
+	int ind;
 	bool dir; //True if moving from index 0 to n of path, false if moving backwards
 
 	bool moving;
 	point dest;
+public:
 
 	int behavior;
 	Enemy(int b) : combatant(), behavior(b) {
 		srand(unsigned int(time(NULL)));
-		itr = path.begin();
+		ind = 0;
 		dir = true;
 		moving = false;
 	}
 
 	void addWaypoint(const point& p) { //Adds to path vector at end
-		return addWaypoint(p, -1);
-		itr = path.begin();
+		addWaypoint(p, -1);
+		ind= 0;
+		return;
 	}
 
-	void addWaypoint(const point& p, int ind) { //Adds to path vector at index
-		if (ind == -1) { return path.push_back(p); }
-		list<point>::iterator iter;
-		if (ind < path.size() / 2) {
-			iter = path.begin();
-			for (int i = 0; i < ind; i++) { iter++; }
-		} else {
-			iter = path.end();
-			for (int i = 0; i < (path.size() - ind); i++) { iter--; }
-		}
-		path.insert(iter, p);
+	void addWaypoint(const point& p, int i) { //Adds to path vector at index
+		if (i == -1) { return path.push_back(p); }
+		path.insert(path.begin() + i, p);
 	}
 
 	void act() {	//Decides which AI to implement
-		if (moving) { return; }
+		if (moving) {
+			point dire = (dest - position);
+			if (dire.magnitude() < .05) {
+				moving = false;
+			} else {
+				position += unitvector(dire)*.02;
+			}
+			return;
+		}
 		switch (behavior) {
 		case 1:
 			return behave1();
@@ -131,7 +133,7 @@ public:
 	}
 
 	void behave1() {	//Just follows the path
-		if (!path.size()) { return; } 
+		if (path.size() == 0) { return; } 
 		else if (path.size() == 1) { 
 			if ((path.front() - position).magnitude() > .5) {
 				move(path.front());
@@ -139,21 +141,19 @@ public:
 			return; 
 		}
 
-		if (itr == path.begin()) {
-			itr++;
+		if (ind == 0) {
+			ind++;
 			dir = true;
-			move(*itr);
-		} /*else if(itr != path.end()){
-			if (++itr == path.end()) {
-				itr--;
-				itr--;
-				dir = false;
-				move(*itr);
-			}
-		}*/
-		else {
-			if (dir) { itr++; } else { itr--; }
-			move(*itr);
+			move(path[ind]);
+		} 
+		else if(ind == (path.size()-1)){
+			ind--;
+			dir = false;
+			move(path[ind]);
+		} 
+		else{
+			ind += (dir ? 1 : -1);
+			move(path[ind]);
 		}
 		return;
 	}
@@ -167,16 +167,16 @@ public:
 
 	}
 
-	void move(point& dir) {
-		dest = dir;
+	void move(point& dire) {
+		dest = dire;
 		moving = true;
 	}
 
-	void aim(point& dir) {
+	void aim(point& dire) {
 
 	}
 
-	void shoot(point& dir) {
+	void shoot(point& dire) {
 
 	}
 };

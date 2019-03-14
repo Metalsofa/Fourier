@@ -329,16 +329,7 @@ public:
 
 		//Iterate AI:
 		for (Enemy& e : antags) {
-			if (e.moving) {
-				point dir = (e.dest - e.position);
-				if (dir.magnitude() < .05) {
-					e.moving = false;
-				} else {
-					e.position += unitvector(dir)*.02;
-				}
-			} else {
-				e.act();
-			}
+			e.act();
 		}
 	}
 	//Constructor to read a "battlePreset.txt" and define this battlestate accordingly
