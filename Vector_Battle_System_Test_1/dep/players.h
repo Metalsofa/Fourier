@@ -78,6 +78,8 @@ public:
 		for (shape& sh : sprite.pieces) { sh.lineThickness = (tog? 1 : 2); }
 		tog = !tog;
 	}
+
+
 };
 
 class Enemy : public combatant {

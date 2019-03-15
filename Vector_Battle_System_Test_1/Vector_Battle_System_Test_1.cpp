@@ -298,6 +298,8 @@ int main(int argc, char **argv) {
 	currentbattle.antags.push_back(e1);
 	currentbattle.antags[0].addWaypoint(point(7, 2));
 	currentbattle.antags[0].addWaypoint(point(7, 4));
+	currentbattle.antags[0].addWaypoint(point(1, 3));
+	currentbattle.antags[0].addWaypoint(point(3, 1));
 
 	//enter GLUT event processing cycle
 	st.Start();

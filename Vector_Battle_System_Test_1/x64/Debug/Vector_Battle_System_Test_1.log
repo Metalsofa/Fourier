@@ -1,6 +1,6 @@
 ﻿  Vector_Battle_System_Test_1.cpp
 c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(78): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(118): warning C4305: 'argument': truncation from 'double' to 'const float'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(120): warning C4305: 'argument': truncation from 'double' to 'const float'
 c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\controls.h(158): warning C4305: 'argument': truncation from 'double' to 'const float'
 c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(64): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
 c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(267): warning C4305: '=': truncation from 'double' to 'float'

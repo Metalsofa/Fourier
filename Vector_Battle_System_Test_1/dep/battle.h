@@ -194,6 +194,13 @@ public:
 					term = true;
 				}
 			}
+			for (combatant& x : antags) {
+				int hit = rays[i].checkcollision(x);
+				if (hit) {
+					rays[i].terminate(rays[i].bits[hit - 1]); //http://mathworld.wolfram.com/Circle-LineIntersection.html
+					term = true;
+				}
+			}
 			for (wall& surface : map.walls) {
 				if (rays[i].checkcollision(surface.getbody())) {
 					term = true;
