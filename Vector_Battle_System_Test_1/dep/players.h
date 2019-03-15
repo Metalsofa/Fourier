@@ -78,11 +78,11 @@ public:
 		for (shape& sh : sprite.pieces) { sh.lineThickness = (tog? 1 : 2); }
 		tog = !tog;
 	}
-
-
+	
 };
 
 class Enemy : public combatant {
+	typedef  void (Enemy::*behavior)();
 private:
 	vector<point> path;
 	int ind;
@@ -90,14 +90,33 @@ private:
 
 	bool moving;
 	point dest;
+	behavior behave;
+
 public:
 
-	int behavior;
-	Enemy(int b) : combatant(), behavior(b) {
+	
+
+	Enemy(int b) : combatant(){
 		srand(unsigned int(time(NULL)));
 		ind = 0;
 		dir = true;
 		moving = false;
+		switch (b) {
+		case 1: 
+			behave = &Enemy::b1;
+			break;
+		case 2:
+			behave = &Enemy::b1;
+			break;
+		case 3: 
+			behave = &Enemy::b1;
+			break;
+		case 4:
+			behave = &Enemy::b1;
+			break;
+		default:
+			behave = nullptr;
+		}
 	}
 
 	void addWaypoint(const point& p) { //Adds to path vector at end
@@ -121,20 +140,15 @@ public:
 			}
 			return;
 		}
-		switch (behavior) {
-		case 1:
-			return behave1();
-		case 2:
-			return behave2();
-		case 3:
-			return behave3();
-		case 4:
-			return behave4();
+		if (behave) {
+			invoke(behave, *this);		//USING THIS BECAUSE BEHAVIOR IS SCOPED TO MEMBER FUNCTION
+			return;
 		}
 		cerr << "ERROR: INVALID BEHAVIOR" << endl;
+		return;
 	}
 
-	void behave1() {	//Just follows the path
+	void b1() {	//Just follows the path
 		if (path.size() == 0) { return; } 
 		else if (path.size() == 1) { 
 			if ((path.front() - position).magnitude() > .5) {
@@ -159,13 +173,13 @@ public:
 		}
 		return;
 	}
-	void behave2() {
+	void b2() {
 
 	}
-	void behave3() {
+	void b3() {
 
 	}
-	void behave4() {
+	void b4() {
 
 	}
 

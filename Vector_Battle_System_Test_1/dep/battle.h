@@ -201,6 +201,7 @@ public:
 					term = true;
 				}
 			}
+
 			for (wall& surface : map.walls) {
 				if (rays[i].checkcollision(surface.getbody())) {
 					term = true;
