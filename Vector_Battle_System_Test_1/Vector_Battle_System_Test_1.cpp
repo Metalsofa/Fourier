@@ -60,7 +60,11 @@ void clocksync() {
 	//Sleep(int((increment * 1000.0f * gamma)));
 	if (st.ElapsedMilliseconds() > increment * 1.2f * 1000.0f * gamma)
 		cout << "@frame " << int(timer) << " - TIME: " << st.ElapsedMilliseconds() << endl;
-	while (st.ElapsedMilliseconds() < double(increment * 1000.0f * gamma)) {}
+	int timeToNextItr = (double(increment * 1000.0f * gamma) - st.ElapsedMilliseconds());
+	if (timeToNextItr > 0) {
+		Sleep(timeToNextItr);
+	}
+	//while (st.ElapsedMilliseconds() < double(increment * 1000.0f * gamma)) {}
 	FPS = 1000 / st.ElapsedMilliseconds();
 	timer += increment * 100;
 	st.Stop();

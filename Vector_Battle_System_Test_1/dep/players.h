@@ -75,7 +75,7 @@ class player: public combatant {
 public:
 	bool tog;
 	void toggle() {
-		for (shape& sh : sprite.pieces) { sh.lineThickness = (tog? 1 : 2); }
+		for (shape& sh : sprite.pieces) { sh.lineThickness = (tog? 1.0f : 2.0f); }
 		tog = !tog;
 	}
 	
@@ -148,7 +148,7 @@ public:
 			if (dire.magnitude() < .05) {
 				moving = false;
 			} else {
-				position += unitvector(dire)*.02;
+				position += unitvector(dire)*.02f;
 			}
 			return;
 		} else if (moveB) {
@@ -184,21 +184,21 @@ public:
 		return;
 	}
 	void sB1() {	//Just shoots if there are no walls in the way of enemy and player
-		//bool shot = true;
-		//for (player& p : currentbattle.protags) {
-		//	shot = true;
-		//	for (wall& w : currentbattle.map.getWalls()) {				//Currently commented out due to not being able to recognize currentbattle, ray, etc.
-		//		segment s(p.position, position);
-		//		if (isintersect(w.body, s)) {
-		//			shot = false;
-		//			break;
-		//		}
-		//	}
-		//	if (shot) {
-		//		shoot(p.position);
-		//		return;
-		//	}
-		//}
+		bool shot = true;
+		for (player& p : currentbattle.protags) {
+			shot = true;
+			for (wall& w : currentbattle.map.getWalls()) {				//Currently commented out due to not being able to recognize currentbattle, ray, etc.
+				segment s(p.position, position);
+				if (isintersect(w.body, s)) {
+					shot = false;
+					break;
+				}
+			}
+			if (shot) {
+				shoot(p.position);
+				return;
+			}
+		}
 		return;
 	}
 	void mB2() {

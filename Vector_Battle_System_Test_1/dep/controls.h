@@ -14,7 +14,7 @@ battlePreset testpreset(11, 7); //Width, Height
 battlestate currentbattle(testpreset); //This holds the information about the current battle scene
 const int BoardDepth = 0; //Not sure about this. Probably will never change from 0.
 float timer = 0; //We'll see if this ends up being necessary
-float increment = float(1.0f / 65.0f);//0.01f; //Incremental time in seconds, the denominator is nominal FPS
+float increment = float(1.0f / (60.0f + .01f) );//0.01f; //Incremental time in seconds, the denominator is nominal FPS
 float gamma = 1.0f; //Time dilation, from the viewer's refrence frame
 int rain = 0; //This is really just for fun; good for iterating through a rainbow for no good reason
 
@@ -155,7 +155,7 @@ void battlefieldDesignKeychecks() {
 			if (normalKeysdown[' ']) {
 				for (player& b : currentbattle.protags) {
 					if (b.tog) {
-						ray newRay(colorfromID(rain++ % 12 + 1), (b.position + b.direction*.3), b.position + b.direction + b.direction, 2.0f,
+						ray newRay(colorfromID(rain++ % 12 + 1), (b.position + b.direction*.3f), b.position + b.direction + b.direction, 2.0f,
 							6.0f, 2);
 						currentbattle.spawnRay(newRay);
 					}

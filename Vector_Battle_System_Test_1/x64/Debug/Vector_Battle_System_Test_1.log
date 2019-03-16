@@ -1,11 +1,20 @@
 ﻿  Vector_Battle_System_Test_1.cpp
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(78): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(157): warning C4305: 'argument': truncation from 'double' to 'const float'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\controls.h(158): warning C4305: 'argument': truncation from 'double' to 'const float'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(64): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(267): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(275): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(283): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(291): warning C4305: '=': truncation from 'double' to 'float'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(296): warning C4305: '=': truncation from 'double' to 'float'
-  Vector_Battle_System_Test_1.vcxproj -> C:\Users\dp\Documents\GitHub\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(188): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(190): error C2065: 'wall': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(190): error C2065: 'w': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(190): error C2143: syntax error: missing ';' before ':'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(190): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(190): error C2143: syntax error: missing ';' before ')'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(191): error C2065: 'p': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(191): error C2664: 'segment::segment(segment &&)': cannot convert argument 1 from 'point' to 'const segment &'
+  c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(191): note: Reason: cannot convert from 'point' to 'const segment'
+  c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(191): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(192): error C2065: 'w': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(198): error C2065: 'p': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(63): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(68): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(271): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(279): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(287): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(295): warning C4305: '=': truncation from 'double' to 'float'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(300): warning C4305: '=': truncation from 'double' to 'float'
