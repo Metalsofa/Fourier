@@ -134,7 +134,7 @@ public:
 	//Other spells
 	//vector of sinks/sources
 	vector<player> protags;
-	vector<Enemy> antags;
+	vector<enemy> antags;
 	//vector of portals
 
 
@@ -336,7 +336,7 @@ public:
 		}
 
 		//Iterate AI:
-		for (Enemy& e : antags) {
+		for (enemy& e : antags) {
 			e.act();
 		}
 	}

@@ -291,7 +291,7 @@ int main(int argc, char **argv) {
 	plyr4.width = .4;
 	currentbattle.protags.push_back(plyr4);
 
-	Enemy e1(1);
+	enemy e1(1, 1);
 	e1.position = point(7, 4);
 	e1.width = .4;
 	plyr4.sprite = (graphic("delta.fgr"));

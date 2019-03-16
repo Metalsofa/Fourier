@@ -3,8 +3,8 @@ physics or outside of battle.*/
 #pragma once
 #define spells
 #include "geometry.h"
-#include "players.h"
 #include "waves.h"
+#include "players.h"
 
 //move: Spell Object that can be part of a player's known spells (called a function in game)
 	///string name

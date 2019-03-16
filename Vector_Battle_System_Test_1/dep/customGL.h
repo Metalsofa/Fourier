@@ -13,8 +13,8 @@ take advantage of freeGlut*/
 #include "GL/glut.h"
 #include "fcolor.h"
 #include "waves.h"
-#include "players.h"
 #include "camera.h"
+#include "players.h"
 
 #include <string>
 
