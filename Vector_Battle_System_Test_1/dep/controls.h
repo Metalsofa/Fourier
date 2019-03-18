@@ -1,9 +1,10 @@
 /*All player controls, and some debug ones, go in here.*/
 #pragma once
-#ifndef __controls_h
-#define __controls_h
+#ifndef __controls_h__
+#define __controls_h__
 
 #include "battle.h"
+#include "materials.h"
 
 
 bool keyMode = false; //Whether using keyboard controls (BETA)

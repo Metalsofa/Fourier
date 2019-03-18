@@ -1,7 +1,7 @@
 /*This file contains a great many custom rendering functions that
 take advantage of freeGlut*/
-#ifndef __customGL_h
-#define __customGL_h
+#ifndef __customGL_h__
+#define __customGL_h__
 
 /*Attention Developoers:
 	This header file was developed for another project, so there are some namespace

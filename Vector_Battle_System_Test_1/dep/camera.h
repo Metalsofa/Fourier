@@ -3,8 +3,8 @@
 Additionally, I was tired of having so many globals that could all fit into one class.
 Essentially it makes the cursor and the camera into classes
 It also contains some other settings*/
-#ifndef __camera_h
-#define __camera_h
+#ifndef __camera_h__
+#define __camera_h__
 
 //Global Camera Position Data
 float LookPointX = float(currentbattle.boardWidth()) / 2.0f;

@@ -1,7 +1,8 @@
 /*This header file contians the object typs that keep track of spell info, whether in battle through
 physics or outside of battle.*/
 #pragma once
-#define spells
+#ifndef __spells_h__
+#define __spells_h__
 #include "geometry.h"
 #include "waves.h"
 #include "players.h"
@@ -206,3 +207,5 @@ public:
 
 //field:
 	//function that returns direction and magnitude, given x and y
+
+#endif
