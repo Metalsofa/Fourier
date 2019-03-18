@@ -1,2 +1,84 @@
 ﻿  Vector_Battle_System_Test_1.cpp
-  Vector_Battle_System_Test_1.vcxproj -> C:\Users\dp\Documents\GitHub\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\camera.h(10): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\camera.h(11): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\camera.h(12): error C2065: 'BoardDepth': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(118): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(119): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(119): error C2660: 'glVertex3f': function does not take 2 arguments
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\gl\gl.h(1477): note: see declaration of 'glVertex3f'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(126): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(129): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(129): error C2660: 'glVertex3f': function does not take 2 arguments
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\gl\gl.h(1477): note: see declaration of 'glVertex3f'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(130): error C2065: 'BoardDepth': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(130): error C2660: 'glVertex3f': function does not take 2 arguments
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\gl\gl.h(1477): note: see declaration of 'glVertex3f'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(133): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(135): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(136): error C2065: 'BoardDepth': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(136): error C2660: 'glVertex3f': function does not take 2 arguments
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\gl\gl.h(1477): note: see declaration of 'glVertex3f'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(143): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(144): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(144): error C2660: 'glVertex3f': function does not take 2 arguments
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\gl\gl.h(1477): note: see declaration of 'glVertex3f'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(353): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(353): error C2660: 'glVertex2f': function does not take 1 arguments
+  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\gl\gl.h(1469): note: see declaration of 'glVertex2f'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(355): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(359): error C2065: 'DESIGN_FUNCTION': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(387): error C2065: 'wall': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(387): error C2065: 'drawingWall': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(387): error C2182: 'drawwall': illegal use of type 'void'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(387): error C2448: 'drawwall': function-style initializer appears to be a function definition
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(409): error C2065: 'ray': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(409): error C2065: 'drawingRay': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(409): error C2182: 'drawray': illegal use of type 'void'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(409): error C2448: 'drawray': function-style initializer appears to be a function definition
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(464): error C2065: 'combatant': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(464): error C2065: 'fighter': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(464): error C2182: 'drawCombatant': illegal use of type 'void'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(464): error C2448: 'drawCombatant': function-style initializer appears to be a function definition
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(499): error C2065: 'currentbattle': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(499): error C2440: '<function-style-cast>': cannot convert from 'float' to 'point'
+  c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(499): note: No constructor could take the source type, or constructor overload resolution was ambiguous
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(87): error C2061: syntax error: identifier 'battlestate'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(149): error C2061: syntax error: identifier 'battlestate'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(166): error C2061: syntax error: identifier 'battlestate'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(190): error C2061: syntax error: identifier 'battlestate'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(208): error C2061: syntax error: identifier 'battlestate'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(211): error C2061: syntax error: identifier 'battlestate'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(214): error C2061: syntax error: identifier 'battlestate'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(227): error C2061: syntax error: identifier 'battlestate'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(231): error C2061: syntax error: identifier 'battlestate'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(159): error C2065: 'b': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(192): error C2065: 'b': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(194): error C2065: 'wall': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(194): error C2065: 'w': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(194): error C2143: syntax error: missing ';' before ':'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(194): error C2065: 'b': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(194): error C2143: syntax error: missing ';' before ')'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(195): error C2065: 'p': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(195): error C2664: 'segment::segment(segment &&)': cannot convert argument 1 from 'point' to 'const segment &'
+  c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(195): note: Reason: cannot convert from 'point' to 'const segment'
+  c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(195): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(196): error C2065: 'w': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(202): error C2065: 'p': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(202): error C2065: 'b': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(202): error C2661: 'enemy::shoot': no overloaded function takes 2 arguments
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(228): error C2065: 'b': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(232): error C2065: 'ray': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(232): error C2146: syntax error: missing ';' before identifier 'newRay'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(232): error C2065: 'rain': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(232): error C3861: 'newRay': identifier not found
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(234): error C2065: 'b': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(234): error C2065: 'newRay': undeclared identifier
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\battle.h(340): error C2660: 'enemy::act': function does not take 1 arguments
+  c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(149): note: see declaration of 'enemy::act'
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\controls.h(122): error C2064: term does not evaluate to a function taking 1 arguments
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\controls.h(137): error C2064: term does not evaluate to a function taking 1 arguments
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\controls.h(153): error C2064: term does not evaluate to a function taking 1 arguments
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(122): error C2064: term does not evaluate to a function taking 1 arguments
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(130): error C2064: term does not evaluate to a function taking 1 arguments
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(135): error C2064: term does not evaluate to a function taking 1 arguments
+c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(138): error C2064: term does not evaluate to a function taking 1 arguments

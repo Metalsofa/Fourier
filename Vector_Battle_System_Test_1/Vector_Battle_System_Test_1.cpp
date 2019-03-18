@@ -41,6 +41,8 @@ bool enablePersprot = false; ///fun: enable the user to rotate their perspective
 bool showTimer = false; ///Debug: Show the timer in the lower left
 bool showFPS = true;
 int FPS = 0; ///Calculated and frequently-updated FPS
+bool showConsole = false;
+
 
 //Global stopwatch
 Stopwatch st;
@@ -48,10 +50,10 @@ Stopwatch st;
 
 
 //Be careful; certain headers should only be included after global declaration
+#include "controls.h"
 #include "art.h"
 #include "battle.h"
 #include "console.h"
-#include "controls.h"
 #include "camera.h"
 #include "customGL.h"
 #include "players.h"

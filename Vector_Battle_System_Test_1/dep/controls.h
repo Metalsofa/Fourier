@@ -3,6 +3,8 @@
 #ifndef __controls_h
 #define __controls_h
 
+#include "battle.h"
+
 
 bool keyMode = false; //Whether using keyboard controls (BETA)
 void exteriorConsole();

@@ -10,12 +10,14 @@ thing, to be called by the function that initiates battle */
 #include <sstream>
 #include <map>
 #include <list> 
+#include <time.h>
 
 #include "geometry.h"
 #include "art.h"
+//#include "battle.h"
+#include "customGL.h"
 
 using namespace std;
-
 
 //This version of stats is for overworld logic and battle initiation
 class stats {
@@ -82,7 +84,7 @@ public:
 };
 
 class enemy : public combatant {	//Non controlled combatants with AI
-	typedef  void (enemy::*behavior)();
+	typedef  void (enemy::*behavior)(battlestate&);
 private:
 	vector<point> path;	//Contains points on a path for enemy to follow
 	int ind;	//Current index of path that enemy is at is coming from
@@ -144,7 +146,7 @@ public:
 		path.insert(path.begin() + i, p);
 	}
 
-	void act() {	//invokes moving and shooting functions appropriately
+	void act(battlestate& b) {	//invokes moving and shooting functions appropriately
 		if (moving) {
 			point dire = (dest - position);
 			if (dire.magnitude() < .05) {	//.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
@@ -154,14 +156,14 @@ public:
 			}
 			return;
 		} else if (moveB) {
-			invoke(moveB, *this);		//USING THIS BECAUSE BEHAVIOR IS SCOPED TO MEMBER FUNCTION
+			invoke(moveB, *this, b);		//USING THIS BECAUSE BEHAVIOR IS SCOPED TO MEMBER FUNCTION
 			return;
 		}
 		cerr << "ERROR: INVALID BEHAVIOR" << endl;
 		return;
 	}
 
-	void mB1() {	//Just follows the path 
+	void mB1(battlestate& b) {	//Just follows the path 
 		if (path.size() == 0) { return; } 
 		else if (path.size() == 1) { 
 			if ((path.front() - position).magnitude() > .05) { //.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
@@ -185,31 +187,31 @@ public:
 		}
 		return;
 	}
-	void sB1() {	//Just shoots if there are no walls in the way of enemy and player
-		//bool shot = true;
-		//for (player& p : currentbattle.protags) {
-		//	shot = true;
-		//	for (wall& w : currentbattle.map.getWalls()) {				//Currently commented out due to not being able to recognize currentbattle, ray, etc.
-		//		segment s(p.position, position);
-		//		if (isintersect(w.body, s)) {
-		//			shot = false;
-		//			break;
-		//		}
-		//	}
-		//	if (shot) {
-		//		shoot(p.position);
-		//		return;
-		//	}
-		//}
+	void sB1(battlestate& b) {	//Just shoots if there are no walls in the way of enemy and player
+		bool shot = true;
+		for (player& p : b.protags) {
+			shot = true;
+			for (wall& w : b.map.getWalls()) {				//Currently commented out due to not being able to recognize currentbattle, ray, etc.
+				segment s(p.position, position);
+				if (isintersect(w.body, s)) {
+					shot = false;
+					break;
+				}
+			}
+			if (shot) {
+				shoot(p.position,b);
+				return;
+			}
+		}
 		return;
 	}
-	void mB2() {
+	void mB2(battlestate& b) {
 
 	}
-	void mB3() {
+	void mB3(battlestate& b) {
 
 	}
-	void mB4() {
+	void mB4(battlestate& b) {
 
 	}
 
@@ -222,14 +224,14 @@ public:
 		aim = dire;
 	}
 
-	void shoot() { //Shoots where aiming
-		shoot(aim);
+	void shoot(battlestate& b) { //Shoots where aiming
+		shoot(aim, b);
 	}
 
-	void shoot(const point& dire) { //Shoots at a point
-		//ray newRay(colorfromID(rain++ % 12 + 1), (dire-position)*.3f, dire, 2.0f,		//Currently commented out due to not being able to recognize currentbattle, ray, etc.
-		//	6.0f, 2);
-		//currentbattle.spawnRay(newRay);
+	void shoot(const point& dire, battlestate& b) { //Shoots at a point
+		ray newRay(colorfromID(rain++ % 12 + 1), (dire-position)*.3f, dire, 2.0f,		//Currently commented out due to not being able to recognize currentbattle, ray, etc.
+			6.0f, 2);
+		b.spawnRay(newRay);
 	}
 };
 

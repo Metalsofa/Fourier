@@ -337,7 +337,7 @@ public:
 
 		//Iterate AI:
 		for (enemy& e : antags) {
-			e.act();
+			e.act(*this);
 		}
 	}
 	//Constructor to read a "battlePreset.txt" and define this battlestate accordingly
