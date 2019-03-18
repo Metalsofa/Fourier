@@ -1,7 +1,7 @@
 /*This header file contains classes and methods relating to the chord, note, and wave logic of this game*/
 #pragma once
-#ifndef __waves_h
-#define __waves_h
+#ifndef __waves_h__
+#define __waves_h__
 #include <cmath>
 #include <vector>
 #include "geometry.h"

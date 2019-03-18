@@ -16,12 +16,36 @@
     <Filter Include="Implementation Files">
       <UniqueIdentifier>{1c87aac8-5367-4cba-8a71-5c40310bf286}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Documentation Files">
+      <UniqueIdentifier>{9baa10d0-4b0b-47fb-9fcb-54189def5ae7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation Files\greeglut">
+      <UniqueIdentifier>{9ff706db-2dee-4f3b-b519-5b305d089a97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documentation Files\stopwatch">
+      <UniqueIdentifier>{afa393f5-568b-4f16-8b43-95ed677f00c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Vector_Battle_System_Test_1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="dep\battle.cpp">
+      <Filter>Implementation Files</Filter>
+    </ClCompile>
+    <ClCompile Include="spells.cpp">
+      <Filter>Implementation Files</Filter>
+    </ClCompile>
+    <ClCompile Include="room.cpp">
+      <Filter>Implementation Files</Filter>
+    </ClCompile>
+    <ClCompile Include="resource.cpp">
+      <Filter>Implementation Files</Filter>
+    </ClCompile>
+    <ClCompile Include="players.cpp">
+      <Filter>Implementation Files</Filter>
+    </ClCompile>
+    <ClCompile Include="materials.cpp">
       <Filter>Implementation Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -91,6 +115,15 @@
   <ItemGroup>
     <Text Include="..\..\..\..\AppData\Local\Temp\Rar$DRa10236.32037\StopwatchWin32-master\LICENSE.txt">
       <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="freeglut\Readme.txt">
+      <Filter>Documentation Files\greeglut</Filter>
+    </Text>
+    <Text Include="freeglut\Copying.txt">
+      <Filter>Documentation Files\greeglut</Filter>
+    </Text>
+    <Text Include="Stopwatch\LICENSE.txt">
+      <Filter>Documentation Files\stopwatch</Filter>
     </Text>
   </ItemGroup>
 </Project>

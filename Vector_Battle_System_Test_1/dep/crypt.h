@@ -1,12 +1,12 @@
 #pragma once
 
-#ifndef __crypt_h
-#define __crypt_h
+#ifndef __crypt_h__
+#define __crypt_h__
 
 #include <string>
 #include <vector>
 #include <fstream>
-#include <iostream> //Helps with debug stuff
+#include <iostream>
 
 using namespace std;
 

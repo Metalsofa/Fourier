@@ -1,8 +1,8 @@
 /*This header file is home to a lot of console, design, and debug functionality.
 In theory, nothing that the player will need during gameplay should be in here.*/
 #pragma once
-#ifndef __console_h
-#define __console_h
+#ifndef __console_h__
+#define __console_h__
 
 #include <string>
 #include "gl/glut.h"

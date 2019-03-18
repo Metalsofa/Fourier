@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef __fcolor_h
-#define __fcolor_h
+#ifndef __fcolor_h__
+#define __fcolor_h__
 
 #include <cmath>
 

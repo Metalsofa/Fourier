@@ -1,7 +1,7 @@
 //We'll include things like triangles and other fun geometric functions in this one.
 #pragma once
-#ifndef __geometry_h
-#define __geometry_h
+#ifndef __geometry_h__
+#define __geometry_h__
 #include <cmath>
 #include <string>
 #include <vector>

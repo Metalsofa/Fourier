@@ -1,11 +1,12 @@
 /*The purpose of this header file is to implement methods associated with
 user-friendly fgr manipulation*/
 #pragma once
-#ifndef __graphics_h
-#define __graphics_h
+#ifndef __graphics_h__
+#define __graphics_h__
 
 #include "geometry.h"
 #include "crypt.h"
+
 #include <sstream>
 #include <string>
 #include <vector>

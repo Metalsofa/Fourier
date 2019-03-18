@@ -1,6 +1,6 @@
 #pragma once
-#ifndef __art_h
-#define __art_h
+#ifndef __art_h__
+#define __art_h__
 
 #include "graphics.h"
 #include <string>

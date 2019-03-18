@@ -8,6 +8,8 @@ function. It may be prudent to later change what it is called.*/
 #define BD_MAKE_RAYS 3
 #define BD_MAKE_SHAPES 4
 
+#include "geometry.h"
+#include "crypt.h"
 #include "gl/glut.h"
 #include "Stopwatch.h"
 #include "graphics.h"

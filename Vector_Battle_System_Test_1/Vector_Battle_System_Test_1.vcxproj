@@ -117,6 +117,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>
       </AdditionalDependencies>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -155,10 +156,16 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dep\battle.cpp" />
+    <ClCompile Include="materials.cpp" />
+    <ClCompile Include="players.cpp" />
+    <ClCompile Include="resource.cpp" />
+    <ClCompile Include="room.cpp" />
+    <ClCompile Include="spells.cpp" />
     <ClCompile Include="Vector_Battle_System_Test_1.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +195,9 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\..\AppData\Local\Temp\Rar$DRa10236.32037\StopwatchWin32-master\LICENSE.txt" />
+    <Text Include="freeglut\Copying.txt" />
+    <Text Include="freeglut\Readme.txt" />
+    <Text Include="Stopwatch\LICENSE.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
