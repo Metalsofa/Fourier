@@ -184,22 +184,22 @@ public:
 		return;
 	}
 	void sB1() {	//Just shoots if there are no walls in the way of enemy and player
-		bool shot = true;
-		for (player& p : currentbattle.protags) {
-			shot = true;
-			for (wall& w : currentbattle.map.getWalls()) {				//Currently commented out due to not being able to recognize currentbattle, ray, etc.
-				segment s(p.position, position);
-				if (isintersect(w.body, s)) {
-					shot = false;
-					break;
-				}
-			}
-			if (shot) {
-				shoot(p.position);
-				return;
-			}
-		}
-		return;
+		////bool shot = true;
+		////for (player& p : currentbattle.protags) {
+		////	shot = true;
+		////	for (wall& w : currentbattle.map.getWalls()) {				//Currently commented out due to not being able to recognize currentbattle, ray, etc.
+		////		segment s(p.position, position);
+		////		if (isintersect(w.body, s)) {
+		////			shot = false;
+		////			break;
+		////		}
+		////	}
+		////	if (shot) {
+		////		shoot(p.position);
+		////		return;
+		////	}
+		////}
+		////return;
 	}
 	void mB2() {
 
