@@ -160,7 +160,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="console.cpp" />
+    <ClCompile Include="controls.cpp" />
+    <ClCompile Include="crypt.cpp" />
+    <ClCompile Include="customGL.cpp" />
     <ClCompile Include="dep\battle.cpp" />
+    <ClCompile Include="fcolor.cpp" />
     <ClCompile Include="materials.cpp" />
     <ClCompile Include="players.cpp" />
     <ClCompile Include="resource.cpp" />

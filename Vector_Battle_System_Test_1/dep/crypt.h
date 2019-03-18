@@ -32,119 +32,21 @@ const string cipherBaseAlphabet = //very tough to decode
 "+L~A0|J`F9Ir8?/O!t@E#u$NhiP7nQRS^(K)-_s1v[B]{M}<C>', .%wG&Hxyz;:=T*U6VWXY\\ZD5abcde4f\"gj3klmo2pq";
 
 //Returns a shifted alphabet for the keyed vigenere cipher
-string alphabetShift(char& newFirstletter, const string baseAlphabet) {
-	string newAlphabet = baseAlphabet;
-	char infinityPreventer = baseAlphabet[0];
-	bool firsttry = true;
-	while (newAlphabet[0] != newFirstletter) {
-		if (newAlphabet[0] == infinityPreventer && !firsttry) {
-			break;
-		}
-		if (newAlphabet[0] == infinityPreventer) {
-			firsttry = false;
-		}
-		newAlphabet = newAlphabet + newAlphabet[0];
-		newAlphabet.erase(newAlphabet.begin());
-	}
-	return newAlphabet;
-}
+string alphabetShift(char& newFirstletter, const string baseAlphabet);
 
-int letterIndex(char& letter, const string& alphabet) {
-	unsigned int i = 0;
-	while (i < alphabet.size()) {
-		if (alphabet[i] == letter)
-			return i;
-		i++;
-	}
-	return 0;
-}
+int letterIndex(char& letter, const string& alphabet);
 
-string encrypt(const string& message, const string& keyword) {
-	string cipher = "";
-	int i = 0;
-	if (keyword == "")
-		return message;
-	for (char c : message) {
-		int letterindex = letterIndex(c, cipherBaseAlphabet);
-		int keyletternum = int(i % keyword.size());
-		char keyletter = keyword[keyletternum];
-		string shiftebet = alphabetShift(keyletter, cipherBaseAlphabet);
-		char newletter = shiftebet[letterindex];
-		cipher = cipher + newletter;
-		i++;
-	}
-	return cipher;
-}
+string encrypt(const string& message, const string& keyword);
 
-string multiEncrypt(unsigned int depth,  string message, string keyword) {
-	unsigned int i = 0;
-	if (keyword == "")
-		keyword = "0";
-	while (i < depth) {
-		message = encrypt(message, keyword);
-		i++;
-	}
-	return message;
-}
+string multiEncrypt(unsigned int depth, string message, string keyword);
 
-string unencrypt(string cryptogram, string keyword) {
-	string message = "";
-	if (keyword == "")
-		keyword = "0";
-	int i = 0;
-	for (char c : cryptogram) {
-		int keyletternum = int(i % keyword.size());
-		char keyletter = keyword[keyletternum];
-		string shiftebet = alphabetShift(keyletter, cipherBaseAlphabet);
-		int letterindex = letterIndex(c, shiftebet);
-		char newletter = cipherBaseAlphabet[letterindex];
-		message = message + newletter;
-		i++;
-	}
-	return message;
-}
+string unencrypt(string cryptogram, string keyword);
 
-string multiUnencrypt(unsigned int depth, string cipher, string key) {
-	unsigned int i = 0;
-	if (key == "")
-		key = "0";
-	while (i < depth) {
-		cipher = unencrypt(cipher, key);
-		i++;
-	}
-	return cipher;
-}
+string multiUnencrypt(unsigned int depth, string cipher, string key);
 
 //Takes a filename and returns a vector where each line is an uncrypted line from the file.
-vector<string> unencryptedContents(string filename, string keyword) {
-	ifstream textfile;
-	textfile.open(filename);
-	if (!textfile.good()) {
-		cerr << "ERROR | crypt.h | Could not open file | " << filename << endl;
-	}
-	vector<string> contents;
-	string line;
-	if (textfile.is_open()) {
-		while (getline(textfile, line)) {
-			line = unencrypt(line, keyword);
-			contents.emplace_back(line);
-		}
-		textfile.close();
-	}
-	else
-		contents.push_back("FAILED TO READ FILE " + filename);
-	return contents;
-}
+vector<string> unencryptedContents(string filename, string keyword);
 
-void encryptAndOverwrite(vector<string>& contents, string& filename, string keyword) {
-	ofstream writefile;
-	writefile.open(filename, ios::trunc);
-	if (writefile.is_open()) {
-		for (string printline : contents) {
-			writefile << encrypt(printline, keyword) << endl;
-		}
-		writefile.close();
-	}
-}
+void encryptAndOverwrite(vector<string>& contents, string& filename, string keyword);
 
 #endif
