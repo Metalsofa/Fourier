@@ -18,13 +18,13 @@ public:
 	segment& getbody() { return body; }
 	materialtype getmaterial() { return material; }
 	bool getfixed() { return fixed; }
-	wall (segment definingsegment, Material wallmaterial, bool isfixed) {
+	wall(segment definingsegment, Material wallmaterial, bool isfixed) {
 		body = definingsegment;
 		materialtype definingMatarial(wallmaterial);
 		material = definingMatarial;
 		fixed = isfixed;
 	}
-	wall() {} //DP: You don't need default values?
+	wall(); //DP: You don't need default values?
 };
 
 //A battlefield is one of the members of battlePreset and battlestate; it contains the "terrain" of the battle, if you will.
@@ -337,7 +337,7 @@ public:
 
 		//Iterate AI:
 		for (enemy& e : antags) {
-			e.act(*this);
+			//e.act(*this);
 		}
 	}
 	//Constructor to read a "battlePreset.txt" and define this battlestate accordingly

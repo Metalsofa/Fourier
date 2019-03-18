@@ -1,84 +1,60 @@
-﻿  Vector_Battle_System_Test_1.cpp
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\camera.h(10): error C2065: 'currentbattle': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\camera.h(11): error C2065: 'currentbattle': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\camera.h(12): error C2065: 'BoardDepth': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(118): error C2065: 'currentbattle': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(119): error C2065: 'currentbattle': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(119): error C2660: 'glVertex3f': function does not take 2 arguments
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\gl\gl.h(1477): note: see declaration of 'glVertex3f'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(126): error C2065: 'currentbattle': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(129): error C2065: 'currentbattle': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(129): error C2660: 'glVertex3f': function does not take 2 arguments
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\gl\gl.h(1477): note: see declaration of 'glVertex3f'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(130): error C2065: 'BoardDepth': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(130): error C2660: 'glVertex3f': function does not take 2 arguments
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\gl\gl.h(1477): note: see declaration of 'glVertex3f'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(133): error C2065: 'currentbattle': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(135): error C2065: 'currentbattle': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(136): error C2065: 'BoardDepth': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(136): error C2660: 'glVertex3f': function does not take 2 arguments
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\gl\gl.h(1477): note: see declaration of 'glVertex3f'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(143): error C2065: 'currentbattle': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(144): error C2065: 'currentbattle': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(144): error C2660: 'glVertex3f': function does not take 2 arguments
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\gl\gl.h(1477): note: see declaration of 'glVertex3f'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(353): error C2065: 'currentbattle': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(353): error C2660: 'glVertex2f': function does not take 1 arguments
-  c:\program files (x86)\windows kits\10\include\10.0.17763.0\um\gl\gl.h(1469): note: see declaration of 'glVertex2f'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(355): error C2065: 'currentbattle': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(359): error C2065: 'DESIGN_FUNCTION': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(387): error C2065: 'wall': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(387): error C2065: 'drawingWall': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(387): error C2182: 'drawwall': illegal use of type 'void'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(387): error C2448: 'drawwall': function-style initializer appears to be a function definition
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(409): error C2065: 'ray': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(409): error C2065: 'drawingRay': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(409): error C2182: 'drawray': illegal use of type 'void'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(409): error C2448: 'drawray': function-style initializer appears to be a function definition
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(464): error C2065: 'combatant': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(464): error C2065: 'fighter': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(464): error C2182: 'drawCombatant': illegal use of type 'void'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(464): error C2448: 'drawCombatant': function-style initializer appears to be a function definition
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(499): error C2065: 'currentbattle': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(499): error C2440: '<function-style-cast>': cannot convert from 'float' to 'point'
-  c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\customgl.h(499): note: No constructor could take the source type, or constructor overload resolution was ambiguous
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(87): error C2061: syntax error: identifier 'battlestate'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(149): error C2061: syntax error: identifier 'battlestate'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(166): error C2061: syntax error: identifier 'battlestate'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(190): error C2061: syntax error: identifier 'battlestate'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(208): error C2061: syntax error: identifier 'battlestate'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(211): error C2061: syntax error: identifier 'battlestate'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(214): error C2061: syntax error: identifier 'battlestate'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(227): error C2061: syntax error: identifier 'battlestate'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(231): error C2061: syntax error: identifier 'battlestate'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(159): error C2065: 'b': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(192): error C2065: 'b': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(194): error C2065: 'wall': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(194): error C2065: 'w': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(194): error C2143: syntax error: missing ';' before ':'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(194): error C2065: 'b': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(194): error C2143: syntax error: missing ';' before ')'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(195): error C2065: 'p': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(195): error C2664: 'segment::segment(segment &&)': cannot convert argument 1 from 'point' to 'const segment &'
-  c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(195): note: Reason: cannot convert from 'point' to 'const segment'
-  c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(195): note: No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(196): error C2065: 'w': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(202): error C2065: 'p': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(202): error C2065: 'b': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(202): error C2661: 'enemy::shoot': no overloaded function takes 2 arguments
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(228): error C2065: 'b': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(232): error C2065: 'ray': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(232): error C2146: syntax error: missing ';' before identifier 'newRay'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(232): error C2065: 'rain': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(232): error C3861: 'newRay': identifier not found
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(234): error C2065: 'b': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(234): error C2065: 'newRay': undeclared identifier
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\battle.h(340): error C2660: 'enemy::act': function does not take 1 arguments
-  c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\players.h(149): note: see declaration of 'enemy::act'
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\controls.h(122): error C2064: term does not evaluate to a function taking 1 arguments
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\controls.h(137): error C2064: term does not evaluate to a function taking 1 arguments
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\dep\controls.h(153): error C2064: term does not evaluate to a function taking 1 arguments
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(122): error C2064: term does not evaluate to a function taking 1 arguments
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(130): error C2064: term does not evaluate to a function taking 1 arguments
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(135): error C2064: term does not evaluate to a function taking 1 arguments
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\vector_battle_system_test_1.cpp(138): error C2064: term does not evaluate to a function taking 1 arguments
+﻿  battle.cpp
+Vector_Battle_System_Test_1.obj : error LNK2005: "public: __cdecl materialtype::materialtype(enum Material)" (??0materialtype@@QEAA@W4Material@@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl alphabetShift(char &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?alphabetShift@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEADV12@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "bool __cdecl between(float,float,float)" (?between@@YA_NMMM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point __cdecl combine(class point &,class point &)" (?combine@@YA?AVpoint@@AEAV1@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point __cdecl combine(class point const &,class point const &)" (?combine@@YA?AVpoint@@AEBV1@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "bool __cdecl converges(class point,class point)" (?converges@@YA_NVpoint@@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point __cdecl difference(class point &,class point &)" (?difference@@YA?AVpoint@@AEAV1@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point __cdecl difference(class point const &,class point const &)" (?difference@@YA?AVpoint@@AEBV1@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "float __cdecl distancetoline(class point &,class segment &)" (?distancetoline@@YAMAEAVpoint@@AEAVsegment@@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "float __cdecl distancetoseg(class point &,class segment &)" (?distancetoseg@@YAMAEAVpoint@@AEAVsegment@@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "float __cdecl dotproduct(class point &,class point &)" (?dotproduct@@YAMAEAVpoint@@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl encrypt(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?encrypt@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@AEBV12@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "void __cdecl encryptAndOverwrite(class std::vector<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > > &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?encryptAndOverwrite@@YAXAEAV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@AEAV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@V32@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class segment __cdecl equilateralBisector(class segment)" (?equilateralBisector@@YA?AVsegment@@V1@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "float __cdecl evalSeries(class std::vector<class sinusoid,class std::allocator<class sinusoid> > &,float)" (?evalSeries@@YAMAEAV?$vector@Vsinusoid@@V?$allocator@Vsinusoid@@@std@@@std@@M@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "float __cdecl flatcrossproduct(class point &,class point &)" (?flatcrossproduct@@YAMAEAVpoint@@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point __cdecl intersection(class segment &,class segment &)" (?intersection@@YA?AVpoint@@AEAVsegment@@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class metastat __cdecl inverse(class metastat &)" (?inverse@@YA?AVmetastat@@AEAV1@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "bool __cdecl isintersect(class segment &,class segment &)" (?isintersect@@YA_NAEAVsegment@@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "bool __cdecl isperpintersect(class point &,class segment &)" (?isperpintersect@@YA_NAEAVpoint@@AEAVsegment@@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "int __cdecl letterIndex(char &,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > const &)" (?letterIndex@@YAHAEADAEBV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl multiEncrypt(unsigned int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?multiEncrypt@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IV12@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl multiUnencrypt(unsigned int,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?multiUnencrypt@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@IV12@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "float __cdecl noteFrequency(int)" (?noteFrequency@@YAMH@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "int __cdecl pianoKey(float)" (?pianoKey@@YAHM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point __cdecl pointSum(class std::vector<class point,class std::allocator<class point> > &)" (?pointSum@@YA?AVpoint@@AEAV?$vector@Vpoint@@V?$allocator@Vpoint@@@std@@@std@@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "float __cdecl pyth(float &,float &)" (?pyth@@YAMAEAM0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "float __cdecl pyth(float const &,float const &)" (?pyth@@YAMAEBM0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point __cdecl reflection(class point &,class segment &)" (?reflection@@YA?AVpoint@@AEAV1@AEAVsegment@@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class segment __cdecl reflectiveBisector(class point &,class segment &,class segment &)" (?reflectiveBisector@@YA?AVsegment@@AEAVpoint@@AEAV1@1@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point __cdecl rotate90(class point)" (?rotate90@@YA?AVpoint@@V1@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class segment __cdecl rotate90about(int,class segment &)" (?rotate90about@@YA?AVsegment@@HAEAV1@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point __cdecl rotateabout(class point &,class point &,float &)" (?rotateabout@@YA?AVpoint@@AEAV1@0AEAM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "float __cdecl saw(float)" (?saw@@YAMM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class sinusoid __cdecl sawHarm(int,float,float)" (?sawHarm@@YA?AVsinusoid@@HMM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class std::vector<class sinusoid,class std::allocator<class sinusoid> > __cdecl sawSeries(int,float,float)" (?sawSeries@@YA?AV?$vector@Vsinusoid@@V?$allocator@Vsinusoid@@@std@@@std@@HMM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point __cdecl scalarproduct(class point &,float &)" (?scalarproduct@@YA?AVpoint@@AEAV1@AEAM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point __cdecl scalarproduct(class point const &,float const &)" (?scalarproduct@@YA?AVpoint@@AEBV1@AEBM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "float __cdecl squ(float)" (?squ@@YAMM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class sinusoid __cdecl squHarm(int,float,float)" (?squHarm@@YA?AVsinusoid@@HMM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class std::vector<class sinusoid,class std::allocator<class sinusoid> > __cdecl squSeries(int,float,float)" (?squSeries@@YA?AV?$vector@Vsinusoid@@V?$allocator@Vsinusoid@@@std@@@std@@HMM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "float __cdecl tri(float)" (?tri@@YAMM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class sinusoid __cdecl tri_harm(int,float,float)" (?tri_harm@@YA?AVsinusoid@@HMM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class std::vector<class sinusoid,class std::allocator<class sinusoid> > __cdecl tri_series(int,float,float)" (?tri_series@@YA?AV?$vector@Vsinusoid@@V?$allocator@Vsinusoid@@@std@@@std@@HMM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > __cdecl unencrypt(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?unencrypt@@YA?AV?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V12@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class std::vector<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::allocator<class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > > > __cdecl unencryptedContents(class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >,class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> >)" (?unencryptedContents@@YA?AV?$vector@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@V?$allocator@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@@2@@std@@V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@2@0@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point __cdecl unitfromangle(float &)" (?unitfromangle@@YA?AVpoint@@AEAM@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point __cdecl unitvector(class point)" (?unitvector@@YA?AVpoint@@V1@@Z) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "bool showLayers" (?showLayers@@3_NA) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "bool showDots" (?showDots@@3_NA) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "int editingLayer" (?editingLayer@@3HA) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "int editingFrame" (?editingFrame@@3HA) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "int dragdot" (?dragdot@@3HA) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "float ladDispSize" (?ladDispSize@@3MA) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class animation animart" (?animart@@3Vanimation@@A) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class graphic art" (?art@@3Vgraphic@@A) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class point layDispPos" (?layDispPos@@3Vpoint@@A) already defined in battle.obj
+Vector_Battle_System_Test_1.obj : error LNK2005: "class std::basic_string<char,struct std::char_traits<char>,class std::allocator<char> > currentGraphicName" (?currentGraphicName@@3V?$basic_string@DU?$char_traits@D@std@@V?$allocator@D@2@@std@@A) already defined in battle.obj
+C:\Users\dp\Documents\GitHub\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe : fatal error LNK1169: one or more multiply defined symbols found
