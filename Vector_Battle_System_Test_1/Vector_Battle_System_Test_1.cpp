@@ -45,11 +45,13 @@ int FPS = 0; ///Calculated and frequently-updated FPS
 //Global stopwatch
 Stopwatch st;
 
+
+
 //Be careful; certain headers should only be included after global declaration
 #include "art.h"
+#include "battle.h"
 #include "console.h"
 #include "controls.h"
-#include "battle.h"
 #include "camera.h"
 #include "customGL.h"
 #include "players.h"
@@ -60,12 +62,12 @@ void clocksync() {
 	//Sleep(int((increment * 1000.0f * gamma)));
 	if (st.ElapsedMilliseconds() > increment * 1.2f * 1000.0f * gamma)
 		cout << "@frame " << int(timer) << " - TIME: " << st.ElapsedMilliseconds() << endl;
-	int timeToNextItr = (double(increment * 1000.0f * gamma) - st.ElapsedMilliseconds());
+	int timeToNextItr = int((double(increment * 1000.0f * gamma) - st.ElapsedMilliseconds()));
 	if (timeToNextItr > 0) {
 		Sleep(timeToNextItr);
 	}
 	//while (st.ElapsedMilliseconds() < double(increment * 1000.0f * gamma)) {}
-	FPS = 1000 / st.ElapsedMilliseconds();
+	FPS = int(1000 / st.ElapsedMilliseconds());
 	timer += increment * 100;
 	st.Stop();
 	st.Start();
@@ -268,7 +270,7 @@ int main(int argc, char **argv) {
 	plyr1.turn(0);
 	plyr1.tog = false;
 	plyr1.sprite = (graphic("alpha.fgr"));
-	plyr1.width = .4;
+	plyr1.width = .4f;
 	currentbattle.protags.push_back(plyr1);
 
 	player plyr2;
@@ -276,7 +278,7 @@ int main(int argc, char **argv) {
 	plyr2.turn(0);
 	plyr2.tog = false;
 	plyr2.sprite = (graphic("beta.fgr"));
-	plyr2.width = .4;
+	plyr2.width = .4f;
 	currentbattle.protags.push_back(plyr2);
 
 	player plyr3;
@@ -284,7 +286,7 @@ int main(int argc, char **argv) {
 	plyr3.turn(0);
 	plyr3.tog = false;
 	plyr3.sprite = (graphic("gamma.fgr"));
-	plyr3.width = .4;
+	plyr3.width = .4f;
 	currentbattle.protags.push_back(plyr3);
 
 	player plyr4;
@@ -292,12 +294,12 @@ int main(int argc, char **argv) {
 	plyr4.turn(0);
 	plyr4.tog = false;
 	plyr4.sprite = (graphic("delta.fgr"));
-	plyr4.width = .4;
+	plyr4.width = .4f;
 	currentbattle.protags.push_back(plyr4);
 
 	enemy e1(1, 1);
 	e1.position = point(7, 4);
-	e1.width = .4;
+	e1.width = .4f;
 	plyr4.sprite = (graphic("delta.fgr"));
 	currentbattle.antags.push_back(e1);
 	currentbattle.antags[0].addWaypoint(point(7, 2));

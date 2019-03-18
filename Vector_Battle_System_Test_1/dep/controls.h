@@ -12,6 +12,7 @@ void exteriorConsole();
 //Global Variables for if in battleMode
 battlePreset testpreset(11, 7); //Width, Height
 battlestate currentbattle(testpreset); //This holds the information about the current battle scene
+
 const int BoardDepth = 0; //Not sure about this. Probably will never change from 0.
 float timer = 0; //We'll see if this ends up being necessary
 float increment = float(1.0f / (60.0f + .01f) );//0.01f; //Incremental time in seconds, the denominator is nominal FPS

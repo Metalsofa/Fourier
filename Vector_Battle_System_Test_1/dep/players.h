@@ -53,8 +53,8 @@ public:
 class combatant {
 public:
 	combatant() {
-
 	}
+
 	stats statblock;
 	point position;
 	point direction; //Direction as a unit vector
@@ -71,46 +71,48 @@ public:
 	}
 };
 
-class player: public combatant {
+class player: public combatant { //controlled players
 public:
-	bool tog;
-	void toggle() {
+	bool tog; //Whether or not the player can currently be controlled
+	void toggle() { //Flips tog
 		for (shape& sh : sprite.pieces) { sh.lineThickness = (tog? 1.0f : 2.0f); }
 		tog = !tog;
 	}
 	
 };
 
-class enemy : public combatant {
+class enemy : public combatant {	//Non controlled combatants with AI
 	typedef  void (enemy::*behavior)();
 private:
-	vector<point> path;
-	int ind;
+	vector<point> path;	//Contains points on a path for enemy to follow
+	int ind;	//Current index of path that enemy is at is coming from
 	bool dir; //True if moving from index 0 to n of path, false if moving backwards
 
-	bool moving;
-	point dest;
-	point aim;
-	behavior moveB;
-	behavior shootB;
+	bool moving;	//Whether the enemy is moving
+	point dest;		//Where the enemy is going to
+	point aim;		//Where the enemy is aiming
+	behavior moveB;	//Function pointer that tells the enemy how to move
+	behavior shootB;//Function pointer that tells the enemy how to shoot
 
 public:
 
-	
 
-	enemy(int m = -1, int s = -1) : combatant(){
+	enemy(int m = -1, int s = -1) : combatant() {
+		init(m, s);
+	}
+	void init(int m, int s) {
 		srand(unsigned int(time(NULL)));
 		ind = 0;
 		dir = true;
 		moving = false;
-		switch (m) {
-		case 1: 
+		switch (m) {		//Picking a move behavior
+		case 1:
 			moveB = &enemy::mB1;
 			break;
 		case 2:
 			moveB = &enemy::mB2;
 			break;
-		case 3: 
+		case 3:
 			moveB = &enemy::mB3;
 			break;
 		case 4:
@@ -119,7 +121,7 @@ public:
 		default:
 			moveB = nullptr;
 		}
-		switch (s) {
+		switch (s) {	//Picking a shoot behavior
 		case 1:
 			shootB = &enemy::sB1;
 			break;
@@ -142,13 +144,13 @@ public:
 		path.insert(path.begin() + i, p);
 	}
 
-	void act() {	//Decides which AI to implement
+	void act() {	//invokes moving and shooting functions appropriately
 		if (moving) {
 			point dire = (dest - position);
-			if (dire.magnitude() < .05) {
+			if (dire.magnitude() < .05) {	//.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
 				moving = false;
 			} else {
-				position += unitvector(dire)*.02f;
+				position += unitvector(dire)*.02f;	//.02 is a speed multiplier
 			}
 			return;
 		} else if (moveB) {
@@ -159,10 +161,10 @@ public:
 		return;
 	}
 
-	void mB1() {	//Just follows the path
+	void mB1() {	//Just follows the path 
 		if (path.size() == 0) { return; } 
 		else if (path.size() == 1) { 
-			if ((path.front() - position).magnitude() > .5) {
+			if ((path.front() - position).magnitude() > .05) { //.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
 				move(path.front());
 			}
 			return; 
@@ -184,21 +186,21 @@ public:
 		return;
 	}
 	void sB1() {	//Just shoots if there are no walls in the way of enemy and player
-		bool shot = true;
-		for (player& p : currentbattle.protags) {
-			shot = true;
-			for (wall& w : currentbattle.map.getWalls()) {				//Currently commented out due to not being able to recognize currentbattle, ray, etc.
-				segment s(p.position, position);
-				if (isintersect(w.body, s)) {
-					shot = false;
-					break;
-				}
-			}
-			if (shot) {
-				shoot(p.position);
-				return;
-			}
-		}
+		//bool shot = true;
+		//for (player& p : currentbattle.protags) {
+		//	shot = true;
+		//	for (wall& w : currentbattle.map.getWalls()) {				//Currently commented out due to not being able to recognize currentbattle, ray, etc.
+		//		segment s(p.position, position);
+		//		if (isintersect(w.body, s)) {
+		//			shot = false;
+		//			break;
+		//		}
+		//	}
+		//	if (shot) {
+		//		shoot(p.position);
+		//		return;
+		//	}
+		//}
 		return;
 	}
 	void mB2() {
@@ -211,12 +213,12 @@ public:
 
 	}
 
-	void move(const point& dire) {
+	void move(const point& dire) { //Sets the enemy to move to this point
 		dest = dire;
 		moving = true;
 	}
 
-	void aimAt(const point& dire) {
+	void aimAt(const point& dire) {	//Sets the enemy to aim at this point
 		aim = dire;
 	}
 
@@ -225,15 +227,10 @@ public:
 	}
 
 	void shoot(const point& dire) { //Shoots at a point
-		//ray newRay(colorfromID(rain++ % 12 + 1), (dire-position)*.3, dire, 2.0f,		//Currently commented out due to not being able to recognize currentbattle, ray, etc.
+		//ray newRay(colorfromID(rain++ % 12 + 1), (dire-position)*.3f, dire, 2.0f,		//Currently commented out due to not being able to recognize currentbattle, ray, etc.
 		//	6.0f, 2);
 		//currentbattle.spawnRay(newRay);
 	}
 };
-
-
-
-
-//DP: Use constexpr over macro: https://stackoverflow.com/questions/42388077/constexpr-vs-macros
 
 #endif
