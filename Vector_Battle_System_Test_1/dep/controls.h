@@ -10,11 +10,11 @@ void exteriorConsole();
 ///I hear cactuses hurt to step on
 
 //Global Variables for if in battleMode
-battlePreset testpreset(10, 6); //Width, Height
+battlePreset testpreset(11, 7); //Width, Height
 battlestate currentbattle(testpreset); //This holds the information about the current battle scene
 const int BoardDepth = 0; //Not sure about this. Probably will never change from 0.
 float timer = 0; //We'll see if this ends up being necessary
-float increment = float(1.0f / 65.0f);//0.01f; //Incremental time in seconds, the denominator is nominal FPS
+float increment = float(1.0f / (60.0f + .01f) );//0.01f; //Incremental time in seconds, the denominator is nominal FPS
 float gamma = 1.0f; //Time dilation, from the viewer's refrence frame
 int rain = 0; //This is really just for fun; good for iterating through a rainbow for no good reason
 
@@ -29,7 +29,7 @@ Material SELECTED_MATERIAL = DEFAULT;
 map<char, bool> normalKeysdown;
 
 ///Special and other keys
-bool upPress = false; //DP: Instead of Press, _press might be less confusing
+bool upPress = false; 
 bool leftPress = false;
 bool downPress = false;
 bool rightPress = false;
@@ -153,9 +153,9 @@ void battlefieldDesignKeychecks() {
 		}
 		else {
 			if (normalKeysdown[' ']) {
-				for (combatant& b : currentbattle.fighters) {
+				for (player& b : currentbattle.protags) {
 					if (b.tog) {
-						ray newRay(colorfromID(rain++ % 12 + 1), b.position, b.position + b.direction, 2.0f,
+						ray newRay(colorfromID(rain++ % 12 + 1), (b.position + b.direction*.3f), b.position + b.direction + b.direction, 2.0f,
 							6.0f, 2);
 						currentbattle.spawnRay(newRay);
 					}
@@ -274,7 +274,7 @@ void battleKeychecks() {
 	if (normalKeysdown['a']) { d.x -= increment; }
 	if (normalKeysdown['s']) { d.y -= increment; }
 	if (normalKeysdown['d']) { d.x += increment; }
-	for (combatant& x : currentbattle.fighters) {
+	for (player& x : currentbattle.protags) {
 		if (x.tog) {
 			x.position.y += d.y;
 			x.position.x += d.x;
@@ -288,7 +288,7 @@ void battleKeychecks() {
 		if (normalKeysdown['j'] || leftBuf) { d.x -= increment; }
 		if (d.y != 0 || d.x != 0) {
 			for (unsigned int i = 0; i < 4; i++) {
-				if (currentbattle.fighters[i].tog) { currentbattle.fighters[i].turn(d.angle()); }
+				if (currentbattle.protags[i].tog) { currentbattle.protags[i].turn(d.angle()); }
 			}
 		}
 	}
@@ -324,7 +324,7 @@ void ProcessNormalKeys(unsigned char key, int x, int y) {
 		rightBuf = keyBuf;
 	}
 	if (key >= '1' && key <= '4') {
-		currentbattle.fighters[key - '1'].tog = !(currentbattle.fighters[key - '1'].tog);
+		currentbattle.protags[key - '1'].toggle();
 	}
 	normalKeysdown[key] = true;
 }
@@ -424,8 +424,8 @@ void MouseClick(int button, int state, int x, int y) { //Note that this is good 
 	}
 }
 
-void ActiveMouseMove(int x, int y) { //DP: something I didn't put for the draw fighter function, even though it is void, when we optimize, it will break if we don't return (I think)
-
+void ActiveMouseMove(int x, int y) { 
+	return;
 }
 
 void PassiveMouseMove(int x, int y) {

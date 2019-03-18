@@ -40,32 +40,6 @@ public:
 ///public:
 	vector<point> intersections() {
 		vector<point> returnthis;
-		//Ded code
-		/*
-		while (i < walls.size()) {
-			unsigned int j = 0;
-			while (j < walls.size()) {
-				if (i != j) {
-					if (isintersect(walls[i].getbody(), walls[j].getbody())) {
-						point ints = intersection(walls[i].getbody(), walls[j].getbody());
-						bool addIt = true;
-						unsigned int k = 0;
-						while (k < returnthis.size()) {
-							if (converges(returnthis[k], ints)) {
-								addIt = false;
-							}
-							k++;
-						}
-						if (addIt)
-							returnthis.push_back(ints);
-					}
-				}
-				j++;
-			}
-			i++;
-		}*/
-		//DP: Below is a cleaner and slightly more efficient version of the loops you have above
-		//DM:Implemented 1/31/19
 		for (int i = 0; i < walls.size(); i++) {
 			for (int j = i + 1; j < walls.size(); j++) {
 				if (isintersect(walls[i].getbody(), walls[j].getbody())) {
@@ -159,7 +133,8 @@ public:
 	vector<ray> rays;
 	//Other spells
 	//vector of sinks/sources
-	vector<combatant> fighters;
+	vector<player> protags;
+	vector<enemy> antags;
 	//vector of portals
 
 
@@ -211,8 +186,25 @@ public:
 			rays[i].advance(inc);
 			//Now we check for collisions
 			unsigned int j = 0;
+			bool term = false;
+			for (combatant& x : protags) {
+				int hit = rays[i].checkcollision(x);
+				if (hit) {
+					rays[i].terminate(rays[i].bits[hit-1]); //http://mathworld.wolfram.com/Circle-LineIntersection.html
+					term = true;
+				}
+			}
+			for (combatant& x : antags) {
+				int hit = rays[i].checkcollision(x);
+				if (hit) {
+					rays[i].terminate(rays[i].bits[hit - 1]); //http://mathworld.wolfram.com/Circle-LineIntersection.html
+					term = true;
+				}
+			}
+
 			for (wall& surface : map.walls) {
 				if (rays[i].checkcollision(surface.getbody())) {
+					term = true;
 					int permit = rays[i].permitted(surface.getmaterial().getPermittivitySpells());
 					if (permit == 1) {
 						bool shouldbounce = true;
@@ -334,12 +326,18 @@ public:
 				}
 				j++;
 			}
+			if (!term) { rays[i].terminating = false; }
 			//Erase this ray if it's out of bounds or dead
 			if (abs(rays[i].getbits().back().x - map.getWidth() / 2) > map.getWidth()
 				|| abs(rays[i].getbits().back().y - map.getHeight() / 2) > map.getHeight() || rays[i].deathtime()) {
 				rays.erase(rays.begin() + i);
 				i--; //Appropriately adjust our iterator
 			}
+		}
+
+		//Iterate AI:
+		for (enemy& e : antags) {
+			e.act();
 		}
 	}
 	//Constructor to read a "battlePreset.txt" and define this battlestate accordingly

@@ -15,9 +15,9 @@ int consoleScroll = 0;
 
 #include "gl/glut.h"
 #include "battle.h"
-#include "players.h"
 #include "controls.h"
 #include "customGL.h"
+#include "players.h"
 
 
 void feedkeyboardinput(string &field) {

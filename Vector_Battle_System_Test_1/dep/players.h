@@ -9,6 +9,7 @@ thing, to be called by the function that initiates battle */
 #include "crypt.h"
 #include <sstream>
 #include <map>
+#include <list> 
 
 #include "geometry.h"
 #include "art.h"
@@ -16,8 +17,8 @@ thing, to be called by the function that initiates battle */
 using namespace std;
 
 
-//This version of player is for overworld logic and battle initiation
-class player {
+//This version of stats is for overworld logic and battle initiation
+class stats {
 private:
 	//Player metastats cap out at 255
 	metastat maxHP; //maximum HP
@@ -33,7 +34,7 @@ private:
 
 	//Abilities also need to somehow appear
 public:
-	graphic sprite;
+	graphic sprite; //DP: I think we only need one sprite in the combatant class
 	int Hitpoints(int comp)					{ return HP.component(comp); }
 	int MaxHitpoints(int comp)				{ return maxHP.component(comp); }
 	int HitpointsFraction(int comp)			{ return Hitpoints(comp) / MaxHitpoints(comp); }
@@ -54,10 +55,7 @@ public:
 	combatant() {
 
 	}
-
-	bool tog;
-
-	player statblock;
+	stats statblock;
 	point position;
 	point direction; //Direction as a unit vector
 	//Sprites
@@ -72,37 +70,169 @@ public:
 		direction = unitfromangle(angle);
 	}
 };
-//enum Color {clWhite = 0xFFFFFF, clBlack = 0x0, clRed = 0xFF0000, clOrange = 0xFF7F00, clYellow = 0xFFFF00,
-//	clLime = 0x7FFF00, clGreen = 0x00FF, clTeal = 0x00FF7F, clCyan = 0x00FFFF, clIndigo = 0x007FFF, clBlue = 0x0000FF,
-//	clPurple = 0x7F00FF, clMagenta = 0xFF00FF, clViolet = 0xFF007F
-//};
 
-#define clWhite metastat(255, 255, 255) /*White*/
-#define clBlack metastat(0, 0, 0) /*Black*/
-#define clRed metastat(255,0,0) /*Red*/
-#define domainRed "action"
-#define clOrange metastat(255,127,0) /*Orange*/
-#define domainOrange "artistry"
-#define clYellow metastat(255,255,0) /*Yellow*/
-#define domainYellow "expression"
-#define clLime metastat(127,255,0) /*Lime*/
-#define domainLime "evocation"
-#define clGreen metastat(0,255,0) /*Green*/
-#define domainGreen "emotion"
-#define clTeal metastat(0,255,127) /*Teal*/
-#define domainTeal "introspection"
-#define clCyan metastat(0,255,255) /*Cyan*/
-#define domainCyan "belief"
-#define clIndigo metastat(0,127,255) /*Indigo*/
-#define domainIndigo "heuristic"
-#define clBlue metastat(0,0,255) /*Blue*/
-#define domainBlue "cognition"
-#define clPurple metastat(127,0,255) /*Purple*/
-#define domainPurple "synthesis"
-#define clMagenta metastat(255,0,255) /*Magenta*/
-#define domainMagenta "application"
-#define clViolet metastat(255,0,127) /*Violet*/
-#define domainViolet "operation"
+class player: public combatant {
+public:
+	bool tog;
+	void toggle() {
+		for (shape& sh : sprite.pieces) { sh.lineThickness = (tog? 1.0f : 2.0f); }
+		tog = !tog;
+	}
+	
+};
+
+class enemy : public combatant {
+	typedef  void (enemy::*behavior)();
+private:
+	vector<point> path;
+	int ind;
+	bool dir; //True if moving from index 0 to n of path, false if moving backwards
+
+	bool moving;
+	point dest;
+	point aim;
+	behavior moveB;
+	behavior shootB;
+
+public:
+
+	
+
+	enemy(int m = -1, int s = -1) : combatant(){
+		srand(unsigned int(time(NULL)));
+		ind = 0;
+		dir = true;
+		moving = false;
+		switch (m) {
+		case 1: 
+			moveB = &enemy::mB1;
+			break;
+		case 2:
+			moveB = &enemy::mB2;
+			break;
+		case 3: 
+			moveB = &enemy::mB3;
+			break;
+		case 4:
+			moveB = &enemy::mB4;
+			break;
+		default:
+			moveB = nullptr;
+		}
+		switch (s) {
+		case 1:
+			shootB = &enemy::sB1;
+			break;
+		case 2:
+			shootB = &enemy::sB1;
+			break;
+		case 3:
+			shootB = &enemy::sB1;
+			break;
+		case 4:
+			shootB = &enemy::sB1;
+			break;
+		default:
+			shootB = nullptr;
+		}
+	}
+
+	void addWaypoint(const point& p, int i = 0) { //Adds to path vector at index
+		if (i == -1) { ind = 0;  return path.push_back(p); }
+		path.insert(path.begin() + i, p);
+	}
+
+	void act() {	//Decides which AI to implement
+		if (moving) {
+			point dire = (dest - position);
+			if (dire.magnitude() < .05) {
+				moving = false;
+			} else {
+				position += unitvector(dire)*.02f;
+			}
+			return;
+		} else if (moveB) {
+			invoke(moveB, *this);		//USING THIS BECAUSE BEHAVIOR IS SCOPED TO MEMBER FUNCTION
+			return;
+		}
+		cerr << "ERROR: INVALID BEHAVIOR" << endl;
+		return;
+	}
+
+	void mB1() {	//Just follows the path
+		if (path.size() == 0) { return; } 
+		else if (path.size() == 1) { 
+			if ((path.front() - position).magnitude() > .5) {
+				move(path.front());
+			}
+			return; 
+		}
+		if (ind == 0) {
+			ind++;
+			dir = true;
+			move(path[ind]);
+		} 
+		else if(ind == (path.size()-1)){
+			ind--;
+			dir = false;
+			move(path[ind]);
+		} 
+		else{
+			ind += (dir ? 1 : -1);
+			move(path[ind]);
+		}
+		return;
+	}
+	void sB1() {	//Just shoots if there are no walls in the way of enemy and player
+		bool shot = true;
+		for (player& p : currentbattle.protags) {
+			shot = true;
+			for (wall& w : currentbattle.map.getWalls()) {				//Currently commented out due to not being able to recognize currentbattle, ray, etc.
+				segment s(p.position, position);
+				if (isintersect(w.body, s)) {
+					shot = false;
+					break;
+				}
+			}
+			if (shot) {
+				shoot(p.position);
+				return;
+			}
+		}
+		return;
+	}
+	void mB2() {
+
+	}
+	void mB3() {
+
+	}
+	void mB4() {
+
+	}
+
+	void move(const point& dire) {
+		dest = dire;
+		moving = true;
+	}
+
+	void aimAt(const point& dire) {
+		aim = dire;
+	}
+
+	void shoot() { //Shoots where aiming
+		shoot(aim);
+	}
+
+	void shoot(const point& dire) { //Shoots at a point
+		//ray newRay(colorfromID(rain++ % 12 + 1), (dire-position)*.3, dire, 2.0f,		//Currently commented out due to not being able to recognize currentbattle, ray, etc.
+		//	6.0f, 2);
+		//currentbattle.spawnRay(newRay);
+	}
+};
+
+
+
 
 //DP: Use constexpr over macro: https://stackoverflow.com/questions/42388077/constexpr-vs-macros
 

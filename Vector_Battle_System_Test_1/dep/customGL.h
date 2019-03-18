@@ -13,19 +13,19 @@ take advantage of freeGlut*/
 #include "GL/glut.h"
 #include "fcolor.h"
 #include "waves.h"
-#include "players.h"
 #include "camera.h"
+#include "players.h"
 
 #include <string>
 
 enum discreteHue {red, orange, yellow, lime, green, teal, cyan, indigo, blue, purple, magenta, violet};
 
 
-void setcolor(fcolor col) { //DP: Ref?
+void setcolor(fcolor& col) {
 	glColor4f(col.getLevel('r'), col.getLevel('g'), col.getLevel('b'), col.getLevel('a'));
 }
 
-void drawText(point location, string text) {//DP: Ref?
+void drawText(point& location, string text) {
 	point dot = location;
 	glRasterPos2f(dot.x, dot.y);
 	for (unsigned int i = 0; i < text.size(); i++) { //glutBitmapString() https://stackoverflow.com/questions/544079/how-do-i-use-glutbitmapstring-in-c-to-draw-text-to-the-screen
@@ -34,19 +34,19 @@ void drawText(point location, string text) {//DP: Ref?
 	}
 }
 
-void glVertexPoint(point dot) {//DP: Ref? //DM: Cannot, for many of thsese
+void glVertexPoint(point dot) {
 	glVertex2f(dot.x, dot.y);
 }
-void glVertexSegment(segment seg) {//DP: Ref?
+void glVertexSegment(segment& seg) {
 	glVertexPoint(seg.p1);
 	glVertexPoint(seg.p2);
 }
-void glVertexTriangle(triangle tri) {//DP: Ref?
+void glVertexTriangle(triangle& tri) {
 	glVertexPoint(tri.p1);
 	glVertexPoint(tri.p2);
 	glVertexPoint(tri.p3);
 }
-void glVertexFermatPoint(triangle tri) {//DP: Ref?
+void glVertexFermatPoint(triangle& tri) {
 	glVertexPoint(tri.fermatpoint(0));
 }
 
@@ -89,14 +89,14 @@ void definecamera() {
 		0.0f, 0.0f, 1.0f); //Vector that defines the "up" direction
 }
 
-void setcolor(metastat col, float opacity) { //DP: May want to pass by reference
+void setcolor(metastat col, float opacity) {
 	float R = float(col.som) / 255.0f;
 	float G = float(col.emo) / 255.0f;
 	float B = float(col.cog) / 255.0f;
 	glColor4f(R, G, B, opacity);
 }
 
-void rendertext(point location, string text) {  //DP: IF glRasterPos2f doesn't edit the inputs, you might want to pass location in by reference and not create dot;
+void rendertext(point location, string text) {
 		// set position to text    
 	glRasterPos2f(location.x, location.y);
 
@@ -278,7 +278,7 @@ metastat colorfromID(int colorID) {
 
 
 metastat randomhue() {
-	int hueID = rand() % 12 + 1; //DP: Not good random, should seed random in main, I did it on line 1065 and also included time.h
+	int hueID = rand() % 12 + 1;
 	return colorfromID(hueID);
 }
 void drawWave(sinusoid &wave, float leftbound, float rightbound, int resolution, bool clampLeft, bool clampRight) {
@@ -355,7 +355,7 @@ void drawCursor(cursor& curse) {
 		glVertex2f(currentbattle.boardWidth(), curse.Position.y); glVertex2f(currentbattle.boardWidth() - ticksize, curse.Position.y);
 		glEnd();
 	}
-	glColor3f(curse.Red(), curse.Green(), curse.Blue()); //OH THERE IT IS I FOUND THE CURSOR COLOR LINE FINALLY		//DP: YAY
+	glColor3f(curse.Red(), curse.Green(), curse.Blue()); //OH THERE IT IS I FOUND THE CURSOR COLOR LINE FINALLY
 	if (DESIGN_FUNCTION == BD_MAKE_SHAPES)
 		setcolor(inverse(art.pieces[editingLayer].color), 1.0f);
 	glPushMatrix();
@@ -384,7 +384,7 @@ void drawCursor(cursor& curse) {
 void ClearScreen() { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
 
 //Takes a refrence to a wall and then draws it
-void drawwall(wall& drawingWall) { //DP: Pass by reference?
+void drawwall(wall& drawingWall) {
 	glLineWidth(drawingWall.material.thickness);
 	glBegin(GL_LINES);
 	glColor4f(
@@ -400,7 +400,7 @@ void drawwall(wall& drawingWall) { //DP: Pass by reference?
 }
 
 /* //This function should theoretically be devoid of purpose.
-void rendertext(float x, float y, float z, void *font, string text) { //DP: It might be slightly faster to use glutBitmapString https://stackoverflow.com/questions/544079/how-do-i-use-glutbitmapstring-in-c-to-draw-text-to-the-screen
+void rendertext(float x, float y, float z, void *font, string text) { 
 	glRasterPos3f(x, y, z);
 	for (char c : text)
 		glutBitmapCharacter(font, c);
@@ -418,18 +418,11 @@ void drawray(ray &drawingRay) {
 	//Draw the joints (mainly for debug purposes)
 	bool showjoints = false;
 	if (showjoints) {
-		unsigned int i = 1;
-		for (point dot : drawingRay.getbits()) { //DP: if you are already using an index, it might be better to do what I put on line 420
-			drawPoint(dot);
-			glColor3f(drawingRay.getRed(), drawingRay.getGreen(), drawingRay.getBlue());
-			rendertext(dot, to_string(i));
-			i++;
-		}
-		/*for (unsigned int i = 1; i <= drawingRay.getbits(); i++) {
+		for (unsigned int i = 1; i <= drawingRay.getbits().size(); i++) {
 			drawPoint(drawingRay.getbits()[i-1]);
 			glColor3f(drawingRay.getRed(), drawingRay.getGreen(), drawingRay.getBlue());
 			rendertext(drawingRay.getbits()[i - 1], to_string(i));
-		}*/
+		}
 	}
 
 	////Draw Arrowhead
@@ -468,7 +461,7 @@ void drawray(ray &drawingRay) {
 	}
 }
 
-void drawCombatant(combatant& fighter) { //DP: This is the coolest function I've ever read
+void drawCombatant(combatant& fighter) {
 	glPushMatrix();
 	glTranslatef(fighter.position.x, fighter.position.y, 0.0f);
 	glRotatef(180 * fighter.direction.angle() / PI, 0, 0, 1);
@@ -476,11 +469,11 @@ void drawCombatant(combatant& fighter) { //DP: This is the coolest function I've
 	glTranslatef(-0.5f, -0.5f, 0.0f);
 	drawGraphic(fighter.sprite);
 	glPopMatrix();
-	if (fighter.tog) {
+	//if (fighter.tog) { //DP: Combatant doesn't have a tog var now
 		glColor3f(1.0f, 1.0f, 1.0f);
-	} else {
+	/*} else {
 		glColor3f(.5f, .5f, .5f);
-	}
+	}*/
 	glTranslatef(fighter.position.x, fighter.position.y, 0);
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < 360; i += 10) { //Doing only half the work with i += 2

@@ -12,7 +12,6 @@ function. It may be prudent to later change what it is called.*/
 #include "Stopwatch.h"
 #include "graphics.h"
 #include "art.h"
-#include "players.h"
 
 #include <Windows.h>
 #include <cmath>
@@ -48,11 +47,12 @@ Stopwatch st;
 
 //Be careful; certain headers should only be included after global declaration
 #include "art.h"
-#include "battle.h"
 #include "console.h"
 #include "controls.h"
+#include "battle.h"
 #include "camera.h"
 #include "customGL.h"
+#include "players.h"
 
 
 //Utilizes a timer to keep te clocks spinning at the right pace
@@ -60,7 +60,11 @@ void clocksync() {
 	//Sleep(int((increment * 1000.0f * gamma)));
 	if (st.ElapsedMilliseconds() > increment * 1.2f * 1000.0f * gamma)
 		cout << "@frame " << int(timer) << " - TIME: " << st.ElapsedMilliseconds() << endl;
-	while (st.ElapsedMilliseconds() < double(increment * 1000.0f * gamma)) {}
+	int timeToNextItr = (double(increment * 1000.0f * gamma) - st.ElapsedMilliseconds());
+	if (timeToNextItr > 0) {
+		Sleep(timeToNextItr);
+	}
+	//while (st.ElapsedMilliseconds() < double(increment * 1000.0f * gamma)) {}
 	FPS = 1000 / st.ElapsedMilliseconds();
 	timer += increment * 100;
 	st.Stop();
@@ -123,8 +127,11 @@ void renderScene(void) {
 		}
 		////Draw Combatants
 		if (battleMode && !artMode) {
-			for (int i = 0; i < currentbattle.fighters.size(); i++) {
-				drawCombatant(currentbattle.fighters[i]);
+			for (combatant& c : currentbattle.protags) {
+				drawCombatant(c);
+			}
+			for (combatant& c : currentbattle.antags) {
+				drawCombatant(c);
 			}
 		}
 	}
@@ -219,7 +226,7 @@ int main(int argc, char **argv) {
 		}
 	}
 
-	//DP: Initialize rand
+	//Initialize rand
 	srand(unsigned int(time(NULL)));
 
 	//Initialize GLUT
@@ -256,37 +263,47 @@ int main(int argc, char **argv) {
 
 
 	//Setup battle: Initialize combatants
-	combatant plyr1;
+	player plyr1;
 	plyr1.position = point(6, 3);
 	plyr1.turn(0);
 	plyr1.tog = false;
-	plyr1.sprite = graphic("alpha.fgr");
+	plyr1.sprite = (graphic("alpha.fgr"));
 	plyr1.width = .4;
-	currentbattle.fighters.push_back(plyr1);
+	currentbattle.protags.push_back(plyr1);
 
-	combatant plyr2;
+	player plyr2;
 	plyr2.position = point(5, 4);
 	plyr2.turn(0);
 	plyr2.tog = false;
-	plyr2.sprite = graphic("beta.fgr");
+	plyr2.sprite = (graphic("beta.fgr"));
 	plyr2.width = .4;
-	currentbattle.fighters.push_back(plyr2);
+	currentbattle.protags.push_back(plyr2);
 
-	combatant plyr3;
+	player plyr3;
 	plyr3.position = point(4, 3);
 	plyr3.turn(0);
 	plyr3.tog = false;
-	plyr3.sprite = graphic("gamma.fgr");
+	plyr3.sprite = (graphic("gamma.fgr"));
 	plyr3.width = .4;
-	currentbattle.fighters.push_back(plyr3);
+	currentbattle.protags.push_back(plyr3);
 
-	combatant plyr4;
+	player plyr4;
 	plyr4.position = point(5, 2);
 	plyr4.turn(0);
 	plyr4.tog = false;
-	plyr4.sprite = graphic("delta.fgr");
+	plyr4.sprite = (graphic("delta.fgr"));
 	plyr4.width = .4;
-	currentbattle.fighters.push_back(plyr4);
+	currentbattle.protags.push_back(plyr4);
+
+	enemy e1(1, 1);
+	e1.position = point(7, 4);
+	e1.width = .4;
+	plyr4.sprite = (graphic("delta.fgr"));
+	currentbattle.antags.push_back(e1);
+	currentbattle.antags[0].addWaypoint(point(7, 2));
+	currentbattle.antags[0].addWaypoint(point(7, 4));
+	currentbattle.antags[0].addWaypoint(point(1, 3));
+	currentbattle.antags[0].addWaypoint(point(3, 1));
 
 	//enter GLUT event processing cycle
 	st.Start();
