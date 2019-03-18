@@ -10,12 +10,14 @@ thing, to be called by the function that initiates battle */
 #include <sstream>
 #include <map>
 #include <list> 
+#include <time.h>
 
 #include "geometry.h"
 #include "art.h"
+//#include "battle.h"
+//#include "customGL.h"
 
 using namespace std;
-
 
 //This version of stats is for overworld logic and battle initiation
 class stats {
@@ -53,8 +55,8 @@ public:
 class combatant {
 public:
 	combatant() {
-
 	}
+
 	stats statblock;
 	point position;
 	point direction; //Direction as a unit vector
@@ -71,70 +73,72 @@ public:
 	}
 };
 
-class player: public combatant {
+class player: public combatant { //controlled players
 public:
-	bool tog;
-	void toggle() {
+	bool tog; //Whether or not the player can currently be controlled
+	void toggle() { //Flips tog
 		for (shape& sh : sprite.pieces) { sh.lineThickness = (tog? 1.0f : 2.0f); }
 		tog = !tog;
 	}
 	
 };
 
-class enemy : public combatant {
-	typedef  void (enemy::*behavior)();
+class enemy : public combatant {	//Non controlled combatants with AI
+	//typedef  void (enemy::*behavior)(battlestate&);
 private:
-	vector<point> path;
-	int ind;
+	vector<point> path;	//Contains points on a path for enemy to follow
+	int ind;	//Current index of path that enemy is at is coming from
 	bool dir; //True if moving from index 0 to n of path, false if moving backwards
 
-	bool moving;
-	point dest;
-	point aim;
-	behavior moveB;
-	behavior shootB;
+	bool moving;	//Whether the enemy is moving
+	point dest;		//Where the enemy is going to
+	point aim;		//Where the enemy is aiming
+	//behavior moveB;	//Function pointer that tells the enemy how to move
+	//behavior shootB;//Function pointer that tells the enemy how to shoot
 
 public:
 
-	
 
-	enemy(int m = -1, int s = -1) : combatant(){
+	enemy(int m = -1, int s = -1) : combatant() {
+		init(m, s);
+	}
+	void init(int m, int s) {
 		srand(unsigned int(time(NULL)));
 		ind = 0;
 		dir = true;
 		moving = false;
-		switch (m) {
-		case 1: 
-			moveB = &enemy::mB1;
-			break;
-		case 2:
-			moveB = &enemy::mB2;
-			break;
-		case 3: 
-			moveB = &enemy::mB3;
-			break;
-		case 4:
-			moveB = &enemy::mB4;
-			break;
-		default:
-			moveB = nullptr;
-		}
-		switch (s) {
-		case 1:
-			shootB = &enemy::sB1;
-			break;
-		case 2:
-			shootB = &enemy::sB1;
-			break;
-		case 3:
-			shootB = &enemy::sB1;
-			break;
-		case 4:
-			shootB = &enemy::sB1;
-			break;
-		default:
-			shootB = nullptr;
-		}
+		//switch (m) {		//Picking a move behavior
+		//case 1:
+		//	moveB = &enemy::mB1;
+		//	break;
+		//case 2:
+		//	moveB = &enemy::mB2;
+		//	break;
+		//case 3:
+		//	moveB = &enemy::mB3;
+		//	break;
+		//case 4:
+		//	moveB = &enemy::mB4;
+		//	break;
+		//default:
+		//	moveB = nullptr;
+		//}
+		//switch (s) {	//Picking a shoot behavior
+		//case 1:
+		//	shootB = &enemy::sB1;
+		//	break;
+		//case 2:
+		//	shootB = &enemy::sB1;
+		//	break;
+		//case 3:
+		//	shootB = &enemy::sB1;
+		//	break;
+		//case 4:
+		//	shootB = &enemy::sB1;
+		//	break;
+		//default:
+		//	shootB = nullptr;
+		//}
 	}
 
 	void addWaypoint(const point& p, int i = 0) { //Adds to path vector at index
@@ -142,98 +146,93 @@ public:
 		path.insert(path.begin() + i, p);
 	}
 
-	void act() {	//Decides which AI to implement
-		if (moving) {
-			point dire = (dest - position);
-			if (dire.magnitude() < .05) {
-				moving = false;
-			} else {
-				position += unitvector(dire)*.02f;
-			}
-			return;
-		} else if (moveB) {
-			invoke(moveB, *this);		//USING THIS BECAUSE BEHAVIOR IS SCOPED TO MEMBER FUNCTION
-			return;
-		}
-		cerr << "ERROR: INVALID BEHAVIOR" << endl;
-		return;
-	}
+	//void act(battlestate& b) {	//invokes moving and shooting functions appropriately
+	//	if (moving) {
+	//		point dire = (dest - position);
+	//		if (dire.magnitude() < .05) {	//.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
+	//			moving = false;
+	//		} else {
+	//			position += unitvector(dire)*.02f;	//.02 is a speed multiplier
+	//		}
+	//		return;
+	//	} else if (moveB) {
+	//		invoke(moveB, *this, b);		//USING THIS BECAUSE BEHAVIOR IS SCOPED TO MEMBER FUNCTION
+	//		return;
+	//	}
+	//	cerr << "ERROR: INVALID BEHAVIOR" << endl;
+	//	return;
+	//}
 
-	void mB1() {	//Just follows the path
-		if (path.size() == 0) { return; } 
-		else if (path.size() == 1) { 
-			if ((path.front() - position).magnitude() > .5) {
-				move(path.front());
-			}
-			return; 
-		}
-		if (ind == 0) {
-			ind++;
-			dir = true;
-			move(path[ind]);
-		} 
-		else if(ind == (path.size()-1)){
-			ind--;
-			dir = false;
-			move(path[ind]);
-		} 
-		else{
-			ind += (dir ? 1 : -1);
-			move(path[ind]);
-		}
-		return;
-	}
-	void sB1() {	//Just shoots if there are no walls in the way of enemy and player
-		////bool shot = true;
-		////for (player& p : currentbattle.protags) {
-		////	shot = true;
-		////	for (wall& w : currentbattle.map.getWalls()) {				//Currently commented out due to not being able to recognize currentbattle, ray, etc.
-		////		segment s(p.position, position);
-		////		if (isintersect(w.body, s)) {
-		////			shot = false;
-		////			break;
-		////		}
-		////	}
-		////	if (shot) {
-		////		shoot(p.position);
-		////		return;
-		////	}
-		////}
-		////return;
-	}
-	void mB2() {
+	//void mB1(battlestate& b) {	//Just follows the path 
+	//	if (path.size() == 0) { return; } 
+	//	else if (path.size() == 1) { 
+	//		if ((path.front() - position).magnitude() > .05) { //.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
+	//			move(path.front());
+	//		}
+	//		return; 
+	//	}
+	//	if (ind == 0) {
+	//		ind++;
+	//		dir = true;
+	//		move(path[ind]);
+	//	} 
+	//	else if(ind == (path.size()-1)){
+	//		ind--;
+	//		dir = false;
+	//		move(path[ind]);
+	//	} 
+	//	else{
+	//		ind += (dir ? 1 : -1);
+	//		move(path[ind]);
+	//	}
+	//	return;
+	//}
+	//void sB1(battlestate& b) {	//Just shoots if there are no walls in the way of enemy and player
+	//	bool shot = true;
+	//	for (player& p : b.protags) {
+	//		shot = true;
+	//		for (wall& w : b.map.getWalls()) {				//Currently commented out due to not being able to recognize currentbattle, ray, etc.
+	//			segment s(p.position, position);
+	//			if (isintersect(w.body, s)) {
+	//				shot = false;
+	//				break;
+	//			}
+	//		}
+	//		if (shot) {
+	//			shoot(p.position,b);
+	//			return;
+	//		}
+	//	}
+	//	return;
+	//}
+	//void mB2(battlestate& b) {
 
-	}
-	void mB3() {
+	//}
+	//void mB3(battlestate& b) {
 
-	}
-	void mB4() {
+	//}
+	//void mB4(battlestate& b) {
 
-	}
+	//}
 
-	void move(const point& dire) {
+	void move(const point& dire) { //Sets the enemy to move to this point
 		dest = dire;
 		moving = true;
 	}
 
-	void aimAt(const point& dire) {
+	void aimAt(const point& dire) {	//Sets the enemy to aim at this point
 		aim = dire;
 	}
 
-	void shoot() { //Shoots where aiming
-		shoot(aim);
-	}
+	//void shoot(battlestate& b) { //Shoots where aiming
+	//	shoot(aim, b);
+	//}
 
-	void shoot(const point& dire) { //Shoots at a point
-		//ray newRay(colorfromID(rain++ % 12 + 1), (dire-position)*.3, dire, 2.0f,		//Currently commented out due to not being able to recognize currentbattle, ray, etc.
+	//void shoot(const point& dire, battlestate& b) { //Shoots at a point
+		//ray newRay(colorfromID(rain++ % 12 + 1), (dire-position)*.3f, dire, 2.0f,		//Currently commented out due to not being able to recognize currentbattle, ray, etc.
 		//	6.0f, 2);
-		//currentbattle.spawnRay(newRay);
-	}
+		//b.spawnRay(newRay);
+	//}
 };
-
-
-
-
-//DP: Use constexpr over macro: https://stackoverflow.com/questions/42388077/constexpr-vs-macros
 
 #endif
