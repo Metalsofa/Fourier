@@ -48,6 +48,9 @@
     <ClCompile Include="materials.cpp">
       <Filter>Implementation Files</Filter>
     </ClCompile>
+    <ClCompile Include="graphics.cpp">
+      <Filter>Implementation Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dep\geometry.h">

@@ -9,7 +9,7 @@
 
 using namespace std;
 
-const float  PI = 3.14159265358979f;
+const float PI = 3.14159265358979f;
 
 template <class number>
 number mean(number &num1, number &num2) {

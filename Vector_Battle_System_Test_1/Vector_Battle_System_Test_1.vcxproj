@@ -161,6 +161,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dep\battle.cpp" />
+    <ClCompile Include="graphics.cpp" />
     <ClCompile Include="materials.cpp" />
     <ClCompile Include="players.cpp" />
     <ClCompile Include="resource.cpp" />
