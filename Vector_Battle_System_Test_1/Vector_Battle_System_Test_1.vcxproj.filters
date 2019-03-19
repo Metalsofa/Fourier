@@ -48,7 +48,19 @@
     <ClCompile Include="materials.cpp">
       <Filter>Implementation Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphics.cpp">
+    <ClCompile Include="console.cpp">
+      <Filter>Implementation Files</Filter>
+    </ClCompile>
+    <ClCompile Include="controls.cpp">
+      <Filter>Implementation Files</Filter>
+    </ClCompile>
+    <ClCompile Include="crypt.cpp">
+      <Filter>Implementation Files</Filter>
+    </ClCompile>
+    <ClCompile Include="customGL.cpp">
+      <Filter>Implementation Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fcolor.cpp">
       <Filter>Implementation Files</Filter>
     </ClCompile>
   </ItemGroup>

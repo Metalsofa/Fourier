@@ -24,77 +24,22 @@ private:
 		//Thanks DP~
 	}
 public:
-	fcolor() { //DP: Simplified initalizer below
-		R = G = B = A = 0.0f;
-	}
-	fcolor(float red, float green, float blue, float alpha) {
-		R = red;
-		G = green;
-		B = blue;
-		A = alpha;
-		caplevels();
-	}
-	fcolor(float red, float green, float blue) {
-		R = red;
-		G = green;
-		B = blue;
-		A = 1.0f;
-		caplevels();
-	}
+	fcolor();
+	fcolor(float red, float green, float blue, float alpha);
+	fcolor(float red, float green, float blue);
 	//Accepted components are 'r', 'g', 'b', and 'a'.
-	float getLevel(char component) {
-		if (component == 'r')
-			return R;
-		if (component == 'g')
-			return G;
-		if (component == 'b')
-			return B;
-		if (component == 'a')
-			return A;
-		return A;
-	}
+	float getLevel(char component);
 	//Accepted components are 'r', 'g', 'b', and 'a'.
-	void setLevel(char component, float level) {
-		if (component == 'r')
-			R = level;
-		if (component == 'g')
-			G = level;
-		if (component == 'b')
-			B = level;
-		if (component == 'a')
-			A = level;
-		caplevels();
-	}
+	void setLevel(char component, float level);
 	//Accepted components are 'r', 'g', 'b', and 'a'.
-	void alterLevel(char component, float level) {
-		if (component == 'r')
-			R += level;
-		if (component == 'g')
-			G += level;
-		if (component == 'b')
-			B += level;
-		if (component == 'a')
-			A += level;
-		caplevels();
-	}
-	void invert() {
-		R = 1 - R;
-		G = 1 - G;
-		B = 1 - G;
-	}
+	void alterLevel(char component, float level);
+	void invert();
 
 };
 
-fcolor fcolorInverse(fcolor& col) { //DP: Pass by reference?
-	col.invert();
-	return col;
-}
+fcolor fcolorInverse(fcolor& col);
 
 //This function is presently incomplete
-fcolor fcolorFromHSV(float hue, float saturation, float value) {
-	fcolor col;
-	//Incomplete
-	return col;
-}
+fcolor fcolorFromHSV(float hue, float saturation, float value);
 
 #endif
