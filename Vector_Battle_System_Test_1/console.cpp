@@ -1,7 +1,11 @@
+//Include global variables
+#include "globals.h"
+
 #include "console.h"
 
 using namespace std;
 
+//Put into the string any characters being pressed on the keyboard
 void feedkeyboardinput(string &field) {
 	for (map<char, bool>::iterator itr = normalKeysdown.begin(); itr != normalKeysdown.end(); itr++) {
 		if (itr->second) {
@@ -16,6 +20,7 @@ void feedkeyboardinput(string &field) {
 	}
 }
 
+//Send a message to the console
 void outputConsole(string output) {
 	//console_history.insert(console_history.begin(), output); //Trying something else less intensive
 	cout << output << endl;
@@ -44,7 +49,7 @@ void handleInput(string &input) {
 	} else if (arg == "save") {
 		cons >> arg;
 		if (arg == "battle") { //Save the currently designed battle to a preset file
-
+			///PROTOTYPE
 		} else if (arg == "graphic") {
 			if (cons >> arg) {
 				art.savetofile(arg + ".fgr");
@@ -239,5 +244,4 @@ void drawConsole() {
 		userInput = "";
 	}
 	*/
-
 }

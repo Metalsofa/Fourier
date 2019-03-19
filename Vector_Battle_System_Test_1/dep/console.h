@@ -10,17 +10,16 @@ In theory, nothing that the player will need during gameplay should be in here.*
 #include "controls.h"
 #include "customGL.h"
 #include "players.h"
-//Global Variables for the console.
-/*NOTE: Some of these go unusied right now. May be subject to future cleanup.*/
+
+
 //vector<string> console_history;
-string userInput = "";
-int consoleScroll = 0;
 
 
 
-
+//Put into the string any characters being pressed on the keyboard
 void feedkeyboardinput(string &field);
 
+//Send a message to the console
 void outputConsole(string output);
 
 //Process an input string
@@ -29,6 +28,7 @@ void handleInput(string &input);
 //Pause the game and activate the exterior console for user input.
 void exteriorConsole();
 
+//Deprecated code for rendering the console
 void drawConsole();
 
 

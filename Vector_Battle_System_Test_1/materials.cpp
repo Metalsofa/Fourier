@@ -1,5 +1,8 @@
 //This is the implementation file for 'materials.h'
 
+//Include global variables
+#include "globals.h"
+
 //Header file inclusions
 #include "graphics.h"
 #include "materials.h"

@@ -1,3 +1,6 @@
+//Include global variables
+#include "globals.h"
+
 #include "crypt.h"
 
 string alphabetShift(char& newFirstletter, const string baseAlphabet) {

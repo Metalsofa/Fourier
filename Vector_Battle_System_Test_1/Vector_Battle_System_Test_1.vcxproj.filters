@@ -30,9 +30,6 @@
     <ClCompile Include="Vector_Battle_System_Test_1.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="dep\battle.cpp">
-      <Filter>Implementation Files</Filter>
-    </ClCompile>
     <ClCompile Include="spells.cpp">
       <Filter>Implementation Files</Filter>
     </ClCompile>
@@ -63,6 +60,12 @@
     <ClCompile Include="fcolor.cpp">
       <Filter>Implementation Files</Filter>
     </ClCompile>
+    <ClCompile Include="globals.cpp">
+      <Filter>Implementation Files</Filter>
+    </ClCompile>
+    <ClCompile Include="battle.cpp">
+      <Filter>Implementation Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dep\geometry.h">
@@ -89,9 +92,6 @@
     <ClInclude Include="dep\fcolor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="dep\stopwatch.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -110,10 +110,10 @@
     <ClInclude Include="dep\graphics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dep\art.h">
+    <ClInclude Include="dep\customGL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="dep\customGL.h">
+    <ClInclude Include="globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -128,9 +128,6 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\..\..\..\AppData\Local\Temp\Rar$DRa10236.32037\StopwatchWin32-master\LICENSE.txt">
-      <Filter>Resource Files</Filter>
-    </Text>
     <Text Include="freeglut\Readme.txt">
       <Filter>Documentation Files\greeglut</Filter>
     </Text>
@@ -139,6 +136,9 @@
     </Text>
     <Text Include="Stopwatch\LICENSE.txt">
       <Filter>Documentation Files\stopwatch</Filter>
+    </Text>
+    <Text Include="..\..\..\..\AppData\Local\Temp\Rar$DRa10236.32037\StopwatchWin32-master\LICENSE.txt">
+      <Filter>Documentation Files</Filter>
     </Text>
   </ItemGroup>
 </Project>
