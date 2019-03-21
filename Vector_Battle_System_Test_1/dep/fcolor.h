@@ -16,13 +16,8 @@ private:
 	float G;
 	float B;
 	float A;
-	void caplevels() {
-		R = fminf(fabsf(R), 1.0);
-		G = fminf(fabsf(G), 1.0);
-		B = fminf(fabsf(B), 1.0);
-		A = fminf(fabsf(A), 1.0);
-		//Thanks DP~
-	}
+	//Correct any levels accidentally being above 1
+	void caplevels();
 public:
 	fcolor();
 	fcolor(float red, float green, float blue, float alpha);

@@ -7,7 +7,6 @@ thing, to be called by the function that initiates battle */
 
 //Header includes
 #include "crypt.h"
-#include "art.h"
 #include "graphics.h"
 
 //STL includes

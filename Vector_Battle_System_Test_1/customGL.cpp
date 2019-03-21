@@ -1,4 +1,6 @@
-#include "customGl.h"
+
+//Include global variables
+#include "globals.h"
 
 using namespace std;
 
@@ -7,7 +9,7 @@ take advantage of freeGlut*/
 #ifndef __customGL_h__
 #define __customGL_h__
 
-/*Attention Developoers:
+/*Attention Developers:
 	This header file was developed for another project, so there are some namespace
 	conflicts with some of the other files. We are in the process of reformatting the
 	other files to make room for these names before we #include theme anywhere.*/

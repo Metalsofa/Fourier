@@ -1,5 +1,6 @@
 /*The purpose of this header file is to implement methods associated with
 user-friendly fgr manipulation*/
+
 #pragma once
 #ifndef __graphics_h__
 #define __graphics_h__
@@ -61,7 +62,7 @@ public:
 };
 
 //255 - each stat's value for 
-metastat inverse(metastat &base) {
+inline metastat inverse(metastat &base) {
 	return metastat(255-base.som, 255-base.emo, 255-base.cog);
 }
 

@@ -43,8 +43,6 @@ void setcolor(metastat col, float opacity);
 
 void rendertext(point location, string text);
 
-
-
 void drawaxes();
 
 void drawTriangle(triangle &tri, bool filled, bool vertices, float pointsize, bool labels,
@@ -59,7 +57,7 @@ void drawPoint(point &dot);
 
 void drawsegment(segment &seg);
 
-/*Always at (0,0) in the matrix, drawn along the x-axis, left bound is like the phase angle.
+/*Always at (0,0) in the GL matrix, drawn along the x-axis, left bound is like the phase angle.
 Resolution represents the number of points used to paint a single crest/trough. Appears clamped by bounds for aesthetic,
 but only if passed TRUE for the clamping of that bound.*/
 

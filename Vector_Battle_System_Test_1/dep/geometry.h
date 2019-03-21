@@ -9,24 +9,25 @@
 
 using namespace std;
 
-const float  PI = 3.14159265358979f;
+//PI defined here
+const float PI = 3.14159265358979f;
 
 template <class number>
-number mean(number &num1, number &num2) {
+inline number mean(number &num1, number &num2) {
 	return (num1 + num2) / 2;
 }
 
-float pyth(float &a, float &b) {
+inline float pyth(float &a, float &b) {
 	return sqrt(pow(a, 2) + pow(b, 2));
 }
 
-float pyth(const float &a, const float &b) {
+inline float pyth(const float &a, const float &b) {
 	return sqrt(pow(a, 2) + pow(b, 2));
 }
 
 
 //Boolean for whether X lies between A and B. Think A < X < B.
-bool between(float A, float X, float B) {
+inline bool between(float A, float X, float B) {
 	//return ((A < X && X < B) || (B < X && X < A));
 	//or...
 	return (fminf(A,B) < X && X < fmaxf(A,B)); 
@@ -115,35 +116,35 @@ public:
 	}
 };
 
-bool converges(point PointA, point PointB) {
+inline bool converges(point PointA, point PointB) {
 	return (PointA.x == PointB.x && PointA.y == PointB.y);
 }
 
-point scalarproduct(point &pointe, float &coefficient) {
+inline point scalarproduct(point &pointe, float &coefficient) {
 	return pointe * coefficient;
 }
 
-point scalarproduct(const point &pointe, const float &coefficient) {
+inline point scalarproduct(const point &pointe, const float &coefficient) {
 	return pointe * coefficient;
 }
 
-float dotproduct(point& r1, point& r2) {
+inline float dotproduct(point& r1, point& r2) {
 	return (r1.x * r2.x + r1.y * r2.y);
 }
 
 //Returns a float, since this product will by definition be in the z-direction
-float flatcrossproduct(point& r1, point& r2) {
+inline float flatcrossproduct(point& r1, point& r2) {
 	return r1.x * r2.y - r1.y * r2.x;
 }
 
-point unitvector(point po) {
+inline point unitvector(point po) {
 	if (po.magnitude() == 0)
 		return point(1.0f, 0.0f);
 	return scalarproduct(po, ( 1 / po.magnitude() ) );
 }
 
 //Returns the unit vector corresponding to an angle in radians.
-point unitfromangle(float &angle) {
+inline point unitfromangle(float &angle) {
 	point unit;
 	unit.x = cos(angle);
 	unit.y = sin(angle);
@@ -151,28 +152,28 @@ point unitfromangle(float &angle) {
 	return unit;
 }
 
-point combine(point &point1, point &point2) {
+inline point combine(point &point1, point &point2) {
 	return point(point1.x + point2.x, point1.y + point2.y);
 }
 
-point combine(const point &point1, const point &point2) {
+inline point combine(const point &point1, const point &point2) {
 	return point(point1.x + point2.x, point1.y + point2.y);
 }
 
 //Point 1 - Point 2
-point difference(point& point1, point& point2) {
-	return point1 - point2;
-}
-point difference(const point& point1, const point& point2) {
+inline point difference(point& point1, point& point2) {
 	return point1 - point2;
 }
 
+inline point difference(const point& point1, const point& point2) {
+	return point1 - point2;
+}
 
-point rotate90(point poi) {
+inline point rotate90(point poi) {
 	return point(0 - poi.y, poi.x);
 }
 
-point pointSum(vector<point> &points) {
+inline point pointSum(vector<point> &points) {
 	point result = point(0.0f,0.0f);
 	for (point bit : points) {
 		result = combine(result, bit);
@@ -181,7 +182,7 @@ point pointSum(vector<point> &points) {
 }
 
 //Accepts two points and an angle, returns the first point rotated by the specified angle about the second.
-point rotateabout(point &arg, point &axis, float &angle) {
+inline point rotateabout(point &arg, point &axis, float &angle) {
 	arg = difference(arg, axis);
 	float theta1 = atan2(arg.y, arg.x);
 	float length = arg.magnitude();
@@ -231,7 +232,7 @@ public:
 	}
 };
 
-segment rotate90about(int pointID, segment& seg) { 
+inline segment rotate90about(int pointID, segment& seg) { 
 	segment nseg;
 	if (pointID == 1) 
 		nseg = seg;
@@ -244,11 +245,9 @@ segment rotate90about(int pointID, segment& seg) {
 	analog = rotate90(analog);
 	nseg.p2 = combine(nseg.p1, analog);
 	return nseg;
-
-
 }
 
-segment equilateralBisector(segment seg) { //Bisector protrudes from left, if p1 is bottom and p2 is top
+inline segment equilateralBisector(segment seg) { //Bisector protrudes from left, if p1 is bottom and p2 is top
 	segment perp;
 	perp.p1 = seg.midpoint();
 	point diffp = difference(perp.p2, perp.p1);
@@ -256,8 +255,7 @@ segment equilateralBisector(segment seg) { //Bisector protrudes from left, if p1
 	return perp;
 }
 
-
-point intersection(segment& sega, segment& segb) { //Figured this out using Cramer's Rule 
+inline point intersection(segment& sega, segment& segb) { //Figured this out using Cramer's Rule 
 	float dxa = sega.p2.x - sega.p1.x;
 	float dxb = segb.p2.x - segb.p1.x;
 	float dya = sega.p2.y - sega.p1.y;
@@ -278,7 +276,7 @@ point intersection(segment& sega, segment& segb) { //Figured this out using Cram
 }
 
 //This is showing some REALLY weird behavior when one of the segments is perfectly vertical or horizontal
-bool isintersect(segment& sega, segment& segb) {
+inline bool isintersect(segment& sega, segment& segb) {
 	point ints = intersection(sega, segb);
 	bool eval = true;
 	bool xaeval = (ints.x < sega.p1.x) == (ints.x > sega.p2.x);
@@ -312,9 +310,7 @@ bool isintersect(segment& sega, segment& segb) {
 	return eval;
 }
 
-
-
-bool isperpintersect(point& p, segment& v) {
+inline bool isperpintersect(point& p, segment& v) {
 	point diffVp = difference(v.p1, p);
 	point diffVv = difference(v.p2, v.p1);
 	float numerator = dotproduct(diffVp, diffVv);
@@ -323,7 +319,7 @@ bool isperpintersect(point& p, segment& v) {
 	return  (0 <= t && t <= 1);
 }
 
-float distancetoline(point& p, segment& v) {
+inline float distancetoline(point& p, segment& v) {
 	point diffPv = difference(v.p1, p);
 	point diffVv = difference(v.p2, v.p1);
 	float numerator = abs(flatcrossproduct(diffVv, diffPv));
@@ -332,7 +328,7 @@ float distancetoline(point& p, segment& v) {
 }
 
 //Returns a position vector representing the shortest path from a point to a segment
-float distancetoseg(point& dot, segment& seg) {
+inline float distancetoseg(point& dot, segment& seg) {
 	//First we see if the perpendicular line to the segment even hits it.
 	if (!isperpintersect(dot, seg)) {
 		return min(
@@ -345,7 +341,7 @@ float distancetoseg(point& dot, segment& seg) {
 }
 
 //Returns the given point after refection about an axis defined by a given segment
-point reflection(point &dot, segment &mirror) {
+inline point reflection(point &dot, segment &mirror) {
 	point transform = mirror.midpoint(); //Bring the process to the origin
 	dot = difference(dot, transform);
 	point mir = difference(mirror.p1,transform);
@@ -360,7 +356,7 @@ point reflection(point &dot, segment &mirror) {
 
 /*Returns the appropriate reflective bisector at a given intersection that reflects an incedent ray as if
 it reflected at that corner, given a point that lies on the incedent ray.*/
-segment reflectiveBisector(point &dot, segment &sega, segment &segb) {
+inline segment reflectiveBisector(point &dot, segment &sega, segment &segb) {
 	point corner = intersection(sega, segb);
 	point A = sega.p1;
 	point B = segb.p1;

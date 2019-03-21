@@ -1,3 +1,6 @@
+//Include global variables
+#include "globals.h"
+
 #include "controls.h"
 
 using namespace std;

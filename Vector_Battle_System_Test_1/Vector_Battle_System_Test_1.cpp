@@ -2,19 +2,17 @@
 The main function is rather short; the function 'renderscene' is the real 'main'
 function. It may be prudent to later change what it is called.*/
 
-//Design function macros
-#define BD_CREATE_WALLS 1
-#define BD_ERASE_WALLS 2
-#define BD_MAKE_RAYS 3
-#define BD_MAKE_SHAPES 4
+//Include global variables
+#include "globals.h"
 
+//Custom header includes
 #include "geometry.h"
 #include "crypt.h"
 #include "gl/glut.h"
 #include "Stopwatch.h"
 #include "graphics.h"
-#include "art.h"
 
+//STL/etc. includes
 #include <Windows.h>
 #include <cmath>
 #include <stdlib.h>
@@ -28,32 +26,8 @@ using namespace std;
 using win32::Stopwatch;
 
 
-//Global Variables for detecting mode
-bool artMode = false;
-bool overworldMode = false;
-bool battleMode = true;
-bool battlefieldDesignMode = true;
-bool debugMode = true;
-
-
-//Global settings (mostly debug)
-bool showCorners = false; ///Debug: Draw the corners formed by wall intersections?
-bool showTicks = false; ///Finally found those annoying cursor ticks and made a setting for showing them.
-bool enablePersprot = false; ///fun: enable the user to rotate their perspective with the middle mouse button
-bool showTimer = false; ///Debug: Show the timer in the lower left
-bool showFPS = true;
-int FPS = 0; ///Calculated and frequently-updated FPS
-bool showConsole = false;
-
-
-//Global stopwatch
-Stopwatch st;
-
-
-
 //Be careful; certain headers should only be included after global declaration
 #include "controls.h"
-#include "art.h"
 #include "battle.h"
 #include "console.h"
 #include "camera.h"

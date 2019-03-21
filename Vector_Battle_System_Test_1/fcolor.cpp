@@ -1,3 +1,7 @@
+
+//Include global variables
+#include "globals.h"
+
 #include "fcolor.h"
 
 using namespace std;

@@ -6,16 +6,6 @@ It also contains some other settings*/
 #ifndef __camera_h__
 #define __camera_h__
 
-//Global Camera Position Data
-float LookPointX = float(currentbattle.boardWidth()) / 2.0f;
-float LookPointY = float(currentbattle.boardHeight()) / 2.0f;
-float LookPointZ = BoardDepth / 2.0f;
-const float PerspectiveRiseMax = PI / 2.0f - 0.0005f;
-float PerspectiveOrbit = 0.0f;
-float PerspectiveRise = PerspectiveRiseMax;
-float PerspectiveDist = 10.0f; //7.5f;
-
-
 
 #include "fcolor.h"
 #include "geometry.h"
@@ -54,9 +44,5 @@ public:
 	float Green() { return color.getLevel('g'); }
 	float Blue() { return color.getLevel('b'); }
 };
-
-//Global Custom mouse.
-cursor mouse = cursor();
-
 
 #endif
