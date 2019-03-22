@@ -364,6 +364,6 @@ void battlestate::iterate(float &inc /*incremental time*/) {
 
 	//Iterate AI:
 	for (enemy& e : antags) {
-		//e.act(*this);
+		e.act(*this);
 	}
 }

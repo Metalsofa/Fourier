@@ -14,7 +14,7 @@ take advantage of freeGlut*/
 #include "fcolor.h"
 #include "waves.h"
 #include "camera.h"
-#include "players.h"
+//#include "players.h"
 
 #include <string>
 

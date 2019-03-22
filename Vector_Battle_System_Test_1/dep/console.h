@@ -9,7 +9,7 @@ In theory, nothing that the player will need during gameplay should be in here.*
 #include "battle.h"
 #include "controls.h"
 #include "customGL.h"
-#include "players.h"
+//#include "players.h"
 
 
 //vector<string> console_history;
