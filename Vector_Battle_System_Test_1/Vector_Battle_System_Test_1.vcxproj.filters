@@ -113,7 +113,7 @@
     <ClInclude Include="dep\customGL.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="globals.h">
+    <ClInclude Include="dep\globals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
