@@ -7,7 +7,7 @@ Also the datatypes for stage geometry*/
 //Header includes
 #include "spells.h"
 #include "materials.h"
-#include "geometry.h"
+//#include "geometry.h"
 //#include "crypt.h"
 
 //STL includes
