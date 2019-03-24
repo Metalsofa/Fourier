@@ -117,6 +117,21 @@ void enemy::mB4(battlestate& b) {
 
 }
 
+//Recursive function to aim by bouncing off walls
+point enemy::advancedAim(battlestate& b, int wallInd, int playerInd, int depth, point pos) {
+	if (depth = 0) { return point(-1,-1); }
+	segment s(b.protags[playerInd].position, pos);
+	if (isintersect(b.map.getWall(wallInd).body, s)) {
+		return intersection(b.map.getWall(wallInd).body, s);
+	}
+	for (int i = 0; i < b.map.getWalls().size(); i++) {
+		if (wallInd != i) {
+			//return advancedAim(b, i, playerInd, depth - 1, reflect(pos, b.map.getWall(i)));	//Write reflect function
+		}
+	}
+
+}
+
 void enemy::move(const point& dire) { //Sets the enemy to move to this point
 	dest = dire;
 	moving = true;

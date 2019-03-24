@@ -115,6 +115,8 @@ public:
 	void mB3(battlestate& b);
 	void mB4(battlestate& b);
 
+	point advancedAim(battlestate & b, int wallInd, int playerInd, int depth, point pos);
+
 	void move(const point& dire);
 
 	void aimAt(const point& dire);
