@@ -32,7 +32,7 @@ fcolor::fcolor(float red, float green, float blue) {
 	caplevels();
 }
 //Accepted components are 'r', 'g', 'b', and 'a'.
-float fcolor::getLevel(char component) {
+float fcolor::getLevel(char component) const {
 	if (component == 'r')
 		return R;
 	if (component == 'g')

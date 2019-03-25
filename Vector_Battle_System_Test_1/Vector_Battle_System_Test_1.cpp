@@ -244,7 +244,7 @@ int main(int argc, char **argv) {
 
 	//Setup battle: Initialize combatants
 	player plyr1;
-	plyr1.position = point(6, 3);
+	plyr1.position = point(0, 6);
 	plyr1.turn(0);
 	plyr1.tog = false;
 	plyr1.sprite = (graphic("alpha.fgr"));
@@ -252,7 +252,7 @@ int main(int argc, char **argv) {
 	currentbattle.protags.push_back(plyr1);
 
 	player plyr2;
-	plyr2.position = point(5, 4);
+	plyr2.position = point(10, 6);
 	plyr2.turn(0);
 	plyr2.tog = false;
 	plyr2.sprite = (graphic("beta.fgr"));
@@ -260,7 +260,7 @@ int main(int argc, char **argv) {
 	currentbattle.protags.push_back(plyr2);
 
 	player plyr3;
-	plyr3.position = point(4, 3);
+	plyr3.position = point(10, 0);
 	plyr3.turn(0);
 	plyr3.tog = false;
 	plyr3.sprite = (graphic("gamma.fgr"));
@@ -268,7 +268,7 @@ int main(int argc, char **argv) {
 	currentbattle.protags.push_back(plyr3);
 
 	player plyr4;
-	plyr4.position = point(5, 2);
+	plyr4.position = point(0, 0);
 	plyr4.turn(0);
 	plyr4.tog = false;
 	plyr4.sprite = (graphic("delta.fgr"));
