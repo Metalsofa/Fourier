@@ -176,7 +176,7 @@ void artKeychecks() {
 	} else
 		dragdot = -1;
 	//Add a point by releasing the mouse
-	if (clickdragtrail.length() != 0 || clickdragtrail.p1.x != 0.0f || clickdragtrail.p1.y != 0.0f) {
+	if (clickdragtrail.length() != 0 || clickdragtrail.p1.x() != 0.0f || clickdragtrail.p1.y() != 0.0f) {
 		if (!leftclicking && !normalKeysdown['z']) {
 			animart[editingFrame].pieces[editingLayer].vertices.push_back(clickdragtrail.p2);
 			clickdragtrail = segment(0, 0, 0, 0);
@@ -206,23 +206,25 @@ void battleKeychecks() {
 	//Moving players (presently only handles one player):
 	//
 	point d(0.0f, 0.0f); //The differential of this player's movement
-	if (normalKeysdown['w']) { d.y += increment; }
-	if (normalKeysdown['a']) { d.x -= increment; }
-	if (normalKeysdown['s']) { d.y -= increment; }
-	if (normalKeysdown['d']) { d.x += increment; }
-	for (player& x : currentbattle.protags) {
-		if (x.tog) {
-			x.position.y += d.y;
-			x.position.x += d.x;
+	if (normalKeysdown['w']) { d.yinc(increment); }
+	if (normalKeysdown['a']) { d.xdec(increment); }
+	if (normalKeysdown['s']) { d.ydec(increment); }
+	if (normalKeysdown['d']) { d.xinc(increment); }
+	//Iterate through the protagonists and move them
+	for (unsigned int x = 0; x < currentbattle.protags.size(); x++) {
+		if (currentbattle.protags[x].tog) {
+			currentbattle.protags[x].position += d;
 		}
 	}
+	//Iterate through the protagonists and aim them
 	if (normalKeysdown['i'] || normalKeysdown['j'] || normalKeysdown['k'] || normalKeysdown['l']) {
-		d.y = d.x = 0;
-		if (normalKeysdown['i'] || upBuf) { d.y += increment; }
-		if (normalKeysdown['k'] || downBuf) { d.y -= increment; }
-		if (normalKeysdown['l'] || rightBuf) { d.x += increment; }
-		if (normalKeysdown['j'] || leftBuf) { d.x -= increment; }
-		if (d.y != 0 || d.x != 0) {
+		d.y(0.0f);
+		d.x(0.0f);
+		if (normalKeysdown['i'] || upBuf) { d.yinc(increment); }
+		if (normalKeysdown['k'] || downBuf) { d.ydec(increment); }
+		if (normalKeysdown['l'] || rightBuf) { d.xinc(increment); }
+		if (normalKeysdown['j'] || leftBuf) { d.x(increment); }
+		if (d.y() != 0 || d.x() != 0) {
 			for (unsigned int i = 0; i < 4; i++) {
 				if (currentbattle.protags[i].tog) { currentbattle.protags[i].turn(d.angle()); }
 			}
@@ -379,20 +381,20 @@ void PassiveMouseMove(int x, int y) {
 		deltay *= 2;
 	}
 	if (mouse.Snap != 0) {
-		mouse.Position.x = roundf(mouse.Position.x / mouse.Snap) * mouse.Snap;
-		mouse.Position.y = roundf(mouse.Position.y / mouse.Snap) * mouse.Snap;
+		mouse.Position.x(roundf(mouse.Position.x() / mouse.Snap) * mouse.Snap);
+		mouse.Position.y(roundf(mouse.Position.y() / mouse.Snap) * mouse.Snap);
 	}
 	if (!(middleclicking && enablePersprot)) {
-		mouse.Position.x += deltax * cos(PerspectiveOrbit) - deltay * sin(PerspectiveOrbit);
-		mouse.Position.y += deltay * cos(PerspectiveOrbit) + deltax * sin(PerspectiveOrbit);
-		if (mouse.Position.x < 0)
-			mouse.Position.x = 0;
-		if (mouse.Position.x > currentbattle.boardWidth())
-			mouse.Position.x = currentbattle.boardWidth();
-		if (mouse.Position.y < 0)
-			mouse.Position.y = 0;
-		if (mouse.Position.y > currentbattle.boardHeight())
-			mouse.Position.y = currentbattle.boardHeight();
+		mouse.Position.xinc(deltax * cos(PerspectiveOrbit) - deltay * sin(PerspectiveOrbit));
+		mouse.Position.yinc(deltay * cos(PerspectiveOrbit) + deltax * sin(PerspectiveOrbit));
+		if (mouse.Position.x() < 0)
+			mouse.Position.x(0.0f);
+		if (mouse.Position.x() > currentbattle.boardWidth())
+			mouse.Position.x(currentbattle.boardWidth());
+		if (mouse.Position.y() < 0)
+			mouse.Position.y(0.0f);
+		if (mouse.Position.y() > currentbattle.boardHeight())
+			mouse.Position.y(currentbattle.boardHeight());
 	}
 	if (middleclicking && enablePersprot) {
 		PerspectiveOrbit -= deltax;

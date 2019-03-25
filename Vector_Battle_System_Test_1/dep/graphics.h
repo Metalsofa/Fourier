@@ -81,9 +81,9 @@ public:
 		translation = to_string(vertices.size()); ///The first argument is an integer counting the number of verticies
 		for (int i = 0; i < vertices.size(); i++) {
 			translation += " "
-				+ to_string(vertices[i].x)
+				+ to_string(vertices[i].x())
 				+ " "
-				+ to_string(vertices[i].y);
+				+ to_string(vertices[i].y());
 		}
 		return translation + " "
 			+ to_string(color.som) + " "
@@ -100,9 +100,9 @@ public:
 		translation[0] = to_string(vertices.size()); ///The first argument is an integer counting the number of verticies
 		for (int i = 0; i < vertices.size(); i++) {
 			translation[0] += " ";
-			translation[0] += to_string(vertices[i].x);
+			translation[0] += to_string(vertices[i].x());
 			translation[0] += " ";
-			translation[0] += to_string(vertices[i].y);
+			translation[0] += to_string(vertices[i].y());
 		}
 		translation[0] += " ";
 		translation[0] += to_string(color.som) + " ";
@@ -183,13 +183,13 @@ public:
 	//Scale this shape strictly in the x-dimension around the origin
 	void rescaleX(float scalingFactor) {
 		for (unsigned long i = 0; i < vertices.size(); i++) {
-			vertices[i].x *= scalingFactor;
+			vertices[i].xmult(scalingFactor);
 		}
 	}
 	//Scale this shape strictly in the y-dimension around the origin
 	void rescaleY(float scalingFactor) {
 		for (unsigned long i = 0; i < vertices.size(); i++) {
-			vertices[i].y *= scalingFactor;
+			vertices[i].ymult(scalingFactor);
 		}
 	}
 	//Returns the diagonally-spanning segment for this shape
@@ -198,20 +198,20 @@ public:
 		//Iterate through every point and set the bounding segment accordingly
 		for (unsigned int i = 0; i < vertices.size(); i++) {
 			//Check rightbounds
-			if (vertices[i].x > rets.p2.x) {
-				rets.p2.x = vertices[i].x;
+			if (vertices[i].x() > rets.p2.x()) {
+				rets.p2.x(vertices[i].x());
 			}
 			//Check topbounds
-			if (vertices[i].y > rets.p2.y) {
-				rets.p2.y = vertices[i].y;
+			if (vertices[i].y() > rets.p2.y()) {
+				rets.p2.y(vertices[i].y());
 			}
 			//Check leftbounds
-			if (vertices[i].x < rets.p1.x) {
-				rets.p1.x = vertices[i].x;
+			if (vertices[i].x() < rets.p1.x()) {
+				rets.p1.x(vertices[i].x());
 			}
 			//Check bottombounds
-			if (vertices[i].y < rets.p1.y) {
-				rets.p1.y = vertices[i].y;
+			if (vertices[i].y() < rets.p1.y()) {
+				rets.p1.y(vertices[i].y());
 			}
 		}
 		//Now rets is the bounding segment for this shape!
@@ -291,20 +291,20 @@ public:
 			//This way we don't have to keep calling 'bounds'
 			const segment checker = pieces[i].bounds();
 			//Check rightbounds
-			if (checker.p2.x > rets.p2.x) {
-				rets.p2.x = checker.p2.x;
+			if (checker.p2.x() > rets.p2.x()) {
+				rets.p2.x(checker.p2.x());
 			}
 			//Check topbounds
-			if (checker.p2.y > rets.p2.y) {
-				rets.p2.y = checker.p2.y;
+			if (checker.p2.y() > rets.p2.y()) {
+				rets.p2.y(checker.p2.y());
 			}
 			//Check leftbounds
-			if (checker.p1.x < rets.p1.x) {
-				rets.p1.x = checker.p1.x;
+			if (checker.p1.x() < rets.p1.x()) {
+				rets.p1.x(checker.p1.x());
 			}
 			//Check bottombounds
-			if (checker.p1.y < rets.p1.y) {
-				rets.p1.y = checker.p1.y;
+			if (checker.p1.y() < rets.p1.y()) {
+				rets.p1.y(checker.p1.y());
 			}
 		}
 		//Return the augmented segment
@@ -316,7 +316,7 @@ public:
 		//Make this graphic flush with the x and y axes
 		setOrigin(bounds().p1);
 		//Rescale this graphic to be flush with y = 1
-		rescale(1 / (bounds().p2.x));
+		rescale(1 / (bounds().p2.x()));
 	}
 
 	//Fit this object to a new bounding box, breaking aspect ratio as neccessary
@@ -324,9 +324,9 @@ public:
 		//These calculatoins all work best from the origin point
 		standardize();
 		//Rescale horizontally
-		rescaleX(newBounds.p2.x);
+		rescaleX(newBounds.p2.x());
 		//Rescale vertically
-		rescaleY(newBounds.p2.y);
+		rescaleY(newBounds.p2.y());
 		setOrigin(newBounds.p1 * -1.0f);
 	}
 
@@ -335,7 +335,7 @@ public:
 		//These calculatoins all work best from the origin point
 		standardize();
 		//Rescale to fit with x
-		rescale(newBounds.p2.x - newBounds.p1.x);
+		rescale(newBounds.p2.x() - newBounds.p1.x());
 		//If it's too tall,
 		if (bounds().height() > newBounds.height()) {
 			//Rescale rationally to correct height
@@ -353,7 +353,7 @@ public:
 		//These calculatoins all work best from the origin point
 		standardize();
 		//Rescale to fit with x
-		rescale(newBounds.p2.x - newBounds.p1.x);
+		rescale(newBounds.p2.x() - newBounds.p1.x());
 		//If it isn't tall enough,
 		if (bounds().height() < newBounds.height()) {
 			//Rescale rationally to correct height

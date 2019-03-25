@@ -1,6 +1,13 @@
 ﻿  Vector_Battle_System_Test_1.cpp
+  battle.cpp
   console.cpp
   controls.cpp
+  crypt.cpp
+  customGL.cpp
+  fcolor.cpp
+  globals.cpp
+  materials.cpp
   players.cpp
+  spells.cpp
   Generating Code...
   Vector_Battle_System_Test_1.vcxproj -> C:\Users\medlod\Source\Repos\Fourier\x64\Debug\Vector_Battle_System_Test_1.exe

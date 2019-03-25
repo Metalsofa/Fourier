@@ -356,8 +356,8 @@ void battlestate::iterate(float &inc /*incremental time*/) {
 		}
 		if (!term) { rays[i].terminating = false; }
 		//Erase this ray if it's out of bounds or dead
-		if (abs(rays[i].getbits().back().x - map.getWidth() / 2) > map.getWidth()
-			|| abs(rays[i].getbits().back().y - map.getHeight() / 2) > map.getHeight() || rays[i].deathtime()) {
+		if (abs(rays[i].getbits().back().x() - map.getWidth() / 2) > map.getWidth()
+			|| abs(rays[i].getbits().back().y() - map.getHeight() / 2) > map.getHeight() || rays[i].deathtime()) {
 			rays.erase(rays.begin() + i);
 			i--; //Appropriately adjust our iterator
 		}

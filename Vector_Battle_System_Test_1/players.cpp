@@ -116,7 +116,7 @@ void enemy::sB1(battlestate& b) {	//Just shoots if there are no walls in the way
 void enemy::sB4(battlestate& b) {
 	for (int i = 0; i < b.protags.size(); i++) {
 		point aimDot = recursiveReflectiveAim(b, -1, i, 5, position, clWhite);
-		if (aimDot.x != -1 && aimDot.y != -1)
+		if (aimDot.x() != -1 && aimDot.y() != -1)
 			shoot(colorfromID(i + 1), aimDot, b);
 	}
 }
@@ -171,7 +171,7 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 			//Recall this function on walls[i], after reflecting 'pos' across that wall
 			point reticle(recursiveReflectiveAim(b, i, playerInd, depth - 1, reflection(pos, b.map.getWall(i).body), shotColor));
 			//Continue if nothing valid is found
-			if (reticle.x == -1 && reticle.y == -1)
+			if (reticle.x() == -1 && reticle.y() == -1)
 				continue;
 			//If we're still considering a direct line, don't reflect it
 			if (wallInd == -1)

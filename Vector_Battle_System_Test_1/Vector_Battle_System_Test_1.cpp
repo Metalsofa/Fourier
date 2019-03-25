@@ -280,7 +280,7 @@ int main(int argc, char **argv) {
 	e1.width = .4f;
 	plyr4.sprite = (graphic("delta.fgr"));
 	currentbattle.antags.push_back(e1);
-	currentbattle.antags[0].addWaypoint(point(7, 2));
+	currentbattle.antags[0].addWaypoint(point(7, 2.5));
 	//currentbattle.antags[0].addWaypoint(point(7, 4));
 	//currentbattle.antags[0].addWaypoint(point(1, 3));
 	//currentbattle.antags[0].addWaypoint(point(3, 1));
