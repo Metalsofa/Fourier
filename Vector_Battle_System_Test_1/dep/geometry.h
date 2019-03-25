@@ -31,40 +31,107 @@ inline bool between(float A, float X, float B) {
 	//The second one looks better, but the first one might be barely faster due to a function call
 }
 
+//Stores an x and a y value, a two-dimensional co-ordinate
 class point {
 private:
+	//Keep track of whether a value has changed
+	bool needsUpdate;
 	//Remembers its value to make some calculations faster
 	float angCache;
 	float magCache;
 	float xCache;
 	float yCache;
+public:
 	//Checks if the cache-values for x and y are up-to-date, updates them if not
 	void updateCache() {
-		if (xCache != x || yCache != y) {
-			xCache = x;
-			yCache = y;
-			angCache = atan2(y, x);
-			magCache = pyth(x, y);
+		if (needsUpdate) {
+			needsUpdate = false;
+			angCache = atan2(yCache, xCache);
+			magCache = pyth(xCache, yCache);
 		}
 	}
-public:
-	float x;
-	float y;
+	//Const-qualified accessors
+	float x() const {
+		return xCache;
+	}
+	float y() const {
+		return yCache;
+	}
+	//Set the x-coordinate of this point
+	void x(float newval) {
+		xCache = newval;
+		needsUpdate = true;
+	}
+	//Set the y-coordinate of this point
+	void y(float newval) {
+		yCache = newval;
+		needsUpdate = true;
+	}
+	//Increment the x-coordinate by some degree
+	void xinc(float addon) {
+		xCache += addon;
+		needsUpdate = true;
+	}
+	//Increment the y-coordinate by some degree
+	void yinc(float addon) {
+		yCache += addon;
+		needsUpdate = true;
+	}
+	//Decrement the x-coordinate by some degree
+	void xdec(float subtract) {
+		xCache -= subtract;
+		needsUpdate = true;
+	}
+	//Decrement the y-coordinate by some degree
+	void ydec(float subtract) {
+		yCache -= subtract;
+		needsUpdate = true;
+	}
+	//Multiply the x-coordinate by some degree
+	void xmult(float factor) {
+		xCache *= factor;
+		needsUpdate = true;
+	}
+	//Multiply the y-coordinate by some degree
+	void ymult(float factor) {
+		yCache *= factor;
+		needsUpdate = true;
+	}
+	//Divide the x-coordinate by some degree
+	void xdiv(float divisor) {
+		xCache /= divisor;
+		needsUpdate = true;
+	}
+	//Divide the y-coordinate by some degree
+	void ydiv(float divisor) {
+		yCache /= divisor;
+		needsUpdate = true;
+	}
+	//Constructor given y and x
 	point(float xpos, float ypos) {
-		x = xpos;
-		y = ypos;
+		needsUpdate = true;
+		xCache = xpos;
+		yCache = ypos;
 		updateCache();
 	}
+	//Default constructor
 	point() {
-		x = 0;
-		y = 0;
+		needsUpdate = true;
+		xCache = 0;
+		yCache = 0;
+		updateCache();
+	}
+	//Copy constructor
+	point(const point& other) {
+		*this = other;
 		updateCache();
 	}
 	//Time to overload some operators!
 	// += overload
 	point& operator +=(const point& rhs) {
-		x += rhs.x;
-		y += rhs.y;
+		xCache += rhs.x();
+		yCache += rhs.y();
+		needsUpdate = true;
 		return *this;
 	}
 	// + overload
@@ -74,8 +141,9 @@ public:
 	}
 	// -= overload
 	point& operator-= (const point& rhs) {
-		x -= rhs.x;
-		y -= rhs.y;
+		xCache -= rhs.x();
+		yCache -= rhs.y();
+		needsUpdate = true;
 		return *this;
 	}
 	// - overload
@@ -84,13 +152,21 @@ public:
 		return lhs;
 	}
 	// *= overload
-	point& operator*= (const float& rhs) {
-		x *= rhs;
-		y *= rhs;
+	point& operator*= (float rhs) {
+		xCache *= rhs;
+		yCache *= rhs;
+		needsUpdate = true;
+		return *this;
+	}
+	// /= overload
+	point& operator/= (float rhs) {
+		xCache /= rhs;
+		yCache /= rhs;
+		needsUpdate = true;
 		return *this;
 	}
 	bool operator== (point& p) const {
-		return ((x == p.x) && (y == p.y));
+		return ((xCache == p.x()) && (yCache == p.y()));
 	}
 	bool operator!= (point& p) const {
 		return !(*this == p);
@@ -101,31 +177,29 @@ public:
 		return lhs;
 	}
 	//The pythagorean hypotenuse of thes point from the origin
-	float magnitude() {
-		updateCache();
+	float magnitude() const {
+		if (needsUpdate) {
+			//std::cerr << "Heavy magnitude lifting at " << xCache << ", " << yCache << '!' << std::endl;
+			return pyth(xCache, yCache);
+		}
 		return magCache;
 	}
-	//Const-qualifid version
-	float magnitude() const {
-		return pyth(x, y);
-	}
 	//The angle formed by this point's vector from the origin with respect to the x-axis
-	float angle() {
-		updateCache();
-		return angCache;
-	}
-	//Const-qualified version
 	float angle() const {
-		return atan2(y, x);
+		if (needsUpdate) {
+			//std::cerr << "Heavy angle lifting at " << xCache << ", " << yCache << '!' << std::endl;
+			return atan2(yCache, xCache);
+		}
+		return angCache;
 	}
 	//Returns a nice label for this point for debug/gui purposes
 	string label() const {
-		return "(" + to_string(x) + "," + to_string(y) + ")";
+		return "(" + to_string(xCache) + "," + to_string(yCache) + ")";
 	}
 };
 
 inline bool converges(point PointA, point PointB) {
-	return (PointA.x == PointB.x && PointA.y == PointB.y);
+	return (PointA.x() == PointB.x() && PointA.y() == PointB.y());
 }
 
 inline point scalarproduct(point &pointe, float &coefficient) {
@@ -137,12 +211,12 @@ inline point scalarproduct(const point &pointe, const float &coefficient) {
 }
 
 inline float dotproduct(point& r1, point& r2) {
-	return (r1.x * r2.x + r1.y * r2.y);
+	return (r1.x() * r2.x() + r1.y() * r2.y());
 }
 
 //Returns a float, since this product will by definition be in the z-direction
 inline float flatcrossproduct(const point& r1, const point& r2) {
-	return r1.x * r2.y - r1.y * r2.x;
+	return r1.x() * r2.y() - r1.y() * r2.x();
 }
 
 inline point unitvector(const point po) {
@@ -154,14 +228,14 @@ inline point unitvector(const point po) {
 //Returns the unit vector corresponding to an angle in radians.
 inline point unitfromangle(float angle) {
 	point unit;
-	unit.x = cos(angle);
-	unit.y = sin(angle);
+	unit.x(cos(angle));
+	unit.y(sin(angle));
 	unit = unitvector(unit); //Just to be sure.
 	return unit;
 }
 
 inline point combine(const point& point1, const point& point2) {
-	return point(point1.x + point2.x, point1.y + point2.y);
+	return point(point1.x() + point2.x(), point1.y() + point2.y());
 }
 
 //Point 1 - Point 2
@@ -170,11 +244,11 @@ inline point difference(const point& point1, const point& point2) {
 }
 
 inline point rotate90(point poi) {
-	return point(0 - poi.y, poi.x);
+	return point(0 - poi.y(), poi.x());
 }
 
 inline point pointSum(const vector<point>& points) {
-	point result = point(0.0f,0.0f);
+	point result = point(0.0f, 0.0f);
 	for (point bit : points) {
 		result = combine(result, bit);
 	}
@@ -184,7 +258,7 @@ inline point pointSum(const vector<point>& points) {
 //Accepts two points and an angle, returns the first point rotated by the specified angle about the second.
 inline point rotateabout(point &arg, point &axis, float &angle) {
 	arg = difference(arg, axis);
-	float theta1 = atan2(arg.y, arg.x);
+	float theta1 = atan2(arg.y(), arg.x());
 	float length = arg.magnitude();
 	float theta2 = theta1 + angle;
 	float x2 = length * cos(theta2);
@@ -203,20 +277,20 @@ public:
 		p2 = point2;
 	}
 	const point midpoint() const {
-		return point(mean(p1.x, p2.x), mean(p1.y, p2.y));
+		return point(mean(p1.x(), p2.x()), mean(p1.y(), p2.y()));
 	}
 	float length() {
 		float leng;
-		leng = pyth(p1.x - p2.x, p1.y - p2.y);
+		leng = pyth(p1.x() - p2.x(), p1.y() - p2.y());
 		return leng;
 	}
 	//Height of box bounded by this segment. Can be negative.
 	const float height() const {
-		return (p2.y - p1.y);
+		return (p2.y() - p1.y());
 	}
 	//Width of box bounded by this segment. Can be negative.
 	const float width() const {
-		return (p2.x - p1.x);
+		return (p2.x() - p1.x());
 	}
 	segment() {
 		p1 = point(0.0f,0.0f);
@@ -239,8 +313,8 @@ inline segment rotate90about(int pointID, segment& seg) {
 	else
 		nseg.define(seg.p2, seg.p1);
 	//point analog; //UNcomment if fermatpoint stops working
-	//analog.x = nseg.p2.x - nseg.p1.x; //UNcomment if fermatpoint stops working
-	//analog.y = nseg.p2.y - nseg.p1.y; //UNcomment if fermatpoint stops working
+	//analog.x() = nseg.p2.x() - nseg.p1.x(); //UNcomment if fermatpoint stops working
+	//analog.y() = nseg.p2.y() - nseg.p1.y(); //UNcomment if fermatpoint stops working
 	point analog = nseg.p2 - nseg.p1; //comment OUT if fermatpoint stops working
 	analog = rotate90(analog);
 	nseg.p2 = combine(nseg.p1, analog);
@@ -257,14 +331,14 @@ inline segment equilateralBisector(segment seg) { //Bisector protrudes from left
 
 //Returns the point in two-dimensional space at which two lines intersect (treated as full lines, not segments)
 inline point intersection(const segment& sega, const segment& segb) { //Figured this out using Cramer's Rule 
-	float dxa = sega.p2.x - sega.p1.x;
-	float dxb = segb.p2.x - segb.p1.x;
-	float dya = sega.p2.y - sega.p1.y;
-	float dyb = segb.p2.y - segb.p1.y;
-	float xa = sega.p1.x;
-	float xb = segb.p1.x;
-	float ya = sega.p1.y;
-	float yb = segb.p1.y;
+	float dxa = sega.p2.x() - sega.p1.x();
+	float dxb = segb.p2.x() - segb.p1.x();
+	float dya = sega.p2.y() - sega.p1.y();
+	float dyb = segb.p2.y() - segb.p1.y();
+	float xa = sega.p1.x();
+	float xb = segb.p1.x();
+	float ya = sega.p1.y();
+	float yb = segb.p1.y();
 	float pa = dxa * ya - dya * xa;
 	float pb = dxb * yb - dyb * xb;
 	float det = dya * dxb - dyb * dxa;
@@ -280,17 +354,17 @@ inline point intersection(const segment& sega, const segment& segb) { //Figured 
 inline bool isintersect(const segment& sega, const segment& segb) {
 	point ints = intersection(sega, segb);
 	bool eval = true;
-	bool xaeval = (ints.x < sega.p1.x) == (ints.x > sega.p2.x);
-	if (sega.p1.x == sega.p2.x)
+	bool xaeval = (ints.x() < sega.p1.x()) == (ints.x() > sega.p2.x());
+	if (sega.p1.x() == sega.p2.x())
 		xaeval = false;
-	bool xbeval = (ints.x < segb.p1.x) == (ints.x > segb.p2.x);
-	if (segb.p1.x == segb.p2.x)
+	bool xbeval = (ints.x() < segb.p1.x()) == (ints.x() > segb.p2.x());
+	if (segb.p1.x() == segb.p2.x())
 		xbeval = false;
-	bool yaeval = (ints.y < sega.p1.y) == (ints.y > sega.p2.y);
-	if (sega.p1.y == sega.p2.y)
+	bool yaeval = (ints.y() < sega.p1.y()) == (ints.y() > sega.p2.y());
+	if (sega.p1.y() == sega.p2.y())
 		yaeval = false;
-	bool ybeval = (ints.y < segb.p1.y) == (ints.y > segb.p2.y);
-	if (segb.p1.y == segb.p2.y)
+	bool ybeval = (ints.y() < segb.p1.y()) == (ints.y() > segb.p2.y());
+	if (segb.p1.y() == segb.p2.y())
 		ybeval = false;
 	if (!xaeval && !yaeval)
 		eval = false;
@@ -304,8 +378,8 @@ inline bool isintersect(const segment& sega, const segment& segb) {
 		cerr << "SOMETHING IS WRONG" << endl
 			<< (eval? "TRUE" : "FALSE") << endl
 			<< ((onSegment(sega.p1, ints, sega.p2) && onSegment(segb.p1, ints, segb.p2)) ? "TRUE" : "FALSE") << endl
-			<< "Seg 1: (" << sega.p1.x << ", " << sega.p1.y << "), ("  << sega.p2.x << ", " << sega.p2.y << ")" << endl
-			<< "Seg 2: (" << segb.p1.x << ", " << segb.p1.y << "), (" << segb.p2.x << ", " << segb.p2.y << ")" << endl;
+			<< "Seg 1: (" << sega.p1.x() << ", " << sega.p1.y() << "), ("  << sega.p2.x() << ", " << sega.p2.y() << ")" << endl
+			<< "Seg 2: (" << segb.p1.x() << ", " << segb.p1.y() << "), (" << segb.p2.x() << ", " << segb.p2.y() << ")" << endl;
 		exit(1);
 	}*/
 	return eval;
@@ -463,8 +537,8 @@ public:
 		fermA = intersection(finder2, finder3);
 		fermB = intersection(finder3, finder1);
 		fermC = intersection(finder1, finder2);
-		fermM.x = (fermA.x + fermB.x + fermC.x) / 3;
-		fermM.y = (fermA.y + fermB.y + fermC.y) / 3;
+		fermM.x((fermA.x() + fermB.x() + fermC.x()) / 3.0f);
+		fermM.y((fermA.y() + fermB.y() + fermC.y()) / 3.0f);
 		if (which == 1)
 			return fermA;
 		else if (which == 2)
@@ -475,6 +549,5 @@ public:
 			return fermM;
 	}
 };
-
 
 #endif

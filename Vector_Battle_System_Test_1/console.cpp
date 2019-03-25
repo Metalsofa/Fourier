@@ -113,7 +113,9 @@ void handleInput(string &input) {
 			art.pieces[editingLayer].vertices.clear();
 			outputConsole("Cleared vertecies of Shape #" + to_string(editingLayer));
 		} else if (arg == "origin") {
-			point O; cons >> O.x; cons >> O.y;
+			float Ox; cons >> Ox;
+			float Oy; cons >> Oy;
+			point O(Ox, Oy);
 			art.pieces[editingLayer].setOrigin(O);
 			outputConsole("Set origin to " + O.label());
 		} else
@@ -124,7 +126,9 @@ void handleInput(string &input) {
 			art.standardize();
 		}
 		if (arg == "origin") {
-			point O; cons >> O.x; cons >> O.y;
+			float Ox; cons >> Ox;
+			float Oy; cons >> Oy;
+			point O(Ox, Oy);
 			art.setOrigin(O);
 		}
 		if (arg == "expand") {

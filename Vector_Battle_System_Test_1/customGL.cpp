@@ -31,7 +31,7 @@ void setcolor(const fcolor& col) {
 }
 
 void drawText(const point& location, const string& text) {
-	glRasterPos2f(location.x, location.y);
+	glRasterPos2f(location.x(), location.y());
 	for (unsigned int i = 0; i < text.size(); i++) { //glutBitmapString() https://stackoverflow.com/questions/544079/how-do-i-use-glutbitmapstring-in-c-to-draw-text-to-the-screen
 		//Draw each character    
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
@@ -39,7 +39,7 @@ void drawText(const point& location, const string& text) {
 }
 
 void glVertexPoint(const point& dot) {
-	glVertex2f(dot.x, dot.y);
+	glVertex2f(dot.x(), dot.y());
 }
 void glVertexSegment(const segment& seg) {
 	glVertexPoint(seg.p1);
@@ -65,7 +65,7 @@ void drawPoint(const point& dot, float size, bool label) {
 
 //Like glTranslatef, but it takes a single argument: a point
 void glTranslatePoint(point& offset) {
-	glTranslatef(offset.x, offset.y, 0.0f);
+	glTranslatef(offset.x(), offset.y(), 0.0f);
 }
 
 //Render a line segment using OpenGL
@@ -103,13 +103,13 @@ void setcolor(const metastat& col, float opacity) {
 
 void rendertext(const point& location, const string& text) {
 	// set position to text    
-	glRasterPos2f(location.x, location.y);
+	glRasterPos2f(location.x(), location.y());
 
 	for (unsigned int i = 0; i < text.size(); i++) {
 		// draw each character    
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
 	}
-	//glTranslatef(-dot.x, -dot.y, 0.0f);
+	//glTranslatef(-dot.x(), -dot.y(), 0.0f);
 }
 
 
@@ -182,38 +182,38 @@ void drawXYgrid(segment bounds, unsigned int levels) {
 		glColor3f(lightness, lightness, lightness);
 		glBegin(GL_LINES);
 		for (unsigned int i = 1; i < level; i++) {
-			bounds.p1.x *= 2.0f; bounds.p1.y *= 2.0f;
-			bounds.p2.x *= 2.0f; bounds.p2.y *= 2.0f;
+			bounds.p1 *= 2.0f; bounds.p1 *= 2.0f;
+			bounds.p2 *= 2.0f; bounds.p2 *= 2.0f;
 		}
 		int xfirst, xlast, yfirst, ylast;
-		if (bounds.p1.x < 0)
-			xfirst = int(floor(bounds.p1.x));
+		if (bounds.p1.x() < 0)
+			xfirst = int(floor(bounds.p1.x()));
 		else
-			xfirst = int(ceil(bounds.p1.x));
-		if (bounds.p1.y < 0)
-			yfirst = int(floor(bounds.p1.y));
+			xfirst = int(ceil(bounds.p1.x()));
+		if (bounds.p1.y() < 0)
+			yfirst = int(floor(bounds.p1.y()));
 		else
-			yfirst = int(ceil(bounds.p1.y));
-		if (bounds.p2.x > 0)
-			xlast = int(floor(bounds.p2.x));
+			yfirst = int(ceil(bounds.p1.y()));
+		if (bounds.p2.x() > 0)
+			xlast = int(floor(bounds.p2.x()));
 		else
-			xlast = int(ceil(bounds.p2.x));
-		if (bounds.p2.y > 0)
-			ylast = int(floor(bounds.p2.y));
+			xlast = int(ceil(bounds.p2.x()));
+		if (bounds.p2.y() > 0)
+			ylast = int(floor(bounds.p2.y()));
 		else
-			ylast = int(ceil(bounds.p2.y));
+			ylast = int(ceil(bounds.p2.y()));
 		for (unsigned int i = 1; i < level; i++) {
-			bounds.p1.x /= 2; bounds.p1.y /= 2;
-			bounds.p2.x /= 2; bounds.p2.y /= 2;
+			bounds.p1 /= 2.0f; bounds.p1 /= 2.0f;
+			bounds.p2 /= 2.0f; bounds.p2 /= 2.0f;
 		}
 		float lv = float(level);
 		for (int i = xfirst; i <= xlast; i++) {
 			float it = float(i);
-			glVertex2f(it / powf(2, lv - 1), bounds.p1.y); glVertex2f(it / powf(2, lv - 1), bounds.p2.y);
+			glVertex2f(it / powf(2, lv - 1), bounds.p1.y()); glVertex2f(it / powf(2, lv - 1), bounds.p2.y());
 		}
 		for (int i = yfirst; i <= ylast; i++) {
 			float it = float(i);
-			glVertex2f(bounds.p1.x, it / powf(2, lv - 1)); glVertex2f(bounds.p2.x, it / powf(2, lv - 1));
+			glVertex2f(bounds.p1.x(), it / powf(2, lv - 1)); glVertex2f(bounds.p2.x(), it / powf(2, lv - 1));
 		}
 		glEnd();
 		level++;
@@ -223,20 +223,20 @@ void drawXYgrid(segment bounds, unsigned int levels) {
 //Use OpenGL to draw a point on the screen
 void drawPoint(const point &dot) {
 	glColor3f(1, 1, 1);
-	glTranslatef(dot.x, dot.y, 0.0f);
+	glTranslatef(dot.x(), dot.y(), 0.0f);
 	glutSolidSphere(0.05, 10, 10);
-	glTranslatef(-dot.x, -dot.y, 0.0f);
+	glTranslatef(-dot.x(), -dot.y(), 0.0f);
 	glColor3f(0, 0, 0);
-	glTranslatef(dot.x, dot.y, 0.0f);
+	glTranslatef(dot.x(), dot.y(), 0.0f);
 	glutSolidSphere(0.025, 10, 10);
-	glTranslatef(-dot.x, -dot.y, 0.0f);
+	glTranslatef(-dot.x(), -dot.y(), 0.0f);
 }
 
 //Use OpenGL to draw a segment on the screen
 void drawsegment(segment &seg) {
 	glBegin(GL_LINES);
-	glVertex2f(seg.p1.x, seg.p1.y);
-	glVertex2f(seg.p2.x, seg.p2.y);
+	glVertex2f(seg.p1.x(), seg.p1.y());
+	glVertex2f(seg.p2.x(), seg.p2.y());
 	glEnd();
 }
 
@@ -337,7 +337,7 @@ void drawshape(shape &obj) {
 	glLineWidth(obj.lineThickness);
 	glBegin(obj.mode);
 	for (int i = 0; i < obj.vertices.size(); i++) {
-		glVertex2f(obj.vertices[i].x, obj.vertices[i].y);
+		glVertex2f(obj.vertices[i].x(), obj.vertices[i].y());
 	}
 	glEnd();
 }
@@ -353,17 +353,17 @@ void drawCursor(cursor& curse) {
 		float ticksize = 0.2f;
 		glLineWidth(1.0f);
 		glBegin(GL_LINES);
-		glVertex2f(curse.Position.x, 0); glVertex2f(curse.Position.x, ticksize);
-		glVertex2f(curse.Position.x, currentbattle.boardHeight()); glVertex2f(curse.Position.x, currentbattle.boardHeight() - ticksize);
-		glVertex2f(0, curse.Position.y); glVertex2f(ticksize, curse.Position.y);
-		glVertex2f(currentbattle.boardWidth(), curse.Position.y); glVertex2f(currentbattle.boardWidth() - ticksize, curse.Position.y);
+		glVertex2f(curse.Position.x(), 0); glVertex2f(curse.Position.x(), ticksize);
+		glVertex2f(curse.Position.x(), currentbattle.boardHeight()); glVertex2f(curse.Position.x(), currentbattle.boardHeight() - ticksize);
+		glVertex2f(0, curse.Position.y()); glVertex2f(ticksize, curse.Position.y());
+		glVertex2f(currentbattle.boardWidth(), curse.Position.y()); glVertex2f(currentbattle.boardWidth() - ticksize, curse.Position.y());
 		glEnd();
 	}
 	glColor3f(curse.Red(), curse.Green(), curse.Blue()); //OH THERE IT IS I FOUND THE CURSOR COLOR LINE FINALLY
 	if (DESIGN_FUNCTION == BD_MAKE_SHAPES)
 		setcolor(inverse(art.pieces[editingLayer].color), 1.0f);
 	glPushMatrix();
-	glTranslatef(curse.Position.x, curse.Position.y, 0); //Translate #1
+	glTranslatef(curse.Position.x(), curse.Position.y(), 0); //Translate #1
 	glRotatef(-90 + curse.Tilt * 180 / PI, 0, 1, 0); //Rotate #1
 	glRotatef(curse.Yaw * 180 / PI, 0, 0, 1); //Rotate #2
 	glRotatef(curse.Rot * 180 / PI, 1, 0, 0); //Rotate #3
@@ -397,8 +397,8 @@ void drawwall(wall& drawingWall) {
 		drawingWall.material.getBlue(),
 		drawingWall.material.getAlpha()
 	);
-	glVertex2f(drawingWall.getbody().p1.x, drawingWall.getbody().p1.y);
-	glVertex2f(drawingWall.getbody().p2.x, drawingWall.getbody().p2.y);
+	glVertex2f(drawingWall.getbody().p1.x(), drawingWall.getbody().p1.y());
+	glVertex2f(drawingWall.getbody().p2.x(), drawingWall.getbody().p2.y());
 	glEnd();
 	glLineWidth(1.0f);
 }
@@ -415,7 +415,7 @@ void drawray(const ray &drawingRay) {
 	glLineWidth(drawingRay.getthickness());
 	glBegin(GL_LINE_STRIP);
 	for (point dot : drawingRay.getbits()) {
-		glVertex2f(dot.x, dot.y);
+		glVertex2f(dot.x(), dot.y());
 	}
 	glEnd();
 
@@ -431,9 +431,9 @@ void drawray(const ray &drawingRay) {
 
 	////Draw Arrowhead
 	//if (!drawingRay.terminating ) {
-	glTranslatef(drawingRay.getbits()[0].x, drawingRay.getbits()[0].y, 0.0f);
+	glTranslatef(drawingRay.getbits()[0].x(), drawingRay.getbits()[0].y(), 0.0f);
 	point unit = unitvector(difference(drawingRay.getbits()[0], drawingRay.getbits()[1]));
-	glRotatef(atan2f(unit.y, unit.x) * 180 / PI, 0, 0, 1);
+	glRotatef(atan2f(unit.y(), unit.x()) * 180 / PI, 0, 0, 1);
 	glBegin(GL_POLYGON);
 	float arrowWidth = 0.1f;
 	float arrowHeight = 0.2f;
@@ -454,10 +454,10 @@ void drawray(const ray &drawingRay) {
 		float unborn = -excesslength;
 		if (unborn > 0) {
 			float desiredArea = unborn * drawingRay.getthickness() * 0.001f;
-			glTranslatef(drawingRay.getbits().back().x, drawingRay.getbits().back().y, 0);
+			glTranslatef(drawingRay.getbits().back().x(), drawingRay.getbits().back().y(), 0);
 			point unitback = unitvector(difference(drawingRay.getbits()[drawingRay.getbits().size() - 2],
 				drawingRay.getbits().back()));
-			glRotatef(unborn * 20, unitback.x, unitback.y, 0);
+			glRotatef(unborn * 20, unitback.x(), unitback.y(), 0);
 			glutSolidSphere(sqrt(desiredArea / PI), 10, 10);
 			glLoadIdentity();
 			definecamera();
@@ -467,7 +467,7 @@ void drawray(const ray &drawingRay) {
 
 void drawCombatant(combatant& fighter) {
 	glPushMatrix();
-	glTranslatef(fighter.position.x, fighter.position.y, 0.0f);
+	glTranslatef(fighter.position.x(), fighter.position.y(), 0.0f);
 	glRotatef(180 * fighter.direction.angle() / PI, 0, 0, 1);
 	glScalef(fighter.width, fighter.width, fighter.width);
 	glTranslatef(-0.5f, -0.5f, 0.0f);
@@ -478,7 +478,7 @@ void drawCombatant(combatant& fighter) {
 	/*} else {
 		glColor3f(.5f, .5f, .5f);
 	}*/
-	glTranslatef(fighter.position.x, fighter.position.y, 0);
+	glTranslatef(fighter.position.x(), fighter.position.y(), 0);
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < 360; i += 10) { //Doing only half the work with i += 2
 		float theta = PI * i / 90;
@@ -488,10 +488,10 @@ void drawCombatant(combatant& fighter) {
 	glBegin(GL_LINE_LOOP);
 	for (int i = 0; i < 360; i += 50) {
 		float theta = PI * i / 90;
-		glVertex2f(0.01f*cosf(theta) + fighter.direction.x, 0.01f*sinf(theta) + fighter.direction.y);
+		glVertex2f(0.01f*cosf(theta) + fighter.direction.x(), 0.01f*sinf(theta) + fighter.direction.y());
 	}
 	glEnd();
-	glTranslatef(-1 * fighter.position.x, -1 * fighter.position.y, 0);
+	glTranslatef(-1 * fighter.position.x(), -1 * fighter.position.y(), 0);
 
 	//glPopMatrix();
 }
@@ -512,12 +512,12 @@ void drawArtGUI() { //Idea I just had: Every player metastat caps at 255; WHITE 
 				glPointSize(5.0f);
 				glBegin(GL_LINE_STRIP);
 				for (point& dot : animart[f].pieces[i].vertices) {
-					glVertex2f(dot.x, dot.y);
+					glVertex2f(dot.x(), dot.y());
 				}
 				glEnd();
 				glBegin(GL_POINTS);
 				for (point& dot : animart[f].pieces[i].vertices) {
-					glVertex2f(dot.x, dot.y);
+					glVertex2f(dot.x(), dot.y());
 				}
 				glEnd();
 			}
