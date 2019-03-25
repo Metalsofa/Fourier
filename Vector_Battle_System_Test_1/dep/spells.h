@@ -111,10 +111,10 @@ public:
 			bits.pop_back();
 		}
 	}
-	bool gotRed() {return !color.som == 0;} //Bool: Is there a RED component to this ray?
-	bool gotGreen() { return !color.emo == 0; } //Bool: Is there a GREEN component to this ray?
-	bool gotBlue() { return !color.cog == 0; } //Bool: Is there a BLUE component to this ray?
-	bool deathtime() { return killme; }
+	bool gotRed() const {return !color.som == 0;} //Bool: Is there a RED component to this ray?
+	bool gotGreen() const { return !color.emo == 0; } //Bool: Is there a GREEN component to this ray?
+	bool gotBlue() const { return !color.cog == 0; } //Bool: Is there a BLUE component to this ray?
+	bool deathtime() const { return killme; }
 	//Tell the ray it is now terminating, and tell it where to terminate.
 	void terminate(point where) { //DP: Pass by ref
 		terminating = true;
@@ -136,7 +136,7 @@ public:
 		return intersection(frontseg, surface);
 	}
 	//Returns 0 (kill) 1 (bounce) or 2 (permit) based on this ray's compatability with a given material.
-	int permitted(metastat permittivity) { //DP: Pass by ref
+	int permitted(const metastat& permittivity) const { //DP: Pass by ref
 		//These 3 lines of code return 0 (for 'kill') if any component of the ray is not permitted.
 		if (permittivity.som == 0 && gotRed()) return 0;
 		if (permittivity.emo == 0 && gotGreen()) return 0;
@@ -190,6 +190,9 @@ public:
 		return bits;
 	}
 };
+
+//Check if a spell of a given color can pass through a given material
+int permitted(const metastat& spellColor, const metastat& permittivity);
 
 //projectiles: have graphics, position, velocity, behavior,
 

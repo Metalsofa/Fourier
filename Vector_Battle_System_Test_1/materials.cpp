@@ -42,7 +42,7 @@ float materialtype::getAlpha() { return opacity; }
 float materialtype::getThickness() { return thickness; }
 
 //Accessor for the spell-permitivity of this material as a metastat
-metastat materialtype::getPermittivitySpells() { return permittivitySpells; }
+metastat materialtype::getPermittivitySpells() const { return permittivitySpells; }
 
 //Always use this constructor; it takes an integer corresponding to a material.
 materialtype::materialtype(Material MATERIAL_ID) {

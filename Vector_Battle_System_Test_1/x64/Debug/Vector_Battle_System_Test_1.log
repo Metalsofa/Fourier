@@ -1,16 +1,2 @@
-﻿  Vector_Battle_System_Test_1.cpp
-  battle.cpp
-  console.cpp
-  controls.cpp
-  crypt.cpp
-  customGL.cpp
-  fcolor.cpp
-  globals.cpp
-  materials.cpp
-  players.cpp
-c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\players.cpp(134): warning C4305: 'argument': truncation from 'double' to 'const float'
-  resource.cpp
-  room.cpp
-  spells.cpp
-  Generating Code...
+﻿  players.cpp
   Vector_Battle_System_Test_1.vcxproj -> C:\Users\medlod\Source\Repos\Fourier\x64\Debug\Vector_Battle_System_Test_1.exe

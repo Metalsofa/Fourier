@@ -38,7 +38,7 @@ public:
 	//Accessor for the line-thickness of this wall as a float
 	float getThickness();
 	//Accessor for the spell-permitivity of this material as a metastat
-	metastat getPermittivitySpells();
+	metastat getPermittivitySpells() const;
 	//Always use this constructor; it takes an integer corresponding to a material.
 	materialtype(Material MATERIAL_ID);
 	//Default constructor (for just in case)
