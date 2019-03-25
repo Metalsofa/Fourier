@@ -34,6 +34,14 @@ public:
 		cog = 0;
 	}
 
+	bool operator==(const metastat& other) const {
+		return (other.som == som && other.emo == emo && other.cog == cog);
+	}
+
+	bool operator!=(const metastat& other) const {
+		return !(other == *this);
+	}
+
 	void define(int newSom, int newEmo, int newCog) {
 		som = newSom;
 		emo = newEmo;
@@ -41,10 +49,10 @@ public:
 	}
 
 	//Returns the sum of all stat components
-	int sum() { return (som + emo + cog); }
+	int sum() const{ return (som + emo + cog); }
 
 	//Returns the mean of all stat components
-	int mean() { return (sum() / 3); }
+	int mean() const{ return (sum() / 3); }
 
 	//1: Somatic 2: Emotional 3: Cognitive 4: Mean else: sum
 	int component(int comp) {
@@ -60,6 +68,7 @@ public:
 			return sum();
 	}
 };
+
 
 //255 - each stat's value for 
 inline metastat inverse(metastat &base) {
