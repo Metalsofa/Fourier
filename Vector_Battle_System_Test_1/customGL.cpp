@@ -24,39 +24,37 @@ take advantage of freeGlut*/
 
 #include <string>
 
-enum discreteHue { red, orange, yellow, lime, green, teal, cyan, indigo, blue, purple, magenta, violet };
+enum discreteHue { black, red, orange, yellow, lime, green, teal, cyan, indigo, blue, purple, magenta, violet, white };
 
-
-void setcolor(fcolor& col) {
+void setcolor(const fcolor& col) {
 	glColor4f(col.getLevel('r'), col.getLevel('g'), col.getLevel('b'), col.getLevel('a'));
 }
 
-void drawText(point& location, string text) {
-	point dot = location;
-	glRasterPos2f(dot.x, dot.y);
+void drawText(const point& location, const string& text) {
+	glRasterPos2f(location.x, location.y);
 	for (unsigned int i = 0; i < text.size(); i++) { //glutBitmapString() https://stackoverflow.com/questions/544079/how-do-i-use-glutbitmapstring-in-c-to-draw-text-to-the-screen
 		//Draw each character    
 		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
 	}
 }
 
-void glVertexPoint(point dot) {
+void glVertexPoint(const point& dot) {
 	glVertex2f(dot.x, dot.y);
 }
-void glVertexSegment(segment& seg) {
+void glVertexSegment(const segment& seg) {
 	glVertexPoint(seg.p1);
 	glVertexPoint(seg.p2);
 }
-void glVertexTriangle(triangle& tri) {
+void glVertexTriangle(const triangle& tri) {
 	glVertexPoint(tri.p1);
 	glVertexPoint(tri.p2);
 	glVertexPoint(tri.p3);
 }
-void glVertexFermatPoint(triangle& tri) {
+void glVertexFermatPoint(const triangle& tri) {
 	glVertexPoint(tri.fermatpoint(0));
 }
 
-void drawPoint(point dot, float size, bool label) {
+void drawPoint(const point& dot, float size, bool label) {
 	glPointSize(size);
 	glBegin(GL_POINTS);
 	glVertexPoint(dot);
@@ -70,7 +68,8 @@ void glTranslatePoint(point& offset) {
 	glTranslatef(offset.x, offset.y, 0.0f);
 }
 
-void drawSegment(segment &seg, float &thickness, bool &endpoints, bool &labels) {
+//Render a line segment using OpenGL
+void drawSegment(const segment& seg, float thickness, bool endpoints, bool labels) {
 	glLineWidth(thickness);
 	glBegin(GL_LINES);
 	glVertexSegment(seg);
@@ -79,9 +78,9 @@ void drawSegment(segment &seg, float &thickness, bool &endpoints, bool &labels) 
 		drawPoint(seg.p1, thickness * 2.0f, labels);
 		drawPoint(seg.p2, thickness * 2.0f, labels);
 	}
-
 }
 
+//Set the camera
 void definecamera() {
 	if (PerspectiveRise > PerspectiveRiseMax)
 		PerspectiveRise = PerspectiveRiseMax;
@@ -95,14 +94,14 @@ void definecamera() {
 		0.0f, 0.0f, 1.0f); //Vector that defines the "up" direction
 }
 
-void setcolor(metastat col, float opacity) {
+void setcolor(const metastat& col, float opacity) {
 	float R = float(col.som) / 255.0f;
 	float G = float(col.emo) / 255.0f;
 	float B = float(col.cog) / 255.0f;
 	glColor4f(R, G, B, opacity);
 }
 
-void rendertext(point location, string text) {
+void rendertext(const point& location, const string& text) {
 	// set position to text    
 	glRasterPos2f(location.x, location.y);
 
@@ -121,7 +120,8 @@ void drawaxes() {
 	glBegin(GL_QUADS);
 	glColor3f(.1f, .1f, .1f);
 	glVertex3f(0.0f, 0.0f, 0.0f); glVertex3f(currentbattle.boardWidth(), 0.0f, 0.0f);
-	glVertex3f(currentbattle.boardWidth(), currentbattle.boardHeight(), 0); glVertex3f(0, currentbattle.boardHeight(), 0);
+	glVertex3f(currentbattle.boardWidth(), currentbattle.boardHeight(), 0);
+	glVertex3f(0, currentbattle.boardHeight(), 0);
 	glEnd();
 
 	//Gridlines
@@ -152,7 +152,7 @@ void drawaxes() {
 	glColor3f(1, 1, 1);
 }
 
-void drawTriangle(triangle &tri, bool filled, bool vertices, float pointsize, bool labels,
+void drawTriangle(const triangle& tri, bool filled, bool vertices, float pointsize, bool labels,
 	bool fermatPoint) {
 	if (filled)
 		glBegin(GL_TRIANGLES);
@@ -220,9 +220,8 @@ void drawXYgrid(segment bounds, unsigned int levels) {
 	}
 }
 
-//The following sections added after Feb 16 to clean up the main file
-
-void drawPoint(point &dot) {
+//Use OpenGL to draw a point on the screen
+void drawPoint(const point &dot) {
 	glColor3f(1, 1, 1);
 	glTranslatef(dot.x, dot.y, 0.0f);
 	glutSolidSphere(0.05, 10, 10);
@@ -233,6 +232,7 @@ void drawPoint(point &dot) {
 	glTranslatef(-dot.x, -dot.y, 0.0f);
 }
 
+//Use OpenGL to draw a segment on the screen
 void drawsegment(segment &seg) {
 	glBegin(GL_LINES);
 	glVertex2f(seg.p1.x, seg.p1.y);
@@ -410,7 +410,7 @@ void rendertext(float x, float y, float z, void *font, string text) {
 		glutBitmapCharacter(font, c);
 }
 */
-void drawray(ray &drawingRay) {
+void drawray(const ray &drawingRay) {
 	glColor3f(drawingRay.getRed(), drawingRay.getGreen(), drawingRay.getBlue());
 	glLineWidth(drawingRay.getthickness());
 	glBegin(GL_LINE_STRIP);

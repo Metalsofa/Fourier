@@ -23,7 +23,7 @@ public:
 	fcolor(float red, float green, float blue, float alpha);
 	fcolor(float red, float green, float blue);
 	//Accepted components are 'r', 'g', 'b', and 'a'.
-	float getLevel(char component);
+	float getLevel(char component) const;
 	//Accepted components are 'r', 'g', 'b', and 'a'.
 	void setLevel(char component, float level);
 	//Accepted components are 'r', 'g', 'b', and 'a'.

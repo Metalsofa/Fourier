@@ -19,6 +19,7 @@ thing, to be called by the function that initiates battle */
 
 using namespace std;
 class battlestate; //Forward declaring battlestate
+class ray; //Forward declare ray
 
 //This version of stats is for overworld logic and battle initiation
 class stats {
@@ -85,6 +86,7 @@ public:
 };
 
 class enemy : public combatant {	//Non controlled combatants with AI
+	//Typedef 'behavior' as a function pointer to a void that takes a battlestate-
 	typedef  void (enemy::*behavior)(battlestate&);
 private:
 	vector<point> path;	//Contains points on a path for enemy to follow
@@ -111,11 +113,12 @@ public:
 
 	void mB1(battlestate& b);
 	void sB1(battlestate& b);
+	void sB4(battlestate & b);
 	void mB2(battlestate& b);
 	void mB3(battlestate& b);
 	void mB4(battlestate& b);
 
-	point advancedAim(battlestate & b, int wallInd, int playerInd, int depth, point pos);
+	point recursiveReflectiveAim(battlestate & b, int wallInd, int playerInd, int depth, point pos, const metastat & shotColor);
 
 	void move(const point& dire);
 
@@ -123,7 +126,8 @@ public:
 
 	void shoot(battlestate& b);
 
-	void shoot(const point& dire, battlestate& b);
+	void shoot(const metastat & col, const point & dire, battlestate & b);
+
 };
 
 #endif

@@ -23,8 +23,8 @@ public:
 	bool fixed; //wave or no wave
 	int shape; //Circular, linear
 ///public:
-	segment& getbody() { return body; }
-	materialtype getmaterial() { return material; }
+	const segment& getbody() const { return body; }
+	const materialtype& getmaterial() const { return material; }
 	bool getfixed() { return fixed; }
 	wall(segment definingsegment, Material wallmaterial, bool isfixed);
 	wall(); //DP: You don't need default values?
@@ -42,9 +42,9 @@ public:
 	//background animations
 ///public:
 	//Get a vector of all intersection points of this wall
-	vector<point> intersections();
+	vector<point> intersections() const;
 	//returns the point (-100, -100) if there are no intersections.
-	point nearestintersection(point& dot);
+	point nearestintersection(const point& dot) const;
 	//Set the width and height of this battlefield
 	void setSize(float wide, float high);
 	//Accessor for the width of this battlefield

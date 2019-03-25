@@ -94,7 +94,7 @@ extern int rain = 0; //This is really just for fun; good for iterating through a
 //Global Variables for battlefieldDesignMode
 extern int DESIGN_FUNCTION = BD_MAKE_RAYS;
 extern metastat CHOSEEN_COLOR = clCyan;
-extern Material SELECTED_MATERIAL = DEFAULT;
+extern Material SELECTED_MATERIAL = BASIC_REFLECTIVE;
 
 
 ///////////////////////////////////////////////////////////

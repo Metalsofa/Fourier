@@ -469,36 +469,4 @@ public:
 	}
 };
 
-//enum Color {clWhite = 0xFFFFFF, clBlack = 0x0, clRed = 0xFF0000, clOrange = 0xFF7F00, clYellow = 0xFFFF00,
-//	clLime = 0x7FFF00, clGreen = 0x00FF, clTeal = 0x00FF7F, clCyan = 0x00FFFF, clIndigo = 0x007FFF, clBlue = 0x0000FF,
-//	clPurple = 0x7F00FF, clMagenta = 0xFF00FF, clViolet = 0xFF007F
-//};
-
-#define clWhite metastat(255, 255, 255) /*White*/
-#define clBlack metastat(0, 0, 0) /*Black*/
-#define clRed metastat(255,0,0) /*Red*/
-#define domainRed "action"
-#define clOrange metastat(255,127,0) /*Orange*/
-#define domainOrange "artistry"
-#define clYellow metastat(255,255,0) /*Yellow*/
-#define domainYellow "expression"
-#define clLime metastat(127,255,0) /*Lime*/
-#define domainLime "evocation"
-#define clGreen metastat(0,255,0) /*Green*/
-#define domainGreen "emotion"
-#define clTeal metastat(0,255,127) /*Teal*/
-#define domainTeal "introspection"
-#define clCyan metastat(0,255,255) /*Cyan*/
-#define domainCyan "belief"
-#define clIndigo metastat(0,127,255) /*Indigo*/
-#define domainIndigo "heuristic"
-#define clBlue metastat(0,0,255) /*Blue*/
-#define domainBlue "cognition"
-#define clPurple metastat(127,0,255) /*Purple*/
-#define domainPurple "synthesis"
-#define clMagenta metastat(255,0,255) /*Magenta*/
-#define domainMagenta "application"
-#define clViolet metastat(255,0,127) /*Violet*/
-#define domainViolet "operation"
-
 #endif

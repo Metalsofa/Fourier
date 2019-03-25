@@ -1,5 +1,6 @@
 #include "globals.h"
 #include "players.h"
+#include "customGL.h"
 
 using namespace std;
 
@@ -35,7 +36,7 @@ void enemy::init(int m, int s) {
 		shootB = &enemy::sB1;
 		break;
 	case 4:
-		shootB = &enemy::sB1;
+		shootB = &enemy::sB4;
 		break;
 	default:
 		shootB = nullptr;
@@ -65,7 +66,8 @@ void enemy::act(battlestate& b) {	//invokes moving and shooting functions approp
 	return;
 }
 
-void enemy::mB1(battlestate& b) {	//Just follows the path 
+//Movement-Behavior function pointer: Just follows the path
+void enemy::mB1(battlestate& b) {	
 	if (path.size() == 0) { return; } 
 	else if (path.size() == 1) { 
 		if ((path.front() - position).magnitude() > .05) { //.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
@@ -89,11 +91,13 @@ void enemy::mB1(battlestate& b) {	//Just follows the path
 	}
 	return;
 }
+
+//Shooting-behaviour function pointer: Just shoot each player if there are no walls in the way
 void enemy::sB1(battlestate& b) {	//Just shoots if there are no walls in the way of enemy and player
 	bool shot = true;
 	for (player& p : b.protags) {
 		shot = true;
-		for (wall& w : b.map.getWalls()) {				//Currently commented out due to not being able to recognize currentbattle, ray, etc.
+		for (wall& w : b.map.getWalls()) {
 			segment s(p.position, position);
 			if (isintersect(w.body, s)) {
 				shot = false;
@@ -101,35 +105,89 @@ void enemy::sB1(battlestate& b) {	//Just shoots if there are no walls in the way
 			}
 		}
 		if (shot) {
-			shoot(p.position,b);
+			shoot(clWhite, p.position,b);
 			return;
 		}
 	}
 	return;
 }
+
+//Shooting-behavior function pointer: Makes simple use of the recursive-reflective aiming function
+void enemy::sB4(battlestate& b) {
+	for (int i = 0; i < b.protags.size(); i++) {
+		point aimDot = recursiveReflectiveAim(b, -1, i, 5, position, clWhite);
+		if (aimDot.x != -1 && aimDot.y != -1)
+			shoot(colorfromID(i + 1), aimDot, b);
+	}
+}
+
 void enemy::mB2(battlestate& b) {
 
 }
 void enemy::mB3(battlestate& b) {
 
 }
+
 void enemy::mB4(battlestate& b) {
 
 }
 
 //Recursive function to aim by bouncing off walls
-point enemy::advancedAim(battlestate& b, int wallInd, int playerInd, int depth, point pos) {
-	if (depth = 0) { return point(-1,-1); }
-	segment s(b.protags[playerInd].position, pos);
-	if (isintersect(b.map.getWall(wallInd).body, s)) {
-		return intersection(b.map.getWall(wallInd).body, s);
+point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, int depth, point pos, const metastat& shotColor) {
+	//If there are no walls, just take a straight shot for the player
+	if (!b.map.getWalls().size()) {
+		return b.protags[playerInd].position;
 	}
-	for (int i = 0; i < b.map.getWalls().size(); i++) {
-		if (wallInd != i) {
-			//return advancedAim(b, i, playerInd, depth - 1, reflect(pos, b.map.getWall(i)));	//Write reflect function
+	//Return [invalid point] if no potential paths have been found
+	if (depth == 0) { return point(-1,-1); }
+	//If not at the base case
+	if (wallInd != -1) {
+		//Draw a line from here to the target
+		segment s(b.protags[playerInd].position, pos);
+		//Check if this line intersects the given wall
+		if (isintersect(b.map.getWall(wallInd).body, s)) {
+			//Draw a line from the intersection to the target
+			segment trace(intersection(b.map.getWall(wallInd).body, s), b.protags[playerInd].position);
+			//Check that no other walls intersect with this segment
+			bool reCurse = false;
+			for (int i = 0; i < b.map.getWalls().size(); i++) {
+				if (i != wallInd) {
+					if (isintersect(trace, b.map.getWall(wallInd).body)) {
+						reCurse = true;
+						break;
+					}
+				}
+			}
+			//If the recursion flag has been set to false, return
+			if (!reCurse) {
+				return intersection(b.map.getWall(wallInd).body, s);
+			}
 		}
 	}
-
+	//Check every other wall
+	for (int i = 0; i < b.map.getWalls().size(); i++) {
+		//Make sure not to twice consider this wall
+		if (wallInd != i && permitted(shotColor, b.map.getWall(i).material.getPermittivitySpells())) {
+			//Recall this function on walls[i], after reflecting 'pos' across that wall
+			point reticle(recursiveReflectiveAim(b, i, playerInd, depth - 1, reflection(pos, b.map.getWall(i).body), shotColor));
+			//Continue if nothing valid is found
+			if (reticle.x == -1 && reticle.y == -1)
+				continue;
+			//If we're still considering a direct line, don't reflect it
+			if (wallInd == -1)
+				return reticle;
+			//Draw a line from here to the target
+			segment s(reticle, pos);
+			//Check if this line intersects the given wall
+			if (!isintersect(b.map.getWall(wallInd).body, s)) {
+				continue;
+			}
+			//Othersize, reflect that point over walls[wallInd], which is the last one, and return the reflected point
+			return reflection(reticle, b.map.getWall(wallInd).body);
+		}
+	}
+	//If no valid solutions are found, return -1, -1
+	return point(-1, -1);
 }
 
 void enemy::move(const point& dire) { //Sets the enemy to move to this point
@@ -142,11 +200,11 @@ void enemy::aimAt(const point& dire) {	//Sets the enemy to aim at this point
 }
 
 void enemy::shoot(battlestate& b) { //Shoots where aiming
-	shoot(aim, b);
+	shoot(clWhite, aim, b);
 }
 
-void enemy::shoot(const point& dire, battlestate& b) { //Shoots at a point
-	ray newRay(clWhite, (dire - position)* .1 + position, dire, 2.0f,		//Currently commented out due to not being able to recognize currentbattle, ray, etc.
+void enemy::shoot(const metastat& col, const point& dire, battlestate& b) { //Shoots at a point
+	ray newRay(col,  unitvector(dire - position) * 0.6f + position, dire, 2.0f,
 		6.0f, 2);
 	b.spawnRay(newRay);
 }

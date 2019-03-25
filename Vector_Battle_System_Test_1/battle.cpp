@@ -42,7 +42,8 @@ wall::wall() {
 ///////////////////////////////////////////////////////////
 
 
-vector<point> battlefield::intersections() {
+//Returns a vector of every intersection point formed by the walls in the battlefield
+vector<point> battlefield::intersections() const {
 	vector<point> returnthis;
 	for (int i = 0; i < walls.size(); i++) {
 		for (int j = i + 1; j < walls.size(); j++) {
@@ -63,7 +64,7 @@ vector<point> battlefield::intersections() {
 }
 
 //Returns the point (-100, -100) if there are no intersections.
-point battlefield::nearestintersection(point& dot) {
+point battlefield::nearestintersection(const point& dot) const {
 	point nearest(-100, -100);
 	for (unsigned int i = 0; i < intersections().size(); i++) {
 		point comp = intersections()[i];
