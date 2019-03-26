@@ -152,7 +152,7 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 			bool reCurse = false;
 			for (int i = 0; i < b.map.getWalls().size(); i++) {
 				if (i != wallInd) {
-					if (isintersect(trace, b.map.getWall(wallInd).body)) {
+					if (isintersect(trace, b.map.getWall(i).body)) {
 						reCurse = true;
 						break;
 					}

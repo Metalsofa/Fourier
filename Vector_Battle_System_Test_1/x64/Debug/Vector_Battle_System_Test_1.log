@@ -1,4 +1,4 @@
-﻿  Vector_Battle_System_Test_1.cpp
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\VC\VCTargets\Microsoft.CppClean.targets(76,5): warning : Access to the path 'c:\users\dp\documents\github\gameproj1\x64\debug\vector_battle_system_test_1.exe' is denied.
   battle.cpp
   console.cpp
   controls.cpp
@@ -8,6 +8,9 @@
   globals.cpp
   materials.cpp
   players.cpp
+  resource.cpp
+  room.cpp
   spells.cpp
+  Vector_Battle_System_Test_1.cpp
   Generating Code...
-  Vector_Battle_System_Test_1.vcxproj -> C:\Users\medlod\Source\Repos\Fourier\x64\Debug\Vector_Battle_System_Test_1.exe
+LINK : fatal error LNK1104: cannot open file 'C:\Users\dp\Documents\GitHub\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe'
