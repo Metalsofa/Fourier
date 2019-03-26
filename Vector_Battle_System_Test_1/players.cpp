@@ -116,7 +116,7 @@ void enemy::sB1(battlestate& b) {	//Just shoots if there are no walls in the way
 void enemy::sB4(battlestate& b) {
 	for (int i = 0; i < b.protags.size(); i++) {
 		point aimDot = recursiveReflectiveAim(b, -1, i, 5, position, clWhite);
-		if (aimDot.x() != -1 && aimDot.y() != -1)
+		if (aimDot != position)
 			shoot(colorfromID(i + 1), aimDot, b);
 	}
 }
@@ -139,7 +139,7 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 		return b.protags[playerInd].position;
 	}
 	//Return [invalid point] if no potential paths have been found
-	if (depth == 0) { return point(-1,-1); }
+	if (depth == 0) { return position; }
 	//If not at the base case
 	if (wallInd != -1) {
 		//Draw a line from here to the target
@@ -171,15 +171,27 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 			//Recall this function on walls[i], after reflecting 'pos' across that wall
 			point reticle(recursiveReflectiveAim(b, i, playerInd, depth - 1, reflection(pos, b.map.getWall(i).body), shotColor));
 			//Continue if nothing valid is found
-			if (reticle.x() == -1 && reticle.y() == -1)
+			if (reticle == position)
 				continue;
 			//If we're still considering a direct line, don't reflect it
 			if (wallInd == -1)
 				return reticle;
 			//Draw a line from here to the target
 			segment s(reticle, pos);
-			//Check if this line intersects the given wall
-			if (!isintersect(b.map.getWall(wallInd).body, s)) {
+			int j;
+			for (j = 0; j < b.map.getWalls().size(); j++) {
+				if (j != i && j != wallInd) {
+					if (isintersect(s, b.map.getWall(j).body)) {
+						j = b.map.getWalls().size() + 1;
+					}
+				} else if (j == wallInd) {
+					//Check if this line intersects the given wall
+					if (!isintersect(b.map.getWall(wallInd).body, s)) {
+						j = b.map.getWalls().size() + 1;
+					}
+				}
+			}
+			if (j == b.map.getWalls().size() + 1) {
 				continue;
 			}
 			//Othersize, reflect that point over walls[wallInd], which is the last one, and return the reflected point
@@ -187,7 +199,7 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 		}
 	}
 	//If no valid solutions are found, return -1, -1
-	return point(-1, -1);
+	return position;
 }
 
 void enemy::move(const point& dire) { //Sets the enemy to move to this point
