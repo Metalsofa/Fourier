@@ -123,11 +123,6 @@
     </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="marb.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="freeglut\Readme.txt">
       <Filter>Documentation Files\greeglut</Filter>
     </Text>
@@ -140,5 +135,10 @@
     <Text Include="..\..\..\..\AppData\Local\Temp\Rar$DRa10236.32037\StopwatchWin32-master\LICENSE.txt">
       <Filter>Documentation Files</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="marb.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

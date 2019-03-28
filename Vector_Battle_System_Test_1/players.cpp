@@ -92,6 +92,20 @@ void enemy::mB1(battlestate& b) {
 	return;
 }
 
+//Similar to mB1, loops through the path
+void enemy::mB1b(battlestate& b) {
+	if (path.size() == 0) { return; } else if (path.size() == 1) {
+		if ((path.front() - position).magnitude() > .05) { //.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
+			move(path.front());
+		}
+		return;
+	}
+	ind++;
+	ind %= path.size();
+	move(path[ind]);
+	return;
+}
+
 void enemy::sBRand8(battlestate& b) {
 	int direction = rand() % 4;
 	if (rand() % 2 == 0) {	//Shoot in a cardinal direction
@@ -138,8 +152,6 @@ void enemy::sB1(battlestate& b) {	//Just shoots if there are no walls in the way
 	}
 	return;
 }
-
-
 
 
 //Shooting-behavior function pointer: Makes simple use of the recursive-reflective aiming function
@@ -207,7 +219,7 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 			if (wallInd == -1)
 				return reticle;
 			//Draw a line from here to the target
-			segment s(reticle, pos);
+			segment s(reticle, b.protags[playerInd].position);
 			int j;
 			for (j = 0; j < b.map.getWalls().size(); j++) {
 				if (j != i && j != wallInd) {
@@ -216,7 +228,7 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 					}
 				} else if (j == wallInd) {
 					//Check if this line intersects the given wall
-					if (!isintersect(b.map.getWall(wallInd).body, s)) {
+					if (!isintersect(b.map.getWall(j).body, s)) {
 						j = b.map.getWalls().size() + 1;
 					}
 				}
@@ -250,4 +262,3 @@ void enemy::shoot(const metastat& col, const point& dire, battlestate& b) { //Sh
 		6.0f, 2);
 	b.spawnRay(newRay);
 }
-
