@@ -92,6 +92,33 @@ void enemy::mB1(battlestate& b) {
 	return;
 }
 
+void enemy::sBRand8(battlestate& b) {
+	int direction = rand() % 4;
+	if (rand() % 2 == 0) {	//Shoot in a cardinal direction
+		if (direction % 2 == 0) {
+			aimAt(point(direction - 1, 0) + position);
+		} else {
+			aimAt(point(0, direction - 2) + position);
+		}
+	} else { //Shoot in a diagonal
+		switch (direction) {
+		case 0:
+			aimAt(point(-1, -1) + position);
+			break;
+		case 1:
+			aimAt(point(-1, 1) + position);
+			break;
+		case 2:
+			aimAt(point(1, -1) + position);
+			break;
+		case 3:
+			aimAt(point(1,1) + position);
+			break;
+		}
+	}
+	shoot(b);
+}
+
 //Shooting-behaviour function pointer: Just shoot each player if there are no walls in the way
 void enemy::sB1(battlestate& b) {	//Just shoots if there are no walls in the way of enemy and player
 	bool shot = true;
@@ -111,6 +138,9 @@ void enemy::sB1(battlestate& b) {	//Just shoots if there are no walls in the way
 	}
 	return;
 }
+
+
+
 
 //Shooting-behavior function pointer: Makes simple use of the recursive-reflective aiming function
 void enemy::sB4(battlestate& b) {
