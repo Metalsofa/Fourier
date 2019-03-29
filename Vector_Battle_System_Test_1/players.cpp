@@ -219,7 +219,7 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 			if (wallInd == -1)
 				return reticle;
 			//Draw a line from here to the target
-			segment s(reticle, b.protags[playerInd].position);
+			segment s(reticle, pos);
 			int j;
 			for (j = 0; j < b.map.getWalls().size(); j++) {
 				if (j != i && j != wallInd) {
