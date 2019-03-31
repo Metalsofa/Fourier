@@ -156,11 +156,11 @@ void enemy::sB1(battlestate& b) {	//Just shoots if there are no walls in the way
 
 //Shooting-behavior function pointer: Makes simple use of the recursive-reflective aiming function
 void enemy::sB4(battlestate& b) {
-	for (int i = 0; i < b.protags.size(); i++) {
-		point aimDot = recursiveReflectiveAim(b, -1, i, 5, position, clWhite);
+	//for (int i = 0; i < b.protags.size(); i++) {
+		point aimDot = recursiveReflectiveAim(b, -1, 0, 5, position, clWhite);
 		if (aimDot != position)
-			shoot(colorfromID(i + 1), aimDot, b);
-	}
+			shoot(colorfromID(0 + 1), aimDot, b);
+	//}
 }
 
 void enemy::mB2(battlestate& b) {
@@ -181,7 +181,8 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 		return b.protags[playerInd].position;
 	}
 	//Return [invalid point] if no potential paths have been found
-	if (depth == 0) { return position; }
+	bool breakP = false;
+	if (depth == -1) { return position; }
 	//If not at the base case
 	if (wallInd != -1) {
 		//Draw a line from here to the target
@@ -189,7 +190,7 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 		//Check if this line intersects the given wall
 		if (isintersect(b.map.getWall(wallInd).body, s)) {
 			//Draw a line from the intersection to the target
-			segment trace(intersection(b.map.getWall(wallInd).body, s), b.protags[playerInd].position);
+			segment trace(intersection(b.map.getWall(wallInd).body, s), s.p1);
 			//Check that no other walls intersect with this segment
 			bool reCurse = false;
 			for (int i = 0; i < b.map.getWalls().size(); i++) {
@@ -215,27 +216,31 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 			//Continue if nothing valid is found
 			if (reticle == position)
 				continue;
+			//Draw a line from here to the target
+			segment trace(reticle, pos);
+			segment s(reticle, (wallInd == -1
+					? pos 
+					: intersection(trace, b.map.getWall(wallInd).getbody())
+				)
+			);
+			bool cont = false;
+			for (int j = 0; j < b.map.getWalls().size(); j++) {
+				if (j != i && j != wallInd && isintersect(s, b.map.getWall(j).body)) {
+					cont = true;
+					break;
+				}
+				//Check if this line intersects the given wall
+				else if (j == wallInd && wallInd != -1 && !isintersect(b.map.getWall(wallInd).body, trace)) {
+					cont = true;
+					break;
+				}
+			}
+			if (cont) {
+				continue;
+			}
 			//If we're still considering a direct line, don't reflect it
 			if (wallInd == -1)
 				return reticle;
-			//Draw a line from here to the target
-			segment s(reticle, pos);
-			int j;
-			for (j = 0; j < b.map.getWalls().size(); j++) {
-				if (j != i && j != wallInd) {
-					if (isintersect(s, b.map.getWall(j).body)) {
-						j = b.map.getWalls().size() + 1;
-					}
-				} else if (j == wallInd) {
-					//Check if this line intersects the given wall
-					if (!isintersect(b.map.getWall(j).body, s)) {
-						j = b.map.getWalls().size() + 1;
-					}
-				}
-			}
-			if (j == b.map.getWalls().size() + 1) {
-				continue;
-			}
 			//Othersize, reflect that point over walls[wallInd], which is the last one, and return the reflected point
 			return reflection(reticle, b.map.getWall(wallInd).body);
 		}
