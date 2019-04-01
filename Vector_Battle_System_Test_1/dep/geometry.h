@@ -210,7 +210,7 @@ inline point scalarproduct(const point &pointe, const float &coefficient) {
 	return pointe * coefficient;
 }
 
-inline float dotproduct(point& r1, point& r2) {
+inline float dotproduct(const point& r1, const point& r2) {
 	return (r1.x() * r2.x() + r1.y() * r2.y());
 }
 
@@ -243,10 +243,12 @@ inline point difference(const point& point1, const point& point2) {
 	return point1 - point2;
 }
 
+//Returns the rotation of the point 90 degrees counterclockwise about the origin
 inline point rotate90(point poi) {
 	return point(0 - poi.y(), poi.x());
 }
 
+//Takes the vectoral sum of all points in the container passed in
 inline point pointSum(const vector<point>& points) {
 	point result = point(0.0f, 0.0f);
 	for (point bit : points) {
@@ -266,6 +268,13 @@ inline point rotateabout(point &arg, point &axis, float &angle) {
 	point newp(x2, y2);
 	newp = combine(newp, axis);
 	return newp;
+}
+
+
+//Returns the point transformed by leading a shot of a specified velocity from the origin to hit the target point travelling at a given velocity
+inline point shotLeadTransformation(const point& target, const point& targetVelocity, float projectileSpeed) {
+	point unitVelocity(unitvector(targetVelocity));
+	return unitVelocity * projectileSpeed * dotproduct(target, unitVelocity) * (1.0f / targetVelocity.magnitude());
 }
 
 class segment {
