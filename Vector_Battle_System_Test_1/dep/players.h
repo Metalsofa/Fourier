@@ -112,6 +112,8 @@ public:
 	void act(battlestate& b);
 
 	void mB1(battlestate& b);
+	void mB1b(battlestate & b);
+	void sBRand8(battlestate & b);
 	void sB1(battlestate& b);
 	void sB4(battlestate & b);
 	void mB2(battlestate& b);
