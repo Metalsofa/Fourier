@@ -1,4 +1,17 @@
-﻿  players.cpp
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\players.cpp(113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-c:\users\dp\documents\github\gameproj1\vector_battle_system_test_1\players.cpp(115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-  Vector_Battle_System_Test_1.vcxproj -> C:\Users\dp\Documents\GitHub\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe
+﻿  battle.cpp
+  console.cpp
+  controls.cpp
+  crypt.cpp
+  customGL.cpp
+  fcolor.cpp
+  globals.cpp
+  materials.cpp
+  players.cpp
+c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\players.cpp(113): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+c:\users\medlod\source\repos\fourier\vector_battle_system_test_1\players.cpp(115): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  resource.cpp
+  room.cpp
+  spells.cpp
+  Vector_Battle_System_Test_1.cpp
+  Generating Code...
+  Vector_Battle_System_Test_1.vcxproj -> C:\Users\medlod\Source\Repos\Fourier\x64\Debug\Vector_Battle_System_Test_1.exe
