@@ -218,9 +218,9 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 				continue;
 			//Draw a line from here to the target
 			segment trace(reticle, pos);
-			segment s(reticle, (wallInd == -1
+			segment s(intersection(trace, b.map.getWall(i).body), (wallInd == -1
 					? pos 
-					: intersection(trace, b.map.getWall(wallInd).getbody())
+					: intersection(trace, b.map.getWall(wallInd).body)
 				)
 			);
 			bool cont = false;
