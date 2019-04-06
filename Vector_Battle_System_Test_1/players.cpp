@@ -1,6 +1,7 @@
 #include "globals.h"
 #include "players.h"
 #include "customGL.h"
+#include "materials.h"
 
 using namespace std;
 using namespace fgr;
@@ -265,6 +266,20 @@ void enemy::shoot(battlestate& b) { //Shoots where aiming
 
 void enemy::shoot(const metastat& col, const point& dire, battlestate& b) { //Shoots at a point
 	ray newRay(col,  unitvector(dire - position) * 0.6f + position, dire, 2.0f,
+		6.0f, 2);
+	b.spawnRay(newRay);
+}
+
+void player::makeWall(int mat, battlestate & b) {
+	segment s(position, position + direction);
+	s = rotate90about(0, s);
+	s.p1 += (s.p1-s.p2);
+	wall a(s, mat, true);
+	b.constructWall(a);
+}
+
+void player::shoot(const metastat & col, battlestate & b) {
+	ray newRay(col, (position + direction*.3f), position + direction + direction, 2.0f,
 		6.0f, 2);
 	b.spawnRay(newRay);
 }

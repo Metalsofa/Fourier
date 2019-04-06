@@ -29,6 +29,7 @@ public:
 	const materialtype& getmaterial() const { return material; }
 	bool getfixed() { return fixed; }
 	wall(segment definingsegment, Material wallmaterial, bool isfixed);
+	wall(segment definingsegment, int wallmaterial, bool isfixed);
 	wall(); //DP: You don't need default values?
 };
 

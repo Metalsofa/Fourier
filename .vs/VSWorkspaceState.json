@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\Vector_Battle_System_Test_1",
-    "\\Vector_Battle_System_Test_1\\dep"
+    "\\Vector_Battle_System_Test_1\\dep",
+    "\\Vector_Battle_System_Test_1\\fgrutils"
   ],
-  "SelectedNode": "\\Vector_Battle_System_Test_1\\players.cpp",
+  "SelectedNode": "\\Vector_Battle_System_Test_1\\Vector_Battle_System_Test_1.cpp",
   "PreviewInSolutionExplorer": false
 }

@@ -28,6 +28,13 @@ wall::wall(segment definingsegment, Material wallmaterial, bool isfixed) {
 	fixed = isfixed;
 }
 
+wall::wall(segment definingsegment, int wallmaterial, bool isfixed) {
+	body = definingsegment;
+	materialtype definingMatarial((Material)wallmaterial);
+	material = definingMatarial;
+	fixed = isfixed;
+}
+
 //Default constructor
 wall::wall() {
 	fixed = false;

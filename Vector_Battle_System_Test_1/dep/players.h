@@ -83,7 +83,9 @@ public:
 		for (shape& sh : sprite) { sh.lineThickness = (tog? 1.0f : 2.0f); }
 		tog = !tog;
 	}
-	
+
+	void makeWall(int mat, battlestate & b);
+	void shoot(const metastat & col, battlestate & b);
 };
 
 class enemy : public combatant {	//Non controlled combatants with AI

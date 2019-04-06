@@ -95,9 +95,8 @@ void battlefieldDesignKeychecks() {
 			if (normalKeysdown[' ']) {
 				for (player& b : currentbattle.protags) {
 					if (b.tog) {
-						ray newRay(metastatfromID(rain++ % 12 + 1), (b.position + b.direction*.3f), b.position + b.direction + b.direction, 2.0f,
-							6.0f, 2);
-						currentbattle.spawnRay(newRay);
+						//b.shoot(metastatfromID(rain++ % 12 + 1), currentbattle);
+						b.makeWall(SELECTED_MATERIAL, currentbattle);
 					}
 				}
 				normalKeysdown[' '] = false;
