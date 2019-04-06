@@ -9,7 +9,7 @@ take advantage of freeGlut*/
 	other files to make room for these names before we #include theme anywhere.*/
 
 
-#include "geometry.h"
+//#include "geometry.h"
 #include "GL/glut.h"
 #include "fcolor.h"
 #include "waves.h"
@@ -21,7 +21,7 @@ take advantage of freeGlut*/
 enum discreteHue {red, orange, yellow, lime, green, teal, cyan, indigo, blue, purple, magenta, violet};
 
 
-void setcolor(fcolor& col);
+void setcolor(fgr::fcolor& col);
 
 void drawText(const point& location, const string& text);
 
@@ -62,7 +62,7 @@ Resolution represents the number of points used to paint a single crest/trough. 
 but only if passed TRUE for the clamping of that bound.*/
 void drawWave(sinusoid &wave, float leftbound, float rightbound, int resolution, bool clampLeft, bool clampRight);
 
-metastat colorfromID(int colorID);
+metastat metastatfromID(int colorID);
 
 
 metastat randomhue();

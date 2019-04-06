@@ -8,7 +8,7 @@ It also contains some other settings*/
 
 
 #include "fcolor.h"
-#include "geometry.h"
+//#include "geometry.h"
 
 //Controls all the settings for a given camera
 class camera {
@@ -38,7 +38,7 @@ public:
 	float spread = spreadDefault;
 	const float Size = 0.4f;
 	float rotSpeed = 2.0f * PI; //0.05;
-	fcolor color = fcolor(1.0f,1.0f,1.0f);
+	fgr::fcolor color = fgr::fcolor(1.0f,1.0f,1.0f);
 
 	float Red() { return color.getLevel('r'); }
 	float Green() { return color.getLevel('g'); }

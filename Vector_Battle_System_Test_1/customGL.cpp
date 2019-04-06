@@ -3,6 +3,7 @@
 #include "globals.h"
 
 using namespace std;
+using namespace fgr;
 
 /*This file contains a great many custom rendering functions that
 take advantage of freeGlut*/
@@ -15,7 +16,7 @@ take advantage of freeGlut*/
 	other files to make room for these names before we #include theme anywhere.*/
 
 
-#include "geometry.h"
+//#include "geometry.h"
 #include "GL/glut.h"
 #include "fcolor.h"
 #include "waves.h"
@@ -26,47 +27,47 @@ take advantage of freeGlut*/
 
 enum discreteHue { black, red, orange, yellow, lime, green, teal, cyan, indigo, blue, purple, magenta, violet, white };
 
-void setcolor(const fcolor& col) {
-	glColor4f(col.getLevel('r'), col.getLevel('g'), col.getLevel('b'), col.getLevel('a'));
-}
+//void setcolor(const fgr::fcolor& col) {
+//	glColor4f(col.getLevel('r'), col.getLevel('g'), col.getLevel('b'), col.getLevel('a'));
+//}
+//
+//void drawText(const point& location, const string& text) {
+//	glRasterPos2f(location.x(), location.y());
+//	for (unsigned int i = 0; i < text.size(); i++) { //glutBitmapString() https://stackoverflow.com/questions/544079/how-do-i-use-glutbitmapstring-in-c-to-draw-text-to-the-screen
+//		//Draw each character    
+//		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
+//	}
+//}
 
-void drawText(const point& location, const string& text) {
-	glRasterPos2f(location.x(), location.y());
-	for (unsigned int i = 0; i < text.size(); i++) { //glutBitmapString() https://stackoverflow.com/questions/544079/how-do-i-use-glutbitmapstring-in-c-to-draw-text-to-the-screen
-		//Draw each character    
-		glutBitmapCharacter(GLUT_BITMAP_TIMES_ROMAN_24, text[i]);
-	}
-}
-
-void glVertexPoint(const point& dot) {
-	glVertex2f(dot.x(), dot.y());
-}
-void glVertexSegment(const segment& seg) {
-	glVertexPoint(seg.p1);
-	glVertexPoint(seg.p2);
-}
-void glVertexTriangle(const triangle& tri) {
-	glVertexPoint(tri.p1);
-	glVertexPoint(tri.p2);
-	glVertexPoint(tri.p3);
-}
+//void glVertexPoint(const point& dot) {
+//	glVertex2f(dot.x(), dot.y());
+//}
+//void glVertexSegment(const segment& seg) {
+//	glVertexPoint(seg.p1);
+//	glVertexPoint(seg.p2);
+//}
+//void glVertexTriangle(const triangle& tri) {
+//	glVertexPoint(tri.p1);
+//	glVertexPoint(tri.p2);
+//	glVertexPoint(tri.p3);
+//}
 void glVertexFermatPoint(const triangle& tri) {
 	glVertexPoint(tri.fermatpoint(0));
 }
 
-void drawPoint(const point& dot, float size, bool label) {
-	glPointSize(size);
-	glBegin(GL_POINTS);
-	glVertexPoint(dot);
-	glEnd();
-	if (label)
-		drawText(dot, dot.label());
-}
+//void drawPoint(const point& dot, float size, bool label) {
+//	glPointSize(size);
+//	glBegin(GL_POINTS);
+//	glVertexPoint(dot);
+//	glEnd();
+//	if (label)
+//		drawText(dot, dot.label());
+//}
 
 //Like glTranslatef, but it takes a single argument: a point
-void glTranslatePoint(point& offset) {
-	glTranslatef(offset.x(), offset.y(), 0.0f);
-}
+//void glTranslatePoint(point& offset) {
+//	glTranslatef(offset.x(), offset.y(), 0.0f);
+//}
 
 //Render a line segment using OpenGL
 void drawSegment(const segment& seg, float thickness, bool endpoints, bool labels) {
@@ -220,17 +221,17 @@ void drawXYgrid(segment bounds, unsigned int levels) {
 	}
 }
 
-//Use OpenGL to draw a point on the screen
-void drawPoint(const point &dot) {
-	glColor3f(1, 1, 1);
-	glTranslatef(dot.x(), dot.y(), 0.0f);
-	glutSolidSphere(0.05, 10, 10);
-	glTranslatef(-dot.x(), -dot.y(), 0.0f);
-	glColor3f(0, 0, 0);
-	glTranslatef(dot.x(), dot.y(), 0.0f);
-	glutSolidSphere(0.025, 10, 10);
-	glTranslatef(-dot.x(), -dot.y(), 0.0f);
-}
+////Use OpenGL to draw a point on the screen
+//void drawPoint(const point &dot) {
+//	glColor3f(1, 1, 1);
+//	glTranslatef(dot.x(), dot.y(), 0.0f);
+//	glutSolidSphere(0.05, 10, 10);
+//	glTranslatef(-dot.x(), -dot.y(), 0.0f);
+//	glColor3f(0, 0, 0);
+//	glTranslatef(dot.x(), dot.y(), 0.0f);
+//	glutSolidSphere(0.025, 10, 10);
+//	glTranslatef(-dot.x(), -dot.y(), 0.0f);
+//}
 
 //Use OpenGL to draw a segment on the screen
 void drawsegment(segment &seg) {
@@ -245,7 +246,7 @@ Resolution represents the number of points used to paint a single crest/trough. 
 but only if passed TRUE for the clamping of that bound.*/
 
 
-metastat colorfromID(int colorID) {
+metastat metastatfromID(int colorID) {
 	switch (colorID) {
 	case 0:
 		return clBlack;
@@ -283,7 +284,7 @@ metastat colorfromID(int colorID) {
 
 metastat randomhue() {
 	int hueID = rand() % 12 + 1;
-	return colorfromID(hueID);
+	return metastatfromID(hueID);
 }
 void drawWave(sinusoid &wave, float leftbound, float rightbound, int resolution, bool clampLeft, bool clampRight) {
 	if (leftbound > rightbound) {
@@ -333,17 +334,17 @@ void drawSeries(vector<sinusoid> &series, float leftbound, float rightbound, int
 }
 
 void drawshape(shape &obj) {
-	setcolor(obj.color, obj.opacity);
+	setcolor(obj.color);
 	glLineWidth(obj.lineThickness);
 	glBegin(obj.mode);
-	for (int i = 0; i < obj.vertices.size(); i++) {
-		glVertex2f(obj.vertices[i].x(), obj.vertices[i].y());
+	for (int i = 0; i < obj.size(); i++) {
+		glVertex2f(obj[i].x(), obj[i].y());
 	}
 	glEnd();
 }
 
 void drawGraphic(graphic& obj) {
-	for (shape& s : obj.pieces) { drawshape(s); }
+	for (shape& s : obj) { drawshape(s); }
 }
 
 void drawCursor(cursor& curse) {
@@ -361,7 +362,7 @@ void drawCursor(cursor& curse) {
 	}
 	glColor3f(curse.Red(), curse.Green(), curse.Blue()); //OH THERE IT IS I FOUND THE CURSOR COLOR LINE FINALLY
 	if (DESIGN_FUNCTION == BD_MAKE_SHAPES)
-		setcolor(inverse(art.pieces[editingLayer].color), 1.0f);
+		setcolor(fgr::inverse(art[editingLayer].color));
 	glPushMatrix();
 	glTranslatef(curse.Position.x(), curse.Position.y(), 0); //Translate #1
 	glRotatef(-90 + curse.Tilt * 180 / PI, 0, 1, 0); //Rotate #1
@@ -503,20 +504,20 @@ void drawArtGUI() { //Idea I just had: Every player metastat caps at 255; WHITE 
 	rendertext(point(0.0f, currentbattle.map.height + 0.5f), "ART MODE: " + currentGraphicName);
 	//For each frame...
 	drawGraphic(animart[editingFrame]);
-	for (unsigned int f = 0; f < animart.frames.size(); f++) {
+	for (unsigned int f = 0; f < animart.size(); f++) {
 		//For each layer...
-		for (unsigned int i = 0; i < animart[f].pieces.size(); i++) {
+		for (unsigned int i = 0; i < animart[f].size(); i++) {
 			if (showDots && (i == editingLayer)) {
-				setcolor(inverse(animart[f].pieces[i].color), 1.0f);
+				setcolor(inverse(animart[f][i].color));
 				glLineWidth(2.0f);
 				glPointSize(5.0f);
 				glBegin(GL_LINE_STRIP);
-				for (point& dot : animart[f].pieces[i].vertices) {
+				for (point& dot : animart[f][i]) {
 					glVertex2f(dot.x(), dot.y());
 				}
 				glEnd();
 				glBegin(GL_POINTS);
-				for (point& dot : animart[f].pieces[i].vertices) {
+				for (point& dot : animart[f][i]) {
 					glVertex2f(dot.x(), dot.y());
 				}
 				glEnd();

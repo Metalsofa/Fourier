@@ -3,6 +3,7 @@
 #include "customGL.h"
 
 using namespace std;
+using namespace fgr;
 
 void enemy::init(int m, int s) {
 	srand(unsigned int(time(NULL)));
@@ -159,7 +160,7 @@ void enemy::sB4(battlestate& b) {
 	//for (int i = 0; i < b.protags.size(); i++) {
 		point aimDot = recursiveReflectiveAim(b, -1, 0, 5, position, clWhite);
 		if (aimDot != position)
-			shoot(colorfromID(0 + 1), aimDot, b);
+			shoot(metastatfromID(0 + 1), aimDot, b);
 	//}
 }
 

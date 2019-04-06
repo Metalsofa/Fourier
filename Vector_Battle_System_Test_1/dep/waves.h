@@ -4,9 +4,11 @@
 #define __waves_h__
 #include <cmath>
 #include <vector>
-#include "geometry.h"
+//#include "geometry.h"
+#include "fgrutils.h"
 
 using namespace std;
+using namespace fgr;
 
 //Simply stores an amplitude and frequency. Can evaluate itself.
 class sinusoid {

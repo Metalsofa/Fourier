@@ -11,6 +11,7 @@
 #include "customGL.h"
 
 using namespace std;
+using namespace fgr;
 
 /*A 'keycheck' function contains code for checking AND interpreting the presently pressed keys
 under a given scenario, calling the appropriate functions if neccessary.*/

@@ -4,6 +4,7 @@
 #include "controls.h"
 
 using namespace std;
+using namespace fgr;
 
 void evergreenKeychecks() {
 	//Closing the application
@@ -94,7 +95,7 @@ void battlefieldDesignKeychecks() {
 			if (normalKeysdown[' ']) {
 				for (player& b : currentbattle.protags) {
 					if (b.tog) {
-						ray newRay(colorfromID(rain++ % 12 + 1), (b.position + b.direction*.3f), b.position + b.direction + b.direction, 2.0f,
+						ray newRay(metastatfromID(rain++ % 12 + 1), (b.position + b.direction*.3f), b.position + b.direction + b.direction, 2.0f,
 							6.0f, 2);
 						currentbattle.spawnRay(newRay);
 					}
@@ -109,38 +110,40 @@ void battlefieldDesignKeychecks() {
 //These controls are active only in art mode
 void artKeychecks() {
 	if (rightclicking) {
-		for (int i = 0; i < animart[editingFrame].pieces[editingLayer].vertices.size(); i++) {
-			if (difference(mouse.Position, animart[editingFrame].pieces[editingLayer].vertices[i]).magnitude() < 0.05) {
-				animart[editingFrame].pieces[editingLayer].vertices.erase(animart[editingFrame].pieces[editingLayer].vertices.begin() + i);
+		for (int i = 0; i < animart[editingFrame][editingLayer].size(); i++) {
+			if (difference(mouse.Position, animart[editingFrame][editingLayer][i]).magnitude() < 0.05) {
+				auto itr = animart[editingFrame][editingLayer].begin();
+				for (int a = 0; a < i; a++) { itr++; }
+				animart[editingFrame][editingLayer].erase(itr);
 				i--;
 			}
 		}
 	}
 	if (normalKeysdown['H']) {
 		normalKeysdown['H'] = false;
-		animart.frames.insert(animart.frames.begin() + editingFrame++, graphic());
-		while (animart[editingFrame - 1].pieces.size() < animart[editingFrame].pieces.size()) {
-			animart[editingFrame - 1].pieces.push_back(shape());
+		animart.insert(animart.begin() + editingFrame++, frame());
+		while (animart[editingFrame - 1].size() < animart[editingFrame].size()) {
+			animart[editingFrame - 1].push_back(shape());
 		}
 	}
 	if (normalKeysdown['L']) {
 		normalKeysdown['L'] = false;
-		animart.frames.insert(animart.frames.begin() + editingFrame + 1, graphic());
-		while (animart[editingFrame + 1].pieces.size() < animart[editingFrame].pieces.size()) {
-			animart[editingFrame + 1].pieces.push_back(shape());
+		animart.insert(animart.begin() + editingFrame + 1, frame());
+		while (animart[editingFrame + 1].size() < animart[editingFrame].size()) {
+			animart[editingFrame + 1].push_back(shape());
 		}
 	}
 	if (normalKeysdown['J']) {
 		normalKeysdown['J'] = false;
-		for (unsigned int i = 0; i < animart.frames.size(); i++) {
-			animart[i].pieces.insert(animart[i].pieces.begin() + editingLayer + 1, shape());
+		for (unsigned int i = 0; i < animart.size(); i++) {
+			animart[i].insert(animart[i].begin() + editingLayer + 1, shape());
 		}
 	}
 	if (normalKeysdown['K']) {
 		normalKeysdown['K'] = false;
 		editingLayer++;
-		for (unsigned int i = 0; i < animart.frames.size(); i++) {
-			animart[i].pieces.insert(animart[i].pieces.begin() + editingLayer, shape());
+		for (unsigned int i = 0; i < animart.size(); i++) {
+			animart[i].insert(animart[i].begin() + editingLayer, shape());
 		}
 	}
 	if (normalKeysdown['h']) {
@@ -150,7 +153,7 @@ void artKeychecks() {
 	}
 	if (normalKeysdown['l']) {
 		normalKeysdown['l'] = false;
-		if (editingFrame < animart.frames.size() - 1) {
+		if (editingFrame < animart.size() - 1) {
 			editingFrame++;
 		}
 	}
@@ -161,32 +164,32 @@ void artKeychecks() {
 	}
 	if (normalKeysdown['j']) {
 		normalKeysdown['j'] = false;
-		if (editingLayer < animart[editingFrame].pieces.size() - 1) {
+		if (editingLayer < animart[editingFrame].size() - 1) {
 			editingLayer++;
 		}
 	}
 	if (normalKeysdown['z']) { //Hold 'z' to move a point
-		for (int i = 0; i < animart[editingFrame].pieces[editingLayer].vertices.size(); i++) {
-			if (difference(mouse.Position, animart[editingFrame].pieces[editingLayer].vertices[i]).magnitude() < 0.05) {
+		for (int i = 0; i < animart[editingFrame][editingLayer].size(); i++) {
+			if (difference(mouse.Position, animart[editingFrame][editingLayer][i]).magnitude() < 0.05) {
 				dragdot = i;
 			}
 		}
 		if (dragdot != -1)
-			animart[editingFrame].pieces[editingLayer].vertices[dragdot] = mouse.Position;
+			animart[editingFrame][editingLayer][dragdot] = mouse.Position;
 	} else
 		dragdot = -1;
 	//Add a point by releasing the mouse
 	if (clickdragtrail.length() != 0 || clickdragtrail.p1.x() != 0.0f || clickdragtrail.p1.y() != 0.0f) {
 		if (!leftclicking && !normalKeysdown['z']) {
-			animart[editingFrame].pieces[editingLayer].vertices.push_back(clickdragtrail.p2);
+			animart[editingFrame][editingLayer].push_back(clickdragtrail.p2);
 			clickdragtrail = segment(0, 0, 0, 0);
 			drawArtGUI();
 		} else {
 			if (dragdot != -1)
 				dragdot = -1;
-			animart[editingFrame].pieces[editingLayer].vertices.push_back(clickdragtrail.p2);
+			animart[editingFrame][editingLayer].push_back(clickdragtrail.p2);
 			drawArtGUI();
-			animart[editingFrame].pieces[editingLayer].vertices.pop_back();
+			animart[editingFrame][editingLayer].pop_back();
 		}
 	} else {
 		drawArtGUI();
@@ -223,7 +226,7 @@ void battleKeychecks() {
 		if (normalKeysdown['i'] || upBuf) { d.yinc(increment); }
 		if (normalKeysdown['k'] || downBuf) { d.ydec(increment); }
 		if (normalKeysdown['l'] || rightBuf) { d.xinc(increment); }
-		if (normalKeysdown['j'] || leftBuf) { d.x(increment); }
+		if (normalKeysdown['j'] || leftBuf) { d.xdec(increment); }
 		if (d.y() != 0 || d.x() != 0) {
 			for (unsigned int i = 0; i < 4; i++) {
 				if (currentbattle.protags[i].tog) { currentbattle.protags[i].turn(d.angle()); }

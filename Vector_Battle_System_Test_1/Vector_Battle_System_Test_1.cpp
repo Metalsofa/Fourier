@@ -6,7 +6,7 @@ function. It may be prudent to later change what it is called.*/
 #include "globals.h"
 
 //Custom header includes
-#include "geometry.h"
+//#include "geometry.h"
 #include "crypt.h"
 #include "gl/glut.h"
 #include "Stopwatch.h"
@@ -23,6 +23,7 @@ function. It may be prudent to later change what it is called.*/
 
 //Namespaces
 using namespace std;
+using namespace fgr;
 using win32::Stopwatch;
 
 
@@ -119,7 +120,7 @@ void renderScene(void) {
 	//Debug: Show the number of objects
 	if (showCorners) {
 		for (unsigned int i = 0; i < currentbattle.map.intersections().size(); i++) {
-			drawPoint(currentbattle.map.intersections()[i]);
+			fgr::drawPoint(currentbattle.map.intersections()[i]);
 			glColor3f(1, 1, 1);
 		}
 	}
@@ -281,9 +282,9 @@ int main(int argc, char **argv) {
 	plyr4.sprite = (graphic("delta.fgr"));
 	currentbattle.antags.push_back(e1);
 	currentbattle.antags[0].addWaypoint(point(7, 2.5));
-	//currentbattle.antags[0].addWaypoint(point(7, 4));
-	//currentbattle.antags[0].addWaypoint(point(1, 3));
-	//currentbattle.antags[0].addWaypoint(point(3, 1));
+	currentbattle.antags[0].addWaypoint(point(7, 4));
+	currentbattle.antags[0].addWaypoint(point(1, 3));
+	currentbattle.antags[0].addWaypoint(point(3, 1));
 
 	//enter GLUT event processing cycle
 	st.Start();

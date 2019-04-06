@@ -7,7 +7,7 @@
 #include "globals.h"
 
 //Naturally A lot of things have to be included
-#include "geometry.h"
+//#include "geometry.h"
 #include "crypt.h"
 #include "gl/glut.h"
 #include "Stopwatch.h"
@@ -18,6 +18,7 @@
 
 //Namespaces
 using namespace std;
+using namespace fgr;
 using win32::Stopwatch;
 
 ///////////////////////////////////////////////////////////
