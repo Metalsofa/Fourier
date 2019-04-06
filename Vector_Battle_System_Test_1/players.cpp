@@ -159,7 +159,7 @@ void enemy::sB1(battlestate& b) {	//Just shoots if there are no walls in the way
 //Shooting-behavior function pointer: Makes simple use of the recursive-reflective aiming function
 void enemy::sB4(battlestate& b) {
 	//for (int i = 0; i < b.protags.size(); i++) {
-		point aimDot = recursiveReflectiveAim(b, -1, 0, 5, position, clWhite);
+		point aimDot = recursiveReflectiveAim(b, -1, 0, 3, position, clWhite);
 		if (aimDot != position)
 			shoot(metastatfromID(0 + 1), aimDot, b);
 	//}
@@ -213,6 +213,18 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 	for (int i = 0; i < b.map.getWalls().size(); i++) {
 		//Make sure not to twice consider this wall
 		if (wallInd != i && permitted(shotColor, b.map.getWall(i).material.getPermittivitySpells())) {
+			//Check if the considered wall is visable
+			segment segIa(pos,b.map.getWall(i).body.p1);
+			segment segIb(pos, b.map.getWall(i).body.p2);
+			bool contin = false;
+			for (int j = 0; j < b.map.getWalls().size(); j++) {
+				if (j != i && isintersect(segIa,b.map.getWall(j).body) && isintersect(segIb, b.map.getWall(j).body)){
+					contin = true;
+					break;
+				}
+			}
+			if (contin) { continue; }
+
 			//Recall this function on walls[i], after reflecting 'pos' across that wall
 			point reticle(recursiveReflectiveAim(b, i, playerInd, depth - 1, reflection(pos, b.map.getWall(i).body), shotColor));
 			//Continue if nothing valid is found
@@ -273,7 +285,7 @@ void enemy::shoot(const metastat& col, const point& dire, battlestate& b) { //Sh
 void player::makeWall(int mat, battlestate & b) {
 	segment s(position, position + direction);
 	s = rotate90about(0, s);
-	s.p1 += (s.p1-s.p2);
+	//s.p1 += (s.p1-s.p2);
 	wall a(s, mat, true);
 	b.constructWall(a);
 }
