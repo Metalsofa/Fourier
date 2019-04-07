@@ -1,10 +1,12 @@
 {
   "ExpandedNodes": [
     "",
+    "\\Debug",
+    "\\Releases",
     "\\Vector_Battle_System_Test_1",
     "\\Vector_Battle_System_Test_1\\dep",
     "\\Vector_Battle_System_Test_1\\fgrutils"
   ],
-  "SelectedNode": "\\Vector_Battle_System_Test_1\\Vector_Battle_System_Test_1.cpp",
+  "SelectedNode": "\\Debug\\Vector_Battle_System_Test_1.pdb",
   "PreviewInSolutionExplorer": false
 }
