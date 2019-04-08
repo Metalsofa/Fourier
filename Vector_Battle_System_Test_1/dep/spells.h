@@ -3,7 +3,7 @@ physics or outside of battle.*/
 #pragma once
 #ifndef __spells_h__
 #define __spells_h__
-#include "geometry.h"
+//#include "geometry.h"
 #include "waves.h"
 #include "players.h"
 

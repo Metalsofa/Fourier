@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iostream>
 
+
 using namespace std;
 
 /*The first character in this alphabet being the numeral '0' actually isn't great. You see, when

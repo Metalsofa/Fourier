@@ -25,6 +25,9 @@
     <Filter Include="Documentation Files\stopwatch">
       <UniqueIdentifier>{afa393f5-568b-4f16-8b43-95ed677f00c5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="fgrutils">
+      <UniqueIdentifier>{a00e098c-fb45-4681-868e-398a620ef9c0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Vector_Battle_System_Test_1.cpp">
@@ -115,6 +118,24 @@
     </ClInclude>
     <ClInclude Include="dep\globals.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fgrutils\fgrclasses.h">
+      <Filter>fgrutils</Filter>
+    </ClInclude>
+    <ClInclude Include="fgrutils\fgrcolor.h">
+      <Filter>fgrutils</Filter>
+    </ClInclude>
+    <ClInclude Include="fgrutils\fgrdrawing.h">
+      <Filter>fgrutils</Filter>
+    </ClInclude>
+    <ClInclude Include="fgrutils\fgrfileops.h">
+      <Filter>fgrutils</Filter>
+    </ClInclude>
+    <ClInclude Include="fgrutils\fgrgeometry.h">
+      <Filter>fgrutils</Filter>
+    </ClInclude>
+    <ClInclude Include="fgrutils\fgrutils.h">
+      <Filter>fgrutils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

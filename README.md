@@ -1,7 +1,9 @@
 # Fourier (Working title) (In Development)
 *An optics-based Role-Playing Game*
 
-This repository is for all the assets related to the collaborative JRPG (Japanese Role-playing-game) currently being developed by RPI students David Medlock and Devak Patel.
+This repository is for all the assets related to the collaborative RPG (Role-playing-game currently) being developed by RPI students David Medlock and Devak Patel.
+
+When the game engine is finally complete, it will remain located at this repository as a free and open source engine. However, development on the story/art and the rest of the game beyond the engine will not be posted to github. This is probably a long way off right now.
 ## Installation
 If you clone this and expect it to compile and run on your computer, you'll have to update a few project properties (namely the c++ include/library directories) in the Visual Studio project properties settings tab so that they are specific to your local repository.
 

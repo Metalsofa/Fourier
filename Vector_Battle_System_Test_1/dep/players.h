@@ -18,6 +18,7 @@ thing, to be called by the function that initiates battle */
 #include <time.h>
 
 using namespace std;
+using namespace fgr;
 class battlestate; //Forward declaring battlestate
 class ray; //Forward declare ray
 
@@ -79,10 +80,12 @@ class player: public combatant { //controlled players
 public:
 	bool tog; //Whether or not the player can currently be controlled
 	void toggle() { //Flips tog
-		for (shape& sh : sprite.pieces) { sh.lineThickness = (tog? 1.0f : 2.0f); }
+		for (shape& sh : sprite) { sh.lineThickness = (tog? 1.0f : 2.0f); }
 		tog = !tog;
 	}
-	
+
+	void makeWall(int mat, battlestate & b);
+	void shoot(const metastat & col, battlestate & b);
 };
 
 class enemy : public combatant {	//Non controlled combatants with AI

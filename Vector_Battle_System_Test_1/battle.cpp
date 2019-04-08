@@ -9,6 +9,7 @@
 //#include <vector>
 
 using namespace std;
+using namespace fgr;
 
 ///////////////////////////////////////////////////////////
 //
@@ -23,6 +24,13 @@ using namespace std;
 wall::wall(segment definingsegment, Material wallmaterial, bool isfixed) {
 	body = definingsegment;
 	materialtype definingMatarial(wallmaterial);
+	material = definingMatarial;
+	fixed = isfixed;
+}
+
+wall::wall(segment definingsegment, int wallmaterial, bool isfixed) {
+	body = definingsegment;
+	materialtype definingMatarial((Material)wallmaterial);
 	material = definingMatarial;
 	fixed = isfixed;
 }

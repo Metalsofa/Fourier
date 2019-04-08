@@ -1,8 +1,10 @@
 #include "globals.h"
 #include "players.h"
 #include "customGL.h"
+#include "materials.h"
 
 using namespace std;
+using namespace fgr;
 
 void enemy::init(int m, int s) {
 	srand(unsigned int(time(NULL)));
@@ -157,9 +159,9 @@ void enemy::sB1(battlestate& b) {	//Just shoots if there are no walls in the way
 //Shooting-behavior function pointer: Makes simple use of the recursive-reflective aiming function
 void enemy::sB4(battlestate& b) {
 	//for (int i = 0; i < b.protags.size(); i++) {
-		point aimDot = recursiveReflectiveAim(b, -1, 0, 5, position, clWhite);
+		point aimDot = recursiveReflectiveAim(b, -1, 0, 3, position, clWhite);
 		if (aimDot != position)
-			shoot(colorfromID(0 + 1), aimDot, b);
+			shoot(metastatfromID(0 + 1), aimDot, b);
 	//}
 }
 
@@ -211,6 +213,18 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 	for (int i = 0; i < b.map.getWalls().size(); i++) {
 		//Make sure not to twice consider this wall
 		if (wallInd != i && permitted(shotColor, b.map.getWall(i).material.getPermittivitySpells())) {
+			//Check if the considered wall is visable
+			segment segIa(pos,b.map.getWall(i).body.p1);
+			segment segIb(pos, b.map.getWall(i).body.p2);
+			bool contin = false;
+			for (int j = 0; j < b.map.getWalls().size(); j++) {
+				if (j != i && isintersect(segIa,b.map.getWall(j).body) && isintersect(segIb, b.map.getWall(j).body)){
+					contin = true;
+					break;
+				}
+			}
+			if (contin) { continue; }
+
 			//Recall this function on walls[i], after reflecting 'pos' across that wall
 			point reticle(recursiveReflectiveAim(b, i, playerInd, depth - 1, reflection(pos, b.map.getWall(i).body), shotColor));
 			//Continue if nothing valid is found
@@ -218,9 +232,9 @@ point enemy::recursiveReflectiveAim(battlestate& b, int wallInd, int playerInd, 
 				continue;
 			//Draw a line from here to the target
 			segment trace(reticle, pos);
-			segment s(reticle, (wallInd == -1
+			segment s(intersection(trace, b.map.getWall(i).body), (wallInd == -1
 					? pos 
-					: intersection(trace, b.map.getWall(wallInd).getbody())
+					: intersection(trace, b.map.getWall(wallInd).body)
 				)
 			);
 			bool cont = false;
@@ -264,6 +278,20 @@ void enemy::shoot(battlestate& b) { //Shoots where aiming
 
 void enemy::shoot(const metastat& col, const point& dire, battlestate& b) { //Shoots at a point
 	ray newRay(col,  unitvector(dire - position) * 0.6f + position, dire, 2.0f,
+		6.0f, 2);
+	b.spawnRay(newRay);
+}
+
+void player::makeWall(int mat, battlestate & b) {
+	segment s(position, position + direction);
+	s = rotate90about(0, s);
+	//s.p1 += (s.p1-s.p2);
+	wall a(s, mat, true);
+	b.constructWall(a);
+}
+
+void player::shoot(const metastat & col, battlestate & b) {
+	ray newRay(col, (position + direction*.3f), position + direction + direction, 2.0f,
 		6.0f, 2);
 	b.spawnRay(newRay);
 }

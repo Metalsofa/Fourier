@@ -8,6 +8,7 @@ Also the datatypes for stage geometry*/
 #include "spells.h"
 #include "materials.h"
 //#include "geometry.h"
+#include "fgrutils.h"
 //#include "crypt.h"
 
 //STL includes
@@ -15,6 +16,7 @@ Also the datatypes for stage geometry*/
 #include <string>
 
 using namespace std;
+using namespace fgr;
 
 class wall {
 public:
@@ -27,6 +29,7 @@ public:
 	const materialtype& getmaterial() const { return material; }
 	bool getfixed() { return fixed; }
 	wall(segment definingsegment, Material wallmaterial, bool isfixed);
+	wall(segment definingsegment, int wallmaterial, bool isfixed);
 	wall(); //DP: You don't need default values?
 };
 

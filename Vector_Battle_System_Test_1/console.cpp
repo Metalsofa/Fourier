@@ -4,6 +4,7 @@
 #include "console.h"
 
 using namespace std;
+using namespace fgr;
 
 //Put into the string any characters being pressed on the keyboard
 void feedkeyboardinput(string &field) {
@@ -60,7 +61,7 @@ void handleInput(string &input) {
 			}
 		} else if (arg == "shape") { //Save the currently designed shape to a shape file
 			cons >> arg;
-			art.pieces[editingLayer].savetofile(arg);
+			art[editingLayer].savetofile(arg);
 			outputConsole("Wrote shape #" + to_string(editingLayer) + " to file " + arg + ".fgr");
 		}
 	} else if (arg == "load" || arg == "open") {
@@ -72,51 +73,51 @@ void handleInput(string &input) {
 			art = graphic(arg + ".fgr");
 			outputConsole("Opened graphic " + arg);
 			currentGraphicName = arg;
-		} else if (arg == "shape") { //Load a shape file into art.pieces
+		} else if (arg == "shape") { //Load a shape file into art
 			cons >> arg;
-			art.pieces.push_back(shape(arg + ".fgr", 0));
+			art.push_back(shape(arg + ".fgr", 0));
 			outputConsole("Opened shape" + arg + " at end of Graphic shape vector");
 		}
 	} else if (arg == "canvas") {
-		outputConsole("    " + to_string(art.pieces.size()) + " shapes");
+		outputConsole("    " + to_string(art.size()) + " shapes");
 		outputConsole("    Currently editing Shape #" + to_string(editingLayer));
-		for (unsigned int i = 0; i < art.pieces.size(); i++) {
+		for (unsigned int i = 0; i < art.size(); i++) {
 			outputConsole("Shape #" + to_string(i));
-			outputConsole("    Verticies: " + to_string(art.pieces[i].vertices.size()));
-			outputConsole("    Color:     " + to_string(art.pieces[i].color.som) + " " + to_string(art.pieces[i].color.emo) + " "
-				+ to_string(art.pieces[i].color.cog));
-			outputConsole("    Opacity:   " + to_string(art.pieces[i].opacity));
-			outputConsole("    Rendering mode: " + art.pieces[i].getGLMODE());
-			outputConsole("    Line Thickness: " + to_string(art.pieces[i].lineThickness));
+			outputConsole("    Verticies: " + to_string(art[i].size()));
+			outputConsole("    Color:     " + to_string(art[i].color.getLevel('r')) + " " + to_string(art[i].color.getLevel('g')) + " "
+				+ to_string(art[i].color.getLevel('b')));
+			outputConsole("    Opacity:   " + to_string(art[i].opacity));
+			outputConsole("    Rendering mode: " + string(art[i].glModeString()));
+			outputConsole("    Line Thickness: " + to_string(art[i].lineThickness));
 		}
 	} else if (arg == "shape") {
 		cons >> arg;
 		if (arg == "color") {
-			cons >> art.pieces[editingLayer].color.som;
-			cons >> art.pieces[editingLayer].color.emo;
-			cons >> art.pieces[editingLayer].color.cog;
-			outputConsole("Set Shape #" + to_string(editingLayer) + "'s color to " + to_string(art.pieces[editingLayer].color.som) +
-				" " + to_string(art.pieces[editingLayer].color.emo) + " " + to_string(art.pieces[editingLayer].color.cog));
+			/*cons >> art[editingLayer].color.getLevel('r');
+			cons >> art[editingLayer].color.getLevel('g');
+			cons >> art[editingLayer].color.getLevel('b');*/
+			outputConsole("Set Shape #" + to_string(editingLayer) + "'s color to " + to_string(art[editingLayer].color.getLevel('r')) +
+				" " + to_string(art[editingLayer].color.getLevel('g')) + " " + to_string(art[editingLayer].color.getLevel('b')));
 		} else if (arg == "lineThickness") {
-			cons >> art.pieces[editingLayer].lineThickness;
+			cons >> art[editingLayer].lineThickness;
 			outputConsole("Set Shape #" + to_string(editingLayer) + "'s lineThickness to "
-				+ to_string(art.pieces[editingLayer].lineThickness));
+				+ to_string(art[editingLayer].lineThickness));
 		} else if (arg == "opacity") {
-			cons >> art.pieces[editingLayer].opacity;
+			cons >> art[editingLayer].opacity;
 			outputConsole("Set Shape #" + to_string(editingLayer) + "'s opacity to "
-				+ to_string(art.pieces[editingLayer].opacity));
+				+ to_string(art[editingLayer].opacity));
 		} else if (arg == "mode") {
-			cons >> art.pieces[editingLayer].mode;
+			cons >> art[editingLayer].mode;
 			outputConsole("Set Shape #" + to_string(editingLayer) + "'s drawing mode to "
-				+ art.pieces[editingLayer].getGLMODE());
+				+ art[editingLayer].glModeString());
 		} else if (arg == "clear") {
-			art.pieces[editingLayer].vertices.clear();
+			art[editingLayer].clear();
 			outputConsole("Cleared vertecies of Shape #" + to_string(editingLayer));
 		} else if (arg == "origin") {
 			float Ox; cons >> Ox;
 			float Oy; cons >> Oy;
 			point O(Ox, Oy);
-			art.pieces[editingLayer].setOrigin(O);
+			art[editingLayer].setOrigin(O);
 			outputConsole("Set origin to " + O.label());
 		} else
 			outputConsole("Invalid shape property: " + arg);
@@ -143,7 +144,7 @@ void handleInput(string &input) {
 		}
 	} else if (arg == "layer") {
 		cons >> editingLayer;
-		editingLayer %= art.pieces.size();
+		editingLayer %= art.size();
 		outputConsole("Now editing Shape #" + to_string(editingLayer));
 	} else if (arg == "perspective") {
 		cons >> arg;
@@ -159,10 +160,10 @@ void handleInput(string &input) {
 	} else if (arg == "new") {
 		cons >> arg;
 		if (arg == "shape") {
-			int loc; cons >> loc; loc %= art.pieces.size() + 1;
+			int loc; cons >> loc; loc %= art.size() + 1;
 			if (loc <= editingLayer)
 				editingLayer++;
-			art.pieces.emplace(art.pieces.begin() + loc, shape());
+			art.emplace(art.begin() + loc, shape());
 			outputConsole("Added new Shape at position " + to_string(loc));
 		} else {
 			outputConsole("Invalid object type: " + arg);
