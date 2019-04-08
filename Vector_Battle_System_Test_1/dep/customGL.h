@@ -11,7 +11,6 @@ take advantage of freeGlut*/
 
 //#include "geometry.h"
 #include "GL/glut.h"
-#include "fcolor.h"
 #include "waves.h"
 #include "camera.h"
 //#include "players.h"

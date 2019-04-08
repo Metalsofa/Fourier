@@ -25,7 +25,7 @@
     <Filter Include="Documentation Files\stopwatch">
       <UniqueIdentifier>{afa393f5-568b-4f16-8b43-95ed677f00c5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="fgrutils">
+    <Filter Include="Header Files\fgrutils">
       <UniqueIdentifier>{a00e098c-fb45-4681-868e-398a620ef9c0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -37,9 +37,6 @@
       <Filter>Implementation Files</Filter>
     </ClCompile>
     <ClCompile Include="room.cpp">
-      <Filter>Implementation Files</Filter>
-    </ClCompile>
-    <ClCompile Include="resource.cpp">
       <Filter>Implementation Files</Filter>
     </ClCompile>
     <ClCompile Include="players.cpp">
@@ -71,9 +68,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="dep\geometry.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="dep\materials.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -90,9 +84,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dep\crypt.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="dep\fcolor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dep\stopwatch.h">
@@ -120,22 +111,25 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="fgrutils\fgrclasses.h">
-      <Filter>fgrutils</Filter>
+      <Filter>Header Files\fgrutils</Filter>
     </ClInclude>
     <ClInclude Include="fgrutils\fgrcolor.h">
-      <Filter>fgrutils</Filter>
+      <Filter>Header Files\fgrutils</Filter>
     </ClInclude>
     <ClInclude Include="fgrutils\fgrdrawing.h">
-      <Filter>fgrutils</Filter>
+      <Filter>Header Files\fgrutils</Filter>
     </ClInclude>
     <ClInclude Include="fgrutils\fgrfileops.h">
-      <Filter>fgrutils</Filter>
+      <Filter>Header Files\fgrutils</Filter>
     </ClInclude>
     <ClInclude Include="fgrutils\fgrgeometry.h">
-      <Filter>fgrutils</Filter>
+      <Filter>Header Files\fgrutils</Filter>
     </ClInclude>
     <ClInclude Include="fgrutils\fgrutils.h">
-      <Filter>fgrutils</Filter>
+      <Filter>Header Files\fgrutils</Filter>
+    </ClInclude>
+    <ClInclude Include="dep\resource.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -159,6 +153,9 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="marb.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="glowmarb.ico">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
