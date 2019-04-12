@@ -13,6 +13,53 @@ physics or outside of battle.*/
 	///int category (which of  he 12 categories it falls into)
 	///string description
 	///int
+class ray;
+
+class Spell {
+public:
+	string name;
+	int level;
+	string decription;
+	int category;
+	Spell() {
+	
+	}
+
+	void cast(battlestate& b) {
+	}
+};
+
+class raySpell : public Spell {
+public:
+	ray r;
+	raySpell():Spell() {
+		r = ray(clWhite, point(0, 0), point(1, 0), 1.0f, 1.0f, 1.0f);
+		category = 0;
+	}
+	raySpell(ray& ra) :Spell() {
+		r = ra;
+		category = 0;
+	}
+	void cast(battlestate& b) {
+		b.spawnRay(r);
+	}
+};
+
+class wallSpell : public Spell {
+public:
+	wall w;
+	wallSpell() :Spell() {
+		category = 1;
+	}
+	wallSpell(wall& wa) :Spell() {
+		category = 1;
+		w = wa;
+	}
+	void cast(battlestate& b) {
+		b.constructWall(w);
+	}
+
+};
 
 class ray {//all arrow-shaped travelling projectiles
 public:
