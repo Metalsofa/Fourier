@@ -7,7 +7,6 @@ It also contains some other settings*/
 #define __camera_h__
 
 
-#include "fcolor.h"
 //#include "geometry.h"
 
 //Controls all the settings for a given camera
