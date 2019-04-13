@@ -6,7 +6,7 @@ Also the datatypes for stage geometry*/
 
 //Header includes
 #include "materials.h"
-#include "spells.h"
+#include "spellCore.h"
 //#include "geometry.h"
 #include "fgrutils.h"
 //#include "crypt.h"

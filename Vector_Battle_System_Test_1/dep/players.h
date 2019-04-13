@@ -22,6 +22,10 @@ using namespace fgr;
 class battlestate; //Forward declaring battlestate
 class ray; //Forward declare ray
 
+class Spell;
+class raySpell;
+class wallSpell;
+
 //This version of stats is for overworld logic and battle initiation
 class stats {
 private:
@@ -78,12 +82,19 @@ public:
 
 class player: public combatant { //controlled players
 public:
+	vector<Spell> arsenal;
+	int energy;
 	bool tog; //Whether or not the player can currently be controlled
 	void toggle() { //Flips tog
 		for (shape& sh : sprite) { sh.lineThickness = (tog? 1.0f : 2.0f); }
 		tog = !tog;
 	}
-
+	void act(battlestate& b) {
+		for (int i = arsenal.size() - 1; i >= 0; i--) {
+			if (arsenal[i].cost < energy) { energy -= arsenal[i].cast(b); return;}
+		}
+		cout << "NOT ENOUGH ENERGY";
+	}
 	void makeWall(int mat, battlestate & b);
 	void shoot(const metastat & col, battlestate & b);
 };

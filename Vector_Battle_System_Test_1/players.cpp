@@ -112,9 +112,9 @@ void enemy::sBRand8(battlestate& b) {
 	int direction = rand() % 4;
 	if (rand() % 2 == 0) {	//Shoot in a cardinal direction
 		if (direction % 2 == 0) {
-			aimAt(point(direction - 1, 0) + position);
+			aimAt(point(direction - 1.0f, 0.0f) + position);
 		} else {
-			aimAt(point(0, direction - 2) + position);
+			aimAt(point(0.0f, direction - 2.0f) + position);
 		}
 	} else { //Shoot in a diagonal
 		switch (direction) {

@@ -4,7 +4,7 @@ physics or outside of battle.*/
 #ifndef __spells_h__
 #define __spells_h__
 //#include "geometry.h"
-#include "spellCore.h"
+#include "battle.h"
 
 using namespace std;
 using namespace fgr;
@@ -31,19 +31,24 @@ using namespace fgr;
 	//function that returns direction and magnitude, given x and y
 
 
-class battlestate;//Forward declaring battlestate
 
 class Spell {
 public:
 	string name;
 	int level;
-	string decription;
+	string description;
 	int category;
+	int cost;
 	Spell() {
-
+		name = "";
+		level = 0;
+		description = "";
+		category = -1;
+		cost = 0;
 	}
-	/*void cast(battlestate& b) {
-	}*/
+	int cast(battlestate& b) {
+		return cost;
+	}
 };
 
 class raySpell : public Spell {
@@ -52,14 +57,16 @@ public:
 	raySpell() : Spell() {
 		r = ray(metastat(), point(0, 0), point(1, 0), 1.0f, 1.0f, 1.0f);
 		category = 0;
+		cost = 1;
 	}
 	raySpell(ray& ra) :Spell() {
 		r = ra;
 		category = 0;
 	}
-	/*void cast(battlestate& b) {
+	int cast(battlestate& b) {
 		b.spawnRay(r);
-	}*/
+		return cost;
+	}
 };
 
 class wallSpell : public Spell {
@@ -67,14 +74,16 @@ public:
 	wall w;
 	wallSpell() :Spell() {
 		category = 1;
+		cost = 2;
 	}
 	wallSpell(wall& wa) :Spell() {
 		category = 1;
 		w = wa;
 	}
-	/*void cast(battlestate& b) {
+	int cast(battlestate& b) {
 		b.constructWall(w);
-	}*/
+		return cost;
+	}
 
 };
 
