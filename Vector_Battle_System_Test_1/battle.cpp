@@ -11,34 +11,7 @@
 using namespace std;
 using namespace fgr;
 
-///////////////////////////////////////////////////////////
-//
-//           Class wall DEFINITION
-//
-//				This class structures the properties
-//				of a given wall.
-//
-///////////////////////////////////////////////////////////
 
-//Know-it-all constructor
-wall::wall(segment definingsegment, Material wallmaterial, bool isfixed) {
-	body = definingsegment;
-	materialtype definingMatarial(wallmaterial);
-	material = definingMatarial;
-	fixed = isfixed;
-}
-
-wall::wall(segment definingsegment, int wallmaterial, bool isfixed) {
-	body = definingsegment;
-	materialtype definingMatarial((Material)wallmaterial);
-	material = definingMatarial;
-	fixed = isfixed;
-}
-
-//Default constructor
-wall::wall() {
-	fixed = false;
-}
 
 ///////////////////////////////////////////////////////////
 //

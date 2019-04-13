@@ -5,8 +5,8 @@ Also the datatypes for stage geometry*/
 #define __battle_h__
 
 //Header includes
-#include "spells.h"
 #include "materials.h"
+#include "spells.h"
 //#include "geometry.h"
 #include "fgrutils.h"
 //#include "crypt.h"
@@ -18,20 +18,7 @@ Also the datatypes for stage geometry*/
 using namespace std;
 using namespace fgr;
 
-class wall {
-public:
-	segment body;
-	materialtype material;
-	bool fixed; //wave or no wave
-	int shape; //Circular, linear
-///public:
-	const segment& getbody() const { return body; }
-	const materialtype& getmaterial() const { return material; }
-	bool getfixed() { return fixed; }
-	wall(segment definingsegment, Material wallmaterial, bool isfixed);
-	wall(segment definingsegment, int wallmaterial, bool isfixed);
-	wall(); //DP: You don't need default values?
-};
+
 
 //A battlefield is one of the members of battlePreset and battlestate; it contains the "terrain" of the battle, if you will.
 class battlefield { 
