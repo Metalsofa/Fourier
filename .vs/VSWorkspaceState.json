@@ -5,8 +5,9 @@
     "\\Releases",
     "\\Vector_Battle_System_Test_1",
     "\\Vector_Battle_System_Test_1\\dep",
-    "\\Vector_Battle_System_Test_1\\fgrutils"
+    "\\Vector_Battle_System_Test_1\\fgrutils",
+    "\\Vector_Battle_System_Test_1\\Resources"
   ],
-  "SelectedNode": "\\Debug\\Vector_Battle_System_Test_1.pdb",
+  "SelectedNode": "\\Vector_Battle_System_Test_1.sln",
   "PreviewInSolutionExplorer": false
 }
