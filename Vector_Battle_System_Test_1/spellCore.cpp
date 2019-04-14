@@ -32,6 +32,13 @@ wall::wall() {
 	fixed = false;
 }
 
+wall::wall(const wall& w) {
+	body = w.body;
+	material = w.material;
+	fixed = w.fixed;
+	shape = w.shape;
+}
+
 //Check if a spell of a given color can pass through a given material
 int permitted(const metastat& spellColor, const metastat& permittivity) { //DP: Pass by ref
 	//These 3 lines of code return 0 (for 'kill') if any component of the ray is not permitted.
@@ -76,6 +83,23 @@ int permitted(const metastat& spellColor, const metastat& permittivity) { //DP: 
 	///int category (which of  he 12 categories it falls into)
 	///string description
 	///int
+
+ray::ray() {
+}
+
+ray::ray(const ray& r) {
+	bits = r.bits;
+	disjoints = r.disjoints;
+	color = r.color;
+	kindness = r.kindness;
+	direction = r.direction;
+	speed = r.speed;
+	nominalLength = r.nominalLength;
+	killme = r.killme;
+	terminating = r.terminating;
+	thickness = r.thickness;
+	terminalpoint = r.terminalpoint;
+}
 
 //Constructor for some custom ray
 ray::ray(metastat col, point location, point heading, float leng, float fastness, float thickn) { //DP: Pass by ref
@@ -169,13 +193,7 @@ void ray::terminate(point where) { //DP: Pass by ref
 	terminalpoint = where;
 }
 
-int ray::checkcollision(combatant & c) const {
-	float dist0 = (bits[0] - c.position).magnitude();
-	float dist1 = (bits[1] - c.position).magnitude();
-	if (dist0 < c.width / 2) { return 1; } //.25 NEEDS TO BE CHANGED IF PLAYER SIZE CHANGES
-	if (dist1 < c.width / 2) { return 2; }
-	return 0;
-}
+
 bool ray::checkcollision(const segment & surface) const { //DP Pass by ref, no need to create var
 	segment frontseg(bits[0], bits[1]);
 	return isintersect(frontseg, surface);

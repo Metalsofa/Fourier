@@ -5,8 +5,11 @@ physics or outside of battle.*/
 #define __spellCore_h__
 //#include "geometry.h"
 #include "waves.h"
-#include "players.h"
+#include "materials.h"
+//#include "players.h"
 
+using namespace std;
+using namespace fgr;
 //move: Spell Object that can be part of a player's known spells (called a function in game)
 	///string name
 	///int level
@@ -27,6 +30,7 @@ public:
 	wall(segment definingsegment, Material wallmaterial, bool isfixed);
 	wall(segment definingsegment, int wallmaterial, bool isfixed);
 	wall(); //DP: You don't need default values?
+	wall(const wall& w); //DP: You don't need default values?
 };
 
 class ray {//all arrow-shaped travelling projectiles
@@ -48,7 +52,8 @@ public:
 	point terminalpoint;
 	///public:
 
-	ray() {};
+	ray();
+	ray(const ray& r);
 	//Constructor for some custom ray
 	ray(metastat col, point location, point heading, float leng, float fastness, float thickn);
 
@@ -68,7 +73,7 @@ public:
 	bool deathtime() const;
 	//Tell the ray it is now terminating, and tell it where to terminate.
 	void terminate(point where);
-	int checkcollision(combatant& c) const;
+	//int checkcollision(const combatant& c) const;
 	bool checkcollision(const segment& surface) const;
 	point wherehit(segment surface) const;
 	//Returns 0 (kill) 1 (bounce) or 2 (permit) based on this ray's compatability with a given material.

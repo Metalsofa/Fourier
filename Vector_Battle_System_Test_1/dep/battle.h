@@ -6,6 +6,7 @@ Also the datatypes for stage geometry*/
 
 //Header includes
 #include "materials.h"
+#include "players.h"
 #include "spellCore.h"
 //#include "geometry.h"
 #include "fgrutils.h"
@@ -119,8 +120,37 @@ public:
 	/*This function is called every frame during battle unless the battle is paused; even then, It may still be best
 	to call it and simply because certain animations might look cool cycling in the background when the battle is //DP: If u want to do that we should isolate the animation from movement
 	awaiting user input. All iterative battle behaviour and logic goes in here, or is called from in here.*/
+
+	//Moves the Rays on the battlefield
+	void iterateRay(float inc);
+
+	point recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, int depth, point pos, const metastat& shotColor);
+
+	void enemymB1(enemy& e);
+
+	void enemymB1b(enemy& e);
+
+	void enemysBRand8(enemy& e);
+
+	void enemysB1(enemy& e);
+
+	void enemysB4(enemy& e);
+
+	void enemymB2(enemy& e);
+
+	void enemymB3(enemy& e);
+
+	void enemymB4(enemy& e);
+
+	//Moves the Enemies on the battlefield
+	void iterateAI(float inc);
+
 	void iterate(float &inc /*incremental time*/);
 	//Constructor to read a "battlePreset.txt" and define this battlestate accordingly
+
+	void playerAct(int playerInd);
+
 };
+
 
 #endif

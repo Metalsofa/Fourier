@@ -186,31 +186,30 @@ void battlestate::spawnRay(const ray& spawnthis) {
 	rays.push_back(spawnthis);
 }
 
-/*This function is called every frame during battle unless the battle is paused; even then, It may still be best
-to call it and simply because certain animations might look cool cycling in the background when the battle is //DP: If u want to do that we should isolate the animation from movement
-awaiting user input. All iterative battle behaviour and logic goes in here, or is called from in here.*/
-void battlestate::iterate(float &inc /*incremental time*/) {
-	//Iterate Rays
+void battlestate::iterateRay(float inc){
 	for (unsigned int i = 0; i < rays.size(); i++) {
 		rays[i].advance(inc);
 		//Now we check for collisions
 		unsigned int j = 0;
 		bool term = false;
 		for (combatant& x : protags) {
-			int hit = rays[i].checkcollision(x);
-			if (hit) {
-				rays[i].terminate(rays[i].bits[hit-1]); //http://mathworld.wolfram.com/Circle-LineIntersection.html
-				term = true;
-			}
-		}
-		for (combatant& x : antags) {
-			int hit = rays[i].checkcollision(x);
+			int hit = checkcollision(rays[i], x);
 			if (hit) {
 				rays[i].terminate(rays[i].bits[hit - 1]); //http://mathworld.wolfram.com/Circle-LineIntersection.html
 				term = true;
+				break;
 			}
 		}
-
+		if (!term) {
+			for (combatant& x : antags) {
+				int hit = checkcollision(rays[i], x);
+				if (hit) {
+					rays[i].terminate(rays[i].bits[hit - 1]); //http://mathworld.wolfram.com/Circle-LineIntersection.html
+					term = true;
+					break;
+				}
+			}
+		}
 		for (wall& surface : map.walls) {
 			if (rays[i].checkcollision(surface.getbody())) {
 				term = true;
@@ -234,8 +233,8 @@ void battlestate::iterate(float &inc /*incremental time*/) {
 						shouldbounce = false; /* From now on it's fair to assume that j is the ID of
 											  the closest wall to inters */
 
-					/*The following logic is for judging whether the current intersection is actually
-					the same as the previous */
+											  /*The following logic is for judging whether the current intersection is actually
+											  the same as the previous */
 					if (rays[i].getbits().size() > 2) {
 						point previnter = rays[i].bits[1];
 
@@ -343,9 +342,278 @@ void battlestate::iterate(float &inc /*incremental time*/) {
 			i--; //Appropriately adjust our iterator
 		}
 	}
+}
+
+
+point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, int depth, point pos, const metastat& shotColor) {
+	//If there are no walls, just take a straight shot for the player
+	if (!map.getWalls().size()) {
+		return protags[playerInd].position;
+	}
+	//Return [invalid point] if no potential paths have been found
+	bool breakP = false;
+	if (depth == -1) { return e.position; }
+	//If not at the base case
+	if (wallInd != -1) {
+		//Draw a line from here to the target
+		segment s(protags[playerInd].position, pos);
+		//Check if this line intersects the given wall
+		if (isintersect(map.getWall(wallInd).body, s)) {
+			//Draw a line from the intersection to the target
+			segment trace(intersection(map.getWall(wallInd).body, s), s.p1);
+			//Check that no other walls intersect with this segment
+			bool reCurse = false;
+			for (int i = 0; i < map.getWalls().size(); i++) {
+				if (i != wallInd) {
+					if (isintersect(trace, map.getWall(i).body)) {
+						reCurse = true;
+						break;
+					}
+				}
+			}
+			//If the recursion flag has been set to false, return
+			if (!reCurse) {
+				return intersection(map.getWall(wallInd).body, s);
+			}
+		}
+	}
+	//Check every other wall
+	for (int i = 0; i < map.getWalls().size(); i++) {
+		//Make sure not to twice consider this wall
+		if (wallInd != i && permitted(shotColor, map.getWall(i).material.getPermittivitySpells())) {
+			//Check if the considered wall is visable
+			segment segIa(pos, map.getWall(i).body.p1);
+			segment segIb(pos, map.getWall(i).body.p2);
+			bool contin = false;
+			for (int j = 0; j < map.getWalls().size(); j++) {
+				if (j != i && isintersect(segIa, map.getWall(j).body) && isintersect(segIb, map.getWall(j).body)) {
+					contin = true;
+					break;
+				}
+			}
+			if (contin) { continue; }
+
+			//Recall this function on walls[i], after reflecting 'pos' across that wall
+			point reticle(recursiveReflectiveAim(e, i, playerInd, depth - 1, reflection(pos, map.getWall(i).body), shotColor));
+			//Continue if nothing valid is found
+			if (reticle == e.position)
+				continue;
+			//Draw a line from here to the target
+			segment trace(reticle, pos);
+			segment s(intersection(trace, map.getWall(i).body), (wallInd == -1
+				? pos
+				: intersection(trace, map.getWall(wallInd).body)
+				)
+			);
+			bool cont = false;
+			for (int j = 0; j < map.getWalls().size(); j++) {
+				if (j != i && j != wallInd && isintersect(s, map.getWall(j).body)) {
+					cont = true;
+					break;
+				}
+				//Check if this line intersects the given wall
+				else if (j == wallInd && wallInd != -1 && !isintersect(map.getWall(wallInd).body, trace)) {
+					cont = true;
+					break;
+				}
+			}
+			if (cont) {
+				continue;
+			}
+			//If we're still considering a direct line, don't reflect it
+			if (wallInd == -1)
+				return reticle;
+			//Othersize, reflect that point over walls[wallInd], which is the last one, and return the reflected point
+			return reflection(reticle, map.getWall(wallInd).body);
+		}
+	}
+	//If no valid solutions are found, return -1, -1
+	return e.position;
+}
+
+//Movement-Behavior function pointer: Just follows the path
+void battlestate::enemymB1(enemy& e) {
+	if (e.path.size() == 0) { return; } 
+	else if (e.path.size() == 1) { 
+		if ((e.path.front() - e.position).magnitude() > .05) { //.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
+			move(e.path.front());
+		}
+		return; 
+	}
+	if (e.ind == 0) {
+		e.ind++;
+		e.dir = true;
+		e.move();
+	} 
+	else if(e.ind == (e.path.size()-1)){
+		e.ind--;
+		e.dir = false;
+		e.move();
+	} 
+	else{
+		e.ind += (e.dir ? 1 : -1);
+		e.move();
+	}
+	return;
+}
+
+//Similar to mB1, loops through the path
+void battlestate::enemymB1b(enemy& e) {
+	if (e.path.size() == 0) { return; } else if (e.path.size() == 1) {
+		if ((e.path.front() - e.position).magnitude() > .05) { //.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
+			move(e.path.front());
+		}
+		return;
+	}
+	e.ind++;
+	e.ind %= e.path.size();
+	e.move();
+	return;
+}
+
+void battlestate::enemysBRand8(enemy& e) {
+	int direction = rand() % 4;
+	if (rand() % 2 == 0) {	//Shoot in a cardinal direction
+		if (direction % 2 == 0) {
+			e.aimAt(point(direction - 1.0f, 0.0f) + e.position);
+		} else {
+			e.aimAt(point(0.0f, direction - 2.0f) + e.position);
+		}
+	} else { //Shoot in a diagonal
+		switch (direction) {
+		case 0:
+			e.aimAt(point(-1, -1) + e.position);
+			break;
+		case 1:
+			e.aimAt(point(-1, 1) + e.position);
+			break;
+		case 2:
+			e.aimAt(point(1, -1) + e.position);
+			break;
+		case 3:
+			e.aimAt(point(1,1) + e.position);
+			break;
+		}
+	}
+	spawnRay(e.shoot());
+}
+
+//Shooting-behaviour function pointer: Just shoot each player if there are no walls in the way
+void battlestate::enemysB1(enemy& e) {	//Just shoots if there are no walls in the way of enemy and player
+	bool shot = true;
+	for (player& p : protags) {
+		shot = true;
+		for (wall& w : map.getWalls()) {
+			segment s(p.position, e.position);
+			if (isintersect(w.body, s)) {
+				shot = false;
+				break;
+			}
+		}
+		if (shot) {
+			spawnRay(e.shoot(metastat(clWhite.getLevel('r'), clWhite.getLevel('g'), clWhite.getLevel('b')), p.position));
+			return;
+		}
+	}
+	return;
+}
+
+
+//Shooting-behavior function pointer: Makes simple use of the recursive-reflective aiming function
+void battlestate::enemysB4(enemy& e) {
+	for (int i = 0; i < protags.size(); i++) {
+		point aimDot = recursiveReflectiveAim(e, -1, 0, 3, e.position, metastat(clWhite.getLevel('r'), clWhite.getLevel('g'), clWhite.getLevel('b')));
+		if (aimDot != e.position) {
+			rays.size();
+			spawnRay(e.shoot(metastat(255, 255, 255), aimDot));
+			rays.size();
+			return;
+		}
+	}
+}
+
+void battlestate::enemymB2(enemy& e) {
+
+}
+void battlestate::enemymB3(enemy& e) {
+
+}
+
+void battlestate::enemymB4(enemy& e) {
+
+}
+
+void battlestate::iterateAI(float inc){
+	for (enemy& e : antags) {
+		if (e.moving) {
+			point dire = (e.dest - e.position);
+			if (dire.magnitude() < .05) {	//.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
+				e.moving = false;
+			}
+			else {
+				e.position += unitvector(dire) * .02f * (.017/inc);	//.02 is a speed multiplier, .017/inc keeps it consistent with the number of frames being put out
+			}
+			return;
+		}
+		else {
+			switch (e.moveB) {		//Picking a move behavior
+			case 1:
+				enemymB1(e);
+				break;
+			case 2:
+				enemymB1b(e);
+				break;
+			case 3:
+				enemymB2(e);
+				break;
+			case 4:
+				enemymB3(e);
+				break;
+			default:
+				break;
+			}
+			switch (e.shootB) {	//Picking a shoot behavior
+			case 1:
+				enemysB1(e);
+				break;
+			case 2:
+				enemysBRand8(e);
+				break;
+			case 3:
+				enemysB4(e);
+				break;
+			case 4:
+				break;
+			default:
+				break;
+			}
+			return;
+		}
+		//cerr << "ERROR: INVALID BEHAVIOR" << endl;
+	}
+}
+
+/*This function is called every frame during battle unless the battle is paused; even then, It may still be best
+to call it and simply because certain animations might look cool cycling in the background when the battle is //DP: If u want to do that we should isolate the animation from movement
+awaiting user input. All iterative battle behaviour and logic goes in here, or is called from in here.*/
+void battlestate::iterate(float &inc /*incremental time*/) {
+	//Iterate Rays
+	iterateRay(inc);
 
 	//Iterate AI:
-	for (enemy& e : antags) {
-		e.act(*this);
+	iterateAI(inc);
+}
+
+void battlestate::playerAct(int playerInd){
+	Spell s = protags[playerInd].act();
+	switch (s.type) {
+	case sRay:
+		spawnRay(*(s.r));
+		return;
+	case sWall:
+		constructWall(*(s.w));
+		return;
 	}
+
+	//cout << "NOT ENOUGH ENERGY";
 }

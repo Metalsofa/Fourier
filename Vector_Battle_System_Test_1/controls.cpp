@@ -93,10 +93,9 @@ void battlefieldDesignKeychecks() {
 			}
 		} else {
 			if (normalKeysdown[' ']) {
-				for (player& b : currentbattle.protags) {
-					if (b.tog) {
-						//b.shoot(metastatfromID(rain++ % 12 + 1), currentbattle);
-						b.makeWall(SELECTED_MATERIAL, currentbattle);
+				for (int i = 0; i < currentbattle.protags.size(); i++) {
+					if (currentbattle.protags[i].tog) {
+						currentbattle.playerAct(i);
 					}
 				}
 				normalKeysdown[' '] = false;

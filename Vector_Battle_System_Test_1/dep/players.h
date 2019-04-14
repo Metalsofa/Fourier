@@ -8,7 +8,9 @@ thing, to be called by the function that initiates battle */
 //Header includes
 #include "crypt.h"
 #include "graphics.h"
-#include "battle.h"
+//#include "battle.h"
+#include "spells.h"
+#include "spellCore.h"
 
 //STL includes
 #include <vector>
@@ -19,9 +21,11 @@ thing, to be called by the function that initiates battle */
 
 using namespace std;
 using namespace fgr;
-class battlestate; //Forward declaring battlestate
-class ray; //Forward declare ray
 
+//class battlestate; //Forward declaring battlestate
+//class ray; //Forward declare ray
+//class wall;
+//
 class Spell;
 class raySpell;
 class wallSpell;
@@ -62,6 +66,9 @@ public:
 class combatant {
 public:
 	combatant() {
+		position = point(-1, -1);
+		direction = point(1, 0);
+		width = 0;
 	}
 
 	stats statblock;
@@ -85,65 +92,54 @@ public:
 	vector<Spell> arsenal;
 	int energy;
 	bool tog; //Whether or not the player can currently be controlled
-	void toggle() { //Flips tog
-		for (shape& sh : sprite) { sh.lineThickness = (tog? 1.0f : 2.0f); }
-		tog = !tog;
-	}
-	void act(battlestate& b) {
-		for (int i = arsenal.size() - 1; i >= 0; i--) {
-			if (arsenal[i].cost < energy) { energy -= arsenal[i].cast(b); return;}
-		}
-		cout << "NOT ENOUGH ENERGY";
-	}
-	void makeWall(int mat, battlestate & b);
-	void shoot(const metastat & col, battlestate & b);
+	void toggle();//Flips tog
+	Spell& act();
+	wall makeWall(int mat) const;
+	ray shoot(const metastat & col) const;
 };
 
 class enemy : public combatant {	//Non controlled combatants with AI
 	//Typedef 'behavior' as a function pointer to a void that takes a battlestate-
-	typedef  void (enemy::*behavior)(battlestate&);
-private:
+	//typedef  void (enemy::*behavior)(battlestate&);
+public:
 	vector<point> path;	//Contains points on a path for enemy to follow
 	int ind;	//Current index of path that enemy is at is coming from
 	bool dir; //True if moving from index 0 to n of path, false if moving backwards
+	point aim;		//Where the enemy is aiming
+
+	//behavior moveB;	//Function pointer that tells the enemy how to move
+	//behavior shootB;//Function pointer that tells the enemy how to shoot
+
 
 	bool moving;	//Whether the enemy is moving
 	point dest;		//Where the enemy is going to
-	point aim;		//Where the enemy is aiming
-	behavior moveB;	//Function pointer that tells the enemy how to move
-	behavior shootB;//Function pointer that tells the enemy how to shoot
-
-public:
-
+	int moveB;
+	int shootB;
 
 	enemy(int m = -1, int s = -1) : combatant() {
-		init(m, s);
+		srand(unsigned int(time(NULL)));
+		ind = 0;
+		dir = true;
+		moving = false;
+		moveB = m;
+		shootB = s;
 	}
-	void init(int m, int s);
 
 	void addWaypoint(const point& p, int i = -1);
 
-	void act(battlestate& b);
-
-	void mB1(battlestate& b);
-	void mB1b(battlestate & b);
-	void sBRand8(battlestate & b);
-	void sB1(battlestate& b);
-	void sB4(battlestate & b);
-	void mB2(battlestate& b);
-	void mB3(battlestate& b);
-	void mB4(battlestate& b);
-
-	point recursiveReflectiveAim(battlestate & b, int wallInd, int playerInd, int depth, point pos, const metastat & shotColor);
 
 	void move(const point& dire);
+	void move(int index);
+	void move();
 
 	void aimAt(const point& dire);
 
-	void shoot(battlestate& b);
+	ray shoot();
 
-	void shoot(const metastat & col, const point & dire, battlestate & b);
+	ray shoot(const metastat & col, const point & dire);
 
 };
+
+int checkcollision(const ray& r, const combatant& c);
 
 #endif
