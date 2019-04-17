@@ -16,13 +16,23 @@ using namespace fgr;
 	///int category (which of  he 12 categories it falls into)
 	///string description
 	///int
+class wallConst {
+public:
+	materialtype material;
+	bool fixed; //wave or no wave
+	int shape = 0; //Circular, linear
+	wallConst();
+	wallConst(const materialtype& m, bool f, int s);
+	wallConst(int wallmaterial, bool isfixed, int s);
+	wallConst(const wallConst& w);
+};
 
 class wall {
 public:
 	segment body;
 	materialtype material;
 	bool fixed; //wave or no wave
-	int shape; //Circular, linear
+	int shape = 0; //Circular, linear
 ///public:
 	const segment& getbody() const { return body; }
 	const materialtype& getmaterial() const { return material; }
@@ -31,6 +41,17 @@ public:
 	wall(segment definingsegment, int wallmaterial, bool isfixed);
 	wall(); //DP: You don't need default values?
 	wall(const wall& w); //DP: You don't need default values?
+	wall(const wallConst& w, const segment& s);
+};
+
+class rayConst {
+public:
+	metastat color; //color
+	float nominalLength; //The actuall length may change, but this is what it's supposed to be.
+	float speed; //In battlefield units per second
+	float thickness;
+	rayConst(const metastat& c, float len, float spd, float thck);
+	rayConst(const rayConst& r);
 };
 
 class ray {//all arrow-shaped travelling projectiles
@@ -56,6 +77,7 @@ public:
 	ray(const ray& r);
 	//Constructor for some custom ray
 	ray(metastat col, point location, point heading, float leng, float fastness, float thickn);
+	ray(point loc, point head, const rayConst& r);
 
 	//Constructor that accepts a spell and returns the appropriate ray //maybee
 	///Doesn't exist yet

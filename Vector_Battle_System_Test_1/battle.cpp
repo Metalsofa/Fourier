@@ -608,10 +608,14 @@ void battlestate::playerAct(int playerInd){
 	Spell s = protags[playerInd].act();
 	switch (s.type) {
 	case sRay:
-		spawnRay(*(s.r));
+		spawnRay(ray(protags[playerInd].position, protags[playerInd].direction,*(s.r)));
 		return;
 	case sWall:
-		constructWall(*(s.w));
+		segment seg(protags[playerInd].position, protags[playerInd].position + protags[playerInd].direction);
+		seg = rotate90about(0, seg);
+		seg.p1 += (seg.p1 - seg.p2);
+		wall w(*(s.w), seg);
+		constructWall(w);
 		return;
 	}
 

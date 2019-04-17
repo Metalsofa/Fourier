@@ -47,11 +47,11 @@ public:
 	Spell(const Spell& s);
 	SpellType type;
 	
-	ray* r;
-	wall* w;
+	rayConst* r;
+	wallConst* w;
 
-	Spell(const ray& ra);
-	Spell(const wall& wa);
+	Spell(const rayConst& ra);
+	Spell(const wallConst& wa);
 	~Spell();
 };
 

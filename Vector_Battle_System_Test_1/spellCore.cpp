@@ -2,6 +2,15 @@
 #include "globals.h"
 #include "spellCore.h"
 
+wallConst::wallConst() {
+	fixed = false;
+}
+wallConst::wallConst(const materialtype& m, bool f, int s = 0) : material(m), fixed(f), shape(s) {}
+wallConst::wallConst(int wallmaterial, bool isfixed, int s = 0): fixed(isfixed), shape(s) {
+	materialtype definingMatarial((Material)wallmaterial);
+	material = definingMatarial;
+}
+wallConst::wallConst(const wallConst& w) : fixed(w.fixed), shape(w.shape), material(w.material) {}
 
 ///////////////////////////////////////////////////////////
 //
@@ -11,6 +20,8 @@
 //				of a given wall.
 //
 ///////////////////////////////////////////////////////////
+
+
 
 //Know-it-all constructor
 wall::wall(segment definingsegment, Material wallmaterial, bool isfixed) {
@@ -34,6 +45,12 @@ wall::wall() {
 
 wall::wall(const wall& w) {
 	body = w.body;
+	material = w.material;
+	fixed = w.fixed;
+	shape = w.shape;
+}
+wall::wall(const wallConst& w, const segment& s) {
+	body = segment(s);
 	material = w.material;
 	fixed = w.fixed;
 	shape = w.shape;
@@ -67,6 +84,12 @@ int permitted(const metastat& spellColor, const metastat& permittivity) { //DP: 
 
 
 
+
+
+rayConst::rayConst(const metastat& c = metastat(255,255,255), float len = 1, float spd = 1, float thck = 1) 
+	: color(c), nominalLength(len), speed(spd), thickness(thck){}
+rayConst::rayConst(const rayConst& r) 
+	: color(r.color), nominalLength(r.nominalLength), speed(r.speed), thickness(r.thickness) {}
 
 ///////////////////////////////////////////////////////////
 //
@@ -111,6 +134,15 @@ ray::ray(metastat col, point location, point heading, float leng, float fastness
 	nominalLength = leng;
 	thickness = thickn;
 	color = col;
+}
+ray::ray(point loc, point head, const rayConst& r) {
+	bits.push_back(loc);
+	bits.push_back(loc);
+	direction = unitvector(difference(head, loc));
+	speed = r.speed;
+	nominalLength = r.nominalLength;
+	thickness = r.thickness;
+	color = r.color;
 }
 
 //Constructor that accepts a spell and returns the appropriate ray //maybee

@@ -251,7 +251,7 @@ int main(int argc, char **argv) {
 	plyr1.sprite = (graphic("alpha.fgr"));
 	plyr1.width = .4f;
 	plyr1.energy = 100;
-	plyr1.arsenal.push_back(plyr1.makeWall(BASIC_REFLECTIVE));
+	plyr1.arsenal.push_back(wallConst(BASIC_REFLECTIVE,true,0));
 	currentbattle.protags.push_back(plyr1);
 
 	player plyr2;

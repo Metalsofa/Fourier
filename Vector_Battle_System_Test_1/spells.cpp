@@ -17,26 +17,26 @@ Spell::Spell() {
 
 }
 
-Spell::Spell(const ray& ra) {
+Spell::Spell(const rayConst& ra) {
 	name = "";
 	level = 0;
 	description = "";
 	category = 0;
 	cost = 0;
-	r = new ray(ra);
+	r = new rayConst(ra);
 	w = nullptr;
 	type = sRay;
 
 }
 
-Spell::Spell(const wall& wa) {
+Spell::Spell(const wallConst& wa) {
 	name = "";
 	level = 0;
 	description = "";
 	category = 0;
 	cost = 0;
 	r = nullptr;
-	w = new wall(wa);
+	w = new wallConst(wa);
 	type = sWall;
 }
 
@@ -47,8 +47,8 @@ Spell::Spell(const Spell& s) {
 	category = s.category;
 	cost = s.cost;
 	type = s.type;
-	r = (s.r) ? new ray(*(s.r)) : nullptr;
-	w = (s.w) ? new wall(*(s.w)) : nullptr;
+	r = (s.r) ? new rayConst(*(s.r)) : nullptr;
+	w = (s.w) ? new wallConst(*(s.w)) : nullptr;
 }
 
 Spell::~Spell() {
