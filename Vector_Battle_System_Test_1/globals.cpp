@@ -12,6 +12,7 @@
 #include "gl/glut.h"
 #include "Stopwatch.h"
 #include "graphics.h"
+#include "spells.h"
 #include "battle.h"
 #include "camera.h"
 #include <string>

@@ -223,8 +223,7 @@ namespace fgr {
 	//Put a frame of an animtion into a file stream
 	inline void fputframe(const frame& obj, FILE*& stream) {
 		//Write in the delay
-		int delay;
-		fwrite(&delay, sizeof(int), 1, stream);
+		fwrite(&obj.delay, sizeof(int), 1, stream);
 		//Write in the graphic, construct and return the frame
 		fputgraphic(obj, stream);
 	}

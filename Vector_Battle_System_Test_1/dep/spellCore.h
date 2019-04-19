@@ -5,21 +5,34 @@ physics or outside of battle.*/
 #define __spellCore_h__
 //#include "geometry.h"
 #include "waves.h"
-#include "players.h"
+#include "materials.h"
+//#include "players.h"
 
+using namespace std;
+using namespace fgr;
 //move: Spell Object that can be part of a player's known spells (called a function in game)
 	///string name
 	///int level
 	///int category (which of  he 12 categories it falls into)
 	///string description
 	///int
+class wallConst {
+public:
+	materialtype material;
+	bool fixed; //wave or no wave
+	int shape = 0; //Circular, linear
+	wallConst();
+	wallConst(const materialtype& m, bool f, int s);
+	wallConst(int wallmaterial, bool isfixed, int s);
+	wallConst(const wallConst& w);
+};
 
 class wall {
 public:
 	segment body;
 	materialtype material;
 	bool fixed; //wave or no wave
-	int shape; //Circular, linear
+	int shape = 0; //Circular, linear
 ///public:
 	const segment& getbody() const { return body; }
 	const materialtype& getmaterial() const { return material; }
@@ -27,6 +40,18 @@ public:
 	wall(segment definingsegment, Material wallmaterial, bool isfixed);
 	wall(segment definingsegment, int wallmaterial, bool isfixed);
 	wall(); //DP: You don't need default values?
+	wall(const wall& w); //DP: You don't need default values?
+	wall(const wallConst& w, const segment& s);
+};
+
+class rayConst {
+public:
+	metastat color; //color
+	float nominalLength; //The actuall length may change, but this is what it's supposed to be.
+	float speed; //In battlefield units per second
+	float thickness;
+	rayConst(const metastat& c, float len, float spd, float thck);
+	rayConst(const rayConst& r);
 };
 
 class ray {//all arrow-shaped travelling projectiles
@@ -48,9 +73,11 @@ public:
 	point terminalpoint;
 	///public:
 
-	ray() {};
+	ray();
+	ray(const ray& r);
 	//Constructor for some custom ray
 	ray(metastat col, point location, point heading, float leng, float fastness, float thickn);
+	ray(point loc, point head, const rayConst& r);
 
 	//Constructor that accepts a spell and returns the appropriate ray //maybee
 	///Doesn't exist yet
@@ -68,7 +95,7 @@ public:
 	bool deathtime() const;
 	//Tell the ray it is now terminating, and tell it where to terminate.
 	void terminate(point where);
-	int checkcollision(combatant& c) const;
+	//int checkcollision(const combatant& c) const;
 	bool checkcollision(const segment& surface) const;
 	point wherehit(segment surface) const;
 	//Returns 0 (kill) 1 (bounce) or 2 (permit) based on this ray's compatability with a given material.

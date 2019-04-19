@@ -250,6 +250,8 @@ int main(int argc, char **argv) {
 	plyr1.tog = false;
 	plyr1.sprite = (graphic("alpha.fgr"));
 	plyr1.width = .4f;
+	plyr1.energy = 100;
+	plyr1.arsenal.push_back(wallConst(BASIC_REFLECTIVE,true,0));
 	currentbattle.protags.push_back(plyr1);
 
 	player plyr2;
@@ -276,8 +278,8 @@ int main(int argc, char **argv) {
 	plyr4.width = .4f;
 	currentbattle.protags.push_back(plyr4);
 
-	enemy e1(1, 4);
-	e1.position = point(7, 4);
+	enemy e1(1, 3);
+	e1.position = point(7, 3);
 	e1.width = .4f;
 	plyr4.sprite = (graphic("delta.fgr"));
 	currentbattle.antags.push_back(e1);

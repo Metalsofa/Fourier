@@ -2,6 +2,15 @@
 #include "globals.h"
 #include "spellCore.h"
 
+wallConst::wallConst() {
+	fixed = false;
+}
+wallConst::wallConst(const materialtype& m, bool f, int s = 0) : material(m), fixed(f), shape(s) {}
+wallConst::wallConst(int wallmaterial, bool isfixed, int s = 0): fixed(isfixed), shape(s) {
+	materialtype definingMatarial((Material)wallmaterial);
+	material = definingMatarial;
+}
+wallConst::wallConst(const wallConst& w) : fixed(w.fixed), shape(w.shape), material(w.material) {}
 
 ///////////////////////////////////////////////////////////
 //
@@ -11,6 +20,8 @@
 //				of a given wall.
 //
 ///////////////////////////////////////////////////////////
+
+
 
 //Know-it-all constructor
 wall::wall(segment definingsegment, Material wallmaterial, bool isfixed) {
@@ -30,6 +41,19 @@ wall::wall(segment definingsegment, int wallmaterial, bool isfixed) {
 //Default constructor
 wall::wall() {
 	fixed = false;
+}
+
+wall::wall(const wall& w) {
+	body = w.body;
+	material = w.material;
+	fixed = w.fixed;
+	shape = w.shape;
+}
+wall::wall(const wallConst& w, const segment& s) {
+	body = segment(s);
+	material = w.material;
+	fixed = w.fixed;
+	shape = w.shape;
 }
 
 //Check if a spell of a given color can pass through a given material
@@ -61,6 +85,12 @@ int permitted(const metastat& spellColor, const metastat& permittivity) { //DP: 
 
 
 
+
+rayConst::rayConst(const metastat& c = metastat(255,255,255), float len = 1, float spd = 1, float thck = 1) 
+	: color(c), nominalLength(len), speed(spd), thickness(thck){}
+rayConst::rayConst(const rayConst& r) 
+	: color(r.color), nominalLength(r.nominalLength), speed(r.speed), thickness(r.thickness) {}
+
 ///////////////////////////////////////////////////////////
 //
 //           Class ray DEFINITION
@@ -77,6 +107,23 @@ int permitted(const metastat& spellColor, const metastat& permittivity) { //DP: 
 	///string description
 	///int
 
+ray::ray() {
+}
+
+ray::ray(const ray& r) {
+	bits = r.bits;
+	disjoints = r.disjoints;
+	color = r.color;
+	kindness = r.kindness;
+	direction = r.direction;
+	speed = r.speed;
+	nominalLength = r.nominalLength;
+	killme = r.killme;
+	terminating = r.terminating;
+	thickness = r.thickness;
+	terminalpoint = r.terminalpoint;
+}
+
 //Constructor for some custom ray
 ray::ray(metastat col, point location, point heading, float leng, float fastness, float thickn) { //DP: Pass by ref
 	bits.push_back(location);
@@ -87,6 +134,15 @@ ray::ray(metastat col, point location, point heading, float leng, float fastness
 	nominalLength = leng;
 	thickness = thickn;
 	color = col;
+}
+ray::ray(point loc, point head, const rayConst& r) {
+	bits.push_back(loc);
+	bits.push_back(loc);
+	direction = unitvector(difference(head, loc));
+	speed = r.speed;
+	nominalLength = r.nominalLength;
+	thickness = r.thickness;
+	color = r.color;
 }
 
 //Constructor that accepts a spell and returns the appropriate ray //maybee
@@ -169,13 +225,7 @@ void ray::terminate(point where) { //DP: Pass by ref
 	terminalpoint = where;
 }
 
-int ray::checkcollision(combatant & c) const {
-	float dist0 = (bits[0] - c.position).magnitude();
-	float dist1 = (bits[1] - c.position).magnitude();
-	if (dist0 < c.width / 2) { return 1; } //.25 NEEDS TO BE CHANGED IF PLAYER SIZE CHANGES
-	if (dist1 < c.width / 2) { return 2; }
-	return 0;
-}
+
 bool ray::checkcollision(const segment & surface) const { //DP Pass by ref, no need to create var
 	segment frontseg(bits[0], bits[1]);
 	return isintersect(frontseg, surface);

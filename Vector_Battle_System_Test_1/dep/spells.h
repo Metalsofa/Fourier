@@ -4,15 +4,17 @@ physics or outside of battle.*/
 #ifndef __spells_h__
 #define __spells_h__
 //#include "geometry.h"
+//#include "battle.h"
 #include "spellCore.h"
 
 using namespace std;
 using namespace fgr;
 
+
 //move: Spell Object that can be part of a player's known spells (called a function in game)
 	///string name
 	///int level
-	///int category (which of  he 12 categories it falls into)
+	///int category (which of the 12 categories it falls into)
 	///string description
 	///int
 //projectiles: have graphics, position, velocity, behavior,
@@ -30,52 +32,28 @@ using namespace fgr;
 //field:
 	//function that returns direction and magnitude, given x and y
 
+//class battlestate;
+enum SpellType {sNULL, sRay, sWall};
 
-class battlestate;//Forward declaring battlestate
 
 class Spell {
 public:
 	string name;
 	int level;
-	string decription;
+	string description;
 	int category;
-	Spell() {
+	int cost;
+	Spell();
+	Spell(const Spell& s);
+	SpellType type;
+	
+	rayConst* r;
+	wallConst* w;
 
-	}
-	/*void cast(battlestate& b) {
-	}*/
+	Spell(const rayConst& ra);
+	Spell(const wallConst& wa);
+	~Spell();
 };
 
-class raySpell : public Spell {
-public:
-	ray r;
-	raySpell() : Spell() {
-		r = ray(metastat(), point(0, 0), point(1, 0), 1.0f, 1.0f, 1.0f);
-		category = 0;
-	}
-	raySpell(ray& ra) :Spell() {
-		r = ra;
-		category = 0;
-	}
-	/*void cast(battlestate& b) {
-		b.spawnRay(r);
-	}*/
-};
-
-class wallSpell : public Spell {
-public:
-	wall w;
-	wallSpell() :Spell() {
-		category = 1;
-	}
-	wallSpell(wall& wa) :Spell() {
-		category = 1;
-		w = wa;
-	}
-	/*void cast(battlestate& b) {
-		b.constructWall(w);
-	}*/
-
-};
 
 #endif
