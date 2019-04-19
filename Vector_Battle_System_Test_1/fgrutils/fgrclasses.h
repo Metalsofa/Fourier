@@ -199,8 +199,6 @@ namespace fgr {
 		fgr::fcolor color;
 		float lineThickness;
 		float pointSize;
-		float opacity;
-		int mode;
 		//Default constructor
 		shape() : glyph() {
 			color = fgr::fcolor();
@@ -226,7 +224,8 @@ namespace fgr {
 			pointSize = pointSize_;
 		}
 
-		shape(std::string& text) {
+		shape(std::string& text) : glyph() {
+			pointSize = 1.0f;
 			//Container 0: vertices
 			std::stringstream reader(text);
 			int vertexcount;
@@ -238,40 +237,15 @@ namespace fgr {
 				push_back(vert);
 			}
 			//Extract color
-			float R, G, B;
+			float R, G, B, A, mode;
 			reader >> R; reader >> G; reader >> B;
 			color = fcolor(R, G, B);
-			//Extract opacity
-			reader >> opacity;
-			//Extract mode
+			//Extract opacity (does nothing)
+			reader >> A;
+			//Extract mode (does nothing)
 			reader >> mode;
 			//Extract lineThickness
 			reader >> lineThickness;
-		}
-		shape(std::string filename, int begin) { //DP: repetitive with func above
-			std::vector<std::string> shapeContents = unencryptedContents(filename, "The Doors of Perception");
-			if (shapeContents.size() >= 1) {
-				//Container 0: vertices
-				std::stringstream reader(shapeContents[begin]);
-				int vertexcount;
-				reader >> vertexcount;
-				for (int j = 0; j < vertexcount; j++) {
-					float X; reader >> X;
-					float Y; reader >> Y;
-					point vert(X, Y);
-					push_back(vert);
-				}
-				//Extract color
-				float R, G, B;
-				reader >> R; reader >> G; reader >> B;
-				color = fcolor(R, G, B);
-				//Extract opacity
-				reader >> opacity;
-				//Extract mode
-				reader >> mode;
-				//Extract lineThickness
-				reader >> lineThickness;
-			}
 		}
 
 		void savetofile(std::string& filename) {}

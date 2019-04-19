@@ -6,6 +6,67 @@
 using namespace std;
 using namespace fgr;
 
+//Accessor for enumerated player stats
+metastat& stats::getStat(statNum which) {
+	switch (which) {
+	case stMaxHP:
+		return maxHP;
+	case stMaxFP:
+		return maxFP;
+	case stHP:
+		return HP;
+	case stFP:
+		return FP;
+	case stVitality:
+		return vitality;
+	case stSensitivity:
+		return sensitivity;
+	case stAgility:
+		return agility;
+	case stPower:
+		return power;
+	case stResilience:
+		return resilience;
+	case stStability:
+		return stability;
+	default:
+		return HP;
+	}
+}
+
+//Interprets a string as an enumerated stat
+statNum stringToStatNum(const std::string& word) {
+	switch (word[0]) {
+	case 'm':
+		if (word == "maxHP")
+			return stMaxHP;
+		return stMaxFP;
+	case 'H':
+		return stHP;
+	case 'F':
+		return stFP;
+	case 'v':
+		return stVitality;
+	case 'a':
+		return stAgility;
+	case 'p':
+		return stPower;
+	case 'r':
+		return stResilience;
+	case 's':
+		if (word == "sensitivity")
+			return stSensitivity;
+		return stStability;
+	default:
+		return stNULL;
+	}
+}
+
+//Read in a line from an input stream and set the appropriate stat
+void stats::readline(std::istream& source) {
+	std::string spec;
+	source >> spec;
+}
 
 void enemy::addWaypoint(const point& p, int i) { //Adds to path vector at index
 	if (i == -1) { ind = 0;  return path.push_back(p); }
@@ -169,6 +230,7 @@ ray enemy::shoot(const metastat& col, const point& dire) { //Shoots at a point
 	return ray(col,  unitvector(dire - position) * 0.6f + position, dire, 2.0f, 6.0f, 2);
 	
 }
+
 //
 wall player::makeWall(int mat) const {
 	segment s(position, position + direction);
@@ -180,16 +242,19 @@ wall player::makeWall(int mat) const {
 ray player::shoot(const metastat & col) const {
 	return ray(col, (position + direction*.3f), position + direction + direction, 2.0f, 6.0f, 2);
 }
-//
-Spell& player::act() {
+
+//Returns a pointer to the appropriate spell for this player to cast
+const Spell* player::act() {
 	for (int i = arsenal.size() - 1; i >= 0; i--) {
 		if (arsenal[i].cost < energy) { 
 			energy -= arsenal[i].cost; 
-			return arsenal[i]; 
+			return &arsenal[i]; 
 		}
 	}
 	cout << "NOT ENOUGH ENERGY";
+	return nullptr;
 }
+
 
 void player::toggle() { //Flips tog
 	for (shape& sh : sprite) { sh.lineThickness = (tog ? 1.0f : 2.0f); }

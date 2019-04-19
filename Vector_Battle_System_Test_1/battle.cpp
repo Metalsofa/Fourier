@@ -604,20 +604,23 @@ void battlestate::iterate(float &inc /*incremental time*/) {
 	iterateAI(inc);
 }
 
+//Affect the battle
 void battlestate::playerAct(int playerInd){
-	Spell s = protags[playerInd].act();
-	switch (s.type) {
+	const Spell* s = protags[playerInd].act();
+	if (!s)
+		return;
+	switch (protags[playerInd].act()->type) {
 	case sRay:
-		spawnRay(ray(protags[playerInd].position, protags[playerInd].direction,*(s.r)));
+		spawnRay(ray(protags[playerInd].position, protags[playerInd].direction,*(s->r)));
 		return;
 	case sWall:
 		segment seg(protags[playerInd].position, protags[playerInd].position + protags[playerInd].direction);
 		seg = rotate90about(0, seg);
 		seg.p1 += (seg.p1 - seg.p2);
-		wall w(*(s.w), seg);
+		wall w(*(s->w), seg);
 		constructWall(w);
 		return;
 	}
-
 	//cout << "NOT ENOUGH ENERGY";
+	return;
 }

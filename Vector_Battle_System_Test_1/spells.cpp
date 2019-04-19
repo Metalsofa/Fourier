@@ -14,7 +14,6 @@ Spell::Spell() {
 	r = nullptr;
 	w = nullptr;
 	type = sNULL;
-
 }
 
 Spell::Spell(const rayConst& ra) {
@@ -40,6 +39,20 @@ Spell::Spell(const wallConst& wa) {
 	type = sWall;
 }
 
+//Assignment operator
+Spell& Spell::operator=(const Spell& other) {
+	name = other.name;
+	level = other.level;
+	description = other.description;
+	category = other.category;
+	cost = other.cost;
+	type = other.type;
+	r = (other.r) ? new rayConst(*(other.r)) : nullptr;
+	w = (other.w) ? new wallConst(*(other.w)) : nullptr;
+	return *this;
+}
+
+//Copy constructor
 Spell::Spell(const Spell& s) {
 	name = s.name;
 	level = s.level;

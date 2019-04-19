@@ -30,9 +30,27 @@ class Spell;
 class raySpell;
 class wallSpell;
 
+//Enumerate the stats that a character has
+enum statNum {
+	stNULL,
+	stMaxHP,
+	stMaxFP,
+	stHP,
+	stFP,
+	stVitality,
+	stSensitivity,
+	stAgility,
+	stPower,
+	stResilience,
+	stStability
+};
+
+//Interprets a string as an enumerated stat
+statNum stringToStatNum(const std::string& word);
+
 //This version of stats is for overworld logic and battle initiation
 class stats {
-private:
+public:
 	//Player metastats cap out at 255
 	metastat maxHP; //maximum HP
 	metastat maxFP; //maximum FP
@@ -45,21 +63,13 @@ private:
 	metastat resilience; //Benefit from healing
 	metastat stability; //Reduces rate of life loss
 
-	//Abilities also need to somehow appear
-public:
+	// Universal accessor for just in case
+	metastat& getStat(statNum which);
+
+	void readline(std::istream& source);
 	graphic sprite; //DP: I think we only need one sprite in the combatant class
-	int Hitpoints(int comp)					{ return HP.component(comp); }
-	int MaxHitpoints(int comp)				{ return maxHP.component(comp); }
-	int HitpointsFraction(int comp)			{ return Hitpoints(comp) / MaxHitpoints(comp); }
-	int Functionpoints(int comp)			{ return FP.component(comp); }
-	int MaxFunctionpoints(int comp)			{ return maxFP.component(comp); }
-	int FunctionpointsFraction(int comp)	{ return Functionpoints(comp) / MaxFunctionpoints(comp); }
-	int Vitality(int comp)					{ return vitality.component(comp); }
-	int Sensitivity(int comp)				{ return sensitivity.component(comp); }
-	int Agility(int comp)					{ return agility.component(comp); }
-	int Power(int comp)						{ return power.component(comp); }
-	int Resilience(int comp)				{ return resilience.component(comp); }
-	int Stability(int comp)					{ return stability.component(comp); }
+
+	
 };
 
 //all players AND enemies are one of these
@@ -93,7 +103,7 @@ public:
 	int energy;
 	bool tog; //Whether or not the player can currently be controlled
 	void toggle();//Flips tog
-	Spell& act();
+	const Spell* act();
 	wall makeWall(int mat) const;
 	ray shoot(const metastat & col) const;
 };
