@@ -1,6 +1,6 @@
-﻿  Vector_Battle_System_Test_1.cpp
-  Note: including file: C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\globals.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrutils.h
+﻿  main.cpp
+  Note: including file: C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\globals.h
+  Note: including file:  C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\fgrutils\fgrutils.h
   Note: including file:   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\string
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xstring
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iosfwd
@@ -96,12 +96,12 @@
   Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocinfo
   Note: including file:            C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocinfo.h
   Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\locale.h
-  Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrgeometry.h
+  Note: including file:   C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h
+  Note: including file:    C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\fgrutils\fgrgeometry.h
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vector
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\algorithm
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
+  Note: including file:    C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
+  Note: including file:    C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\crypt.h
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\list
@@ -110,10 +110,10 @@
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtree
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cassert
   Note: including file:     C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\assert.h
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
-  Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
-  Note: including file:     C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl\freeglut_std.h
+  Note: including file:    C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
+  Note: including file:   C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
+  Note: including file:    C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
+  Note: including file:     C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\freeglut\include\gl\freeglut_std.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\windows.h
   Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\winapifamily.h
   Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\winpackagefamily.h
@@ -223,17 +223,17 @@
   Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ime_cmodes.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\Stopwatch.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spells.h
-  Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spellCore.h
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\waves.h
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\materials.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\battle.h
-  Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\players.h
+  Note: including file:  C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\Stopwatch.h
+  Note: including file:  C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\graphics.h
+  Note: including file:  C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\spells.h
+  Note: including file:   C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\spellCore.h
+  Note: including file:    C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\waves.h
+  Note: including file:    C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\materials.h
+  Note: including file:  C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\battle.h
+  Note: including file:   C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\players.h
   Note: including file:    C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\time.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\camera.h
-  Note: including file: C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\controls.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\customGL.h
-  Note: including file: C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\console.h
-  Vector_Battle_System_Test_1.vcxproj -> C:\Users\dp\Documents\GitHub\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe
+  Note: including file:  C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\camera.h
+  Note: including file: C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\controls.h
+  Note: including file:  C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\customGL.h
+  Note: including file: C:\Users\medlod\source\repos\Fourier\Vector_Battle_System_Test_1\dep\console.h
+  Vector_Battle_System_Test_1.vcxproj -> C:\Users\medlod\Source\Repos\Fourier\x64\Debug\Vector_Battle_System_Test_1.exe
