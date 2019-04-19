@@ -215,7 +215,7 @@ int main(int argc, char **argv) {
 
 
 	//Setup battle: Initialize combatants
-	player plyr1;
+	player plyr1("teststat1.txt");
 	plyr1.position = point(0, 6);
 	plyr1.turn(0);
 	plyr1.tog = false;
@@ -225,7 +225,7 @@ int main(int argc, char **argv) {
 	plyr1.arsenal.push_back(wallConst(BASIC_REFLECTIVE,true,0));
 	currentbattle.protags.push_back(plyr1);
 
-	player plyr2;
+	player plyr2("teststat2.txt");
 	plyr2.position = point(10, 6);
 	plyr2.turn(0);
 	plyr2.tog = false;
@@ -233,7 +233,7 @@ int main(int argc, char **argv) {
 	plyr2.width = .4f;
 	currentbattle.protags.push_back(plyr2);
 
-	player plyr3;
+	player plyr3("teststat3.txt");
 	plyr3.position = point(10, 0);
 	plyr3.turn(0);
 	plyr3.tog = false;
@@ -241,7 +241,7 @@ int main(int argc, char **argv) {
 	plyr3.width = .4f;
 	currentbattle.protags.push_back(plyr3);
 
-	player plyr4;
+	player plyr4("teststat4.txt");
 	plyr4.position = point(0, 0);
 	plyr4.turn(0);
 	plyr4.tog = false;

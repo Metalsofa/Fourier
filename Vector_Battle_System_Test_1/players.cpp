@@ -7,7 +7,7 @@ using namespace std;
 using namespace fgr;
 
 //Accessor for enumerated player stats
-metastat& stats::getStat(statNum which) {
+metastat& statblock::getStat(statNum which) {
 	switch (which) {
 	case stMaxHP:
 		return maxHP;
@@ -32,6 +32,21 @@ metastat& stats::getStat(statNum which) {
 	default:
 		return HP;
 	}
+}
+
+//Statblock default constructor
+statblock::statblock() {
+
+}
+
+//Constuct a statblock from a text file
+statblock::statblock(const std::string& filename) {
+	std::ifstream source(filename);
+	if (source.is_open()) {
+		while (readline(source));
+		source.close();
+	}
+	return;
 }
 
 //Interprets a string as an enumerated stat
@@ -63,11 +78,43 @@ statNum stringToStatNum(const std::string& word) {
 }
 
 //Read in a line from an input stream and set the appropriate stat
-void stats::readline(std::istream& source) {
+bool statblock::readline(std::istream& source) {
 	std::string spec;
-	source >> spec;
+	if (source >> spec) {
+		getStat(stringToStatNum(spec)) = metastat(source);
+		return true;
+	}
+	return false;
 }
 
+//Combatant default constructor
+combatant::combatant() {
+	position = point(-1, -1);
+	direction = point(1, 0);
+	width = 0;
+}
+
+//Construct a combatant from a stat-text file
+combatant::combatant(const std::string& statfile) : combatant() {
+	stats = statblock(statfile);
+}
+
+//Changes direction based on angle(in radians)
+void combatant::turn(float angle) {
+	direction = unitfromangle(angle);
+}
+
+//Enemy default constructor
+enemy::enemy() : combatant() {
+
+}
+
+//Construct enemy from statblock file
+enemy::enemy(const std::string& statfile) : combatant(statfile) {
+
+}
+
+//Add a waypoint to the enemy's motion path
 void enemy::addWaypoint(const point& p, int i) { //Adds to path vector at index
 	if (i == -1) { ind = 0;  return path.push_back(p); }
 	path.insert(path.begin() + i, p);
@@ -229,6 +276,17 @@ ray enemy::shoot(const metastat& col, const point& dire) { //Shoots at a point
 	aim = dire;
 	return ray(col,  unitvector(dire - position) * 0.6f + position, dire, 2.0f, 6.0f, 2);
 	
+}
+
+//Player default constructor
+player::player() : combatant() {
+	energy = 0;
+	tog = false;
+}
+
+//Construct a player from a statblock text file
+player::player(const std::string& statfile) : combatant(statfile) {
+
 }
 
 //

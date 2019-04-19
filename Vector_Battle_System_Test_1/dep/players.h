@@ -42,14 +42,15 @@ enum statNum {
 	stAgility,
 	stPower,
 	stResilience,
-	stStability
+	stStability,
+	stCount
 };
 
 //Interprets a string as an enumerated stat
 statNum stringToStatNum(const std::string& word);
 
 //This version of stats is for overworld logic and battle initiation
-class stats {
+class statblock {
 public:
 	//Player metastats cap out at 255
 	metastat maxHP; //maximum HP
@@ -62,12 +63,17 @@ public:
 	metastat power; //ATK
 	metastat resilience; //Benefit from healing
 	metastat stability; //Reduces rate of life loss
-
 	// Universal accessor for just in case
 	metastat& getStat(statNum which);
 
-	void readline(std::istream& source);
+	bool readline(std::istream& source);
 	graphic sprite; //DP: I think we only need one sprite in the combatant class
+
+	//Default constructor
+	statblock();
+
+	//Construct this statblock from a file
+	statblock (const std::string& filename);
 
 	
 };
@@ -75,13 +81,10 @@ public:
 //all players AND enemies are one of these
 class combatant {
 public:
-	combatant() {
-		position = point(-1, -1);
-		direction = point(1, 0);
-		width = 0;
-	}
+	combatant();
+	combatant(const std::string& statfile);
 
-	stats statblock;
+	statblock stats;
 	point position;
 	point direction; //Direction as a unit vector
 	//Sprites
@@ -92,17 +95,28 @@ public:
 	//Each segment represents a hitbox; p1 is lower left, p2 is upper right.
 	vector<segment> hitboxes;
 
-	void turn(float angle) { //Changes direction based on angle(in radians)
-		direction = unitfromangle(angle);
-	}
+	//Changes direction based on angle(in radians)
+	void turn(float angle);
 };
 
-class player: public combatant { //controlled players
+//controlled players
+class player: public combatant { 
 public:
+	// REPRESENTATION
 	vector<Spell> arsenal;
 	int energy;
-	bool tog; //Whether or not the player can currently be controlled
-	void toggle();//Flips tog
+	//Whether or not the player can currently be controlled
+	bool tog; 
+
+	// CONSTRUCTORS
+	//Default constructor
+	player();
+	//Construct from a text file
+	player(const std::string& filename);
+
+	// MEMBER FUNCTIONS
+	//Flips tog
+	void toggle();
 	const Spell* act();
 	wall makeWall(int mat) const;
 	ray shoot(const metastat & col) const;
@@ -112,6 +126,8 @@ class enemy : public combatant {	//Non controlled combatants with AI
 	//Typedef 'behavior' as a function pointer to a void that takes a battlestate-
 	//typedef  void (enemy::*behavior)(battlestate&);
 public:
+
+	// REPRESENTATION
 	vector<point> path;	//Contains points on a path for enemy to follow
 	int ind;	//Current index of path that enemy is at is coming from
 	bool dir; //True if moving from index 0 to n of path, false if moving backwards
@@ -120,12 +136,19 @@ public:
 	//behavior moveB;	//Function pointer that tells the enemy how to move
 	//behavior shootB;//Function pointer that tells the enemy how to shoot
 
-
 	bool moving;	//Whether the enemy is moving
 	point dest;		//Where the enemy is going to
 	int moveB;
 	int shootB;
 
+	
+	// CONSTRUCTORS
+	//Default constructor
+	enemy();
+	//Constructor from statblock file
+	enemy(const std::string& statfile);
+
+	// MEMBER FUNCTIONS
 	enemy(int m = -1, int s = -1) : combatant() {
 		srand(unsigned int(time(NULL)));
 		ind = 0;
