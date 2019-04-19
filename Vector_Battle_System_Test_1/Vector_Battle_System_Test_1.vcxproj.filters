@@ -66,15 +66,15 @@
     <ClCompile Include="battle.cpp">
       <Filter>Implementation Files</Filter>
     </ClCompile>
+    <ClCompile Include="spellCore.cpp">
+      <Filter>Implementation Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dep\materials.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dep\players.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="dep\spells.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dep\waves.h">
@@ -129,6 +129,12 @@
       <Filter>Header Files\fgrutils</Filter>
     </ClInclude>
     <ClInclude Include="dep\resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dep\spells.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="dep\spellCore.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

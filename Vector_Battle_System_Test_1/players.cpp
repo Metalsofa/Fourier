@@ -285,7 +285,7 @@ void enemy::shoot(const metastat& col, const point& dire, battlestate& b) { //Sh
 void player::makeWall(int mat, battlestate & b) {
 	segment s(position, position + direction);
 	s = rotate90about(0, s);
-	//s.p1 += (s.p1-s.p2);
+	s.p1 += (s.p1-s.p2);
 	wall a(s, mat, true);
 	b.constructWall(a);
 }
