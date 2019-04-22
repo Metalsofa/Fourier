@@ -174,7 +174,7 @@
     <ClCompile Include="room.cpp" />
     <ClCompile Include="spellCore.cpp" />
     <ClCompile Include="spells.cpp" />
-    <ClCompile Include="Vector_Battle_System_Test_1.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="dep\customGL.h" />

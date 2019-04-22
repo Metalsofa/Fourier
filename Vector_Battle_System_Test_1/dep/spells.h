@@ -50,6 +50,7 @@ public:
 	rayConst* r;
 	wallConst* w;
 
+	Spell& operator=(const Spell& other);
 	Spell(const rayConst& ra);
 	Spell(const wallConst& wa);
 	~Spell();

@@ -6,7 +6,115 @@
 using namespace std;
 using namespace fgr;
 
+//Accessor for enumerated player stats
+metastat& statblock::getStat(statNum which) {
+	switch (which) {
+	case stMaxHP:
+		return maxHP;
+	case stMaxFP:
+		return maxFP;
+	case stHP:
+		return HP;
+	case stFP:
+		return FP;
+	case stVitality:
+		return vitality;
+	case stSensitivity:
+		return sensitivity;
+	case stAgility:
+		return agility;
+	case stPower:
+		return power;
+	case stResilience:
+		return resilience;
+	case stStability:
+		return stability;
+	default:
+		return HP;
+	}
+}
 
+//Statblock default constructor
+statblock::statblock() {
+
+}
+
+//Constuct a statblock from a text file
+statblock::statblock(const std::string& filename) {
+	std::ifstream source(filename);
+	if (source.is_open()) {
+		while (readline(source));
+		source.close();
+	}
+	return;
+}
+
+//Interprets a string as an enumerated stat
+statNum stringToStatNum(const std::string& word) {
+	switch (word[0]) {
+	case 'm':
+		if (word == "maxHP")
+			return stMaxHP;
+		return stMaxFP;
+	case 'H':
+		return stHP;
+	case 'F':
+		return stFP;
+	case 'v':
+		return stVitality;
+	case 'a':
+		return stAgility;
+	case 'p':
+		return stPower;
+	case 'r':
+		return stResilience;
+	case 's':
+		if (word == "sensitivity")
+			return stSensitivity;
+		return stStability;
+	default:
+		return stNULL;
+	}
+}
+
+//Read in a line from an input stream and set the appropriate stat
+bool statblock::readline(std::istream& source) {
+	std::string spec;
+	if (source >> spec) {
+		getStat(stringToStatNum(spec)) = metastat(source);
+		return true;
+	}
+	return false;
+}
+
+//Combatant default constructor
+combatant::combatant() {
+	position = point(-1, -1);
+	direction = point(1, 0);
+	width = 0;
+}
+
+//Construct a combatant from a stat-text file
+combatant::combatant(const std::string& statfile) : combatant() {
+	stats = statblock(statfile);
+}
+
+//Changes direction based on angle(in radians)
+void combatant::turn(float angle) {
+	direction = unitfromangle(angle);
+}
+
+//Enemy default constructor
+enemy::enemy() : combatant() {
+
+}
+
+//Construct enemy from statblock file
+enemy::enemy(const std::string& statfile) : combatant(statfile) {
+
+}
+
+//Add a waypoint to the enemy's motion path
 void enemy::addWaypoint(const point& p, int i) { //Adds to path vector at index
 	if (i == -1) { ind = 0;  return path.push_back(p); }
 	path.insert(path.begin() + i, p);
@@ -169,6 +277,18 @@ ray enemy::shoot(const metastat& col, const point& dire) { //Shoots at a point
 	return ray(col,  unitvector(dire - position) * 0.6f + position, dire, 2.0f, 6.0f, 2);
 	
 }
+
+//Player default constructor
+player::player() : combatant() {
+	energy = 0;
+	tog = false;
+}
+
+//Construct a player from a statblock text file
+player::player(const std::string& statfile) : combatant(statfile) {
+
+}
+
 //
 wall player::makeWall(int mat) const {
 	segment s(position, position + direction);
@@ -180,16 +300,19 @@ wall player::makeWall(int mat) const {
 ray player::shoot(const metastat & col) const {
 	return ray(col, (position + direction*.3f), position + direction + direction, 2.0f, 6.0f, 2);
 }
-//
-Spell& player::act() {
+
+//Returns a pointer to the appropriate spell for this player to cast
+const Spell* player::act() {
 	for (int i = arsenal.size() - 1; i >= 0; i--) {
 		if (arsenal[i].cost < energy) { 
 			energy -= arsenal[i].cost; 
-			return arsenal[i]; 
+			return &arsenal[i]; 
 		}
 	}
 	cout << "NOT ENOUGH ENERGY";
+	return nullptr;
 }
+
 
 void player::toggle() { //Flips tog
 	for (shape& sh : sprite) { sh.lineThickness = (tog ? 1.0f : 2.0f); }

@@ -4,6 +4,7 @@
 #pragma once
 #ifndef __graphics_h__
 #define __graphics_h__
+#include <iostream>
 //
 //#include "geometry.h"
 //#include "crypt.h"
@@ -26,6 +27,12 @@ public:
 		som = somaticValue;
 		emo = emotionalValue;
 		cog = cognitiveValue;
+	}
+
+	metastat(std::istream& source) {
+		source >> som;
+		source >> emo;
+		source >> cog;
 	}
 
 	metastat() {
