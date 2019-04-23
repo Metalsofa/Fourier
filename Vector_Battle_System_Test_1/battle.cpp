@@ -551,7 +551,7 @@ void battlestate::iterateAI(float inc){
 				e.moving = false;
 			}
 			else {
-				e.position += unitvector(dire) * .02f * (.017/inc);	//.02 is a speed multiplier, .017/inc keeps it consistent with the number of frames being put out
+				e.position += unitvector(dire) * 1.0f * inc;	//1 is a speed multiplier, inc keeps it consistent with the number of frames being put out
 			}
 			return;
 		}

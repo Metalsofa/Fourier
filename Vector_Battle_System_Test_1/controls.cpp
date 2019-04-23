@@ -15,6 +15,32 @@ void evergreenKeychecks() {
 }
 
 //These controls are active only in debug mode
+
+//This version is for the new map
+//void debugKeychecks() {
+//
+//	//Opening the console
+//	if (instDown["showConsole"]) {
+//		exteriorConsole();
+//		//showConsole = !showConsole; //relic of a time long past
+//		instDown["showConsole"] = false;
+//	}
+//
+//	//Quickly switch between design functions
+//	if (instDown["artModifier"] && !showConsole) {
+//		if (instDown["1"])
+//			DESIGN_FUNCTION = BD_CREATE_WALLS;
+//		if (instDown["2"])
+//			DESIGN_FUNCTION = BD_MAKE_RAYS;
+//		if (instDown["3"]) {
+//			instDown["3"] = false;
+//			artMode = !artMode;
+//			battlefieldDesignMode = !battlefieldDesignMode;
+//		}
+//	}
+//
+//}
+
 void debugKeychecks() {
 
 	//Opening the console
@@ -40,6 +66,74 @@ void debugKeychecks() {
 }
 
 //These controls are active only in battlefield-design mode
+
+//This version is for the new map
+//void battlefieldDesignKeychecks() {
+//
+//	//Entering/leaving 'keyMode'
+//	if (instDown["keyModeTog"]) {
+//		keyMode = !keyMode;
+//		instDown["keyModeTog"] = false;
+//	}
+//
+//	//Controls based on design function
+//	switch (DESIGN_FUNCTION) {
+//	case BD_CREATE_WALLS: //These are the controls for if 'making walls' is the current design function
+//		if (!keyMode) {
+//			if (clickdragtrail.length() != 0) {
+//				if (!leftclicking) {
+//					wall newWall(clickdragtrail, SELECTED_MATERIAL, true);
+//					clickdragtrail = segment(0, 0, 0, 0);
+//					currentbattle.constructWall(newWall);
+//				} else {
+//					wall newWall(clickdragtrail, SELECTED_MATERIAL, true);
+//					drawwall(newWall);
+//				}
+//			}
+//			if (rightclicktrail.length() != 0) {
+//				if (!rightclicking) {
+//					segment eraser = rightclicktrail;
+//					rightclicktrail = segment(0, 0, 0, 0);
+//					int wallID = 0;
+//					for (int i = 0; i < currentbattle.map.walls.size(); i++) {
+//						if (isintersect(eraser, currentbattle.map.walls[i].body))
+//							currentbattle.destroyWall(i--);
+//					}
+//				} else {
+//					wall newWall(rightclicktrail, ERASER, true);
+//					drawwall(newWall);
+//				}
+//			}
+//		}
+//		break;
+//	case BD_MAKE_RAYS: //Design controls for making rays
+//		if (!keyMode) {
+//			if (clickdragtrail.length() != 0) {
+//				if (!leftclicking) {
+//					ray newRay(randomhue(), clickdragtrail.p1, clickdragtrail.p2, clickdragtrail.length(),
+//						6.0f, 2);
+//					clickdragtrail = segment(0, 0, 0, 0);
+//					currentbattle.spawnRay(newRay);
+//				} else {
+//					wall newWall(clickdragtrail, SELECTED_MATERIAL, true);
+//					drawwall(newWall);
+//				}
+//			}
+//		} else {
+//			if (instDown["action"]) {
+//				for (int i = 0; i < currentbattle.protags.size(); i++) {
+//					if (currentbattle.protags[i].tog) {
+//						currentbattle.playerAct(i);
+//					}
+//				}
+//				instDown["action"] = false;
+//			}
+//		}
+//		break;
+//	}
+//}
+
+
 void battlefieldDesignKeychecks() {
 
 	//Entering/leaving 'keyMode'
@@ -196,6 +290,46 @@ void artKeychecks() {
 }
 
 //These controls are active only in battle mode
+
+//This version is for the new map
+//void battleKeychecks() {
+//
+//	//Handle key-depression buffer decrement
+//	if (upBuf && !instDown["aimUp"]) { upBuf--; }
+//	if (downBuf && !instDown["aimDown"]) { downBuf--; }
+//	if (leftBuf && !instDown["aimLeft"]) { leftBuf--; }
+//	if (rightBuf && !instDown["aimRight"]) { rightBuf--; }
+//
+//	//Moving players (presently only handles one player):
+//	//
+//	point d(0.0f, 0.0f); //The differential of this player's movement
+//	if (instDown["moveUp"]) { d.yinc(increment); }
+//	if (instDown["moveLeft"]) { d.xdec(increment); }
+//	if (instDown["moveDown"]) { d.ydec(increment); }
+//	if (instDown["moveRight"]) { d.xinc(increment); }
+//	//Iterate through the protagonists and move them
+//	for (auto& x : currentbattle.protags) {
+//		if (x.tog) {
+//			x.position += d;
+//		}
+//	}
+//	//Iterate through the protagonists and aim them
+//	if (instDown["aimUp"] || instDown["aimLeft"] || instDown["aimDown"] || instDown["aimRight"]) {
+//		d.y(0.0f);
+//		d.x(0.0f);
+//		if (instDown["aimUp"] || upBuf) { d.yinc(increment); }
+//		if (instDown["aimDown"] || downBuf) { d.ydec(increment); }
+//		if (instDown["aimRight"] || rightBuf) { d.xinc(increment); }
+//		if (instDown["aimLeft"] || leftBuf) { d.xdec(increment); }
+//		if (d.y() != 0 || d.x() != 0) {
+//			for (auto& x : currentbattle.protags) {
+//				if (x.tog) { x.turn(d.angle()); }
+//			}
+//		}
+//	}
+//
+//}
+
 void battleKeychecks() {
 
 	//Handle key-depression buffer decrement
@@ -244,6 +378,12 @@ void overworldKeychecks() {
 ////////////////GLUT key/mouse action callback functions////////////////
 
 //Called when a 'normal' key becomes pressed
+
+//This is the version for the new map
+//void ProcessNormalKeys(unsigned char key, int x, int y) {
+//	instDown[instMap[key]] = true;
+//}
+
 void ProcessNormalKeys(unsigned char key, int x, int y) {
 	if (key == 27)
 		escPress = true;
@@ -269,6 +409,12 @@ void ProcessNormalKeys(unsigned char key, int x, int y) {
 }
 
 //Called when a 'normal' key becomes no longer pressed
+
+//This is the version for the new map
+//void ReleaseNormalKeys(unsigned char key, int x, int y) {
+//	instDown[instMap[key]] = false;
+//}
+
 void ReleaseNormalKeys(unsigned char key, int x, int y) {
 	if (key == 27)
 		escPress = false;
@@ -282,6 +428,12 @@ void ReleaseNormalKeys(unsigned char key, int x, int y) {
 }
 
 //Called when a 'special' key becomes pressed
+
+//This is the version for the new map
+//void ProcessSpecialKeys(unsigned char key, int x, int y) {
+//	instDown[instMap[key]] = true;
+//}
+
 void ProcessSpecialKeys(int key, int x, int y) {
 	switch (key) {
 	case GLUT_KEY_UP:
@@ -300,6 +452,12 @@ void ProcessSpecialKeys(int key, int x, int y) {
 }
 
 //Called when a 'special' key is no longer pressed
+
+//This is the version for the new map
+//void ReleaseSpecialKeys(unsigned char key, int x, int y) {
+//	instDown[instMap[key]] = false;
+//}
+
 void ReleaseSpecialKeys(int key, int x, int y) {
 	switch (key) {
 	case GLUT_KEY_UP:
@@ -316,6 +474,8 @@ void ReleaseSpecialKeys(int key, int x, int y) {
 		break;
 	}
 }
+
+
 
 void MouseClick(int button, int state, int x, int y) { //Note that this is good for button press OR release
 	if (button == GLUT_LEFT_BUTTON) {

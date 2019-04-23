@@ -52,6 +52,32 @@ void clocksync() {
 	st.Start();
 }
 
+void controlsInit() {	//initializes instMap
+	instMap[' '] = "action";
+	instMap['w'] = "moveUp";
+	instMap['a'] = "moveLeft";
+	instMap['s'] = "moveDown";
+	instMap['d'] = "moveRight";
+	instMap['i'] = "aimUp";
+	instMap['j'] = "aimLeft";
+	instMap['k'] = "aimDown";
+	instMap['l'] = "aimRight";
+	instMap['`'] = "showConsole";
+	instMap['0'] = "keyModeTog";
+	instMap['1'] = "1";
+	instMap['2'] = "2";
+	instMap['3'] = "3";
+	instMap['4'] = "4";
+	instMap[GLUT_KEY_UP] = "glutUp";
+	instMap[GLUT_KEY_DOWN] = "glutDown";
+	instMap[GLUT_KEY_LEFT] = "glutLeft";
+	instMap[GLUT_KEY_RIGHT] = "glutRight";
+	instMap[27] = "escape";
+	instMap[13] = "enter";
+	instMap[8] = "backspace";
+	instMap['h'] = "artModifier";
+}
+
 void handleControls() {
 
 	//Some controls will always be available, for now, like closing the program.

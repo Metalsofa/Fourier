@@ -148,6 +148,9 @@ void exteriorConsole();
 
 //Global Key Detections
 extern map<char, bool> normalKeysdown;
+extern map<char, string> instMap;
+extern map<string, bool> instDown;
+
 
 ///Special and other keys
 extern bool upPress;
