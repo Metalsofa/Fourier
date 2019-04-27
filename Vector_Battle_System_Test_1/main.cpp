@@ -68,10 +68,6 @@ void controlsInit() {	//initializes instMap
 	instMap['2'] = "2";
 	instMap['3'] = "3";
 	instMap['4'] = "4";
-	instMap[GLUT_KEY_UP] = "glutUp";
-	instMap[GLUT_KEY_DOWN] = "glutDown";
-	instMap[GLUT_KEY_LEFT] = "glutLeft";
-	instMap[GLUT_KEY_RIGHT] = "glutRight";
 	instMap[27] = "escape";
 	instMap[13] = "enter";
 	instMap[8] = "backspace";
@@ -226,6 +222,9 @@ int main(int argc, char **argv) {
 	//Some settings
 	glutIgnoreKeyRepeat(1);
 	glutSetCursor(GLUT_CURSOR_NONE); //Hide the cursor
+
+	//Initialize controls:
+	controlsInit();
 
 	//register callbacks
 	glutDisplayFunc(renderScene); //Callback for when we refresh
