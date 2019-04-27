@@ -391,7 +391,7 @@ void overworldKeychecks() {
 //This is the version for the new map
 void ProcessNormalKeys(unsigned char key, int x, int y) {
 	instDown[instMap[key]] = true;
-	if (key >= '1' && key <= '4') {
+	if (key >= '1' && key <= '4') {					//TODO: MOVE THIS OUT OF HERE
 		currentbattle.protags[key - '1'].toggle();
 	}
 }
@@ -440,7 +440,7 @@ void ReleaseNormalKeys(unsigned char key, int x, int y) {
 //}
 
 //Called when a 'special' key becomes pressed
-void ProcessSpecialKeys(int key, int x, int y) {
+void ProcessSpecialKeys(int key, int x, int y) {	//TODO MOVE THESE TO THE MAP BUT THEY COINCIDE WITH KEYS
 	switch (key) {
 	case GLUT_KEY_UP:
 		upPress = true;
