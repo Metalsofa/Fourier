@@ -302,6 +302,12 @@ void artKeychecks() {
 
 //This version is for the new map
 void battleKeychecks() {
+	
+	//Toggling the players from enabled to disabled
+	if (instDown["1"]) { currentbattle.protags[0].toggle(); instDown["1"] = false; }
+	if (instDown["2"]) { currentbattle.protags[1].toggle(); instDown["2"] = false; }
+	if (instDown["3"]) { currentbattle.protags[2].toggle(); instDown["3"] = false; }
+	if (instDown["4"]) { currentbattle.protags[3].toggle(); instDown["4"] = false; }
 
 	//Handle key-depression buffer decrement
 	if (upBuf && !instDown["aimUp"]) { upBuf--; }
@@ -391,9 +397,7 @@ void overworldKeychecks() {
 //This is the version for the new map
 void ProcessNormalKeys(unsigned char key, int x, int y) {
 	instDown[instMap[key]] = true;
-	if (key >= '1' && key <= '4') {					//TODO: MOVE THIS OUT OF HERE
-		currentbattle.protags[key - '1'].toggle();
-	}
+	
 }
 
 //void ProcessNormalKeys(unsigned char key, int x, int y) {
@@ -439,43 +443,53 @@ void ReleaseNormalKeys(unsigned char key, int x, int y) {
 //	normalKeysdown[key] = false;
 //}
 
-//Called when a 'special' key becomes pressed
+////Called when a 'special' key becomes pressed
+//void ProcessSpecialKeys(int key, int x, int y) {	//TODO MOVE THESE TO THE MAP BUT THEY COINCIDE WITH KEYS
+//	switch (key) {
+//	case GLUT_KEY_UP:
+//		upPress = true;
+//		break;
+//	case GLUT_KEY_DOWN:
+//		downPress = true;
+//		break;
+//	case GLUT_KEY_RIGHT:
+//		rightPress = true;
+//		break;
+//	case GLUT_KEY_LEFT:
+//		leftPress = true;
+//		break;
+//	}
+//}
+
 void ProcessSpecialKeys(int key, int x, int y) {	//TODO MOVE THESE TO THE MAP BUT THEY COINCIDE WITH KEYS
-	switch (key) {
-	case GLUT_KEY_UP:
-		upPress = true;
-		break;
-	case GLUT_KEY_DOWN:
-		downPress = true;
-		break;
-	case GLUT_KEY_RIGHT:
-		rightPress = true;
-		break;
-	case GLUT_KEY_LEFT:
-		leftPress = true;
-		break;
+	if (key <= GLUT_KEY_DOWN && key >= GLUT_KEY_LEFT) {
+		instDown[instMap[key - 110]] = true;
 	}
 }
 
-//Called when a 'special' key is no longer pressed
-void ReleaseSpecialKeys(int key, int x, int y) {
-	switch (key) {
-	case GLUT_KEY_UP:
-		upPress = false;
-		break;
-	case GLUT_KEY_LEFT:
-		leftPress = false;
-		break;
-	case GLUT_KEY_DOWN:
-		downPress = false;
-		break;
-	case GLUT_KEY_RIGHT:
-		rightPress = false;
-		break;
+////Called when a 'special' key is no longer pressed
+//void ReleaseSpecialKeys(int key, int x, int y) {
+//	switch (key) {
+//	case GLUT_KEY_UP:
+//		upPress = false;
+//		break;
+//	case GLUT_KEY_LEFT:
+//		leftPress = false;
+//		break;
+//	case GLUT_KEY_DOWN:
+//		downPress = false;
+//		break;
+//	case GLUT_KEY_RIGHT:
+//		rightPress = false;
+//		break;
+//	}
+//}
+
+void ReleaseSpecialKeys(int key, int x, int y) {	//TODO MOVE THESE TO THE MAP BUT THEY COINCIDE WITH KEYS
+	if (key <= GLUT_KEY_DOWN && key >= GLUT_KEY_LEFT) {
+		instDown[instMap[key - 110]] = false;
 	}
 }
-
-
 
 void MouseClick(int button, int state, int x, int y) { //Note that this is good for button press OR release
 	if (button == GLUT_LEFT_BUTTON) {

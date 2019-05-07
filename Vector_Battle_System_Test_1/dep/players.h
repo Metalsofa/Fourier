@@ -104,7 +104,7 @@ class player: public combatant {
 public:
 	// REPRESENTATION
 	vector<Spell> arsenal;
-	int energy;
+	float energy;
 	//Whether or not the player can currently be controlled
 	bool tog; 
 
@@ -120,6 +120,7 @@ public:
 	const Spell* act();
 	wall makeWall(int mat) const;
 	ray shoot(const metastat & col) const;
+	float energyCap;
 };
 
 class enemy : public combatant {	//Non controlled combatants with AI

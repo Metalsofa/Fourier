@@ -1,238 +1,235 @@
-﻿  controls.cpp
-  Note: including file: C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\globals.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrutils.h
-  Note: including file:   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\string
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xstring
-  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iosfwd
-  Note: including file:      C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\yvals.h
-  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\yvals_core.h
-  Note: including file:        C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\crtdefs.h
-  Note: including file:         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime.h
-  Note: including file:          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\sal.h
-  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\concurrencysal.h
-  Note: including file:          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vadefs.h
-  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt.h
-  Note: including file:        C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xkeycheck.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\crtdbg.h
-  Note: including file:        C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime_new_debug.h
-  Note: including file:         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime_new.h
-  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\use_ansi.h
-  Note: including file:      C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstdio
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdio.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wstdio.h
-  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_stdio_config.h
-  Note: including file:      C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstring
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\string.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_memory.h
-  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_memcpy_s.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\errno.h
-  Note: including file:          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime_string.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wstring.h
-  Note: including file:      C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cwchar
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\wchar.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wconio.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wctype.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wdirect.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wio.h
-  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_share.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wprocess.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wstdlib.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wtime.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\sys/stat.h
-  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\sys/types.h
-  Note: including file:      C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xstddef
-  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstddef
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stddef.h
-  Note: including file:        C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtr1common
-  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstdlib
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\math.h
-  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_math.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdlib.h
-  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_malloc.h
-  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_search.h
-  Note: including file:         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\limits.h
-  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\initializer_list
-  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xmemory0
-  Note: including file:      C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstdint
-  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\stdint.h
-  Note: including file:      C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\limits
-  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cfloat
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\float.h
-  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\climits
-  Note: including file:      C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\new
-  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\exception
-  Note: including file:        C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\type_traits
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\malloc.h
-  Note: including file:        C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime_exception.h
-  Note: including file:         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\eh.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_terminate.h
-  Note: including file:      C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xutility
-  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\utility
-  Note: including file:      C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xatomic0.h
-  Note: including file:      C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\intrin0.h
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cctype
-  Note: including file:     C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\ctype.h
-  Note: including file:   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\sstream
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\istream
-  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\ostream
-  Note: including file:      C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\ios
-  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocnum
-  Note: including file:        C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cmath
-  Note: including file:         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtgmath.h
-  Note: including file:        C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\streambuf
-  Note: including file:         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xiosbase
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\share.h
-  Note: including file:          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\system_error
-  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cerrno
-  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\stdexcept
-  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xcall_once.h
-  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xerrc.h
-  Note: including file:          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocale
-  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\memory
-  Note: including file:            C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\typeinfo
-  Note: including file:             C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime_typeinfo.h
-  Note: including file:            C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xmemory
-  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xfacet
-  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocinfo
-  Note: including file:            C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocinfo.h
-  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\locale.h
-  Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrgeometry.h
-  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vector
-  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\algorithm
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
-  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
-  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\list
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\map
-  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\tuple
-  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtree
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cassert
-  Note: including file:     C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\assert.h
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
-  Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
-  Note: including file:     C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl\freeglut_std.h
-  Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\windows.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\winapifamily.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\winpackagefamily.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\sdkddkver.h
-  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\excpt.h
-  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\stdarg.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\windef.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\minwindef.h
-  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\specstrings.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\specstrings_strict.h
-  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\specstrings_undef.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\driverspecs.h
-  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\sdv_driverspecs.h
-  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winnt.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\kernelspecs.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\basetsd.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\guiddef.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack4.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack4.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack4.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack2.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack2.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack2.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack8.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack1.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack1.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\apiset.h
-  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\ktmtypes.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winbase.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\apisetcconv.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\minwinbase.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\apiquery2.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\processenv.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\fileapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\debugapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\utilapiset.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\handleapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\errhandlingapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\fibersapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\namedpipeapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\profileapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\heapapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ioapiset.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\synchapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\interlockedapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\processthreadsapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\sysinfoapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\memoryapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\enclaveapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\threadpoollegacyapiset.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\threadpoolapiset.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\jobapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\jobapi2.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\wow64apiset.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\libloaderapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\securitybaseapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\namespaceapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\systemtopologyapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\processtopologyapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\securityappcontainer.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\realtimeapiset.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\timezoneapi.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\wingdi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack1.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack2.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack2.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack4.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack4.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winuser.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack2.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\tvout.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winnls.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\datetimeapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\stringapiset.h
-  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winnls.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\wincon.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\wincontypes.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\consoleapi.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\consoleapi2.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\consoleapi3.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winver.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\verrsrc.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winreg.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\reason.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winnetwk.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\wnnc.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\stralign.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winsvc.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\mcx.h
-  Note: including file:       C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\imm.h
-  Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ime_cmodes.h
-  Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
-  Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\Stopwatch.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spells.h
-  Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spellCore.h
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\waves.h
-  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\materials.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\battle.h
-  Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\players.h
-  Note: including file:    C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\time.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\camera.h
-  Note: including file: C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\controls.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\customGL.h
+﻿  battle.cpp
+  Note: including file: C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\battle.h
+  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\materials.h
+  Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h
+  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\istream
+  Note: including file:      C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\ostream
+  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\ios
+  Note: including file:        C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocnum
+  Note: including file:         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\climits
+  Note: including file:          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\yvals_core.h
+  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\crtdefs.h
+  Note: including file:            C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime.h
+  Note: including file:             C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\sal.h
+  Note: including file:              C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\concurrencysal.h
+  Note: including file:             C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vadefs.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt.h
+  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xkeycheck.h
+  Note: including file:          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\limits.h
+  Note: including file:         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cmath
+  Note: including file:          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\yvals.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\crtdbg.h
+  Note: including file:            C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime_new_debug.h
+  Note: including file:             C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime_new.h
+  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\use_ansi.h
+  Note: including file:          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstdlib
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\math.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_math.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdlib.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_malloc.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_search.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stddef.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wstdlib.h
+  Note: including file:          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtgmath.h
+  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtr1common
+  Note: including file:         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstdio
+  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdio.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wstdio.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_stdio_config.h
+  Note: including file:         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\streambuf
+  Note: including file:          C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xiosbase
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\share.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_share.h
+  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\system_error
+  Note: including file:            C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cerrno
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\errno.h
+  Note: including file:            C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\stdexcept
+  Note: including file:             C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\exception
+  Note: including file:              C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\type_traits
+  Note: including file:               C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xstddef
+  Note: including file:                C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstddef
+  Note: including file:                C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\initializer_list
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\malloc.h
+  Note: including file:              C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime_exception.h
+  Note: including file:               C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\eh.h
+  Note: including file:                C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_terminate.h
+  Note: including file:             C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xstring
+  Note: including file:              C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iosfwd
+  Note: including file:               C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstring
+  Note: including file:                C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\string.h
+  Note: including file:                 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_memory.h
+  Note: including file:                  C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_memcpy_s.h
+  Note: including file:                   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime_string.h
+  Note: including file:                 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wstring.h
+  Note: including file:               C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cwchar
+  Note: including file:                C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\wchar.h
+  Note: including file:                 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wconio.h
+  Note: including file:                 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wctype.h
+  Note: including file:                 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wdirect.h
+  Note: including file:                 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wio.h
+  Note: including file:                 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wprocess.h
+  Note: including file:                 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\corecrt_wtime.h
+  Note: including file:                 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\sys/stat.h
+  Note: including file:                  C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\sys/types.h
+  Note: including file:              C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xmemory0
+  Note: including file:               C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cstdint
+  Note: including file:                C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\stdint.h
+  Note: including file:               C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\limits
+  Note: including file:                C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cfloat
+  Note: including file:                 C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\float.h
+  Note: including file:               C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\new
+  Note: including file:               C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xutility
+  Note: including file:                C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\utility
+  Note: including file:               C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xatomic0.h
+  Note: including file:               C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\intrin0.h
+  Note: including file:            C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xcall_once.h
+  Note: including file:            C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xerrc.h
+  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocale
+  Note: including file:            C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\memory
+  Note: including file:             C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\typeinfo
+  Note: including file:              C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vcruntime_typeinfo.h
+  Note: including file:             C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xmemory
+  Note: including file:            C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xfacet
+  Note: including file:            C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocinfo
+  Note: including file:             C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocinfo.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\ctype.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\locale.h
+  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\players.h
+  Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
+  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\string
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cctype
+  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vector
+  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
+  Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spells.h
+  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spellCore.h
+  Note: including file:     C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\waves.h
+  Note: including file:      C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrutils.h
+  Note: including file:       C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\sstream
+  Note: including file:       C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h
+  Note: including file:        C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrgeometry.h
+  Note: including file:         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\algorithm
+  Note: including file:        C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
+  Note: including file:        C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\list
+  Note: including file:        C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\map
+  Note: including file:         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\tuple
+  Note: including file:         C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtree
+  Note: including file:        C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cassert
+  Note: including file:         C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\assert.h
+  Note: including file:        C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
+  Note: including file:       C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
+  Note: including file:        C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
+  Note: including file:         C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl\freeglut_std.h
+  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\windows.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\winapifamily.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\winpackagefamily.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\sdkddkver.h
+  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\excpt.h
+  Note: including file:           C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\stdarg.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\windef.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\minwindef.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\specstrings.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\specstrings_strict.h
+  Note: including file:               C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\specstrings_undef.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\driverspecs.h
+  Note: including file:               C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\sdv_driverspecs.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winnt.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\kernelspecs.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\basetsd.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\guiddef.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack4.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack4.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack4.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack2.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack2.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack2.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack8.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack1.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack1.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\apiset.h
+  Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\ktmtypes.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winbase.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\apisetcconv.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\minwinbase.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\apiquery2.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\processenv.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\fileapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\debugapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\utilapiset.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\handleapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\errhandlingapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\fibersapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\namedpipeapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\profileapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\heapapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ioapiset.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\synchapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\interlockedapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\processthreadsapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\sysinfoapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\memoryapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\enclaveapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\threadpoollegacyapiset.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\threadpoolapiset.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\jobapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\jobapi2.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\wow64apiset.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\libloaderapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\securitybaseapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\namespaceapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\systemtopologyapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\processtopologyapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\securityappcontainer.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\realtimeapiset.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\winerror.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\timezoneapi.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\wingdi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack1.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack2.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack2.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack4.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack4.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winuser.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\pshpack2.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\poppack.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\tvout.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winnls.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\datetimeapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\stringapiset.h
+  Note: including file:             C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winnls.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\wincon.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\wincontypes.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\consoleapi.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\consoleapi2.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\consoleapi3.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winver.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\verrsrc.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winreg.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\reason.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winnetwk.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\wnnc.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\shared\stralign.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\winsvc.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\mcx.h
+  Note: including file:           C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\imm.h
+  Note: including file:            C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ime_cmodes.h
+  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
+  Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
+  Note: including file:   C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\time.h
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(514): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(525): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
   Vector_Battle_System_Test_1.vcxproj -> C:\Users\dp\Documents\GitHub\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe

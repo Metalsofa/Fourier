@@ -72,6 +72,10 @@ void controlsInit() {	//initializes instMap
 	instMap[13] = "enter";
 	instMap[8] = "backspace";
 	instMap['h'] = "artModifier";
+	instMap[GLUT_KEY_UP - 110] = "upPress";
+	instMap[GLUT_KEY_DOWN - 110] = "downPress";
+	instMap[GLUT_KEY_LEFT - 110] = "leftPress";
+	instMap[GLUT_KEY_RIGHT - 110] = "rightPress";
 }
 
 void handleControls() {
@@ -137,6 +141,7 @@ void renderScene(void) {
 				drawCombatant(c);
 			}
 		}
+		//TODO: DRAW HUD, player stats, etc.
 	}
 	////Debug-only drawing
 	//Debug: Show the number of objects
@@ -239,15 +244,17 @@ int main(int argc, char **argv) {
 	glutPassiveMotionFunc(PassiveMouseMove); //Callback for mouse movement with no button down
 
 
-	//Setup battle: Initialize combatants
-	player plyr1("teststat1.txt");
+	//Setup battle: Initialize combatants		//TODO: Move this to a playerinit func for battlemode
+	player plyr1("teststat1.txt");		//TODO: write a constructor for this stuff
 	plyr1.position = point(0, 6);
 	plyr1.turn(0);
 	plyr1.tog = false;
 	plyr1.sprite = (graphic("alpha.fgr"));
 	plyr1.width = .4f;
 	plyr1.energy = 100;
+	plyr1.energyCap = 100;
 	plyr1.arsenal.push_back(wallConst(BASIC_REFLECTIVE,true,0));
+	plyr1.arsenal[0].cost = 20;
 	currentbattle.protags.push_back(plyr1);
 
 	player plyr2("teststat2.txt");
@@ -256,6 +263,10 @@ int main(int argc, char **argv) {
 	plyr2.tog = false;
 	plyr2.sprite = (graphic("beta.fgr"));
 	plyr2.width = .4f;
+	plyr2.energy = 100;
+	plyr2.energyCap = 100;
+	plyr2.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 1, 1));
+	plyr2.arsenal[0].cost = 5;
 	currentbattle.protags.push_back(plyr2);
 
 	player plyr3("teststat3.txt");
@@ -264,6 +275,10 @@ int main(int argc, char **argv) {
 	plyr3.tog = false;
 	plyr3.sprite = (graphic("gamma.fgr"));
 	plyr3.width = .4f;
+	plyr3.energy = 100;
+	plyr3.energyCap = 100;
+	plyr3.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 1, 1));
+	plyr3.arsenal[0].cost = 5;
 	currentbattle.protags.push_back(plyr3);
 
 	player plyr4("teststat4.txt");
@@ -272,6 +287,10 @@ int main(int argc, char **argv) {
 	plyr4.tog = false;
 	plyr4.sprite = (graphic("delta.fgr"));
 	plyr4.width = .4f;
+	plyr4.energy = 100;
+	plyr4.energyCap = 100;
+	plyr4.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 1, 1));
+	plyr4.arsenal[0].cost = 5;
 	currentbattle.protags.push_back(plyr4);
 
 	enemy e1(1, 3);

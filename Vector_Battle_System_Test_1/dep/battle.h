@@ -145,6 +145,8 @@ public:
 	//Moves the Enemies on the battlefield
 	void iterateAI(float inc);
 
+	void iteratePlayer(float inc);
+
 	void iterate(float &inc /*incremental time*/);
 	//Constructor to read a "battlePreset.txt" and define this battlestate accordingly
 

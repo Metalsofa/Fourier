@@ -593,6 +593,13 @@ void battlestate::iterateAI(float inc){
 	}
 }
 
+void battlestate::iteratePlayer(float inc) {	//Used to iterate the players stats frame by frame
+	for (auto& p : protags) {
+		if (p.energy < p.energyCap) {
+			p.energy += (10 * inc);	//TODO: update to match agility or speed of player
+		}	
+	}
+}
 /*This function is called every frame during battle unless the battle is paused; even then, It may still be best
 to call it and simply because certain animations might look cool cycling in the background when the battle is //DP: If u want to do that we should isolate the animation from movement
 awaiting user input. All iterative battle behaviour and logic goes in here, or is called from in here.*/
@@ -602,14 +609,18 @@ void battlestate::iterate(float &inc /*incremental time*/) {
 
 	//Iterate AI:
 	iterateAI(inc);
+
+	//Iterate players:
+	iteratePlayer(inc);
 }
+
 
 //Affect the battle
 void battlestate::playerAct(int playerInd){
 	const Spell* s = protags[playerInd].act();
 	if (!s)
 		return;
-	switch (protags[playerInd].act()->type) {
+	switch (s->type) {
 	case sRay:
 		spawnRay(ray(protags[playerInd].position, protags[playerInd].direction,*(s->r)));
 		return;

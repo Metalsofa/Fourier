@@ -21,7 +21,7 @@ Spell::Spell(const rayConst& ra) {
 	level = 0;
 	description = "";
 	category = 0;
-	cost = 0;
+	cost = 10;
 	r = new rayConst(ra);
 	w = nullptr;
 	type = sRay;
@@ -33,7 +33,7 @@ Spell::Spell(const wallConst& wa) {
 	level = 0;
 	description = "";
 	category = 0;
-	cost = 0;
+	cost = 20;
 	r = nullptr;
 	w = new wallConst(wa);
 	type = sWall;
