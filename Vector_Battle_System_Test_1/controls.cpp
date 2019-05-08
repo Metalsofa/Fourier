@@ -129,14 +129,7 @@ void battlefieldDesignKeychecks() {
 				}
 			}
 		} else {
-			if (instDown["action"]) {
-				for (int i = 0; i < currentbattle.protags.size(); i++) {
-					if (currentbattle.protags[i].tog) {
-						currentbattle.playerAct(i);
-					}
-				}
-				instDown["action"] = false;
-			}
+			
 		}
 		break;
 	}
@@ -342,7 +335,14 @@ void battleKeychecks() {
 			}
 		}
 	}
-
+	if (instDown["action"]) {
+		for (int i = 0; i < currentbattle.protags.size(); i++) {
+			if (currentbattle.protags[i].tog) {
+				currentbattle.playerAct(i);
+			}
+		}
+		instDown["action"] = false;
+	}
 }
 
 //void battleKeychecks() {

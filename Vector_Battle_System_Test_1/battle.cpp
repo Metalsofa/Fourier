@@ -622,7 +622,7 @@ void battlestate::playerAct(int playerInd){
 		return;
 	switch (s->type) {
 	case sRay:
-		spawnRay(ray(protags[playerInd].position, protags[playerInd].direction,*(s->r)));
+		spawnRay(ray(protags[playerInd].position+protags[playerInd].direction*.5, protags[playerInd].position + protags[playerInd].direction,*(s->r)));
 		return;
 	case sWall:
 		segment seg(protags[playerInd].position, protags[playerInd].position + protags[playerInd].direction);

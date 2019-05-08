@@ -265,7 +265,7 @@ int main(int argc, char **argv) {
 	plyr2.width = .4f;
 	plyr2.energy = 100;
 	plyr2.energyCap = 100;
-	plyr2.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 1, 1));
+	plyr2.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 3, 1));
 	plyr2.arsenal[0].cost = 5;
 	currentbattle.protags.push_back(plyr2);
 
