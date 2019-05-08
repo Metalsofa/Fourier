@@ -15,17 +15,7 @@ void evergreenKeychecks() {
 
 }
 
-//void evergreenKeychecks() {
-//	//Closing the application
-//	if (escPress) {
-//		exit(0);
-//	}
-//
-//}
-
 //These controls are active only in debug mode
-
-//This version is for the new map
 void debugKeychecks() {
 
 	//Opening the console
@@ -50,33 +40,7 @@ void debugKeychecks() {
 
 }
 
-//void debugKeychecks() {
-//
-//	//Opening the console
-//	if (normalKeysdown['`']) {
-//		exteriorConsole();
-//		//showConsole = !showConsole; //relic of a time long past
-//		normalKeysdown['`'] = false;
-//	}
-//
-//	//Quickly switch between design functions
-//	if (normalKeysdown['h'] && !showConsole) {
-//		if (normalKeysdown['1'])
-//			DESIGN_FUNCTION = BD_CREATE_WALLS;
-//		if (normalKeysdown['2'])
-//			DESIGN_FUNCTION = BD_MAKE_RAYS;
-//		if (normalKeysdown['3']) {
-//			normalKeysdown['3'] = false;
-//			artMode = !artMode;
-//			battlefieldDesignMode = !battlefieldDesignMode;
-//		}
-//	}
-//
-//}
-
 //These controls are active only in battlefield-design mode
-
-//This version is for the new map
 void battlefieldDesignKeychecks() {
 
 	//Entering/leaving 'keyMode'
@@ -135,71 +99,6 @@ void battlefieldDesignKeychecks() {
 	}
 }
 
-
-//void battlefieldDesignKeychecks() {
-//
-//	//Entering/leaving 'keyMode'
-//	if (normalKeysdown['0']) {
-//		keyMode = !keyMode;
-//		normalKeysdown['0'] = false;
-//	}
-//
-//	//Controls based on design function
-//	switch (DESIGN_FUNCTION) {
-//	case BD_CREATE_WALLS: //These are the controls for if 'making walls' is the current design function
-//		if (!keyMode) {
-//			if (clickdragtrail.length() != 0) {
-//				if (!leftclicking) {
-//					wall newWall(clickdragtrail, SELECTED_MATERIAL, true);
-//					clickdragtrail = segment(0, 0, 0, 0);
-//					currentbattle.constructWall(newWall);
-//				} else {
-//					wall newWall(clickdragtrail, SELECTED_MATERIAL, true);
-//					drawwall(newWall);
-//				}
-//			}
-//			if (rightclicktrail.length() != 0) {
-//				if (!rightclicking) {
-//					segment eraser = rightclicktrail;
-//					rightclicktrail = segment(0, 0, 0, 0);
-//					int wallID = 0;
-//					for (int i = 0; i < currentbattle.map.walls.size(); i++) {
-//						if (isintersect(eraser, currentbattle.map.walls[i].body))
-//							currentbattle.destroyWall(i--);
-//					}
-//				} else {
-//					wall newWall(rightclicktrail, ERASER, true);
-//					drawwall(newWall);
-//				}
-//			}
-//		}
-//		break;
-//	case BD_MAKE_RAYS: //Design controls for making rays
-//		if (!keyMode) {
-//			if (clickdragtrail.length() != 0) {
-//				if (!leftclicking) {
-//					ray newRay(randomhue(), clickdragtrail.p1, clickdragtrail.p2, clickdragtrail.length(),
-//						6.0f, 2);
-//					clickdragtrail = segment(0, 0, 0, 0);
-//					currentbattle.spawnRay(newRay);
-//				} else {
-//					wall newWall(clickdragtrail, SELECTED_MATERIAL, true);
-//					drawwall(newWall);
-//				}
-//			}
-//		} else {
-//			if (normalKeysdown[' ']) {
-//				for (int i = 0; i < currentbattle.protags.size(); i++) {
-//					if (currentbattle.protags[i].tog) {
-//						currentbattle.playerAct(i);
-//					}
-//				}
-//				normalKeysdown[' '] = false;
-//			}
-//		}
-//		break;
-//	}
-//}
 
 //These controls are active only in art mode
 void artKeychecks() {
@@ -292,8 +191,6 @@ void artKeychecks() {
 }
 
 //These controls are active only in battle mode
-
-//This version is for the new map
 void battleKeychecks() {
 	
 	//Toggling the players from enabled to disabled
@@ -345,44 +242,6 @@ void battleKeychecks() {
 	}
 }
 
-//void battleKeychecks() {
-//
-//	//Handle key-depression buffer decrement
-//	if (upBuf && !normalKeysdown['i']) { upBuf--; }
-//	if (downBuf && !normalKeysdown['k']) { downBuf--; }
-//	if (leftBuf && !normalKeysdown['j']) { leftBuf--; }
-//	if (rightBuf && !normalKeysdown['l']) { rightBuf--; }
-//
-//	//Moving players (presently only handles one player):
-//	//
-//	point d(0.0f, 0.0f); //The differential of this player's movement
-//	if (normalKeysdown['w']) { d.yinc(increment); }
-//	if (normalKeysdown['a']) { d.xdec(increment); }
-//	if (normalKeysdown['s']) { d.ydec(increment); }
-//	if (normalKeysdown['d']) { d.xinc(increment); }
-//	//Iterate through the protagonists and move them
-//	for (unsigned int x = 0; x < currentbattle.protags.size(); x++) {
-//		if (currentbattle.protags[x].tog) {
-//			currentbattle.protags[x].position += d;
-//		}
-//	}
-//	//Iterate through the protagonists and aim them
-//	if (normalKeysdown['i'] || normalKeysdown['j'] || normalKeysdown['k'] || normalKeysdown['l']) {
-//		d.y(0.0f);
-//		d.x(0.0f);
-//		if (normalKeysdown['i'] || upBuf) { d.yinc(increment); }
-//		if (normalKeysdown['k'] || downBuf) { d.ydec(increment); }
-//		if (normalKeysdown['l'] || rightBuf) { d.xinc(increment); }
-//		if (normalKeysdown['j'] || leftBuf) { d.xdec(increment); }
-//		if (d.y() != 0 || d.x() != 0) {
-//			for (unsigned int i = 0; i < 4; i++) {
-//				if (currentbattle.protags[i].tog) { currentbattle.protags[i].turn(d.angle()); }
-//			}
-//		}
-//	}
-//
-//}
-
 //These controls are active only in overworld mode
 void overworldKeychecks() {
 
@@ -393,99 +252,25 @@ void overworldKeychecks() {
 ////////////////GLUT key/mouse action callback functions////////////////
 
 //Called when a 'normal' key becomes pressed
-
-//This is the version for the new map
 void ProcessNormalKeys(unsigned char key, int x, int y) {
 	instDown[instMap[key]] = true;
 	
 }
 
-//void ProcessNormalKeys(unsigned char key, int x, int y) {
-//	if (key == 27)
-//		escPress = true;
-//	//if (key == 32)
-//		//spacePress = true;
-//	if (key == 13)
-//		enterPress = true;
-//	if (key == 8)
-//		backspacePress = true;
-//	if (key == 'i') {
-//		upBuf = keyBuf;
-//	} else if (key == 'j') {
-//		leftBuf = keyBuf;
-//	} else if (key == 'k') {
-//		downBuf = keyBuf;
-//	} else if (key == 'l') {
-//		rightBuf = keyBuf;
-//	}
-//	if (key >= '1' && key <= '4') {
-//		currentbattle.protags[key - '1'].toggle();
-//	}
-//	normalKeysdown[key] = true;
-//}
 
 //Called when a 'normal' key becomes no longer pressed
-
-//This is the version for the new map
 void ReleaseNormalKeys(unsigned char key, int x, int y) {
 	instDown[instMap[key]] = false;
 }
 
-//void ReleaseNormalKeys(unsigned char key, int x, int y) {
-//	if (key == 27)
-//		escPress = false;
-//	//if (key == 32)
-//		//spacePress = false;
-//	if (key == 13)
-//		enterPress = false;
-//	if (key == 8)
-//		backspacePress = false;
-//	normalKeysdown[key] = false;
-//}
 
-////Called when a 'special' key becomes pressed
-//void ProcessSpecialKeys(int key, int x, int y) {	//TODO MOVE THESE TO THE MAP BUT THEY COINCIDE WITH KEYS
-//	switch (key) {
-//	case GLUT_KEY_UP:
-//		upPress = true;
-//		break;
-//	case GLUT_KEY_DOWN:
-//		downPress = true;
-//		break;
-//	case GLUT_KEY_RIGHT:
-//		rightPress = true;
-//		break;
-//	case GLUT_KEY_LEFT:
-//		leftPress = true;
-//		break;
-//	}
-//}
-
-void ProcessSpecialKeys(int key, int x, int y) {	//TODO MOVE THESE TO THE MAP BUT THEY COINCIDE WITH KEYS
+void ProcessSpecialKeys(int key, int x, int y) {
 	if (key <= GLUT_KEY_DOWN && key >= GLUT_KEY_LEFT) {
 		instDown[instMap[key - 110]] = true;
 	}
 }
 
-////Called when a 'special' key is no longer pressed
-//void ReleaseSpecialKeys(int key, int x, int y) {
-//	switch (key) {
-//	case GLUT_KEY_UP:
-//		upPress = false;
-//		break;
-//	case GLUT_KEY_LEFT:
-//		leftPress = false;
-//		break;
-//	case GLUT_KEY_DOWN:
-//		downPress = false;
-//		break;
-//	case GLUT_KEY_RIGHT:
-//		rightPress = false;
-//		break;
-//	}
-//}
-
-void ReleaseSpecialKeys(int key, int x, int y) {	//TODO MOVE THESE TO THE MAP BUT THEY COINCIDE WITH KEYS
+void ReleaseSpecialKeys(int key, int x, int y) {
 	if (key <= GLUT_KEY_DOWN && key >= GLUT_KEY_LEFT) {
 		instDown[instMap[key - 110]] = false;
 	}

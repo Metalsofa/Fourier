@@ -245,50 +245,22 @@ int main(int argc, char **argv) {
 
 
 	//Setup battle: Initialize combatants		//TODO: Move this to a playerinit func for battlemode
-	player plyr1("teststat1.txt");		//TODO: write a constructor for this stuff
-	plyr1.position = point(0, 6);
-	plyr1.turn(0);
-	plyr1.tog = false;
-	plyr1.sprite = (graphic("alpha.fgr"));
-	plyr1.width = .4f;
-	plyr1.energy = 100;
-	plyr1.energyCap = 100;
+	player plyr1("teststat1.txt", point(0,6), graphic("alpha.fgr"));		
 	plyr1.arsenal.push_back(wallConst(BASIC_REFLECTIVE,true,0));
 	plyr1.arsenal[0].cost = 20;
 	currentbattle.protags.push_back(plyr1);
 
-	player plyr2("teststat2.txt");
-	plyr2.position = point(10, 6);
-	plyr2.turn(0);
-	plyr2.tog = false;
-	plyr2.sprite = (graphic("beta.fgr"));
-	plyr2.width = .4f;
-	plyr2.energy = 100;
-	plyr2.energyCap = 100;
+	player plyr2("teststat2.txt", point(10, 6), graphic("beta.fgr"));
 	plyr2.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 3, 1));
 	plyr2.arsenal[0].cost = 5;
 	currentbattle.protags.push_back(plyr2);
 
-	player plyr3("teststat3.txt");
-	plyr3.position = point(10, 0);
-	plyr3.turn(0);
-	plyr3.tog = false;
-	plyr3.sprite = (graphic("gamma.fgr"));
-	plyr3.width = .4f;
-	plyr3.energy = 100;
-	plyr3.energyCap = 100;
+	player plyr3("teststat3.txt", point(10, 0), graphic("gamma.fgr"));
 	plyr3.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 1, 1));
 	plyr3.arsenal[0].cost = 5;
 	currentbattle.protags.push_back(plyr3);
 
-	player plyr4("teststat4.txt");
-	plyr4.position = point(0, 0);
-	plyr4.turn(0);
-	plyr4.tog = false;
-	plyr4.sprite = (graphic("delta.fgr"));
-	plyr4.width = .4f;
-	plyr4.energy = 100;
-	plyr4.energyCap = 100;
+	player plyr4("teststat4.txt", point(0,0), graphic("delta.fgr"));
 	plyr4.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 1, 1));
 	plyr4.arsenal[0].cost = 5;
 	currentbattle.protags.push_back(plyr4);

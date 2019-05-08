@@ -105,6 +105,7 @@ public:
 	// REPRESENTATION
 	vector<Spell> arsenal;
 	float energy;
+	float energyCap;
 	//Whether or not the player can currently be controlled
 	bool tog; 
 
@@ -113,6 +114,9 @@ public:
 	player();
 	//Construct from a text file
 	player(const std::string& filename);
+	//MEGA constructor that has most stuff
+	player(const std::string& filename, const fgr::point& pos, const graphic& sprit, 
+		float ang = 0, bool toggle = false,  float wid = 0.4f, float energ = 100, float energCap = 100);
 
 	// MEMBER FUNCTIONS
 	//Flips tog
@@ -120,7 +124,6 @@ public:
 	const Spell* act();
 	wall makeWall(int mat) const;
 	ray shoot(const metastat & col) const;
-	float energyCap;
 };
 
 class enemy : public combatant {	//Non controlled combatants with AI
