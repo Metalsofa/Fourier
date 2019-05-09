@@ -5,6 +5,7 @@
 #ifndef __graphics_h__
 #define __graphics_h__
 #include <iostream>
+#include <algorithm>
 //
 //#include "geometry.h"
 //#include "crypt.h"

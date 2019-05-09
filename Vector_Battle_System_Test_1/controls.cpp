@@ -194,10 +194,18 @@ void artKeychecks() {
 void battleKeychecks() {
 	
 	//Toggling the players from enabled to disabled
-	if (instDown["1"]) { currentbattle.protags[0].toggle(); instDown["1"] = false; }
-	if (instDown["2"]) { currentbattle.protags[1].toggle(); instDown["2"] = false; }
-	if (instDown["3"]) { currentbattle.protags[2].toggle(); instDown["3"] = false; }
-	if (instDown["4"]) { currentbattle.protags[3].toggle(); instDown["4"] = false; }
+	if (currentbattle.protags.size() > 0) {
+		if (instDown["1"]) { currentbattle.protags[0].toggle(); instDown["1"] = false; }
+		if (currentbattle.protags.size() > 1) {
+			if (instDown["2"]) { currentbattle.protags[1].toggle(); instDown["2"] = false; }
+			if (currentbattle.protags.size() > 2) {
+				if (instDown["3"]) { currentbattle.protags[2].toggle(); instDown["3"] = false; }
+				if (currentbattle.protags.size() > 3) {
+					if (instDown["4"]) { currentbattle.protags[3].toggle(); instDown["4"] = false; }
+				}
+			}
+		}
+	}
 
 	//Handle key-depression buffer decrement
 	if (upBuf && !instDown["aimUp"]) { upBuf--; }
