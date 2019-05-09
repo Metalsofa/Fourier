@@ -104,11 +104,13 @@ void combatant::turn(float angle) {
 	direction = unitfromangle(angle);
 }
 
-void combatant::hit(metastat m, int level) {
+bool combatant::hit(const metastat& m, int level) {
 	(stats.HP -= (m * ((float)level / 100)).bind()).bind();
-	if (stats.HP == 0) {
+	if (stats.HP == metastat(0,0,0)) {
 		//TODO: have combatant removed
+		return true;
 	}
+	return false;
 }
 
 //Enemy default constructor

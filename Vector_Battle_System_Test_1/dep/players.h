@@ -99,7 +99,7 @@ public:
 	void turn(float angle);
 
 	//When a combatant is hit by a spell
-	void hit(metastat m, int level);
+	bool hit(const metastat& m, int level);
 
 };
 
