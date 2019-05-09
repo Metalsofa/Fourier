@@ -20,9 +20,9 @@
 //
 class metastat {
 public:
-	uint8_t som;	//Changed to 8bit uints to restrict it to 0 to 255
-	uint8_t emo;
-	uint8_t cog;
+	int som;	//Changed to 8bit uints to restrict it to 0 to 255
+	int emo;
+	int cog;
 	metastat(int somaticValue, int emotionalValue, int cognitiveValue) {
 		som = somaticValue;
 		emo = emotionalValue;
@@ -49,37 +49,45 @@ public:
 		return !(other == *this);
 	}
 	//Warning: overflow will occur if the sum of any component excedes 255
+	//Use .bind() to limit component values from 0 to 255
 	metastat operator+(const metastat& other) const {
 		return metastat(other.som + som, other.emo + emo, other.cog + cog);
 	}
 	//Waring overflow will occur if the difference in any component is less than 0
+	//Use .bind() to limit component values from 0 to 255
 	metastat operator-(const metastat& other) const {
 		return metastat(other.som - som, other.emo - emo, other.cog - cog);
 	}
 	//Warning overflow can occur
+	//Use .bind() to limit component values from 0 to 255
 	metastat operator*(const metastat& other) const {
 		return metastat(other.som * som, other.emo * emo, other.cog * cog);
 	}
 	//Warning overflow can occur
+	//Use .bind() to limit component values from 0 to 255
 	metastat operator*(float mult) const {
 		return metastat(mult* som, mult * emo, mult * cog);
 	}
 	//Warning: overflow will occur if the sum of any component excedes 255
+	//Use .bind() to limit component values from 0 to 255
 	metastat& operator+=(const metastat& other) {
 		som += other.som; emo += other.emo; cog += other.cog;
 		return *this;
 	}
 	//Warning: if other is bigger in any component, overflow will occur
+	//Use .bind() to limit component values from 0 to 255
 	metastat& operator-=(const metastat& other) {
 		som -= other.som; emo -= other.emo; cog -= other.cog;
 		return *this;
 	}
 	//Warning overflow can occur
+	//Use .bind() to limit component values from 0 to 255
 	metastat& operator*=(const metastat& other) {
 		som *= other.som; emo *= other.emo; cog *= other.cog;
 		return *this;
 	}
 	//Warning overflow can occur
+	//Use .bind() to limit component values from 0 to 255
 	metastat& operator*=(float mult) {
 		som *= mult; emo *= mult; cog *= mult;
 		return *this;
@@ -89,6 +97,13 @@ public:
 		som = newSom;
 		emo = newEmo;
 		cog = newCog;
+	}
+
+	metastat& bind() {
+		som = std::min(std::max(0, som), 255);
+		emo = std::min(std::max(0, emo), 255);
+		cog = std::min(std::max(0, cog), 255);
+		return *this;
 	}
 
 	//Returns the sum of all stat components
