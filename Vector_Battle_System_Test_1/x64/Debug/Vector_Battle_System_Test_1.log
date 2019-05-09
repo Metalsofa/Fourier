@@ -95,6 +95,9 @@
   Note: including file:             C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xlocinfo.h
   Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\ctype.h
   Note: including file:              C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\locale.h
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(73): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(74): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(75): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\players.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\string
@@ -335,14 +338,15 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(52
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vector
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\algorithm
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
+  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\list
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\map
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\tuple
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtree
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cassert
   Note: including file:     C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\assert.h
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h(410): error C3861: 'unencryptedContents': identifier not found
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
@@ -456,10 +460,11 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ime_cmodes.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
-  Note: including file:   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\Stopwatch.h
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(73): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(74): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(75): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spells.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spellCore.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\waves.h
@@ -574,14 +579,15 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vector
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\algorithm
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
+  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\list
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\map
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\tuple
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtree
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cassert
   Note: including file:     C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\assert.h
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h(410): error C3861: 'unencryptedContents': identifier not found
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
@@ -695,10 +701,11 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ime_cmodes.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
-  Note: including file:   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\Stopwatch.h
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(73): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(74): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(75): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spells.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spellCore.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\waves.h
@@ -812,14 +819,15 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vector
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\algorithm
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
+  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\list
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\map
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\tuple
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtree
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cassert
   Note: including file:     C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\assert.h
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h(410): error C3861: 'unencryptedContents': identifier not found
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
@@ -933,10 +941,11 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ime_cmodes.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
-  Note: including file:   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\Stopwatch.h
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(73): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(74): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(75): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spells.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spellCore.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\waves.h
@@ -1048,14 +1057,15 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vector
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\algorithm
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
+  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\list
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\map
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\tuple
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtree
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cassert
   Note: including file:     C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\assert.h
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h(410): error C3861: 'unencryptedContents': identifier not found
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
@@ -1169,10 +1179,11 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ime_cmodes.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
-  Note: including file:   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\Stopwatch.h
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(73): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(74): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(75): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spells.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spellCore.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\waves.h
@@ -1284,14 +1295,15 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vector
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\algorithm
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
+  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\list
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\map
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\tuple
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtree
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cassert
   Note: including file:     C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\assert.h
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h(410): error C3861: 'unencryptedContents': identifier not found
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
@@ -1405,10 +1417,11 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ime_cmodes.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
-  Note: including file:   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\Stopwatch.h
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(73): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(74): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(75): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spells.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spellCore.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\waves.h
@@ -1520,14 +1533,15 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vector
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\algorithm
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
+  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\list
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\map
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\tuple
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtree
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cassert
   Note: including file:     C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\assert.h
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h(410): error C3861: 'unencryptedContents': identifier not found
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
@@ -1641,10 +1655,11 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ime_cmodes.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
-  Note: including file:   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\Stopwatch.h
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(73): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(74): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(75): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spells.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spellCore.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\waves.h
@@ -1759,14 +1774,15 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vector
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\algorithm
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
+  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\list
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\map
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\tuple
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtree
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cassert
   Note: including file:     C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\assert.h
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h(410): error C3861: 'unencryptedContents': identifier not found
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
@@ -1880,10 +1896,11 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ime_cmodes.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
-  Note: including file:   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\Stopwatch.h
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(73): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(74): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(75): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spells.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spellCore.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\waves.h
@@ -1995,14 +2012,15 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vector
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\algorithm
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
+  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\list
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\map
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\tuple
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtree
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cassert
   Note: including file:     C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\assert.h
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h(410): error C3861: 'unencryptedContents': identifier not found
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
@@ -2116,10 +2134,11 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ime_cmodes.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
-  Note: including file:   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\Stopwatch.h
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(73): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(74): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(75): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spells.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spellCore.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\waves.h
@@ -2129,7 +2148,7 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:    C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\time.h
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\camera.h
   Note: including file: C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\customGL.h
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\players.cpp(319): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\players.cpp(325): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
   spellCore.cpp
   Note: including file: C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\globals.h
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrutils.h
@@ -2233,14 +2252,15 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\players.cpp(3
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vector
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\algorithm
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
+  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\list
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\map
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\tuple
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtree
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cassert
   Note: including file:     C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\assert.h
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h(410): error C3861: 'unencryptedContents': identifier not found
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
@@ -2354,10 +2374,11 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ime_cmodes.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
-  Note: including file:   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\Stopwatch.h
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(73): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(74): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(75): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spells.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spellCore.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\waves.h
@@ -2469,14 +2490,15 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\vector
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\algorithm
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrcolor.h
+  Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
+  Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\list
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\map
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\tuple
   Note: including file:     C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\xtree
   Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\cassert
   Note: including file:     C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\assert.h
-  Note: including file:    C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\iostream
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrclasses.h(410): error C3861: 'unencryptedContents': identifier not found
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrfileops.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrdrawing.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\freeglut\include\gl/glut.h
@@ -2590,10 +2612,11 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:        C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\ime_cmodes.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
   Note: including file:      C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
-  Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\crypt.h
-  Note: including file:   C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.20.27508\include\fstream
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\Stopwatch.h
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(73): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(74): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(75): warning C4244: '*=': conversion from 'float' to 'uint8_t', possible loss of data
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spells.h
   Note: including file:   C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\spellCore.h
   Note: including file:    C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\waves.h
@@ -2603,3 +2626,4 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\fgrutils\fgrc
   Note: including file:    C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\time.h
   Note: including file:  C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\camera.h
   Generating Code...
+  Vector_Battle_System_Test_1.vcxproj -> C:\Users\dp\Documents\GitHub\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe

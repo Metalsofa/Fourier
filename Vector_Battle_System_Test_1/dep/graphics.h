@@ -20,9 +20,9 @@
 //
 class metastat {
 public:
-	int som;
-	int emo;
-	int cog;
+	uint8_t som;	//Changed to 8bit uints to restrict it to 0 to 255
+	uint8_t emo;
+	uint8_t cog;
 	metastat(int somaticValue, int emotionalValue, int cognitiveValue) {
 		som = somaticValue;
 		emo = emotionalValue;
@@ -47,6 +47,42 @@ public:
 
 	bool operator!=(const metastat& other) const {
 		return !(other == *this);
+	}
+	//Warning: overflow will occur if the sum of any component excedes 255
+	metastat operator+(const metastat& other) const {
+		return metastat(other.som + som, other.emo + emo, other.cog + cog);
+	}
+	//Waring overflow will occur if the difference in any component is less than 0
+	metastat operator-(const metastat& other) const {
+		return metastat(other.som - som, other.emo - emo, other.cog - cog);
+	}
+	//Warning overflow can occur
+	metastat operator*(const metastat& other) const {
+		return metastat(other.som * som, other.emo * emo, other.cog * cog);
+	}
+	//Warning overflow can occur
+	metastat operator*(float mult) const {
+		return metastat(mult* som, mult * emo, mult * cog);
+	}
+	//Warning: overflow will occur if the sum of any component excedes 255
+	metastat& operator+=(const metastat& other) {
+		som += other.som; emo += other.emo; cog += other.cog;
+		return *this;
+	}
+	//Warning: if other is bigger in any component, overflow will occur
+	metastat& operator-=(const metastat& other) {
+		som -= other.som; emo -= other.emo; cog -= other.cog;
+		return *this;
+	}
+	//Warning overflow can occur
+	metastat& operator*=(const metastat& other) {
+		som *= other.som; emo *= other.emo; cog *= other.cog;
+		return *this;
+	}
+	//Warning overflow can occur
+	metastat& operator*=(float mult) {
+		som *= mult; emo *= mult; cog *= mult;
+		return *this;
 	}
 
 	void define(int newSom, int newEmo, int newCog) {

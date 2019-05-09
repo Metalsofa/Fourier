@@ -97,6 +97,10 @@ public:
 
 	//Changes direction based on angle(in radians)
 	void turn(float angle);
+
+	//When a combatant is hit by a spell
+	void hit(metastat m, int level);
+
 };
 
 //controlled players

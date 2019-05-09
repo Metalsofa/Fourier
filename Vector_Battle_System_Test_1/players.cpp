@@ -104,6 +104,10 @@ void combatant::turn(float angle) {
 	direction = unitfromangle(angle);
 }
 
+void combatant::hit(metastat m, int level) {
+	stats.HP -= (m*((float)level/100))
+}
+
 //Enemy default constructor
 enemy::enemy() : combatant() {
 
