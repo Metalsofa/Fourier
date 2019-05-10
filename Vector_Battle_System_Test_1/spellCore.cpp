@@ -256,7 +256,7 @@ void ray::bounce(const segment& surface) {
 	float errr = (bits.size() == 2)? 0.01f : 0.0f;
 	if (isintersect(frontseg, surface) && intdist > errr) {
 		bits.insert((bits.begin() + 1), intersection(frontseg, surface));
-		bits[0] = reflection(bits[0], surface);
+		bits[0] = reflection(bits[0], surface);	//Why bits[0]?
 		segment surface2;
 		surface2.p1 = difference(surface.p1, surface.midpoint());
 		surface2.p2 = difference(surface.p2, surface.midpoint());

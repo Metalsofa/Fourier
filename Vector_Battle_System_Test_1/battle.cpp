@@ -197,7 +197,7 @@ void battlestate::iterateRay(float inc){
 			if (hit) {
 				rays[i].terminate(rays[i].bits[hit - 1]); //http://mathworld.wolfram.com/Circle-LineIntersection.html
 				term = true;
-				if (protags[j].hit(rays[i].color, 1)) { protags.erase(protags.begin() + j); }	//FUTURE: change 1 to level of ray or change function, death animation or script(possibly)
+				//if (protags[j].hit(rays[i].color, 1)) { protags.erase(protags.begin() + j); }	//FUTURE: change 1 to level of ray or change function, death animation or script(possibly)
 				break;
 			}
 		}
