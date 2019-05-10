@@ -94,15 +94,15 @@ public:
 	bool gotBlue() const;
 	bool deathtime() const;
 	//Tell the ray it is now terminating, and tell it where to terminate.
-	void terminate(point where);
+	void terminate(const point& where);
 	//int checkcollision(const combatant& c) const;
 	bool checkcollision(const segment& surface) const;
-	point wherehit(segment surface) const;
+	point wherehit(const segment& surface) const;
 	//Returns 0 (kill) 1 (bounce) or 2 (permit) based on this ray's compatability with a given material.
 	int permitted(const metastat& permittivity) const;
 
 	//Doublechecks that there is a collision, then causes the ray to bounce off of the given surface
-	void bounce(segment surface);
+	void bounce(const segment& surface);
 	//Returns the thickness that glut should be using to render this ray.
 	float getthickness() const;
 	float getRed() const; //Returns float from 0 to 1, for glut's sake

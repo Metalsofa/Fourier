@@ -473,6 +473,7 @@ void battlestate::enemymB1b(enemy& e) {
 	return;
 }
 
+//Shooting-behaviour function pointer: shoots randomly in one of the cardinal or diagonal directions
 void battlestate::enemysBRand8(enemy& e) {
 	int direction = rand() % 4;
 	if (rand() % 2 == 0) {	//Shoot in a cardinal direction
@@ -553,9 +554,9 @@ void battlestate::iterateAI(float inc){
 				e.moving = false;
 			}
 			else {
-				e.position += unitvector(dire) * 1.0f * inc;	//1 is a speed multiplier, inc keeps it consistent with the number of frames being put out
+				e.position += unitvector(dire) * 1.0f * inc;	//Future 1 is a speed multiplier, inc keeps it consistent with the number of frames being put out
 			}
-			return;
+			return;		//Future remove return when we want enemies to be able to move and shoot at the same time
 		}
 		else {
 			switch (e.moveB) {		//Picking a move behavior
