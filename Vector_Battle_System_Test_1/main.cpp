@@ -62,7 +62,7 @@ void controlsInit() {	//initializes instMap
 	instMap['j'] = "aimLeft";
 	instMap['k'] = "aimDown";
 	instMap['l'] = "aimRight";
-	instMap['`'] = "showConsole";
+	//instMap['`'] = "showConsole";
 	instMap['0'] = "keyModeTog";
 	instMap['1'] = "1";
 	instMap['2'] = "2";

@@ -227,7 +227,7 @@ void ray::terminate(const point& where) { //DP: Pass by ref
 
 
 bool ray::checkcollision(const segment & surface) const {
-	return isintersect(segment(bits[0],bits[1]), surface);
+	return isintersect(surface,segment(bits[0], midpoint(bits[0],bits[1]))) == 1; //&& intersection(segment(bits[0],bits[1]),surface) != bits[1];
 }
 point ray::wherehit(const segment& surface) const {
 	return intersection(segment(bits[0], bits[1]), surface);
