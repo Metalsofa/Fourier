@@ -206,12 +206,15 @@ void battleKeychecks() {
 			}
 		}
 	}
-
 	//Handle key-depression buffer decrement
-	if (upBuf && !instDown["aimUp"]) { upBuf--; }
-	if (downBuf && !instDown["aimDown"]) { downBuf--; }
-	if (leftBuf && !instDown["aimLeft"]) { leftBuf--; }
-	if (rightBuf && !instDown["aimRight"]) { rightBuf--; }
+	if (instDown["aimUp"]){upBuf = 2; }
+	else if (upBuf && !instDown["aimUp"]) { upBuf--; }
+	if (instDown["aimDown"]) { downBuf = 2; }
+	else if (downBuf && !instDown["aimDown"]) { downBuf--; }
+	if (instDown["aimLeft"]) { leftBuf = 2; }
+	else if (leftBuf && !instDown["aimLeft"]) { leftBuf--; }
+	if (instDown["aimRight"]) { rightBuf = 2; }
+	else if (rightBuf && !instDown["aimRight"]) { rightBuf--; }
 
 	//Moving players (presently only handles one player):
 	//
