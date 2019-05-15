@@ -391,21 +391,28 @@ namespace fgr {
 		point solution(X, Y);
 		return solution;
 	}
+
+	inline bool closeEnoughMatch(float a, float b) {
+		if (a == b) { return true; }
+		if ((a + 0.0001 < b - 0.0001) || (b + 0.0001 < a - 0.0001)) { return false; }
+		return true;
+	}
+
 	///This is showing some REALLY weird behavior when one of the segments is perfectly vertical or horizontal
 	inline int isintersect(const segment& sega, const segment& segb) {
 		point ints = intersection(sega, segb);
 		bool eval = true;
 		bool xaeval = (ints.x() < sega.p1.x()) == (ints.x() > sega.p2.x());
-		if (sega.p1.x() == sega.p2.x())
+		if (closeEnoughMatch(sega.p1.x(),sega.p2.x()))
 			xaeval = false;
 		bool xbeval = (ints.x() < segb.p1.x()) == (ints.x() > segb.p2.x());
-		if (segb.p1.x() == segb.p2.x())
+		if (closeEnoughMatch(segb.p1.x(), segb.p2.x()))
 			xbeval = false;
 		bool yaeval = (ints.y() < sega.p1.y()) == (ints.y() > sega.p2.y());
-		if (sega.p1.y() == sega.p2.y())
+		if (closeEnoughMatch(sega.p1.y(), sega.p2.y()))
 			yaeval = false;
 		bool ybeval = (ints.y() < segb.p1.y()) == (ints.y() > segb.p2.y());
-		if (segb.p1.y() == segb.p2.y())
+		if (closeEnoughMatch(segb.p1.y(), segb.p2.y()))
 			ybeval = false;
 		if (!xaeval && !yaeval)
 			eval = false;
