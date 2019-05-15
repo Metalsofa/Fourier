@@ -393,9 +393,7 @@ namespace fgr {
 	}
 
 	inline bool closeEnoughMatch(float a, float b) {
-		if (a == b) { return true; }
-		if ((a + 0.0001 < b - 0.0001) || (b + 0.0001 < a - 0.0001)) { return false; }
-		return true;
+		return !((a + 0.0001 < b - 0.0001) || (b + 0.0001 < a - 0.0001));
 	}
 
 	///This is showing some REALLY weird behavior when one of the segments is perfectly vertical or horizontal
