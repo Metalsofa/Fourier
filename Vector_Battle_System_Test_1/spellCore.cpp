@@ -227,7 +227,7 @@ void ray::terminate(const point& where) { //DP: Pass by ref
 
 
 bool ray::checkcollision(const segment & surface) const {
-	return isintersect(surface,segment(bits[0], midpoint(bits[0],bits[1]))) == 1; //&& intersection(segment(bits[0],bits[1]),surface) != bits[1];
+	return isintersect(surface,segment(bits[0], bits[1])) == 1; //&& intersection(segment(bits[0],bits[1]),surface) != bits[1];
 }
 point ray::wherehit(const segment& surface) const {
 	return intersection(segment(bits[0], bits[1]), surface);
@@ -253,10 +253,10 @@ void ray::bounce(const segment& surface) {
 	point ints = intersection(frontseg, surface);
 	point intdiff = difference(bits[1], ints);
 	float intdist = intdiff.magnitude();
-	float errr = (bits.size() == 2)? 0.01f : 0.0f;
-	if (isintersect(frontseg, surface) && intdist > errr) {
+	float errr = (bits.size() == 2)? 0.01f : 0.00f;
+	if (isintersect(frontseg, surface) == 1 && intdist > errr) {
 		bits.insert((bits.begin() + 1), intersection(frontseg, surface));
-		bits[0] = reflection(bits[0], surface);	//Why bits[0]?
+		//bits[0] = reflection(bits[0], surface);	//Why bits[0]?
 		segment surface2;
 		surface2.p1 = difference(surface.p1, surface.midpoint());
 		surface2.p2 = difference(surface.p2, surface.midpoint());
