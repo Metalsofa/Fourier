@@ -214,61 +214,49 @@ void ray::advance(float inc /*Incremental Time*/) {
 	}
 }
 
-bool ray::gotRed() const { return !color.som == 0; } //Bool: Is there a RED component to this ray?
-bool ray::gotGreen() const { return !color.emo == 0; } //Bool: Is there a GREEN component to this ray?
-bool ray::gotBlue() const { return !color.cog == 0; } //Bool: Is there a BLUE component to this ray?
+bool ray::gotRed() const { return color.som != 0; } //Bool: Is there a RED component to this ray?
+bool ray::gotGreen() const { return color.emo != 0; } //Bool: Is there a GREEN component to this ray?
+bool ray::gotBlue() const { return color.cog != 0; } //Bool: Is there a BLUE component to this ray?
 bool ray::deathtime() const { return killme; }
 
 //Tell the ray it is now terminating, and tell it where to terminate.
-void ray::terminate(point where) { //DP: Pass by ref
+void ray::terminate(const point& where) { //DP: Pass by ref
 	terminating = true;
 	terminalpoint = where;
 }
 
 
-bool ray::checkcollision(const segment & surface) const { //DP Pass by ref, no need to create var
-	segment frontseg(bits[0], bits[1]);
-	return isintersect(frontseg, surface);
+bool ray::checkcollision(const segment & surface) const {
+	return isintersect(surface,segment(bits[0], bits[1])) == 1; //&& intersection(segment(bits[0],bits[1]),surface) != bits[1];
 }
-point ray::wherehit(segment surface) const { //DP Pass by ref, no need to create var
-	segment frontseg(bits[0], bits[1]);
-	return intersection(frontseg, surface);
+point ray::wherehit(const segment& surface) const {
+	return intersection(segment(bits[0], bits[1]), surface);
 }
 //Returns 0 (kill) 1 (bounce) or 2 (permit) based on this ray's compatability with a given material.
-int ray::permitted(const metastat & permittivity) const { //DP: Pass by ref
+int ray::permitted(const metastat & permittivity) const {
 	//These 3 lines of code return 0 (for 'kill') if any component of the ray is not permitted.
-	if (permittivity.som == 0 && gotRed()) return 0;
-	if (permittivity.emo == 0 && gotGreen()) return 0;
-	if (permittivity.cog == 0 && gotBlue()) return 0;
+	if ((permittivity.som == 0 && gotRed()) ||
+		(permittivity.emo == 0 && gotGreen()) ||
+		(permittivity.cog == 0 && gotBlue())) return 0;
 	//These 3 lines of cour return 1 (for 'bounce') if any component of the ray is to be bounced.
-	if (permittivity.som == 1 && gotRed()) return 1;
-	if (permittivity.emo == 1 && gotGreen()) return 1;
-	if (permittivity.cog == 1 && gotBlue()) return 1;
+	else if ((permittivity.som == 1 && gotRed()) ||
+		(permittivity.emo == 1 && gotGreen()) ||
+		(permittivity.cog == 1 && gotBlue())) return 1;
 	//If no return has happened by now, the ray is permitted by this permittivity.
 	return 2;
-	//DP:
-	//if ((permittivity.som == 0 && gotRed()) ||
-	//	(permittivity.emo == 0 && gotGreen()) ||
-	//	(permittivity.cog == 0 && gotBlue())) return 0;
-	//else if ((permittivity.som == 1 && gotRed()) ||
-	//	(permittivity.emo == 1 && gotGreen()) ||
-	//	(permittivity.cog == 1 && gotBlue())) return 1;
-	//return 2;
 }
 
 //Doublechecks that there is a collision, then causes the ray to bounce off of the given surface
-void ray::bounce(segment surface) { //DP: Pass by ref
+void ray::bounce(const segment& surface) {
 	bool shouldbounce = true;
 	segment frontseg(bits[0], bits[1]);
 	point ints = intersection(frontseg, surface);
 	point intdiff = difference(bits[1], ints);
 	float intdist = intdiff.magnitude();
-	float errr = 0.00f;
-	if (bits.size() == 2) //DP: Merge into line above: float errr = (bits.size() == 2)? 0.01f : 0f;
-		errr = 0.01f;
-	if (isintersect(frontseg, surface) && intdist > errr) {
+	float errr = (bits.size() == 2)? 0.01f : 0.00f;
+	if (isintersect(frontseg, surface) == 1 && intdist > errr) {
 		bits.insert((bits.begin() + 1), intersection(frontseg, surface));
-		bits[0] = reflection(bits[0], surface);
+		bits[0] = reflection(bits[0], surface);	//Why bits[0]?
 		segment surface2;
 		surface2.p1 = difference(surface.p1, surface.midpoint());
 		surface2.p2 = difference(surface.p2, surface.midpoint());

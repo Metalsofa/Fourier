@@ -98,6 +98,9 @@ public:
 	//Changes direction based on angle(in radians)
 	void turn(float angle);
 
+	//When a combatant is hit by a spell
+	bool hit(const metastat& m, int level);
+
 };
 
 //controlled players
@@ -105,7 +108,8 @@ class player: public combatant {
 public:
 	// REPRESENTATION
 	vector<Spell> arsenal;
-	int energy;
+	float energy;
+	float energyCap;
 	//Whether or not the player can currently be controlled
 	bool tog; 
 
@@ -114,6 +118,9 @@ public:
 	player();
 	//Construct from a text file
 	player(const std::string& filename);
+	//MEGA constructor that has most stuff
+	player(const std::string& filename, const fgr::point& pos, const graphic& sprit, 
+		float ang = 0, bool toggle = false,  float wid = 0.4f, float energ = 100, float energCap = 100);
 
 	// MEMBER FUNCTIONS
 	//Flips tog
@@ -135,7 +142,7 @@ public:
 	point aim;		//Where the enemy is aiming
 
 	//behavior moveB;	//Function pointer that tells the enemy how to move
-	//behavior shootB;	//Function pointer that tells the enemy how to shoot
+	//behavior shootB;//Function pointer that tells the enemy how to shoot
 
 	bool moving;	//Whether the enemy is moving
 	point dest;		//Where the enemy is going to

@@ -114,6 +114,8 @@ extern void exteriorConsole();
 
 //Global Key Detections
 extern map<char, bool> normalKeysdown = map<char, bool>();
+extern map<char, string> instMap = map<char, string>();
+extern map<string, bool> instDown = map<string, bool>();
 
 ///Special and other keys
 extern bool upPress = false;

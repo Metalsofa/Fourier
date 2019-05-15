@@ -6,6 +6,7 @@
 #include <string>
 #include <vector>
 #include <algorithm>
+#include <cassert>
 
 namespace fgr {
 	//PI defined here
@@ -164,10 +165,10 @@ namespace fgr {
 			needsUpdate = true;
 			return *this;
 		}
-		bool operator== (point& p) const {
+		bool operator== (const point& p) const {
 			return ((xCache == p.x()) && (yCache == p.y()));
 		}
-		bool operator!= (point& p) const {
+		bool operator!= (const point& p) const {
 			return !(*this == p);
 		}
 		// * overload
@@ -333,8 +334,42 @@ namespace fgr {
 		return perp;
 	}
 
-	//Returns the point in two-dimensional space at which two lines intersect (treated as full lines, not segments)
-	inline point intersection(const segment& sega, const segment& segb) { //Figured this out using Cramer's Rule 
+	inline float distancetoline(const point& p, const segment& v) {
+		point diffPv = difference(v.p1, p);
+		point diffVv = difference(v.p2, v.p1);
+		float numerator = abs(flatcrossproduct(diffVv, diffPv));
+		float denominator = diffVv.magnitude();
+		return numerator / denominator;
+	}
+
+	inline point midpoint(const point& a, const point& b) {
+		return point((a.x() + b.x()) / 2, (a.y() + b.y()) / 2);
+	}
+
+	// Given three colinear points p, q, r, the function checks if 
+	// point q lies on line segment 'pr' 
+	//inline bool onSegment(const point& p, const point& q, const point& r) {
+	//	float epsilon = 0.001f;	//TODO: make this the global epsilon
+	//	if (q.x() <= std::max(p.x(), r.x())+epsilon && q.x() >= std::min(p.x(), r.x())-epsilon &&
+	//		q.y() <= std::max(p.y(), r.y())+epsilon && q.y() >= std::min(p.y(), r.y())-epsilon)
+	//		return true;
+
+	//	return false;
+	//}
+
+	//inline int orientation(const point& p, const point& q, const point& r) {
+	//	// See https://www.geeksforgeeks.org/orientation-3-ordered-points/ 
+	//	// for details of below formula. 
+	//	int val = (q.y() - p.y()) * (r.x() - q.x()) -
+	//		(q.x() - p.x()) * (r.y() - q.y());
+
+	//	if (val == 0) return 0;  // colinear 
+
+	//	return (val > 0) ? 1 : 2; // clockwise or counterclockwise 
+	//}
+
+	inline point intersection(const segment& sega, const segment& segb) { //Figured this out using Cramer's Rule  
+		//assert(isintersect(sega, segb) == 1);	//FUTURE: remove this for speedup when safe 
 		float dxa = sega.p2.x() - sega.p1.x();
 		float dxb = segb.p2.x() - segb.p1.x();
 		float dya = sega.p2.y() - sega.p1.y();
@@ -346,6 +381,9 @@ namespace fgr {
 		float pa = dxa * ya - dya * xa;
 		float pb = dxb * yb - dyb * xb;
 		float det = dya * dxb - dyb * dxa;
+		/*if (det == 0) {
+			throw 0;
+		}*/
 		float dety = dya * pb - dyb * pa;
 		float detx = dxa * pb - dxb * pa;
 		float Y = dety / det;
@@ -354,26 +392,33 @@ namespace fgr {
 		return solution;
 	}
 
-	//This is showing some REALLY weird behavior when one of the segments is perfectly vertical or horizontal
-	inline bool isintersect(const segment& sega, const segment& segb) {
+	inline bool closeEnoughMatch(float a, float b) {
+		return !((a + 0.0001 < b - 0.0001) || (b + 0.0001 < a - 0.0001));
+	}
+
+	///This is showing some REALLY weird behavior when one of the segments is perfectly vertical or horizontal
+	inline int isintersect(const segment& sega, const segment& segb) {
 		point ints = intersection(sega, segb);
 		bool eval = true;
 		bool xaeval = (ints.x() < sega.p1.x()) == (ints.x() > sega.p2.x());
-		if (sega.p1.x() == sega.p2.x())
+		if (closeEnoughMatch(sega.p1.x(),sega.p2.x()))
 			xaeval = false;
 		bool xbeval = (ints.x() < segb.p1.x()) == (ints.x() > segb.p2.x());
-		if (segb.p1.x() == segb.p2.x())
+		if (closeEnoughMatch(segb.p1.x(), segb.p2.x()))
 			xbeval = false;
 		bool yaeval = (ints.y() < sega.p1.y()) == (ints.y() > sega.p2.y());
-		if (sega.p1.y() == sega.p2.y())
+		if (closeEnoughMatch(sega.p1.y(), sega.p2.y()))
 			yaeval = false;
 		bool ybeval = (ints.y() < segb.p1.y()) == (ints.y() > segb.p2.y());
-		if (segb.p1.y() == segb.p2.y())
+		if (closeEnoughMatch(segb.p1.y(), segb.p2.y()))
 			ybeval = false;
 		if (!xaeval && !yaeval)
 			eval = false;
 		if (!xbeval && !ybeval)
 			eval = false;
+		//bool a = onSegment(sega.p1, ints, sega.p2);
+		//bool b = onSegment(segb.p1, ints, segb.p2);
+		//assert(eval == ( a&& b));
 		//if (!yaeval)
 		//	eval = false;
 		//if (!ybeval)
@@ -398,13 +443,7 @@ namespace fgr {
 		return  (0 <= t && t <= 1);
 	}
 
-	inline float distancetoline(const point& p, const segment& v) {
-		point diffPv = difference(v.p1, p);
-		point diffVv = difference(v.p2, v.p1);
-		float numerator = abs(flatcrossproduct(diffVv, diffPv));
-		float denominator = diffVv.magnitude();
-		return numerator / denominator;
-	}
+	
 
 	//Returns a position std::vector representing the shortest path from a point to a segment
 	inline float distancetoseg(const point& dot, const segment& seg) {

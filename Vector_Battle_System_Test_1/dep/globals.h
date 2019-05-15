@@ -147,22 +147,25 @@ void exteriorConsole();
 ///I hear cactuses hurt to step on
 
 //Global Key Detections
-extern map<char, bool> normalKeysdown;
+extern map<char, bool> normalKeysdown;	//TODO: remove this when art and console controls are removed
+extern map<char, string> instMap;	//EDIT THIS TO CHANGE KEYBINDINGS, reference controlsInit() for default keybindings
+extern map<string, bool> instDown;	//Is edited by the program, determines which buttons are being pressed
+
 
 ///Special and other keys
-extern bool upPress;
-extern bool leftPress;
-extern bool downPress;
-extern bool rightPress;
+//extern bool upPress;		//No need for these, Use instDown["upPress"] instead
+//extern bool leftPress;
+//extern bool downPress;
+//extern bool rightPress;
 extern int upBuf;
 extern int downBuf;
 extern int leftBuf;
 extern int rightBuf;
 extern const int keyBuf;
-extern bool escPress;
-extern bool enterPress;
-extern bool spacePress;
-extern bool backspacePress;
+//extern bool escPress;		//No need for these, use instDown[escape]
+//extern bool enterPress;	//instDown["enter"]
+//extern bool spacePress;	//instDown["action"]
+//extern bool backspacePress;	//instDown["backspace"]
 ///For Numerals in Particular
 
 //Global Mouse Class

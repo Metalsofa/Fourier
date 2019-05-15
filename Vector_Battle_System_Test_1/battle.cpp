@@ -192,20 +192,22 @@ void battlestate::iterateRay(float inc){
 		//Now we check for collisions
 		unsigned int j = 0;
 		bool term = false;
-		for (combatant& x : protags) {
-			int hit = checkcollision(rays[i], x);
+		for (int j = 0; j < protags.size(); j++) {
+			int hit = checkcollision(rays[i], protags[j]);
 			if (hit) {
 				rays[i].terminate(rays[i].bits[hit - 1]); //http://mathworld.wolfram.com/Circle-LineIntersection.html
 				term = true;
+				//if (protags[j].hit(rays[i].color, 1)) { protags.erase(protags.begin() + j); }	//FUTURE: change 1 to level of ray or change function, death animation or script(possibly)
 				break;
 			}
 		}
 		if (!term) {
-			for (combatant& x : antags) {
-				int hit = checkcollision(rays[i], x);
+			for (int j = 0; j < antags.size(); j++) {
+				int hit = checkcollision(rays[i], antags[j]);
 				if (hit) {
 					rays[i].terminate(rays[i].bits[hit - 1]); //http://mathworld.wolfram.com/Circle-LineIntersection.html
 					term = true;
+					if (antags[j].hit(rays[i].color, 1)) { antags.erase(antags.begin() + j); }	//FUTURE: change 1 to level of ray or change function, death animation or script(possibly)
 					break;
 				}
 			}
@@ -471,6 +473,7 @@ void battlestate::enemymB1b(enemy& e) {
 	return;
 }
 
+//Shooting-behaviour function pointer: shoots randomly in one of the cardinal or diagonal directions
 void battlestate::enemysBRand8(enemy& e) {
 	int direction = rand() % 4;
 	if (rand() % 2 == 0) {	//Shoot in a cardinal direction
@@ -551,9 +554,9 @@ void battlestate::iterateAI(float inc){
 				e.moving = false;
 			}
 			else {
-				e.position += unitvector(dire) * .02f * (.017/inc);	//.02 is a speed multiplier, .017/inc keeps it consistent with the number of frames being put out
+				e.position += unitvector(dire) * 1.0f * inc;	//Future 1 is a speed multiplier, inc keeps it consistent with the number of frames being put out
 			}
-			return;
+			return;		//Future remove return when we want enemies to be able to move and shoot at the same time
 		}
 		else {
 			switch (e.moveB) {		//Picking a move behavior
@@ -593,6 +596,13 @@ void battlestate::iterateAI(float inc){
 	}
 }
 
+void battlestate::iteratePlayer(float inc) {	//Used to iterate the players stats frame by frame
+	for (auto& p : protags) {
+		if (p.energy < p.energyCap) {
+			p.energy += (10 * inc);	//TODO: update to match agility or speed of player
+		}	
+	}
+}
 /*This function is called every frame during battle unless the battle is paused; even then, It may still be best
 to call it and simply because certain animations might look cool cycling in the background when the battle is //DP: If u want to do that we should isolate the animation from movement
 awaiting user input. All iterative battle behaviour and logic goes in here, or is called from in here.*/
@@ -602,16 +612,20 @@ void battlestate::iterate(float &inc /*incremental time*/) {
 
 	//Iterate AI:
 	iterateAI(inc);
+
+	//Iterate players:
+	iteratePlayer(inc);
 }
+
 
 //Affect the battle
 void battlestate::playerAct(int playerInd){
 	const Spell* s = protags[playerInd].act();
 	if (!s)
 		return;
-	switch (protags[playerInd].act()->type) {
+	switch (s->type) {
 	case sRay:
-		spawnRay(ray(protags[playerInd].position, protags[playerInd].direction,*(s->r)));
+		spawnRay(ray(protags[playerInd].position+protags[playerInd].direction*.5, protags[playerInd].position + protags[playerInd].direction,*(s->r)));
 		return;
 	case sWall:
 		segment seg(protags[playerInd].position, protags[playerInd].position + protags[playerInd].direction);

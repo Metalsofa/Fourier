@@ -104,6 +104,15 @@ void combatant::turn(float angle) {
 	direction = unitfromangle(angle);
 }
 
+bool combatant::hit(const metastat& m, int level) {
+	(stats.HP -= (m * ((float)level / 100)).bind()).bind();
+	if (stats.HP == metastat(0,0,0)) {
+		//TODO: have combatant removed
+		return true;
+	}
+	return false;
+}
+
 //Enemy default constructor
 enemy::enemy() : combatant() {
 	ind = 0;
@@ -281,14 +290,27 @@ ray enemy::shoot(const metastat& col, const point& dire) { //Shoots at a point
 
 //Player default constructor
 player::player() : combatant() {
-	energy = 0;
+	energy = energyCap = 0;
 	tog = false;
 }
 
 //Construct a player from a statblock text file
 player::player(const std::string& statfile) : combatant(statfile) {
-
+	energy = energyCap = 0;
+	tog = false;
 }
+
+player::player(const std::string& filename, const fgr::point& pos, const graphic& sprit, float ang, bool toggle, float wid, float energ, float energCap): player(filename){
+	position = pos;
+	turn(ang);
+	tog = toggle;
+	sprite = sprit;
+	width = wid;
+	energy = energ;
+	energyCap = energCap;
+}
+
+
 
 //
 wall player::makeWall(int mat) const {

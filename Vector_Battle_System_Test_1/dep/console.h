@@ -20,7 +20,7 @@ In theory, nothing that the player will need during gameplay should be in here.*
 void feedkeyboardinput(string &field);
 
 //Send a message to the console
-void outputConsole(string output);
+void outputConsole(const string& output);
 
 //Process an input string
 void handleInput(string &input);

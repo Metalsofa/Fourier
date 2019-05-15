@@ -14,15 +14,15 @@ void feedkeyboardinput(string &field) {
 			field += itr->first;
 		}
 	}
-	if (backspacePress) {
-		backspacePress = false;
+	if (instDown["backspace"]) {
+		instDown["backspace"] = false;
 		if (field.size() > 0)
 			field.pop_back();
 	}
 }
 
 //Send a message to the console
-void outputConsole(string output) {
+void outputConsole(const string& output) {
 	//console_history.insert(console_history.begin(), output); //Trying something else less intensive
 	cout << output << endl;
 }

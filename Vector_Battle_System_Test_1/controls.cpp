@@ -6,9 +6,10 @@
 using namespace std;
 using namespace fgr;
 
+
 void evergreenKeychecks() {
 	//Closing the application
-	if (escPress) {
+	if (instDown["escape"]) {
 		exit(0);
 	}
 
@@ -18,20 +19,20 @@ void evergreenKeychecks() {
 void debugKeychecks() {
 
 	//Opening the console
-	if (normalKeysdown['`']) {
+	if (instDown["showConsole"]) {
 		exteriorConsole();
 		//showConsole = !showConsole; //relic of a time long past
-		normalKeysdown['`'] = false;
+		instDown["showConsole"] = false;
 	}
 
 	//Quickly switch between design functions
-	if (normalKeysdown['h'] && !showConsole) {
-		if (normalKeysdown['1'])
+	if (instDown["artModifier"] && !showConsole) {
+		if (instDown["1"])
 			DESIGN_FUNCTION = BD_CREATE_WALLS;
-		if (normalKeysdown['2'])
+		if (instDown["2"])
 			DESIGN_FUNCTION = BD_MAKE_RAYS;
-		if (normalKeysdown['3']) {
-			normalKeysdown['3'] = false;
+		if (instDown["3"]) {
+			instDown["3"] = false;
 			artMode = !artMode;
 			battlefieldDesignMode = !battlefieldDesignMode;
 		}
@@ -43,9 +44,9 @@ void debugKeychecks() {
 void battlefieldDesignKeychecks() {
 
 	//Entering/leaving 'keyMode'
-	if (normalKeysdown['0']) {
+	if (instDown["keyModeTog"]) {
 		keyMode = !keyMode;
-		normalKeysdown['0'] = false;
+		instDown["keyModeTog"] = false;
 	}
 
 	//Controls based on design function
@@ -92,18 +93,12 @@ void battlefieldDesignKeychecks() {
 				}
 			}
 		} else {
-			if (normalKeysdown[' ']) {
-				for (int i = 0; i < currentbattle.protags.size(); i++) {
-					if (currentbattle.protags[i].tog) {
-						currentbattle.playerAct(i);
-					}
-				}
-				normalKeysdown[' '] = false;
-			}
+			
 		}
 		break;
 	}
 }
+
 
 //These controls are active only in art mode
 void artKeychecks() {
@@ -195,43 +190,67 @@ void artKeychecks() {
 
 }
 
-//These controls are active only in battle mode (gameplay)
+//These controls are active only in battle mode
 void battleKeychecks() {
-
+	
+	//Toggling the players from enabled to disabled
+	if (currentbattle.protags.size() > 0) {
+		if (instDown["1"]) { currentbattle.protags[0].toggle(); instDown["1"] = false; }
+		if (currentbattle.protags.size() > 1) {
+			if (instDown["2"]) { currentbattle.protags[1].toggle(); instDown["2"] = false; }
+			if (currentbattle.protags.size() > 2) {
+				if (instDown["3"]) { currentbattle.protags[2].toggle(); instDown["3"] = false; }
+				if (currentbattle.protags.size() > 3) {
+					if (instDown["4"]) { currentbattle.protags[3].toggle(); instDown["4"] = false; }
+				}
+			}
+		}
+	}
 	//Handle key-depression buffer decrement
-	if (upBuf && !normalKeysdown['i']) { upBuf--; }
-	if (downBuf && !normalKeysdown['k']) { downBuf--; }
-	if (leftBuf && !normalKeysdown['j']) { leftBuf--; }
-	if (rightBuf && !normalKeysdown['l']) { rightBuf--; }
+	if (instDown["aimUp"]){upBuf = 2; }
+	else if (upBuf && !instDown["aimUp"]) { upBuf--; }
+	if (instDown["aimDown"]) { downBuf = 2; }
+	else if (downBuf && !instDown["aimDown"]) { downBuf--; }
+	if (instDown["aimLeft"]) { leftBuf = 2; }
+	else if (leftBuf && !instDown["aimLeft"]) { leftBuf--; }
+	if (instDown["aimRight"]) { rightBuf = 2; }
+	else if (rightBuf && !instDown["aimRight"]) { rightBuf--; }
 
 	//Moving players (presently only handles one player):
 	//
 	point d(0.0f, 0.0f); //The differential of this player's movement
-	if (normalKeysdown['w']) { d.yinc(increment); }
-	if (normalKeysdown['a']) { d.xdec(increment); }
-	if (normalKeysdown['s']) { d.ydec(increment); }
-	if (normalKeysdown['d']) { d.xinc(increment); }
+	if (instDown["moveUp"]) { d.yinc(increment); }
+	if (instDown["moveLeft"]) { d.xdec(increment); }
+	if (instDown["moveDown"]) { d.ydec(increment); }
+	if (instDown["moveRight"]) { d.xinc(increment); }
 	//Iterate through the protagonists and move them
-	for (unsigned int x = 0; x < currentbattle.protags.size(); x++) {
-		if (currentbattle.protags[x].tog) {
-			currentbattle.protags[x].position += d * currentbattle.protags[x].stats.agility.som;
+	for (auto& x : currentbattle.protags) {
+		if (x.tog) {
+			x.position += d;
 		}
 	}
 	//Iterate through the protagonists and aim them
-	if (normalKeysdown['i'] || normalKeysdown['j'] || normalKeysdown['k'] || normalKeysdown['l']) {
+	if (instDown["aimUp"] || instDown["aimLeft"] || instDown["aimDown"] || instDown["aimRight"]) {
 		d.y(0.0f);
 		d.x(0.0f);
-		if (normalKeysdown['i'] || upBuf) { d.yinc(increment); }
-		if (normalKeysdown['k'] || downBuf) { d.ydec(increment); }
-		if (normalKeysdown['l'] || rightBuf) { d.xinc(increment); }
-		if (normalKeysdown['j'] || leftBuf) { d.xdec(increment); }
+		if (instDown["aimUp"] || upBuf) { d.yinc(increment); }
+		if (instDown["aimDown"] || downBuf) { d.ydec(increment); }
+		if (instDown["aimRight"] || rightBuf) { d.xinc(increment); }
+		if (instDown["aimLeft"] || leftBuf) { d.xdec(increment); }
 		if (d.y() != 0 || d.x() != 0) {
-			for (unsigned int i = 0; i < 4; i++) {
-				if (currentbattle.protags[i].tog) { currentbattle.protags[i].turn(d.angle()); }
+			for (auto& x : currentbattle.protags) {
+				if (x.tog) { x.turn(d.angle()); }
 			}
 		}
 	}
-
+	if (instDown["action"]) {
+		for (int i = 0; i < currentbattle.protags.size(); i++) {
+			if (currentbattle.protags[i].tog) {
+				currentbattle.playerAct(i);
+			}
+		}
+		instDown["action"] = false;
+	}
 }
 
 //These controls are active only in overworld mode
@@ -245,75 +264,26 @@ void overworldKeychecks() {
 
 //Called when a 'normal' key becomes pressed
 void ProcessNormalKeys(unsigned char key, int x, int y) {
-	if (key == 27)
-		escPress = true;
-	//if (key == 32)
-		//spacePress = true;
-	if (key == 13)
-		enterPress = true;
-	if (key == 8)
-		backspacePress = true;
-	if (key == 'i') {
-		upBuf = keyBuf;
-	} else if (key == 'j') {
-		leftBuf = keyBuf;
-	} else if (key == 'k') {
-		downBuf = keyBuf;
-	} else if (key == 'l') {
-		rightBuf = keyBuf;
-	}
-	if (key >= '1' && key <= '4') {
-		currentbattle.protags[key - '1'].toggle();
-	}
-	normalKeysdown[key] = true;
+	instDown[instMap[key]] = true;
+	
 }
+
 
 //Called when a 'normal' key becomes no longer pressed
 void ReleaseNormalKeys(unsigned char key, int x, int y) {
-	if (key == 27)
-		escPress = false;
-	//if (key == 32)
-		//spacePress = false;
-	if (key == 13)
-		enterPress = false;
-	if (key == 8)
-		backspacePress = false;
-	normalKeysdown[key] = false;
+	instDown[instMap[key]] = false;
 }
 
-//Called when a 'special' key becomes pressed
+
 void ProcessSpecialKeys(int key, int x, int y) {
-	switch (key) {
-	case GLUT_KEY_UP:
-		upPress = true;
-		break;
-	case GLUT_KEY_DOWN:
-		downPress = true;
-		break;
-	case GLUT_KEY_RIGHT:
-		rightPress = true;
-		break;
-	case GLUT_KEY_LEFT:
-		leftPress = true;
-		break;
+	if (key <= GLUT_KEY_DOWN && key >= GLUT_KEY_LEFT) {
+		instDown[instMap[key - 110]] = true;
 	}
 }
 
-//Called when a 'special' key is no longer pressed
 void ReleaseSpecialKeys(int key, int x, int y) {
-	switch (key) {
-	case GLUT_KEY_UP:
-		upPress = false;
-		break;
-	case GLUT_KEY_LEFT:
-		leftPress = false;
-		break;
-	case GLUT_KEY_DOWN:
-		downPress = false;
-		break;
-	case GLUT_KEY_RIGHT:
-		rightPress = false;
-		break;
+	if (key <= GLUT_KEY_DOWN && key >= GLUT_KEY_LEFT) {
+		instDown[instMap[key - 110]] = false;
 	}
 }
 
