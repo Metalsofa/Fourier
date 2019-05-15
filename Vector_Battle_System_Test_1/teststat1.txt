@@ -1,0 +1,11 @@
+maxHP 20 20 20
+maxFP 10 10 10
+HP 20 20 20 
+FP 10 10 10
+vitality 3 4 5
+sensitivity 5 5 5
+agility 3 3 3
+power 4 4 4
+resilience 6 6 6
+stability 2 2 2
+

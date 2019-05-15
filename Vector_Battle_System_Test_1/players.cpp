@@ -106,7 +106,8 @@ void combatant::turn(float angle) {
 
 //Enemy default constructor
 enemy::enemy() : combatant() {
-
+	ind = 0;
+	dir = true;
 }
 
 //Construct enemy from statblock file

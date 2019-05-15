@@ -97,6 +97,7 @@ public:
 
 	//Changes direction based on angle(in radians)
 	void turn(float angle);
+
 };
 
 //controlled players
@@ -134,7 +135,7 @@ public:
 	point aim;		//Where the enemy is aiming
 
 	//behavior moveB;	//Function pointer that tells the enemy how to move
-	//behavior shootB;//Function pointer that tells the enemy how to shoot
+	//behavior shootB;	//Function pointer that tells the enemy how to shoot
 
 	bool moving;	//Whether the enemy is moving
 	point dest;		//Where the enemy is going to

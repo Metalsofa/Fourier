@@ -195,7 +195,7 @@ void artKeychecks() {
 
 }
 
-//These controls are active only in battle mode
+//These controls are active only in battle mode (gameplay)
 void battleKeychecks() {
 
 	//Handle key-depression buffer decrement
@@ -214,7 +214,7 @@ void battleKeychecks() {
 	//Iterate through the protagonists and move them
 	for (unsigned int x = 0; x < currentbattle.protags.size(); x++) {
 		if (currentbattle.protags[x].tog) {
-			currentbattle.protags[x].position += d;
+			currentbattle.protags[x].position += d * currentbattle.protags[x].stats.agility.som;
 		}
 	}
 	//Iterate through the protagonists and aim them

@@ -89,7 +89,7 @@ extern battlestate currentbattle(testpreset); //This holds the information about
 
 extern const int BoardDepth = 0; //Not sure about this. Probably will never change from 0.
 extern float timer = 0; //We'll see if this ends up being necessary
-extern float increment = float(1.0f / (60.0f + .01f) );//0.01f; //Incremental time in seconds, the denominator is nominal FPS
+extern float increment = float(1.0f / (100.0f + .01f) );//0.01f; //Incremental time in seconds, the denominator is nominal FPS
 extern float gamma = 1.0f; //Time dilation, from the viewer's refrence frame
 extern int rain = 0; //This is really just for fun; good for iterating through a rainbow for no good reason
 
@@ -107,7 +107,7 @@ extern Material SELECTED_MATERIAL = BASIC_REFLECTIVE;
 ///////////////////////////////////////////////////////////
 
 //Whether using keyboard controls (neccessary only in BETA)
-extern bool keyMode = false;
+extern bool keyMode = true;
 extern void exteriorConsole();
 //Global Variables for if in overworldMode
 ///I hear cactuses hurt to step on
