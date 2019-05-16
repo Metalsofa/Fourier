@@ -9,7 +9,7 @@ user-friendly fgr manipulation*/
 #include "fgrgeometry.h"
 #include "fgrcolor.h"
 
-#include "crypt.h"	//TODO: TAKE THIS OUT EVENTUALLY
+#include "crypt.h"	//FUTURE: TAKE THIS OUT EVENTUALLY
 
 #include <vector>
 #include <list>

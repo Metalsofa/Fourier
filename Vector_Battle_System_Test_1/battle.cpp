@@ -599,7 +599,7 @@ void battlestate::iterateAI(float inc){
 void battlestate::iteratePlayer(float inc) {	//Used to iterate the players stats frame by frame
 	for (auto& p : protags) {
 		if (p.energy < p.energyCap) {
-			p.energy += (10 * inc);	//TODO: update to match agility or speed of player
+			p.energy += (10 * inc);	//FUTURE: update to match agility or speed of player
 		}	
 	}
 }

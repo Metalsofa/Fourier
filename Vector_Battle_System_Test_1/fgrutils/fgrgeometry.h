@@ -346,28 +346,6 @@ namespace fgr {
 		return point((a.x() + b.x()) / 2, (a.y() + b.y()) / 2);
 	}
 
-	// Given three colinear points p, q, r, the function checks if 
-	// point q lies on line segment 'pr' 
-	//inline bool onSegment(const point& p, const point& q, const point& r) {
-	//	float epsilon = 0.001f;	//TODO: make this the global epsilon
-	//	if (q.x() <= std::max(p.x(), r.x())+epsilon && q.x() >= std::min(p.x(), r.x())-epsilon &&
-	//		q.y() <= std::max(p.y(), r.y())+epsilon && q.y() >= std::min(p.y(), r.y())-epsilon)
-	//		return true;
-
-	//	return false;
-	//}
-
-	//inline int orientation(const point& p, const point& q, const point& r) {
-	//	// See https://www.geeksforgeeks.org/orientation-3-ordered-points/ 
-	//	// for details of below formula. 
-	//	int val = (q.y() - p.y()) * (r.x() - q.x()) -
-	//		(q.x() - p.x()) * (r.y() - q.y());
-
-	//	if (val == 0) return 0;  // colinear 
-
-	//	return (val > 0) ? 1 : 2; // clockwise or counterclockwise 
-	//}
-
 	inline point intersection(const segment& sega, const segment& segb) { //Figured this out using Cramer's Rule  
 		//assert(isintersect(sega, segb) == 1);	//FUTURE: remove this for speedup when safe 
 		float dxa = sega.p2.x() - sega.p1.x();
@@ -416,21 +394,6 @@ namespace fgr {
 			eval = false;
 		if (!xbeval && !ybeval)
 			eval = false;
-		//bool a = onSegment(sega.p1, ints, sega.p2);
-		//bool b = onSegment(segb.p1, ints, segb.p2);
-		//assert(eval == ( a&& b));
-		//if (!yaeval)
-		//	eval = false;
-		//if (!ybeval)
-		//	eval = false;
-		/*if (eval) {
-			cerr << "SOMETHING IS WRONG" << endl
-				<< (eval? "TRUE" : "FALSE") << endl
-				<< ((onSegment(sega.p1, ints, sega.p2) && onSegment(segb.p1, ints, segb.p2)) ? "TRUE" : "FALSE") << endl
-				<< "Seg 1: (" << sega.p1.x() << ", " << sega.p1.y() << "), ("  << sega.p2.x() << ", " << sega.p2.y() << ")" << endl
-				<< "Seg 2: (" << segb.p1.x() << ", " << segb.p1.y() << "), (" << segb.p2.x() << ", " << segb.p2.y() << ")" << endl;
-			exit(1);
-		}*/
 		return eval;
 	}
 

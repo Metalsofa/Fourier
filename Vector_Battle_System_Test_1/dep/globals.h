@@ -147,7 +147,7 @@ void exteriorConsole();
 ///I hear cactuses hurt to step on
 
 //Global Key Detections
-extern map<char, bool> normalKeysdown;	//TODO: remove this when art and console controls are removed
+extern map<char, bool> normalKeysdown;	//FUTURE: remove this when art and console controls are removed
 extern map<char, string> instMap;	//EDIT THIS TO CHANGE KEYBINDINGS, reference controlsInit() for default keybindings
 extern map<string, bool> instDown;	//Is edited by the program, determines which buttons are being pressed
 
