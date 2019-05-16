@@ -88,6 +88,3 @@ Spell::~Spell() {
 	delete w;
 }
 
-//inline int Spell::cast(battlestate& b) {
-//	return cost;
-//}
