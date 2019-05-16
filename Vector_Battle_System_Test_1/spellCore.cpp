@@ -24,7 +24,7 @@ wallConst::wallConst(const wallConst& w) : fixed(w.fixed), shape(w.shape), mater
 
 
 //Know-it-all constructor
-wall::wall(segment definingsegment, Material wallmaterial, bool isfixed) {
+wall::wall(const segment& definingsegment, const Material& wallmaterial, bool isfixed) {
 	body = definingsegment;
 	materialtype definingMatarial(wallmaterial);
 	material = definingMatarial;
@@ -74,13 +74,38 @@ int permitted(const metastat& spellColor, const metastat& permittivity) { //DP: 
 
 ///////////////////////////////////////////////////////////
 //
-//           Class projectile DEFINITION
+//           Class Portal DEFINITION
 //
-//				Structures information about moving
-//				projectiles on the battlefield.	
+//				Structures information about portals
+//				on the battlefield.	
 //
 ///////////////////////////////////////////////////////////
 
+portal::portal(const segment& definingsegment, Material mat, portal* partner = nullptr) {
+	body = definingsegment;
+	material = mat;
+	pair = partner;
+}
+
+portal::portal(const segment& definingsegment, int wallmaterial, portal* partner = nullptr) {
+	body = definingsegment;
+	material = (Material)wallmaterial;
+	pair = partner;
+}
+portal::portal() {
+	pair = nullptr;
+}
+portal::portal(const portal& p) {
+	body = p.body;
+	material = p.material;
+	pair = p.pair;
+}
+
+portal::portal(const portalConst& pc, const segment& s, portal* partner = nullptr) {
+	body = s;
+	material = pc.material;
+	pair = partner;
+}
 
 
 
