@@ -30,6 +30,10 @@ namespace fgr {
 		return (fminf(A, B) < X && X < fmaxf(A, B));
 		//The second one looks better, but the first one might be barely faster due to a function call
 	}
+	inline bool closeEnoughMatch(float a, float b) {
+		return !((a + 0.0001 < b - 0.0001) || (b + 0.0001 < a - 0.0001));
+	}
+
 
 	//Stores an x and a y value, a two-dimensional co-ordinate
 	class point {
@@ -200,7 +204,7 @@ namespace fgr {
 
 	//Returns true if the points are at the exact same location
 	inline bool converges(point PointA, point PointB) {
-		return (PointA.x() == PointB.x() && PointA.y() == PointB.y());
+		return (closeEnoughMatch(PointA.x(),PointB.x()) && closeEnoughMatch(PointA.y(),PointB.y()));
 	}
 
 	//Returns the scalar product of the point and float passed in
@@ -370,9 +374,7 @@ namespace fgr {
 		return solution;
 	}
 
-	inline bool closeEnoughMatch(float a, float b) {
-		return !((a + 0.0001 < b - 0.0001) || (b + 0.0001 < a - 0.0001));
-	}
+	
 
 	///This is showing some REALLY weird behavior when one of the segments is perfectly vertical or horizontal
 	inline int isintersect(const segment& sega, const segment& segb) {

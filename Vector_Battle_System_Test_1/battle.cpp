@@ -267,7 +267,7 @@ void battlestate::iterateRay(float inc){
 						}
 						/* So now j is the ID for the wall inters is on, and closestID is the ID for
 						the closest wall to previnter*/
-						float err = 0.01f; //Used to be 0.01f;
+						float err = 0.01f; 
 						int prevwallID = closestID;
 						int currentwallID = j;
 						if (prevwallID == currentwallID

@@ -115,7 +115,8 @@ bool combatant::hit(const metastat& m, int level) {
 
 //Enemy default constructor
 enemy::enemy() : combatant() {
-
+	ind = 0;
+	dir = true;
 }
 
 //Construct enemy from statblock file
