@@ -76,8 +76,8 @@ public:
 	ray();
 	ray(const ray& r);
 	//Constructor for some custom ray
-	ray(metastat col, point location, point heading, float leng, float fastness, float thickn);
-	ray(point loc, point head, const rayConst& r);
+	ray(const metastat& col, const point& location, const point& heading, float leng, float fastness, float thickn);
+	ray(const point& loc, const point& head, const rayConst& r);
 
 	//Constructor that accepts a spell and returns the appropriate ray //maybee
 	///Doesn't exist yet

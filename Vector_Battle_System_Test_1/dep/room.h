@@ -6,7 +6,7 @@ the player has to be in some sort of room.*/
 #include "fgrutils.h"
 
 //These give life to the world
-class prop : public fgr::spritesheet {
+class prop : public fgr::spritesheet {	//DP: I think the prop should have a spritesheet, rather than be a spritesheet
 public:
 	// REPRESENTATION
 	//Position relative to the room's origin point
@@ -16,7 +16,7 @@ public:
 	//How many times this prop remembers being interacted with by the player previously
 	int interactionCount;
 	//This function will be called when the player interacts with this prop
-	void(*interact_func)(int prevc, prop& object);
+	void(*interact_func)(int prevc, prop& object);	//DP: Does a prop need to be passed in?
 
 	// MEMBER FUNCTIONS
 	//CONSTURCTORS
