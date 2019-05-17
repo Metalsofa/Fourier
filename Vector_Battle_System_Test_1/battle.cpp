@@ -275,59 +275,66 @@ void battlestate::iterateRay(float inc){
 							shouldbounce = false;
 					}
 					if (shouldbounce) {
-						//Check if at a corner
-						bool atcorner = false;
-						if (converges(inters, map.nearestintersection(inters))) {
-							atcorner = true;
-						}
-						//The following IF statement is triggering as it should, but the
-						//Corner logic is causing the ray to pass through corners
-						if (difference(map.nearestintersection(inters), inters).magnitude() < 0.03) {
-							atcorner = true;
-						}
-						if (equidist)
-							atcorner = true;
-						//If in a corner, turn serf into the appropriate bisector
-						if (atcorner) {
-							//Determine point dot, the location of the previous intersection
-							point dot = rays[i].getbits()[1];
-							point head = rays[i].getbits()[0];
-							point corner = map.nearestintersection(inters);
-							//Determine the closest walls: WALL_A and WALL_B (really just their indices)
-							int closestIDa = -1;
-							int closestIDb = -1;
-							unsigned int i = 0;
-							vector<portal> port = map.portals;
-							while (i < port.size()) {
-								if (closestIDa == -1) {
-									closestIDa = i++;
-									continue;
-								}
-								segment comparator = port[i].getbody();
-								segment currentclosest = port[closestIDa].getbody();
-								float distanceComparator = distancetoseg(head, comparator);
-								float distanceCurrentClosest = distancetoseg(head, currentclosest);
-								/*This if statement compares the current furthest wall to the comparator,
-								and sets the new closest if it beats the current one. The old closest
-								is set to the second closest.*/
-								if (distanceComparator < distanceCurrentClosest) {
-									closestIDb = closestIDa;
-									closestIDa = i;
-								} else if (closestIDb == -1 || distanceComparator <
-									distancetoseg(head, port[closestIDb].getbody())) {
-									closestIDb = i;
-								}
-								i++;
-							}
-							//Extract sega and segb from WALL_A and WALL_B
-							segment sega = port[closestIDa].getbody();
-							segment segb = port[closestIDb].getbody();
-							//Find the appropriate bisector given sega, segb, and dot
-							segment cornermirror = reflectiveBisector(dot, sega, segb);
-							//Turn serf into that bisector
-							serf = cornermirror;
-						}
-						rays[i].bounce(serf);
+						//Commenting out corner case
+						////Check if at a corner
+						//bool atcorner = false;
+						//if (converges(inters, map.nearestintersection(inters))) {
+						//	atcorner = true;
+						//}
+						////The following IF statement is triggering as it should, but the
+						////Corner logic is causing the ray to pass through corners
+						//if (difference(map.nearestintersection(inters), inters).magnitude() < 0.03) {
+						//	atcorner = true;
+						//}
+						//if (equidist)
+						//	atcorner = true;
+						////If in a corner, turn serf into the appropriate bisector
+						//if (atcorner) {
+						//	//Determine point dot, the location of the previous intersection
+						//	point dot = rays[i].getbits()[1];
+						//	point head = rays[i].getbits()[0];
+						//	point corner = map.nearestintersection(inters);
+						//	//Determine the closest walls: WALL_A and WALL_B (really just their indices)
+						//	int closestIDa = -1;
+						//	int closestIDb = -1;
+						//	unsigned int i = 0;
+						//	vector<portal> port = map.portals;
+						//	while (i < port.size()) {
+						//		if (closestIDa == -1) {
+						//			closestIDa = i++;
+						//			continue;
+						//		}
+						//		segment comparator = port[i].getbody();
+						//		segment currentclosest = port[closestIDa].getbody();
+						//		float distanceComparator = distancetoseg(head, comparator);
+						//		float distanceCurrentClosest = distancetoseg(head, currentclosest);
+						//		/*This if statement compares the current furthest wall to the comparator,
+						//		and sets the new closest if it beats the current one. The old closest
+						//		is set to the second closest.*/
+						//		if (distanceComparator < distanceCurrentClosest) {
+						//			closestIDb = closestIDa;
+						//			closestIDa = i;
+						//		} else if (closestIDb == -1 || distanceComparator <
+						//			distancetoseg(head, port[closestIDb].getbody())) {
+						//			closestIDb = i;
+						//		}
+						//		i++;
+						//	}
+						//	//Extract sega and segb from WALL_A and WALL_B
+						//	segment sega = port[closestIDa].getbody();
+						//	segment segb = port[closestIDb].getbody();
+						//	//Find the appropriate bisector given sega, segb, and dot
+						//	segment cornermirror = reflectiveBisector(dot, sega, segb);
+						//	//Turn serf into that bisector
+						//	serf = cornermirror;
+						//}
+						point originHit = rays[i].wherehit(surface.getbody());
+						float surfaceProp = (originHit - surface.getbody().p1).magnitude() / surface.body.length();
+						rays[i].terminate(originHit);
+						float dist = surfaceProp * surface.pair->body.length();
+						point pairHit = unitvector(surface.pair->body.p2 - surface.pair->body.p1) * dist + surface.pair->body.p1;
+						rays.push_back(ray(rays[i]));
+						rays.back().bits[0] = rays.back().bits[1] = pairHit - rays[i].direction * .01;
 					}
 				}
 				if (permit == 0 && !rays[i].terminating)
