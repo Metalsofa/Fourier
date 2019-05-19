@@ -33,7 +33,7 @@ using namespace fgr;
 	//function that returns direction and magnitude, given x and y
 
 //class battlestate;
-enum SpellType {sNULL, sRay, sWall};
+enum SpellType {sNULL, sRay, sWall, sPortal};
 
 
 class Spell {
@@ -49,10 +49,12 @@ public:
 	
 	rayConst* r;
 	wallConst* w;
+	portalConst* p;
 
 	Spell& operator=(const Spell& other);
 	Spell(const rayConst& ra);
 	Spell(const wallConst& wa);
+	Spell(const portalConst& wa);
 	~Spell();
 };
 

@@ -37,10 +37,10 @@ public:
 	const segment& getbody() const { return body; }
 	const materialtype& getmaterial() const { return material; }
 	bool getfixed() { return fixed; }
-	wall(segment definingsegment, Material wallmaterial, bool isfixed);
+	wall(const segment& definingsegment, const Material& wallmaterial, bool isfixed);
 	wall(segment definingsegment, int wallmaterial, bool isfixed);
-	wall(); //DP: You don't need default values?
-	wall(const wall& w); //DP: You don't need default values?
+	wall(); 
+	wall(const wall& w);
 	wall(const wallConst& w, const segment& s);
 };
 
@@ -76,8 +76,8 @@ public:
 	ray();
 	ray(const ray& r);
 	//Constructor for some custom ray
-	ray(metastat col, point location, point heading, float leng, float fastness, float thickn);
-	ray(point loc, point head, const rayConst& r);
+	ray(const metastat& col, const point& location, const point& heading, float leng, float fastness, float thickn);
+	ray(const point& loc, const point& head, const rayConst& r);
 
 	//Constructor that accepts a spell and returns the appropriate ray //maybee
 	///Doesn't exist yet
@@ -117,6 +117,28 @@ int permitted(const metastat& spellColor, const metastat& permittivity);
 
 //projectiles: have graphics, position, velocity, behavior,
 
+class portalConst {
+public:
+	materialtype material;
+	portalConst(Material mat) : material(mat) {}
+	portalConst(int mat) { material = (Material)mat; }
+	portalConst(const portalConst& pC) : material(pC.material) {}
+};
+
+class portal {
+public:
+	segment body;
+	materialtype material;
+	portal* pair;
+
+	const segment& getbody() const { return body; }
+	const materialtype& getmaterial() const { return material; }
+	portal(const segment& definingsegment, Material mat, portal* partner);
+	portal(const segment& definingsegment, int wallmaterial, portal* partner);
+	portal();
+	portal(const portal& p);
+	portal(const portalConst& pc, const segment& s, portal* partner);
+};
 //portal:
 	//position
 	//radius

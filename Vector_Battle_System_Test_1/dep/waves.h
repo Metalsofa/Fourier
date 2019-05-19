@@ -115,6 +115,6 @@ inline float noteFrequency(int key) { return pow(pow(2.0f, 1.0f / 12.0f), float(
 inline int pianoKey(float frequency) { return int(round(12 * log2(frequency / 440.0f) + 49)); }
 
 //To-do list: Make some GLUT rendering functions for all this stuff
-//DP: Overall this code is really clean
+
 
 #endif

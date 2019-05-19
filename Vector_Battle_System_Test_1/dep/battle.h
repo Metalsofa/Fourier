@@ -27,6 +27,7 @@ public:
 	float width;
 	float height;
 	vector<wall> walls;
+	vector<portal> portals;
 	//Other vectors containg other sets of battlefield objects
 	//sinks
 	//portals

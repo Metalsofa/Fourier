@@ -24,7 +24,7 @@ wallConst::wallConst(const wallConst& w) : fixed(w.fixed), shape(w.shape), mater
 
 
 //Know-it-all constructor
-wall::wall(segment definingsegment, Material wallmaterial, bool isfixed) {
+wall::wall(const segment& definingsegment, const Material& wallmaterial, bool isfixed) {
 	body = definingsegment;
 	materialtype definingMatarial(wallmaterial);
 	material = definingMatarial;
@@ -57,7 +57,7 @@ wall::wall(const wallConst& w, const segment& s) {
 }
 
 //Check if a spell of a given color can pass through a given material
-int permitted(const metastat& spellColor, const metastat& permittivity) { //DP: Pass by ref
+int permitted(const metastat& spellColor, const metastat& permittivity) {
 	//These 3 lines of code return 0 (for 'kill') if any component of the ray is not permitted.
 	if (permittivity.som == 0 && spellColor.som) return 0;
 	if (permittivity.emo == 0 && spellColor.emo) return 0;
@@ -74,13 +74,38 @@ int permitted(const metastat& spellColor, const metastat& permittivity) { //DP: 
 
 ///////////////////////////////////////////////////////////
 //
-//           Class projectile DEFINITION
+//           Class Portal DEFINITION
 //
-//				Structures information about moving
-//				projectiles on the battlefield.	
+//				Structures information about portals
+//				on the battlefield.	
 //
 ///////////////////////////////////////////////////////////
 
+portal::portal(const segment& definingsegment, Material mat, portal* partner = nullptr) {
+	body = definingsegment;
+	material = mat;
+	pair = partner;
+}
+
+portal::portal(const segment& definingsegment, int wallmaterial, portal* partner = nullptr) {
+	body = definingsegment;
+	material = (Material)wallmaterial;
+	pair = partner;
+}
+portal::portal() {
+	pair = nullptr;
+}
+portal::portal(const portal& p) {
+	body = p.body;
+	material = p.material;
+	pair = p.pair;
+}
+
+portal::portal(const portalConst& pc, const segment& s, portal* partner = nullptr) {
+	body = s;
+	material = pc.material;
+	pair = partner;
+}
 
 
 
@@ -125,19 +150,16 @@ ray::ray(const ray& r) {
 }
 
 //Constructor for some custom ray
-ray::ray(metastat col, point location, point heading, float leng, float fastness, float thickn) { //DP: Pass by ref
-	bits.push_back(location);
-	bits.push_back(location);
-	//DP: bits = {location, location};
+ray::ray(const metastat& col, const point& location, const point& heading, float leng, float fastness, float thickn) {
+	bits = {location, location};
 	direction = unitvector(difference(heading, location));
 	speed = fastness;
 	nominalLength = leng;
 	thickness = thickn;
 	color = col;
 }
-ray::ray(point loc, point head, const rayConst& r) {
-	bits.push_back(loc);
-	bits.push_back(loc);
+ray::ray(const point& loc, const point& head, const rayConst& r) {
+	bits = { loc, loc };
 	direction = unitvector(difference(head, loc));
 	speed = r.speed;
 	nominalLength = r.nominalLength;
@@ -150,32 +172,19 @@ ray::ray(point loc, point head, const rayConst& r) {
 
 //Returns the vector representing the ray's velocity
 point ray::movevector() const {
-	if (terminating)
-		return scalarproduct(unitvector(difference(terminalpoint, bits[0])), speed);
-	else
-		return scalarproduct(unitvector(direction), speed);
-	//DP: return scalarproduct(unitvector((
-	//	(terminating)
-	//		?difference(terminalpoint, bits[0])
-	//		:direction)), 
-	//	speed);
+	return scalarproduct(unitvector((
+		(terminating)
+			?difference(terminalpoint, bits[0])
+			:direction)), 
+		speed);
 }
 
 //Returns the actual length of the vector, calculated by counting individual segment lengths
 float ray::length() const {
 	float cumulative = 0;
-	int i = 0;
-	while (i < int(bits.size()) - 1) {
-		point p1 = bits[i];
-		point p2 = bits[i + 1];
-		segment meas(p1, p2);
-		cumulative += meas.length();
-		i += 1;
+	for (int i = 0; i < int(bits.size()) - 1; i++) {
+		cumulative += segment(bits[i], bits[i + 1]).length();
 	}
-	//DP:
-	//for (int i = 0; i < int(bits.size()) - 1; i++) {
-	//	cumulative += segment(bits[i], bits[i + 1]);
-	//}
 	return cumulative;
 }
 
@@ -220,14 +229,14 @@ bool ray::gotBlue() const { return color.cog != 0; } //Bool: Is there a BLUE com
 bool ray::deathtime() const { return killme; }
 
 //Tell the ray it is now terminating, and tell it where to terminate.
-void ray::terminate(const point& where) { //DP: Pass by ref
+void ray::terminate(const point& where) { 
 	terminating = true;
 	terminalpoint = where;
 }
 
 
 bool ray::checkcollision(const segment & surface) const {
-	return isintersect(surface,segment(bits[0], bits[1])) == 1; //&& intersection(segment(bits[0],bits[1]),surface) != bits[1];
+	return isintersect(surface,segment(bits[0], bits[1]));
 }
 point ray::wherehit(const segment& surface) const {
 	return intersection(segment(bits[0], bits[1]), surface);
