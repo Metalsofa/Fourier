@@ -33,9 +33,6 @@
     <ClCompile Include="spells.cpp">
       <Filter>Implementation Files</Filter>
     </ClCompile>
-    <ClCompile Include="room.cpp">
-      <Filter>Implementation Files</Filter>
-    </ClCompile>
     <ClCompile Include="players.cpp">
       <Filter>Implementation Files</Filter>
     </ClCompile>
@@ -96,9 +93,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dep\controls.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="dep\room.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="dep\graphics.h">

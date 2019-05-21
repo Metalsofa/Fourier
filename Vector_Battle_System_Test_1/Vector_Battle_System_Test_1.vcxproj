@@ -171,7 +171,6 @@
     <ClCompile Include="globals.cpp" />
     <ClCompile Include="materials.cpp" />
     <ClCompile Include="players.cpp" />
-    <ClCompile Include="room.cpp" />
     <ClCompile Include="spellCore.cpp" />
     <ClCompile Include="spells.cpp" />
     <ClCompile Include="main.cpp" />
@@ -188,7 +187,6 @@
     <ClInclude Include="dep\materials.h" />
     <ClInclude Include="dep\players.h" />
     <ClInclude Include="dep\resource.h" />
-    <ClInclude Include="dep\room.h" />
     <ClInclude Include="dep\spellCore.h" />
     <ClInclude Include="dep\spells.h" />
     <ClInclude Include="dep\stopwatch.h" />
