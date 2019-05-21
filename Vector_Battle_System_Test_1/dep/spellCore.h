@@ -133,11 +133,11 @@ public:
 
 	const segment& getbody() const { return body; }
 	const materialtype& getmaterial() const { return material; }
-	portal(const segment& definingsegment, Material mat, portal* partner);
-	portal(const segment& definingsegment, int wallmaterial, portal* partner);
+	portal(const segment& definingsegment, Material mat, portal* partner = nullptr);
+	portal(const segment& definingsegment, int wallmaterial, portal* partner = nullptr);
 	portal();
 	portal(const portal& p);
-	portal(const portalConst& pc, const segment& s, portal* partner);
+	portal(const portalConst& pc, const segment& s, portal* partner= nullptr);
 };
 //portal:
 	//position

@@ -256,8 +256,8 @@ int main(int argc, char **argv) {
 	currentbattle.protags.push_back(plyr2);
 
 	player plyr3("teststat3.txt", point(10, 0), graphic("gamma.fgr"));
-	plyr3.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 1, 1));
-	plyr3.arsenal[0].cost = 5;
+	//plyr3.arsenal.push_back(portalConst(BASIC_REFLECTIVE));
+	//plyr3.arsenal[0].cost = 20;
 	currentbattle.protags.push_back(plyr3);
 
 	player plyr4("teststat4.txt", point(0,0), graphic("delta.fgr"));

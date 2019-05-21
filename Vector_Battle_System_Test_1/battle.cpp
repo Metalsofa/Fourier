@@ -213,7 +213,7 @@ void battlestate::iterateRay(float inc){
 			}
 		}
 		for (portal& surface : map.portals) {
-			if (rays[i].checkcollision(surface.getbody())) {
+			if (!rays[i].terminating && rays[i].checkcollision(surface.getbody()) ) {
 				term = true;
 				int permit = rays[i].permitted(surface.getmaterial().getPermittivitySpells());
 				if (permit == 1) {
@@ -754,16 +754,32 @@ void battlestate::playerAct(int playerInd){
 	if (!s)
 		return;
 	switch (s->type) {
-	case sRay:
-		spawnRay(ray(protags[playerInd].position+protags[playerInd].direction*.5, protags[playerInd].position + protags[playerInd].direction,*(s->r)));
+	case sRay: {
+		spawnRay(ray(protags[playerInd].position + protags[playerInd].direction * .5, protags[playerInd].position + protags[playerInd].direction, *(s->r)));
 		return;
-	case sWall:
+	}
+	case sWall: {
 		segment seg(protags[playerInd].position, protags[playerInd].position + protags[playerInd].direction);
 		seg = rotate90about(0, seg);
 		seg.p1 += (seg.p1 - seg.p2);
 		wall w(*(s->w), seg);
 		constructWall(w);
 		return;
+	}
+	case sPortal: {
+		segment seg(protags[playerInd].position, protags[playerInd].position + protags[playerInd].direction);
+		seg = rotate90about(0, seg);
+		seg.p1 += (seg.p1 - seg.p2);
+		portal p(*(s->p), seg, protags[playerInd].lastPortal);
+		map.portals.push_back(p);
+		if (protags[playerInd].lastPortal == nullptr) {
+			protags[playerInd].lastPortal = &(map.portals.back());
+		} else {
+			protags[playerInd].lastPortal->pair = &(map.portals.back());
+		}
+		return;
+	}
+		
 	}
 	//cout << "NOT ENOUGH ENERGY";
 	return;

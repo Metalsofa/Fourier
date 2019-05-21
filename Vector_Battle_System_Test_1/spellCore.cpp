@@ -81,13 +81,13 @@ int permitted(const metastat& spellColor, const metastat& permittivity) {
 //
 ///////////////////////////////////////////////////////////
 
-portal::portal(const segment& definingsegment, Material mat, portal* partner = nullptr) {
+portal::portal(const segment& definingsegment, Material mat, portal* partner) {
 	body = definingsegment;
 	material = mat;
 	pair = partner;
 }
 
-portal::portal(const segment& definingsegment, int wallmaterial, portal* partner = nullptr) {
+portal::portal(const segment& definingsegment, int wallmaterial, portal* partner) {
 	body = definingsegment;
 	material = (Material)wallmaterial;
 	pair = partner;
@@ -101,7 +101,7 @@ portal::portal(const portal& p) {
 	pair = p.pair;
 }
 
-portal::portal(const portalConst& pc, const segment& s, portal* partner = nullptr) {
+portal::portal(const portalConst& pc, const segment& s, portal* partner) {
 	body = s;
 	material = pc.material;
 	pair = partner;

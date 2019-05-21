@@ -90,6 +90,7 @@ public:
 	//Sprites
 	graphic sprite;
 	float width;
+	portal* lastPortal;	//If combatant is spawning portals, need to know the last Portal spawned to link them
 
 
 	//Each segment represents a hitbox; p1 is lower left, p2 is upper right.
