@@ -125,6 +125,10 @@ void renderScene(void) {
 			drawwall(currentbattle.map.getWalls()[walliterator]);
 			walliterator++;
 		}
+		//Draw Portals
+		for (portal& p : currentbattle.map.portals) {
+			drawportal(p);
+		}
 
 		//Draw Spells
 

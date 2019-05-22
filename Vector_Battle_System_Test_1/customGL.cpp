@@ -403,6 +403,22 @@ void drawwall(wall& drawingWall) {
 	glLineWidth(1.0f);
 }
 
+//Takes a refrence to a portal and then draws it
+void drawportal(portal& drawingWall) {
+	glLineWidth(drawingWall.material.thickness);
+	glBegin(GL_LINES);
+	glColor4f(
+		drawingWall.material.getRed(),
+		drawingWall.material.getGreen(),
+		drawingWall.material.getBlue(),
+		drawingWall.material.getAlpha()
+	);
+	glVertex2f(drawingWall.getbody().p1.x(), drawingWall.getbody().p1.y());
+	glVertex2f(drawingWall.getbody().p2.x(), drawingWall.getbody().p2.y());
+	glEnd();
+	glLineWidth(1.0f);
+}
+
 /* //This function should theoretically be devoid of purpose.
 void rendertext(float x, float y, float z, void *font, string text) {
 	glRasterPos3f(x, y, z);
