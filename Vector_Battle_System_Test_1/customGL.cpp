@@ -509,7 +509,7 @@ void drawCombatant(combatant& fighter) {
 	glEnd();
 	glTranslatef(-1 * fighter.position.x(), -1 * fighter.position.y(), 0);
 
-	//glPopMatrix();
+	glPopMatrix();
 }
 
 
