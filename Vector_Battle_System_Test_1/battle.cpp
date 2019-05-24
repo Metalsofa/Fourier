@@ -276,11 +276,20 @@ void battlestate::iterateRay(float inc){
 						portal* pair = &map.portals[surface.pairInd];
 						point originHit = rays[i].wherehit(surface.getbody());
 						float surfaceProp = (originHit - surface.getbody().p1).magnitude() / surface.body.length();
-						rays[i].terminate(originHit);
 						float dist = surfaceProp * pair->body.length();
 						point pairHit = unitvector(pair->body.p2 - pair->body.p1) * dist + pair->body.p1;
 						rays.push_back(ray(rays[i]));
-						rays.back().bits[0] = rays.back().bits[1] = pairHit - rays[i].direction * .01;
+						rays.back().bits[0] = rays.back().bits[1] = pairHit - rays[i].direction * 1;
+						segment surface2;
+						surface2.p1 = difference(serf.p1, serf.midpoint());
+						surface2.p2 = difference(serf.p2, serf.midpoint());
+						point reflec2 = reflection(rays.back().direction, surface2);
+						//point seg1 = unitvector(serf.p2 - serf.p1);
+						//point seg2 = unitvector(pair->body.p2 - pair->body.p1);
+						//reflec2 += (seg1 - seg2);
+						rays.back().direction = unitvector(reflec2);
+
+						rays[i].terminate(originHit);
 
 					}
 				}

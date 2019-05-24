@@ -92,6 +92,7 @@ combatant::combatant() {
 	position = point(-1, -1);
 	direction = point(1, 0);
 	width = 0;
+	lastPortal = -1;
 }
 
 //Construct a combatant from a stat-text file
