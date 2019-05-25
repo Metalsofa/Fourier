@@ -236,12 +236,12 @@ C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.
 C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(93,1): warning C4244: Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/gl.h
 C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(93,1): warning C4244: Note: including file:          C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\um\GL/glu.h
 C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\dep\graphics.h(93,1): warning C4244: Note: including file:   C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\time.h
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(605,92): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(605,69): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(605,46): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(616,137): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(616,114): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(616,91): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(735,56): warning C4267:  '=': conversion from 'size_t' to 'int', possible loss of data
-C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(737,63): warning C4267:  '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(607,92): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(607,69): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(607,46): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(618,137): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(618,114): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(618,91): warning C4244:  'argument': conversion from 'float' to 'int', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(737,56): warning C4267:  '=': conversion from 'size_t' to 'int', possible loss of data
+C:\Users\dp\Documents\GitHub\GameProj1\Vector_Battle_System_Test_1\battle.cpp(739,63): warning C4267:  '=': conversion from 'size_t' to 'int', possible loss of data
   Vector_Battle_System_Test_1.vcxproj -> C:\Users\dp\Documents\GitHub\GameProj1\x64\Debug\Vector_Battle_System_Test_1.exe

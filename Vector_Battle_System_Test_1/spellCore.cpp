@@ -231,6 +231,8 @@ bool ray::deathtime() const { return killme; }
 //Tell the ray it is now terminating, and tell it where to terminate.
 void ray::terminate(const point& where) { 
 	terminating = true;
+
+	//bits[0] -= direction * .01;
 	terminalpoint = where;
 }
 

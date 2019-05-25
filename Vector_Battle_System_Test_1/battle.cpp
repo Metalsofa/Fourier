@@ -213,8 +213,9 @@ void battlestate::iterateRay(float inc){
 		}
 		unsigned int j = 0;	//Portal index
 		for (portal& surface : map.portals) {
-			if (!rays[i].terminating && rays[i].checkcollision(surface.getbody()) ) {
+			if (rays[i].checkcollision(surface.getbody()) ) {
 				term = true;
+				if (rays[i].terminating) { rays[i].terminate(rays[i].bits[0]); break; }
 				int permit = rays[i].permitted(surface.getmaterial().getPermittivitySpells());
 				if (permit == 1) {
 					bool shouldbounce = true;
@@ -284,17 +285,18 @@ void battlestate::iterateRay(float inc){
 						surface2.p1 = difference(serf.p1, serf.midpoint());
 						surface2.p2 = difference(serf.p2, serf.midpoint());
 						point reflec2 = reflection(rays.back().direction, surface2);
-						//point seg1 = unitvector(serf.p2 - serf.p1);
-						//point seg2 = unitvector(pair->body.p2 - pair->body.p1);
-						//reflec2 += (seg1 - seg2);
+						point seg1 = unitvector(serf.p2 - serf.p1);
+						point seg2 = unitvector(pair->body.p2 - pair->body.p1);
+						reflec2 += (seg1 - seg2);
 						rays.back().direction = unitvector(reflec2);
 
-						rays[i].terminate(originHit);
+						rays[i].terminate(rays[i].bits[0]);
 
 					}
 				}
 				if (permit == 0 && !rays[i].terminating)
-					rays[i].terminate(rays[i].wherehit(surface.getbody()));
+					rays[i].terminate(rays[i].bits[0]);	//NOTE: should terminate on the bit instead of the intersection for a smoother stop, also need to terminate again after 1 advance
+				break;
 			}
 			j++;
 		}
