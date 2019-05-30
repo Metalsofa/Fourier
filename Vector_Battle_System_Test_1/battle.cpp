@@ -280,13 +280,19 @@ void battlestate::iterateRay(float inc){
 						float dist = surfaceProp * pair->body.length();
 						point pairHit = unitvector(pair->body.p2 - pair->body.p1) * dist + pair->body.p1;
 						rays.push_back(ray(rays[i]));
-						rays.back().bits[0] = rays.back().bits[1] = pairHit - rays[i].direction * 1;
-						point surfRay = unitvector(reflection(rays.back().direction, serf));
+						segment surface2;
+						surface2.p1 = difference(serf.p1, serf.midpoint());
+						surface2.p2 = difference(serf.p2, serf.midpoint());
+						point surfRay = unitvector(reflection(rays[i].direction, surface2));
 						point seg = unitvector(serf.p2 - serf.p1);
 						float angle = dotproduct(surfRay, seg);
 						angle /= (surfRay.magnitude() * seg.magnitude());
-
+						angle = acos(angle);
+						float pairAng = (pair->body.p2 - pair->body.p1).angle();
+						angle += pairAng;
+						rays.back().direction = point(cos(angle), sin(angle));
 						//rays.back().direction = unitvector(reflec2);
+						rays.back().bits[0] = rays.back().bits[1] = pairHit + rays.back().direction * .1;
 
 						rays[i].terminate(rays[i].bits[0]);
 
