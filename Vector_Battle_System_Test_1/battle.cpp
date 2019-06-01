@@ -274,25 +274,20 @@ void battlestate::iterateRay(float inc){
 							shouldbounce = false;
 					}
 					if (surface.pairInd != -1) {
-						portal* pair = &map.portals[surface.pairInd];
-						point originHit = rays[i].wherehit(surface.getbody());
-						float surfaceProp = (originHit - surface.getbody().p1).magnitude() / surface.body.length();
-						float dist = surfaceProp * pair->body.length();
-						point pairHit = unitvector(pair->body.p2 - pair->body.p1) * dist + pair->body.p1;
-						rays.push_back(ray(rays[i]));
-						segment surface2;
-						surface2.p1 = difference(serf.p1, serf.midpoint());
-						surface2.p2 = difference(serf.p2, serf.midpoint());
-						point surfRay = unitvector(reflection(rays[i].direction, surface2));
-						point seg = unitvector(serf.p2 - serf.p1);
-						float angle = dotproduct(surfRay, seg);
-						angle /= (surfRay.magnitude() * seg.magnitude());
-						angle = acos(angle);
-						float pairAng = (pair->body.p2 - pair->body.p1).angle();
-						angle += pairAng;
-						rays.back().direction = point(cos(angle), sin(angle));
-						//rays.back().direction = unitvector(reflec2);
-						rays.back().bits[0] = rays.back().bits[1] = pairHit + rays.back().direction * .1;
+						portal* pair = &map.portals[surface.pairInd];														//Paired portal(b) to portal(a) that is currently being hit
+						point originHit = rays[i].wherehit(surface.getbody());												//Where the ray connects with portal a
+						float surfaceProp = (originHit - surface.getbody().p1).magnitude() / surface.body.length();			//What proportion of portal a it was hit (Portals can be different lengths)
+						float dist = surfaceProp * pair->body.length();														//How far along poral b the new ray needs to come from
+						point pairHit = unitvector(pair->body.p2 - pair->body.p1) * dist + pair->body.p1;					//Where it is hit on portal b
+						rays.push_back(ray(rays[i]));																		//Duplicates the ray
+						segment surface2(difference(serf.p1, serf.midpoint()), difference(serf.p2, serf.midpoint()));
+						point surfRay = unitvector(reflection(rays[i].direction, surface2));								
+						point seg = unitvector(serf.p2 - serf.p1);															
+						float ang = surfRay.angle() - seg.angle();															//Angle that new direction makes with portal a
+						float pairAng = (pair->body.p2 - pair->body.p1).angle();											//Angle that new direction makes with portal b if b is horizontal
+						ang += pairAng;																						//Adjusts for angle of portal b
+						rays.back().direction = point(cos(ang), sin(ang));
+						rays.back().bits[0] = rays.back().bits[1] = pairHit + rays.back().direction * .01;					//Moves bits of new ray to come from portal b
 
 						rays[i].terminate(rays[i].bits[0]);
 
