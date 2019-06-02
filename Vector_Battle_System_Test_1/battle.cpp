@@ -258,8 +258,8 @@ void battlestate::iterateRay(float inc){
 						if (closestID == secondclosestID)
 							k++;
 						if (closestID != -1 && secondclosestID != -1) {
-							if (distancetoseg(previnter, map.getWall(closestID).getbody()) ==
-								distancetoseg(previnter, map.getWall(secondclosestID).getbody())
+							if (distancetoseg(previnter, map.portals[closestID].getbody()) ==
+								distancetoseg(previnter, map.portals[secondclosestID].getbody())
 								&& closestID != secondclosestID) {
 								equidist = true;
 							}
@@ -280,6 +280,9 @@ void battlestate::iterateRay(float inc){
 						float dist = surfaceProp * pair->body.length();														//How far along poral b the new ray needs to come from
 						point pairHit = unitvector(pair->body.p2 - pair->body.p1) * dist + pair->body.p1;					//Where it is hit on portal b
 						rays.push_back(ray(rays[i]));																		//Duplicates the ray
+						while (rays.back().bits.size() > 2) {
+							rays.back().bits.pop_back();
+						}
 						segment surface2(difference(serf.p1, serf.midpoint()), difference(serf.p2, serf.midpoint()));
 						point surfRay = unitvector(reflection(rays[i].direction, surface2));								
 						point seg = unitvector(serf.p2 - serf.p1);															
