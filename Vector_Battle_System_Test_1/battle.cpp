@@ -551,6 +551,15 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 					}
 				}
 			}
+			for (int i = 0; i < map.portals.size(); i++) {
+				if (i != wallInd || portOrWall == 0) {
+					if (isintersect(trace, map.portals[i].body)) {
+						reCurse = true;
+						break;
+					}
+				}
+			}
+
 			//If the recursion flag has been set to false, return
 			if (!reCurse) {
 				return intersection(map.getWall(wallInd).body, s);
@@ -560,7 +569,7 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 	//Check every other wall
 	for (int i = 0; i < map.getWalls().size(); i++) {
 		//Make sure not to twice consider this wall
-		if (wallInd != i && permitted(shotColor, map.getWall(i).material.getPermittivitySpells())) {
+		if ((wallInd != i || portOrWall != 0) && permitted(shotColor, map.getWall(i).material.getPermittivitySpells())) {
 			//Check if the considered wall is visable
 			segment segIa(pos, map.getWall(i).body.p1);
 			segment segIb(pos, map.getWall(i).body.p2);
@@ -587,12 +596,12 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 			);
 			bool cont = false;
 			for (int j = 0; j < map.getWalls().size(); j++) {
-				if (j != i && j != wallInd && isintersect(s, map.getWall(j).body)) {
+				if (j != i && (j != wallInd || portOrWall != 0)&& isintersect(s, map.getWall(j).body)) {
 					cont = true;
 					break;
 				}
 				//Check if this line intersects the given wall
-				else if (j == wallInd && wallInd != -1 && !isintersect(map.getWall(wallInd).body, trace)) {
+				else if (portOrWall == 0 && j == wallInd && wallInd != -1 && !isintersect(map.getWall(wallInd).body, trace)) {
 					cont = true;
 					break;
 				}
@@ -605,6 +614,72 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 				return reticle;
 			//Othersize, reflect that point over walls[wallInd], which is the last one, and return the reflected point
 			return reflection(reticle, map.getWall(wallInd).body);
+		}
+	}
+	//Check every other portal
+	for (int i = 0; i < map.portals.size(); i++) {
+		//Make sure not to twice consider this portal
+		if ((wallInd != i || portOrWall == 0) && permitted(shotColor, map.getWall(i).material.getPermittivitySpells())) {
+			//Check if the considered wall is visable
+			segment segIa(pos, map.portals[i].body.p1);
+			segment segIb(pos, map.portals[i].body.p2);
+			bool contin = false;
+			for (int j = 0; j < map.walls.size(); j++) {
+				if (isintersect(segIa, map.getWall(j).body) && isintersect(segIb, map.getWall(j).body)) {
+					contin = true;
+					break;
+				}
+			}
+			if (contin) { continue; }
+			for (int j = 0; j < map.portals.size(); j++) {
+				if (j != i && isintersect(segIa, map.portals[j].body) && isintersect(segIb, map.portals[j].body)) {
+					contin = true;
+					break;
+				}
+			}
+			if (contin) { continue; }
+
+			//Recall this function on walls[i], after reflecting 'pos' across that wall
+			point reticle(recursiveReflectiveAim(e, i, playerInd, depth - 1, reflection(pos, map.portals[i].body), shotColor,1));
+			//Continue if nothing valid is found
+			if (reticle == e.position)
+				continue;
+			//Draw a line from here to the target
+			segment trace(reticle, pos);
+			segment s(intersection(trace, map.portals[i].body), (wallInd == -1
+				? pos
+				: intersection(trace, map.portals[wallInd].body)
+				)
+			);
+			bool cont = false;
+			for (int j = 0; j < map.portals.size(); j++) {
+				if (j != i && (j != wallInd || portOrWall == 0) && isintersect(s, map.portals[j].body)) {
+					cont = true;
+					break;
+				}
+				//Check if this line intersects the given wall
+				else if (j == wallInd && portOrWall != 0 && wallInd != -1 && !isintersect(map.getWall(wallInd).body, trace)) {
+					cont = true;
+					break;
+				}
+			}
+			if (cont) {
+				continue;
+			}
+			for (int j = 0; j < map.walls.size(); j++) {
+				if (isintersect(s, map.walls[j].body)) {
+					cont = true;
+					break;
+				}
+			}
+			if (cont) {
+				continue;
+			}
+			//If we're still considering a direct line, don't reflect it
+			if (wallInd == -1)
+				return reticle;
+			//Othersize, reflect that point over walls[wallInd], which is the last one, and return the reflected point
+			return reflection(reticle, map.portals[wallInd].body);
 		}
 	}
 	//If no valid solutions are found, return enemies position

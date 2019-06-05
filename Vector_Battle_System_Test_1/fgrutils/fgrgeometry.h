@@ -437,6 +437,19 @@ namespace fgr {
 		return reflect;
 	}
 
+	//inline point reflection(point dot, const portal& mirror) {
+	//	point transform = mirror.body.midpoint(); //Bring the process to the origin
+	//	dot = difference(dot, transform);
+	//	point mir = difference(mirror.body.p1, transform);
+	//	float dang = mir.angle() - dot.angle();
+	//	float nang = dot.angle() + dang * 2;
+	//	float nx = dot.magnitude() * cos(nang);
+	//	float ny = dot.magnitude() * sin(nang);
+	//	point reflect(nx, ny);
+	//	reflect = combine(reflect, transform);
+	//	return reflect;
+	//}
+
 	/*Returns the appropriate reflective bisector at a given intersection that reflects an incedent ray as if
 	it reflected at that corner, given a point that lies on the incedent ray.*/
 	inline segment reflectiveBisector(const point &dot, const segment &sega, const segment &segb) {
