@@ -553,7 +553,7 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 			}
 			for (int i = 0; i < map.portals.size(); i++) {
 				if (i != wallInd || portOrWall == 0) {
-					if (isintersect(trace, map.portals[i].body)) {
+					if (map.portals[i].pairInd != -1 && isintersect(trace, map.portals[i].body)) {
 						reCurse = true;
 						break;
 					}
@@ -632,7 +632,7 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 			}
 			if (contin) { continue; }
 			for (int j = 0; j < map.portals.size(); j++) {
-				if (j != i && isintersect(segIa, map.portals[j].body) && isintersect(segIb, map.portals[j].body)) {
+				if (j != i && map.portals[j].pairInd != -1 && isintersect(segIa, map.portals[j].body) && isintersect(segIb, map.portals[j].body)) {
 					contin = true;
 					break;
 				}
