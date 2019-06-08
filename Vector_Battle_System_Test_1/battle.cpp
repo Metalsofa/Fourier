@@ -628,7 +628,7 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 	//Check every other portal
 	for (int i = 0; i < map.portals.size(); i++) {
 		//Make sure not to twice consider this portal
-		if ((wallInd != i || portOrWall == 0) && permitted(shotColor, map.getWall(i).material.getPermittivitySpells())) {
+		if ((wallInd != i || portOrWall == 0) && permitted(shotColor, map.portals[i].material.getPermittivitySpells()) && map.portals[i].pairInd != -1) {
 			//Check if the considered wall is visable
 			segment segIa(pos, map.portals[i].body.p1);
 			segment segIb(pos, map.portals[i].body.p2);
@@ -649,7 +649,7 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 			if (contin) { continue; }
 
 			//Recall this function on walls[i], after reflecting 'pos' across that wall
-			point reticle(recursiveReflectiveAim(e, i, playerInd, depth - 1, reflection(pos, map.portals[i].body), shotColor,1));
+			point reticle(recursiveReflectiveAim(e, i, playerInd, depth - 1, reflection(pos, map.portals[i].body, map.portals[map.portals[i].pairInd].body), shotColor,1));
 			//Continue if nothing valid is found
 			if (reticle == e.position)
 				continue;
