@@ -437,33 +437,26 @@ namespace fgr {
 		return reflect;
 	}
 
-	inline point reflection(const point& dot, const segment& mirrorA, const segment& mirrorB) {
-		point reflec = unitvector(mirrorA.p2-reflection(dot, mirrorA));
-		point seg = unitvector(mirrorA.p2 - mirrorA.p1);
-		float ang = reflec.angle() - seg.angle();															
-		float pairAng = (mirrorB.p2 - mirrorB.p1).angle();											
-		ang += pairAng;
-		return point(cos(ang), sin(ang)) * distancetoline(dot, mirrorA);
+	
 
-		//point transform = mirrorA.midpoint(); //Bring the process to the origin
-		//dot = difference(dot, transform);
-		//point mir = difference(mirrorA.p1, transform);
-		//float dang = mir.angle() - dot.angle();
-		//float nang = dot.angle() + dang * 2;
-		//float nx = dot.magnitude() * cos(nang);
-		//float ny = dot.magnitude() * sin(nang);
-		//point reflect(nx, ny);
-		//reflect = combine(reflect, transform);
-	}
-
+	//Returns a point which has the same position in relation to mirrorB as dot has to mirrorAn
 	inline point transfer(const point& dot, const segment& mirrorA, const segment& mirrorB) {
-		float dist = distancetoline(dot, mirrorA);
-		float d = (dot.x - mirrorA.p1.x) * (mirrorA.p2.y - mirrorA.p1.y) - (dot.y - mirrorA.p1.y) * (mirrorA.p2.x - mirrorA.p1.x);
-		float dComp = ((mirrorA.p1.x - 1) - mirrorA.p1.x) * (mirrorA.p2.y - mirrorA.p1.y) - (mirrorA.p1.y - mirrorA.p1.y) * (mirrorA.p2.x - mirrorA.p1.x);
-
+		float distLine = distancetoline(dot, mirrorA);
+		float d = (dot.x() - mirrorA.p1.x()) * (mirrorA.p2.y() - mirrorA.p1.y()) - (dot.y() - mirrorA.p1.y()) * (mirrorA.p2.x() - mirrorA.p1.x());
+		float dComp = -1 * (mirrorA.p2.y() - mirrorA.p1.y());
+		bool left = d < 0 == dComp < 0;
 		float surfaceProp = (dot - mirrorA.p1).magnitude() / mirrorA.length();			//What proportion of portal a it was hit (Portals can be different lengths)
 		float dist = surfaceProp * mirrorB.length();														//How far along poral b the new ray needs to come from
-		return unitvector(mirrorB.p2 - mirrorB.p1) * dist + mirrorB.p1;
+		point trans =  unitvector(mirrorB.p2 - mirrorB.p1) * dist + mirrorB.p1;
+		float bAng = (mirrorB.p2 - mirrorB.p1).angle();
+		bAng += PI / 2 * (left ? 1 : -1);
+		return point(cos(bAng), sin(bAng)) * distLine + trans;
+		
+	}
+	
+	inline point reflection(const point& dot, const segment& mirrorA, const segment& mirrorB) {
+		point reflec = reflection(dot, mirrorA);
+		return transfer(dot, mirrorA, mirrorB);
 	}
 
 	/*Returns the appropriate reflective bisector at a given intersection that reflects an incedent ray as if
