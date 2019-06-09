@@ -288,7 +288,7 @@ namespace fgr {
 		const point midpoint() const {
 			return point(mean(p1.x(), p2.x()), mean(p1.y(), p2.y()));
 		}
-		float length() {
+		float length() const {
 			float leng;
 			leng = pyth(p1.x() - p2.x(), p1.y() - p2.y());
 			return leng;
@@ -438,7 +438,7 @@ namespace fgr {
 	}
 
 	inline point reflection(const point& dot, const segment& mirrorA, const segment& mirrorB) {
-		point reflec = unitvector(reflection(dot, mirrorA));
+		point reflec = unitvector(mirrorA.p2-reflection(dot, mirrorA));
 		point seg = unitvector(mirrorA.p2 - mirrorA.p1);
 		float ang = reflec.angle() - seg.angle();															
 		float pairAng = (mirrorB.p2 - mirrorB.p1).angle();											
@@ -454,6 +454,16 @@ namespace fgr {
 		//float ny = dot.magnitude() * sin(nang);
 		//point reflect(nx, ny);
 		//reflect = combine(reflect, transform);
+	}
+
+	inline point transfer(const point& dot, const segment& mirrorA, const segment& mirrorB) {
+		float dist = distancetoline(dot, mirrorA);
+		float d = (dot.x - mirrorA.p1.x) * (mirrorA.p2.y - mirrorA.p1.y) - (dot.y - mirrorA.p1.y) * (mirrorA.p2.x - mirrorA.p1.x);
+		float dComp = ((mirrorA.p1.x - 1) - mirrorA.p1.x) * (mirrorA.p2.y - mirrorA.p1.y) - (mirrorA.p1.y - mirrorA.p1.y) * (mirrorA.p2.x - mirrorA.p1.x);
+
+		float surfaceProp = (dot - mirrorA.p1).magnitude() / mirrorA.length();			//What proportion of portal a it was hit (Portals can be different lengths)
+		float dist = surfaceProp * mirrorB.length();														//How far along poral b the new ray needs to come from
+		return unitvector(mirrorB.p2 - mirrorB.p1) * dist + mirrorB.p1;
 	}
 
 	/*Returns the appropriate reflective bisector at a given intersection that reflects an incedent ray as if

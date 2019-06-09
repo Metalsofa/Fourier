@@ -541,7 +541,7 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 		//Draw a line from here to the target
 		segment s(protags[playerInd].position, pos);
 		//Check if this line intersects the given wall
-		if ((portOrWall == 0 && isintersect(map.getWall(wallInd).body, s)) || isintersect(map.portals[wallInd].body, s)) {
+		if ((portOrWall == 0 && isintersect(map.getWall(wallInd).body, s)) ||(portOrWall == 1 && isintersect(map.portals[wallInd].body, s))) {
 			//Draw a line from the intersection to the target
 			segment trace(intersection((portOrWall == 0 ? map.getWall(wallInd).body : map.portals[wallInd].body), s), s.p1);
 			//Check that no other walls intersect with this segment
@@ -565,7 +565,11 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 
 			//If the recursion flag has been set to false, return
 			if (!reCurse) {
-				return intersection((portOrWall == 0 ? map.getWall(wallInd).body : map.portals[wallInd].body), s);
+				if (portOrWall == 0) {
+					return intersection(map.walls[wallInd].body, s);
+				} else {
+					return reflection(intersection(map.portals[wallInd].body, s), map.portals[wallInd].body, map.portals[map.portals[wallInd].pairInd].body);
+				}
 			}
 		}
 	}
@@ -598,14 +602,14 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 				continue;
 			//Draw a line from here to the target
 			segment trace(reticle, pos);
-			segment s(intersection(trace, map.getWall(i).body), (wallInd == -1
-				? pos
+			segment s(intersection(trace, map.getWall(i).body), (
+				wallInd == -1 ? pos
 				: intersection(trace, (portOrWall == 0 ? map.getWall(wallInd).body : map.portals[wallInd].body))
 				)
 			);
 			bool cont = false;
 			for (int j = 0; j < map.getWalls().size(); j++) {
-				if (j != i && (j != wallInd || portOrWall != 0)&& isintersect(s, map.getWall(j).body)) {
+				if (j != i && (j != wallInd || portOrWall != 0) && isintersect(s, map.getWall(j).body)) {
 					cont = true;
 					break;
 				}
@@ -622,7 +626,12 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 			if (wallInd == -1)
 				return reticle;
 			//Othersize, reflect that point over walls[wallInd], which is the last one, and return the reflected point
-			return reflection(reticle, map.getWall(wallInd).body);
+			//If the last wall was a wall reflect it over that, otherwise reflect it over the portal
+			if (portOrWall == 0) {
+				return reflection(reticle, map.getWall(wallInd).body);
+			}
+			return reflection(reticle, map.portals[wallInd].body, map.portals[map.portals[wallInd].pairInd].body);
+			
 		}
 	}
 	//Check every other portal
@@ -649,7 +658,7 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 			if (contin) { continue; }
 
 			//Recall this function on walls[i], after reflecting 'pos' across that wall
-			point reticle(recursiveReflectiveAim(e, i, playerInd, depth - 1, reflection(pos, map.portals[i].body, map.portals[map.portals[i].pairInd].body), shotColor,1));
+			point reticle(recursiveReflectiveAim(e, map.portals[i].pairInd, playerInd, depth - 1, reflection(pos, map.portals[i].body, map.portals[map.portals[i].pairInd].body), shotColor,1));
 			//Continue if nothing valid is found
 			if (reticle == e.position)
 				continue;
@@ -688,6 +697,10 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 			if (wallInd == -1)
 				return reticle;
 			//Othersize, reflect that point over walls[wallInd], which is the last one, and return the reflected point
+			//If the last wall was a wall reflect it over that, otherwise reflect it over the portal
+			if (portOrWall == 0) {
+				return reflection(reticle, map.getWall(wallInd).body);
+			}
 			return reflection(reticle, map.portals[wallInd].body, map.portals[map.portals[wallInd].pairInd].body);
 		}
 	}
