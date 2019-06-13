@@ -830,6 +830,9 @@ void battlestate::iterateAI(float inc){
 			}
 			else {
 				e.position += unitvector(dire) * 1.0f * inc;	//Future 1 is a speed multiplier, inc keeps it consistent with the number of frames being put out
+
+				enemysB4(e);
+
 			}
 			return;		//Future remove return when we want enemies to be able to move and shoot at the same time
 		}
