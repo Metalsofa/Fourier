@@ -444,10 +444,12 @@ namespace fgr {
 		float distLine = distancetoline(dot, mirrorA);
 		float d = (dot.x() - mirrorA.p1.x()) * (mirrorA.p2.y() - mirrorA.p1.y()) - (dot.y() - mirrorA.p1.y()) * (mirrorA.p2.x() - mirrorA.p1.x());
 		float dComp = -1 * (mirrorA.p2.y() - mirrorA.p1.y());
-		bool left = d < 0 == dComp < 0;
+		bool left = d < 0 != dComp < 0;
 
 		float distFromP1 = sqrt(pow((dot - mirrorA.p1).magnitude(), 2) - pow(distLine, 2));
-		float surfaceProp = distFromP1 / mirrorA.length();			//What proportion of portal a it was hit (Portals can be different lengths)
+		float distFromP2 = sqrt(pow((dot - mirrorA.p2).magnitude(), 2) - pow(distLine, 2));
+		bool offLine = distFromP2 > mirrorA.length();
+		float surfaceProp = distFromP1 / mirrorA.length() * (offLine?-1 : 1);			//What proportion of portal a it was hit (Portals can be different lengths)
 		float dist = surfaceProp * mirrorB.length();														//How far along poral b the new ray needs to come from
 		point trans =  unitvector(mirrorB.p2 - mirrorB.p1) * dist + mirrorB.p1;
 		float bAng = (mirrorB.p2 - mirrorB.p1).angle();
@@ -458,7 +460,7 @@ namespace fgr {
 	
 	inline point reflection(const point& dot, const segment& mirrorA, const segment& mirrorB) {
 		point reflec = reflection(dot, mirrorA);
-		return transfer(dot, mirrorA, mirrorB);
+		return transfer(reflec, mirrorA, mirrorB);
 	}
 
 	/*Returns the appropriate reflective bisector at a given intersection that reflects an incedent ray as if

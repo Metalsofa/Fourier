@@ -206,7 +206,7 @@ void battlestate::iterateRay(float inc){
 				if (hit) {
 					rays[i].terminate(rays[i].bits[hit - 1]); //http://mathworld.wolfram.com/Circle-LineIntersection.html
 					term = true;
-					if (antags[j].hit(rays[i].color, 1)) { antags.erase(antags.begin() + j); }	//FUTURE: change 1 to level of ray or change function, death animation or script(possibly)
+					//if (antags[j].hit(rays[i].color, 1)) { antags.erase(antags.begin() + j); }	//FUTURE: change 1 to level of ray or change function, death animation or script(possibly)
 					break;
 				}
 			}
@@ -608,16 +608,32 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 				)
 			);
 			bool cont = false;
-			for (int j = 0; j < map.getWalls().size(); j++) {
-				if (j != i && (j != wallInd || portOrWall != 0) && isintersect(s, map.getWall(j).body)) {
+			for (int j = 0; j < map.walls.size(); j++) {
+				if (j != i && (j != wallInd || portOrWall != 0) && isintersect(s, map.walls[j].body)) {
 					cont = true;
 					break;
 				}
 				//Check if this line intersects the given wall
-				else if (portOrWall == 0 && j == wallInd && wallInd != -1 && !isintersect(map.getWall(wallInd).body, trace)) {
+				else if (j == wallInd && portOrWall == 0 && !isintersect(map.walls[wallInd].body, trace)) {
 					cont = true;
 					break;
 				}
+			}
+			if (cont) {
+				continue;
+			}
+			for (int j = 0; j < map.portals.size(); j++) {
+				if (map.portals[j].pairInd != -1 && isintersect(s, map.portals[j].body)) {
+					cont = true;
+					break;
+				}//Check if this line intersects the given wall
+				else if (j == wallInd && portOrWall != 0 && !isintersect(map.portals[wallInd].body, trace)) {
+					cont = true;
+					break;
+				}
+			}
+			if (cont) {
+				continue;
 			}
 			if (cont) {
 				continue;
@@ -657,7 +673,7 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 			}
 			if (contin) { continue; }
 
-			//Recall this function on walls[i], after reflecting 'pos' across that wall
+			//Recall this function on portals[i], after reflecting 'pos' across that portal
 			point reticle(recursiveReflectiveAim(e, map.portals[i].pairInd, playerInd, depth - 1, reflection(pos, map.portals[i].body, map.portals[map.portals[i].pairInd].body), shotColor,1));
 			//Continue if nothing valid is found
 			if (reticle == e.position)
@@ -688,6 +704,10 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 				if (isintersect(s, map.walls[j].body)) {
 					cont = true;
 					break;
+				}//Check if this line intersects the given wall
+				else if (j == wallInd && portOrWall == 0 && !isintersect(map.walls[wallInd].body, trace)) {
+					cont = true;
+					break;
 				}
 			}
 			if (cont) {
@@ -701,7 +721,8 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 			if (portOrWall == 0) {
 				return reflection(reticle, map.getWall(wallInd).body);
 			}
-			return reflection(reticle, map.portals[wallInd].body, map.portals[map.portals[wallInd].pairInd].body);
+			point ret = reflection(reticle, map.portals[wallInd].body, map.portals[map.portals[wallInd].pairInd].body);
+			return ret;
 		}
 	}
 	//If no valid solutions are found, return enemies position
