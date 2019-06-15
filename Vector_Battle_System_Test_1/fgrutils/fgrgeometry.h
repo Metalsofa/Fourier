@@ -443,8 +443,7 @@ namespace fgr {
 	inline point transfer(const point& dot, const segment& mirrorA, const segment& mirrorB) {
 		float distLine = distancetoline(dot, mirrorA);
 		float d = (dot.x() - mirrorA.p1.x()) * (mirrorA.p2.y() - mirrorA.p1.y()) - (dot.y() - mirrorA.p1.y()) * (mirrorA.p2.x() - mirrorA.p1.x());
-		float dComp = -1 * (mirrorA.p2.y() - mirrorA.p1.y());
-		bool left = d < 0 != dComp < 0;
+		bool left = d < 0;
 
 		float distFromP1 = sqrt(pow((dot - mirrorA.p1).magnitude(), 2) - pow(distLine, 2));
 		float distFromP2 = sqrt(pow((dot - mirrorA.p2).magnitude(), 2) - pow(distLine, 2));
