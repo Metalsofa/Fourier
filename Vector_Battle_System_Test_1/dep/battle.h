@@ -125,7 +125,9 @@ public:
 	//Moves the Rays on the battlefield
 	void iterateRay(float inc);
 
-	point recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, int depth, point pos, const metastat& shotColor);
+	point recursiveReflectiveAimWall(enemy& e, int wallInd, int playerInd, int depth, point pos, const metastat& shotColor);
+
+	point recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, int depth, point pos, const metastat& shotColor, int portOrWall);
 
 	void enemymB1(enemy& e);
 

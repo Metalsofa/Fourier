@@ -190,7 +190,6 @@ void battlestate::iterateRay(float inc){
 	for (unsigned int i = 0; i < rays.size(); i++) {
 		rays[i].advance(inc);
 		//Now we check for collisions
-		unsigned int j = 0;
 		bool term = false;
 		for (int j = 0; j < protags.size(); j++) {
 			int hit = checkcollision(rays[i], protags[j]);
@@ -212,9 +211,11 @@ void battlestate::iterateRay(float inc){
 				}
 			}
 		}
+		unsigned int j = 0;	//Portal index
 		for (portal& surface : map.portals) {
-			if (rays[i].checkcollision(surface.getbody())) {
+			if (rays[i].checkcollision(surface.getbody()) ) {
 				term = true;
+				if (rays[i].terminating) { rays[i].terminate(rays[i].bits[0]); break; }
 				int permit = rays[i].permitted(surface.getmaterial().getPermittivitySpells());
 				if (permit == 1) {
 					bool shouldbounce = true;
@@ -234,12 +235,10 @@ void battlestate::iterateRay(float inc){
 					if (!closestID == j)
 						shouldbounce = false; /* From now on it's fair to assume that j is the ID of
 											  the closest wall to inters */
-
 											  /*The following logic is for judging whether the current intersection is actually
 											  the same as the previous */
 					if (rays[i].getbits().size() > 2) {
 						point previnter = rays[i].bits[1];
-
 						/* The following sequence returns a closestID value representing the closest
 						wall to the previous intersection; ie, the wall on which the previous
 						collision took place.*/
@@ -259,8 +258,8 @@ void battlestate::iterateRay(float inc){
 						if (closestID == secondclosestID)
 							k++;
 						if (closestID != -1 && secondclosestID != -1) {
-							if (distancetoseg(previnter, map.getWall(closestID).getbody()) ==
-								distancetoseg(previnter, map.getWall(secondclosestID).getbody())
+							if (distancetoseg(previnter, map.portals[closestID].getbody()) ==
+								distancetoseg(previnter, map.portals[secondclosestID].getbody())
 								&& closestID != secondclosestID) {
 								equidist = true;
 							}
@@ -274,74 +273,37 @@ void battlestate::iterateRay(float inc){
 							&& difference(inters, previnter).magnitude() < err)
 							shouldbounce = false;
 					}
-					if (shouldbounce) {
-						//Commenting out corner case
-						////Check if at a corner
-						//bool atcorner = false;
-						//if (converges(inters, map.nearestintersection(inters))) {
-						//	atcorner = true;
-						//}
-						////The following IF statement is triggering as it should, but the
-						////Corner logic is causing the ray to pass through corners
-						//if (difference(map.nearestintersection(inters), inters).magnitude() < 0.03) {
-						//	atcorner = true;
-						//}
-						//if (equidist)
-						//	atcorner = true;
-						////If in a corner, turn serf into the appropriate bisector
-						//if (atcorner) {
-						//	//Determine point dot, the location of the previous intersection
-						//	point dot = rays[i].getbits()[1];
-						//	point head = rays[i].getbits()[0];
-						//	point corner = map.nearestintersection(inters);
-						//	//Determine the closest walls: WALL_A and WALL_B (really just their indices)
-						//	int closestIDa = -1;
-						//	int closestIDb = -1;
-						//	unsigned int i = 0;
-						//	vector<portal> port = map.portals;
-						//	while (i < port.size()) {
-						//		if (closestIDa == -1) {
-						//			closestIDa = i++;
-						//			continue;
-						//		}
-						//		segment comparator = port[i].getbody();
-						//		segment currentclosest = port[closestIDa].getbody();
-						//		float distanceComparator = distancetoseg(head, comparator);
-						//		float distanceCurrentClosest = distancetoseg(head, currentclosest);
-						//		/*This if statement compares the current furthest wall to the comparator,
-						//		and sets the new closest if it beats the current one. The old closest
-						//		is set to the second closest.*/
-						//		if (distanceComparator < distanceCurrentClosest) {
-						//			closestIDb = closestIDa;
-						//			closestIDa = i;
-						//		} else if (closestIDb == -1 || distanceComparator <
-						//			distancetoseg(head, port[closestIDb].getbody())) {
-						//			closestIDb = i;
-						//		}
-						//		i++;
-						//	}
-						//	//Extract sega and segb from WALL_A and WALL_B
-						//	segment sega = port[closestIDa].getbody();
-						//	segment segb = port[closestIDb].getbody();
-						//	//Find the appropriate bisector given sega, segb, and dot
-						//	segment cornermirror = reflectiveBisector(dot, sega, segb);
-						//	//Turn serf into that bisector
-						//	serf = cornermirror;
-						//}
-						point originHit = rays[i].wherehit(surface.getbody());
-						float surfaceProp = (originHit - surface.getbody().p1).magnitude() / surface.body.length();
-						rays[i].terminate(originHit);
-						float dist = surfaceProp * surface.pair->body.length();
-						point pairHit = unitvector(surface.pair->body.p2 - surface.pair->body.p1) * dist + surface.pair->body.p1;
-						rays.push_back(ray(rays[i]));
-						rays.back().bits[0] = rays.back().bits[1] = pairHit - rays[i].direction * .01;
+					if (surface.pairInd != -1) {
+						portal* pair = &map.portals[surface.pairInd];														//Paired portal(b) to portal(a) that is currently being hit
+						point originHit = rays[i].wherehit(surface.getbody());												//Where the ray connects with portal a
+						float surfaceProp = (originHit - surface.getbody().p1).magnitude() / surface.body.length();			//What proportion of portal a it was hit (Portals can be different lengths)
+						float dist = surfaceProp * pair->body.length();														//How far along poral b the new ray needs to come from
+						point pairHit = unitvector(pair->body.p2 - pair->body.p1) * dist + pair->body.p1;					//Where it is hit on portal b
+						rays.push_back(ray(rays[i]));																		//Duplicates the ray
+						while (rays.back().bits.size() > 2) {
+							rays.back().bits.pop_back();
+						}
+						segment surface2(difference(serf.p1, serf.midpoint()), difference(serf.p2, serf.midpoint()));
+						point surfRay = unitvector(reflection(rays[i].direction, surface2));								
+						point seg = unitvector(serf.p2 - serf.p1);															
+						float ang = surfRay.angle() - seg.angle();															//Angle that new direction makes with portal a
+						float pairAng = (pair->body.p2 - pair->body.p1).angle();											//Angle that new direction makes with portal b if b is horizontal
+						ang += pairAng;																						//Adjusts for angle of portal b
+						rays.back().direction = point(cos(ang), sin(ang));
+						rays.back().bits[0] = rays.back().bits[1] = pairHit + rays.back().direction * .01;					//Moves bits of new ray to come from portal b
+
+						rays[i].terminate(rays[i].bits[0]);
+
 					}
 				}
 				if (permit == 0 && !rays[i].terminating)
-					rays[i].terminate(rays[i].wherehit(surface.getbody()));
+					rays[i].terminate(rays[i].bits[0]);	//NOTE: should terminate on the bit instead of the intersection for a smoother stop, also need to terminate again after 1 advance
+				break;
 			}
 			j++;
 		}
+
+		j = 0;	//wall index
 		for (wall& surface : map.walls) {
 			if (rays[i].checkcollision(surface.getbody())) {
 				term = true;
@@ -361,7 +323,7 @@ void battlestate::iterateRay(float inc){
 							closestID = k;
 						k++;
 					}
-					if (!closestID == j)
+					if (closestID != j)
 						shouldbounce = false; /* From now on it's fair to assume that j is the ID of
 											  the closest wall to inters */
 
@@ -477,7 +439,7 @@ void battlestate::iterateRay(float inc){
 }
 
 
-point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, int depth, point pos, const metastat& shotColor) {
+point battlestate::recursiveReflectiveAimWall (enemy& e, int wallInd, int playerInd, int depth, point pos, const metastat& shotColor) {
 	//If there are no walls, just take a straight shot for the player
 	if (!map.getWalls().size()) {
 		return protags[playerInd].position;
@@ -526,7 +488,7 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 			if (contin) { continue; }
 
 			//Recall this function on walls[i], after reflecting 'pos' across that wall
-			point reticle(recursiveReflectiveAim(e, i, playerInd, depth - 1, reflection(pos, map.getWall(i).body), shotColor));
+			point reticle(recursiveReflectiveAimWall(e, i, playerInd, depth - 1, reflection(pos, map.getWall(i).body), shotColor));
 			//Continue if nothing valid is found
 			if (reticle == e.position)
 				continue;
@@ -559,7 +521,168 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 			return reflection(reticle, map.getWall(wallInd).body);
 		}
 	}
-	//If no valid solutions are found, return -1, -1
+	//If no valid solutions are found, return enemies position
+	return e.position;
+}
+
+point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, int depth, point pos, const metastat& shotColor, int portOrWall = 0) {
+	//If there are no walls, just take a straight shot for the player
+	if (!map.getWalls().size()) {
+		return protags[playerInd].position;
+	}
+	//Return [invalid point] if no potential paths have been found
+	bool breakP = false;
+	if (depth == -1) { return e.position; }
+	//If not at the base case
+	if (wallInd != -1) {
+		//Draw a line from here to the target
+		segment s(protags[playerInd].position, pos);
+		//Check if this line intersects the given wall
+		if (isintersect(map.getWall(wallInd).body, s)) {
+			//Draw a line from the intersection to the target
+			segment trace(intersection(map.getWall(wallInd).body, s), s.p1);
+			//Check that no other walls intersect with this segment
+			bool reCurse = false;
+			for (int i = 0; i < map.getWalls().size(); i++) {
+				if (i != wallInd || portOrWall != 0) {
+					if (isintersect(trace, map.getWall(i).body)) {
+						reCurse = true;
+						break;
+					}
+				}
+			}
+			for (int i = 0; i < map.portals.size(); i++) {
+				if (i != wallInd || portOrWall == 0) {
+					if (map.portals[i].pairInd != -1 && isintersect(trace, map.portals[i].body)) {
+						reCurse = true;
+						break;
+					}
+				}
+			}
+
+			//If the recursion flag has been set to false, return
+			if (!reCurse) {
+				return intersection(map.getWall(wallInd).body, s);
+			}
+		}
+	}
+	//Check every other wall
+	for (int i = 0; i < map.getWalls().size(); i++) {
+		//Make sure not to twice consider this wall
+		if ((wallInd != i || portOrWall != 0) && permitted(shotColor, map.getWall(i).material.getPermittivitySpells())) {
+			//Check if the considered wall is visable
+			segment segIa(pos, map.getWall(i).body.p1);
+			segment segIb(pos, map.getWall(i).body.p2);
+			bool contin = false;
+			for (int j = 0; j < map.getWalls().size(); j++) {
+				if (j != i && isintersect(segIa, map.getWall(j).body) && isintersect(segIb, map.getWall(j).body)) {
+					contin = true;
+					break;
+				}
+			}
+			if (contin) { continue; }
+
+			//Recall this function on walls[i], after reflecting 'pos' across that wall
+			point reticle(recursiveReflectiveAim(e, i, playerInd, depth - 1, reflection(pos, map.getWall(i).body), shotColor));
+			//Continue if nothing valid is found
+			if (reticle == e.position)
+				continue;
+			//Draw a line from here to the target
+			segment trace(reticle, pos);
+			segment s(intersection(trace, map.getWall(i).body), (wallInd == -1
+				? pos
+				: intersection(trace, map.getWall(wallInd).body)
+				)
+			);
+			bool cont = false;
+			for (int j = 0; j < map.getWalls().size(); j++) {
+				if (j != i && (j != wallInd || portOrWall != 0)&& isintersect(s, map.getWall(j).body)) {
+					cont = true;
+					break;
+				}
+				//Check if this line intersects the given wall
+				else if (portOrWall == 0 && j == wallInd && wallInd != -1 && !isintersect(map.getWall(wallInd).body, trace)) {
+					cont = true;
+					break;
+				}
+			}
+			if (cont) {
+				continue;
+			}
+			//If we're still considering a direct line, don't reflect it
+			if (wallInd == -1)
+				return reticle;
+			//Othersize, reflect that point over walls[wallInd], which is the last one, and return the reflected point
+			return reflection(reticle, map.getWall(wallInd).body);
+		}
+	}
+	//Check every other portal
+	for (int i = 0; i < map.portals.size(); i++) {
+		//Make sure not to twice consider this portal
+		if ((wallInd != i || portOrWall == 0) && permitted(shotColor, map.getWall(i).material.getPermittivitySpells())) {
+			//Check if the considered wall is visable
+			segment segIa(pos, map.portals[i].body.p1);
+			segment segIb(pos, map.portals[i].body.p2);
+			bool contin = false;
+			for (int j = 0; j < map.walls.size(); j++) {
+				if (isintersect(segIa, map.getWall(j).body) && isintersect(segIb, map.getWall(j).body)) {
+					contin = true;
+					break;
+				}
+			}
+			if (contin) { continue; }
+			for (int j = 0; j < map.portals.size(); j++) {
+				if (j != i && map.portals[j].pairInd != -1 && isintersect(segIa, map.portals[j].body) && isintersect(segIb, map.portals[j].body)) {
+					contin = true;
+					break;
+				}
+			}
+			if (contin) { continue; }
+
+			//Recall this function on walls[i], after reflecting 'pos' across that wall
+			point reticle(recursiveReflectiveAim(e, i, playerInd, depth - 1, reflection(pos, map.portals[i].body), shotColor,1));
+			//Continue if nothing valid is found
+			if (reticle == e.position)
+				continue;
+			//Draw a line from here to the target
+			segment trace(reticle, pos);
+			segment s(intersection(trace, map.portals[i].body), (wallInd == -1
+				? pos
+				: intersection(trace, map.portals[wallInd].body)
+				)
+			);
+			bool cont = false;
+			for (int j = 0; j < map.portals.size(); j++) {
+				if (j != i && (j != wallInd || portOrWall == 0) && isintersect(s, map.portals[j].body)) {
+					cont = true;
+					break;
+				}
+				//Check if this line intersects the given wall
+				else if (j == wallInd && portOrWall != 0 && wallInd != -1 && !isintersect(map.getWall(wallInd).body, trace)) {
+					cont = true;
+					break;
+				}
+			}
+			if (cont) {
+				continue;
+			}
+			for (int j = 0; j < map.walls.size(); j++) {
+				if (isintersect(s, map.walls[j].body)) {
+					cont = true;
+					break;
+				}
+			}
+			if (cont) {
+				continue;
+			}
+			//If we're still considering a direct line, don't reflect it
+			if (wallInd == -1)
+				return reticle;
+			//Othersize, reflect that point over walls[wallInd], which is the last one, and return the reflected point
+			return reflection(reticle, map.portals[wallInd].body);
+		}
+	}
+	//If no valid solutions are found, return enemies position
 	return e.position;
 }
 
@@ -655,7 +778,7 @@ void battlestate::enemysB1(enemy& e) {	//Just shoots if there are no walls in th
 //Shooting-behavior function pointer: Makes simple use of the recursive-reflective aiming function
 void battlestate::enemysB4(enemy& e) {
 	for (int i = 0; i < protags.size(); i++) {
-		point aimDot = recursiveReflectiveAim(e, -1, 0, 3, e.position, metastat(clWhite.getLevel('r'), clWhite.getLevel('g'), clWhite.getLevel('b')));
+		point aimDot = recursiveReflectiveAimWall(e, -1, 0, 3, e.position, metastat(clWhite.getLevel('r'), clWhite.getLevel('g'), clWhite.getLevel('b')));
 		if (aimDot != e.position) {
 			rays.size();
 			spawnRay(e.shoot(metastat(255, 255, 255), aimDot));
@@ -754,16 +877,34 @@ void battlestate::playerAct(int playerInd){
 	if (!s)
 		return;
 	switch (s->type) {
-	case sRay:
-		spawnRay(ray(protags[playerInd].position+protags[playerInd].direction*.5, protags[playerInd].position + protags[playerInd].direction,*(s->r)));
+	case sRay: {
+		spawnRay(ray(protags[playerInd].position + protags[playerInd].direction * .5, protags[playerInd].position + protags[playerInd].direction, *(s->r)));
 		return;
-	case sWall:
+	}
+	case sWall: {
 		segment seg(protags[playerInd].position, protags[playerInd].position + protags[playerInd].direction);
 		seg = rotate90about(0, seg);
 		seg.p1 += (seg.p1 - seg.p2);
 		wall w(*(s->w), seg);
 		constructWall(w);
 		return;
+	}
+	case sPortal: {
+		segment seg(protags[playerInd].position, protags[playerInd].position + protags[playerInd].direction);
+		seg = rotate90about(0, seg);
+		seg.p1 += (seg.p1 - seg.p2);
+		int lastPortalInd = protags[playerInd].lastPortal;
+		portal p(*(s->p), seg, lastPortalInd);
+		map.portals.push_back(p);
+		if (lastPortalInd == -1) {
+			protags[playerInd].lastPortal = map.portals.size()-1;
+		} else {
+			map.portals[lastPortalInd].pairInd = map.portals.size() - 1;
+			protags[playerInd].lastPortal = -1;
+		}
+		return;
+	}
+		
 	}
 	//cout << "NOT ENOUGH ENERGY";
 	return;

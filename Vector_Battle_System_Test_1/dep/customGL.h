@@ -82,6 +82,9 @@ void ClearScreen();
 //Takes a refrence to a wall and then draws it
 void drawwall(wall& drawingWall);
 
+//Takes a refrence to a portal and then draws it
+void drawportal(portal& drawingWall);
+
 /* //This function should theoretically be devoid of purpose.
 void rendertext(float x, float y, float z, void *font, string text) { 
 	glRasterPos3f(x, y, z);

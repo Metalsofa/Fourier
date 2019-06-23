@@ -129,15 +129,15 @@ class portal {
 public:
 	segment body;
 	materialtype material;
-	portal* pair;
+	int pairInd; //Index of pair in currentbattle.map.portals
 
 	const segment& getbody() const { return body; }
 	const materialtype& getmaterial() const { return material; }
-	portal(const segment& definingsegment, Material mat, portal* partner);
-	portal(const segment& definingsegment, int wallmaterial, portal* partner);
+	portal(const segment& definingsegment, Material mat, int partner = -1);
+	portal(const segment& definingsegment, int wallmaterial, int partner = -1);
 	portal();
 	portal(const portal& p);
-	portal(const portalConst& pc, const segment& s, portal* partner);
+	portal(const portalConst& pc, const segment& s, int partner= -1);
 };
 //portal:
 	//position

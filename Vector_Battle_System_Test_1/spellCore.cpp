@@ -81,30 +81,30 @@ int permitted(const metastat& spellColor, const metastat& permittivity) {
 //
 ///////////////////////////////////////////////////////////
 
-portal::portal(const segment& definingsegment, Material mat, portal* partner = nullptr) {
+portal::portal(const segment& definingsegment, Material mat, int partner) {
 	body = definingsegment;
 	material = mat;
-	pair = partner;
+	pairInd = partner;
 }
 
-portal::portal(const segment& definingsegment, int wallmaterial, portal* partner = nullptr) {
+portal::portal(const segment& definingsegment, int wallmaterial, int partner) {
 	body = definingsegment;
 	material = (Material)wallmaterial;
-	pair = partner;
+	pairInd = partner;
 }
 portal::portal() {
-	pair = nullptr;
+	pairInd = -1;
 }
 portal::portal(const portal& p) {
 	body = p.body;
 	material = p.material;
-	pair = p.pair;
+	pairInd = p.pairInd;
 }
 
-portal::portal(const portalConst& pc, const segment& s, portal* partner = nullptr) {
+portal::portal(const portalConst& pc, const segment& s, int partner) {
 	body = s;
 	material = pc.material;
-	pair = partner;
+	pairInd = partner;
 }
 
 
@@ -231,6 +231,8 @@ bool ray::deathtime() const { return killme; }
 //Tell the ray it is now terminating, and tell it where to terminate.
 void ray::terminate(const point& where) { 
 	terminating = true;
+
+	//bits[0] -= direction * .01;
 	terminalpoint = where;
 }
 

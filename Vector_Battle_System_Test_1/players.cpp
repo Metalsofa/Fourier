@@ -92,6 +92,7 @@ combatant::combatant() {
 	position = point(-1, -1);
 	direction = point(1, 0);
 	width = 0;
+	lastPortal = -1;
 }
 
 //Construct a combatant from a stat-text file
@@ -346,7 +347,7 @@ void player::toggle() { //Flips tog
 int checkcollision(const ray& r, const combatant& c) {
 	float dist0 = (r.bits[0] - c.position).magnitude();
 	float dist1 = (r.bits[1] - c.position).magnitude();
-	if (dist0 < c.width / 2) { return 1; } //.25 NEEDS TO BE CHANGED IF PLAYER SIZE CHANGES
+	if (dist0 < c.width / 2) { return 1; } //FUTURE: .25 NEEDS TO BE CHANGED IF PLAYER SIZE CHANGES
 	if (dist1 < c.width / 2) { return 2; }
 	return 0;
 }
