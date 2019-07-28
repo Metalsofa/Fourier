@@ -167,30 +167,28 @@ void battlestate::destroyWall(int wallID) {
 }
 
 //Constructor for battlestate; takes a battlePreset
-battlestate::battlestate(battlePreset& preset) { //Pass by ref? K
+battlestate::battlestate(battlePreset& preset) { 
 	map = preset.map;
 }
 
 void battlestate::initChars() {
-	//Setup battle: Initialize combatants		//TODO: Move this to a playerinit func for battlemode
+	//Setup battle: Initialize combatants
 	player plyr1("teststat1.txt", point(0, 6), graphic("alpha.fgr"));
-	plyr1.arsenal.push_back(wallConst(BASIC_REFLECTIVE, true, 0));
-	plyr1.arsenal[0].cost = 20;
+	plyr1.AddSpell(Spell(wallConst(BASIC_REFLECTIVE, true, 0)), 20);
+	plyr1.AddSpell(Spell(portalConst(BASIC_REFLECTIVE)), 50);
+	plyr1.AddSpell(Spell(rayConst(metastat(255, 255, 255), 5, 1, 1)), 1);
 	protags.push_back(plyr1);
 
 	player plyr2("teststat2.txt", point(10, 6), graphic("beta.fgr"));
-	plyr2.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 3, 1));
-	plyr2.arsenal[0].cost = 5;
+	plyr2.AddSpell(rayConst(metastat(255, 255, 255), 5, 3, 1), 5);
 	protags.push_back(plyr2);
 
 	player plyr3("teststat3.txt", point(10, 0), graphic("gamma.fgr"));
-	plyr3.arsenal.push_back(portalConst(BASIC_REFLECTIVE));
-	plyr3.arsenal[0].cost = 20;
+	plyr3.AddSpell(portalConst(BASIC_REFLECTIVE), 20);
 	protags.push_back(plyr3);
 
 	player plyr4("teststat4.txt", point(0, 0), graphic("delta.fgr"));
-	plyr4.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 1, 1));
-	plyr4.arsenal[0].cost = 5;
+	plyr4.AddSpell(rayConst(metastat(255, 255, 255), 5, 1, 1),5);
 	protags.push_back(plyr4);
 
 	enemy e1(1, 3);
@@ -973,6 +971,7 @@ void battlestate::playerAct(int playerInd){
 		seg.p1 += (seg.p1 - seg.p2);
 		int lastPortalInd = protags[playerInd].lastPortal;
 		portal p(*(s->p), seg, lastPortalInd);
+		//p.material.c
 		map.portals.push_back(p);
 		if (lastPortalInd == -1) {
 			protags[playerInd].lastPortal = map.portals.size()-1;

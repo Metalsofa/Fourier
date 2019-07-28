@@ -106,9 +106,14 @@ public:
 
 //controlled players
 class player: public combatant { 
+private:
+	//Asrenal should always be sorted from least cost to greatest with index 0 being the least cost
+	vector<Spell> arsenal;
+	//Made private as it should only be edited by the add spell method
 public:
 	// REPRESENTATION
-	vector<Spell> arsenal;
+
+	
 	float energy;
 	float energyCap;
 	//Whether or not the player can currently be controlled
@@ -129,6 +134,10 @@ public:
 	const Spell* act();
 	wall makeWall(int mat) const;
 	ray shoot(const metastat & col) const;
+
+	void AddSpell(const Spell & s);
+	void AddSpell(const Spell & s, int cost);
+
 };
 
 class enemy : public combatant {	//Non controlled combatants with AI

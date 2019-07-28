@@ -351,7 +351,6 @@ namespace fgr {
 	}
 
 	inline point intersection(const segment& sega, const segment& segb) { //Figured this out using Cramer's Rule  
-		//assert(isintersect(sega, segb) == 1);	//FUTURE: remove this for speedup when safe 
 		float dxa = sega.p2.x() - sega.p1.x();
 		float dxb = segb.p2.x() - segb.p1.x();
 		float dya = sega.p2.y() - sega.p1.y();

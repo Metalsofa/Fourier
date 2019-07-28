@@ -325,15 +325,45 @@ ray player::shoot(const metastat & col) const {
 	return ray(col, (position + direction*.3f), position + direction + direction, 2.0f, 6.0f, 2);
 }
 
-//Returns a pointer to the appropriate spell for this player to cast
-const Spell* player::act() {
-	for (int i = arsenal.size() - 1; i >= 0; i--) {
-		if (arsenal[i].cost < energy) { 
-			energy -= arsenal[i].cost; 
-			return &arsenal[i]; 
+void player::AddSpell(const Spell & s) {
+	for (auto itr = arsenal.begin(); itr != arsenal.end(); itr++) {
+		if (s.cost < itr->cost) {
+			arsenal.insert(itr, s);
+			return;
+		} else if (s.cost == itr->cost) {
+			cerr << "INVALID SPELL: SAME COST AS ANOTHER SPELL" << endl;
+			return;
 		}
 	}
-	cout << "NOT ENOUGH ENERGY";
+	arsenal.push_back(s);
+	return;
+}
+
+void player::AddSpell(const Spell & s, int cost) {
+	for (auto itr = arsenal.begin(); itr != arsenal.end(); itr++) {
+		if (cost < itr->cost) {
+			auto nItr = arsenal.insert(itr, s);
+			nItr->cost = cost;
+			return;
+		} else if (cost == itr->cost) {
+			cerr << "INVALID SPELL: SAME COST AS ANOTHER SPELL" << endl;
+			return;
+		}
+	}
+	arsenal.push_back(s);
+	return;
+}
+
+//Returns a pointer to the appropriate spell for this player to cast
+const Spell* player::act() {
+	for (auto itr = arsenal.end(); itr != arsenal.begin(); ) {
+		itr--;
+		if (itr->cost < energy) { 
+			energy -= itr->cost; 
+			return &(*itr); 
+		}
+	}
+	cerr << "NOT ENOUGH ENERGY" << endl;
 	return nullptr;
 }
 
@@ -347,7 +377,7 @@ void player::toggle() { //Flips tog
 int checkcollision(const ray& r, const combatant& c) {
 	float dist0 = (r.bits[0] - c.position).magnitude();
 	float dist1 = (r.bits[1] - c.position).magnitude();
-	if (dist0 < c.width / 2) { return 1; } //FUTURE: .25 NEEDS TO BE CHANGED IF PLAYER SIZE CHANGES
+	if (dist0 < c.width / 2) { return 1; } 
 	if (dist1 < c.width / 2) { return 2; }
 	return 0;
 }
