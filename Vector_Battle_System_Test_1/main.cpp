@@ -248,36 +248,7 @@ int main(int argc, char **argv) {
 	glutPassiveMotionFunc(PassiveMouseMove); //Callback for mouse movement with no button down
 
 
-	//Setup battle: Initialize combatants		//TODO: Move this to a playerinit func for battlemode
-	player plyr1("teststat1.txt", point(0,6), graphic("alpha.fgr"));		
-	plyr1.arsenal.push_back(wallConst(BASIC_REFLECTIVE,true,0));
-	plyr1.arsenal[0].cost = 20;
-	currentbattle.protags.push_back(plyr1);
-
-	player plyr2("teststat2.txt", point(10, 6), graphic("beta.fgr"));
-	plyr2.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 3, 1));
-	plyr2.arsenal[0].cost = 5;
-	currentbattle.protags.push_back(plyr2);
-
-	player plyr3("teststat3.txt", point(10, 0), graphic("gamma.fgr"));
-	plyr3.arsenal.push_back(portalConst(BASIC_REFLECTIVE));
-	plyr3.arsenal[0].cost = 20;
-	currentbattle.protags.push_back(plyr3);
-
-	player plyr4("teststat4.txt", point(0,0), graphic("delta.fgr"));
-	plyr4.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 1, 1));
-	plyr4.arsenal[0].cost = 5;
-	currentbattle.protags.push_back(plyr4);
-
-	enemy e1(1, 3);
-	e1.position = point(7, 3);
-	e1.width = .4f;
-	plyr4.sprite = (graphic("delta.fgr"));
-	currentbattle.antags.push_back(e1);
-	currentbattle.antags[0].addWaypoint(point(7, 2.5));
-	currentbattle.antags[0].addWaypoint(point(7, 4));
-	currentbattle.antags[0].addWaypoint(point(1, 3));
-	currentbattle.antags[0].addWaypoint(point(3, 1));
+	currentbattle.initChars();	//Initializes combatants
 
 	//enter GLUT event processing cycle
 	st.Start();

@@ -171,6 +171,38 @@ battlestate::battlestate(battlePreset& preset) { //Pass by ref? K
 	map = preset.map;
 }
 
+void battlestate::initChars() {
+	//Setup battle: Initialize combatants		//TODO: Move this to a playerinit func for battlemode
+	player plyr1("teststat1.txt", point(0, 6), graphic("alpha.fgr"));
+	plyr1.arsenal.push_back(wallConst(BASIC_REFLECTIVE, true, 0));
+	plyr1.arsenal[0].cost = 20;
+	protags.push_back(plyr1);
+
+	player plyr2("teststat2.txt", point(10, 6), graphic("beta.fgr"));
+	plyr2.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 3, 1));
+	plyr2.arsenal[0].cost = 5;
+	protags.push_back(plyr2);
+
+	player plyr3("teststat3.txt", point(10, 0), graphic("gamma.fgr"));
+	plyr3.arsenal.push_back(portalConst(BASIC_REFLECTIVE));
+	plyr3.arsenal[0].cost = 20;
+	protags.push_back(plyr3);
+
+	player plyr4("teststat4.txt", point(0, 0), graphic("delta.fgr"));
+	plyr4.arsenal.push_back(rayConst(metastat(255, 255, 255), 5, 1, 1));
+	plyr4.arsenal[0].cost = 5;
+	protags.push_back(plyr4);
+
+	enemy e1(1, 3);
+	e1.position = point(7, 3);
+	e1.width = .4f;
+	e1.addWaypoint(point(7, 2.5));
+	e1.addWaypoint(point(7, 4));
+	e1.addWaypoint(point(1, 3));
+	e1.addWaypoint(point(3, 1));
+	antags.push_back(e1);
+}
+
 //Returns the number of travelling rays in existence
 std::size_t battlestate::rayCount() {
 	return rays.size();

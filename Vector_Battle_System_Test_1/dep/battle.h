@@ -112,6 +112,8 @@ public:
 	void destroyWall(int wallID);
 	//Constructor for battlestate; takes a battlePreset
 	battlestate(battlePreset& preset);
+	//Inits players and enemies to default values
+	void initChars();
 	//Returns the number of travelling rays in existence
 	size_t rayCount();
 	//Add a ray to the vector or travelling rays (this is a relic of when I had private members. I miss those days)
