@@ -192,13 +192,30 @@ void battlestate::initChars() {
 	protags.push_back(plyr4);
 
 	enemy e1(1, 3);
-	e1.position = point(7, 3);
+	e1.position = point(7, 5);
 	e1.width = .4f;
-	e1.addWaypoint(point(7, 2.5));
-	e1.addWaypoint(point(7, 4));
-	e1.addWaypoint(point(1, 3));
-	e1.addWaypoint(point(3, 1));
+	e1.addWaypoint(point(6, 5));
+	e1.addWaypoint(point(5, 5));
+	e1.addWaypoint(point(4, 5));
 	antags.push_back(e1);
+
+	enemy e2(1, 3);
+	e2.position = point(7, 3);
+	e2.width = .4f;
+	e2.addWaypoint(point(6, 3));
+	e2.addWaypoint(point(5, 3));
+	e2.addWaypoint(point(4, 3));
+	antags.push_back(e2);
+
+	enemy e3(1, 3);
+	e3.position = point(7, 4);
+	e3.width = .4f;
+	e3.addWaypoint(point(6, 4));
+	e3.addWaypoint(point(5, 4));
+	e3.addWaypoint(point(4, 4));
+	antags.push_back(e3);
+
+
 }
 
 //Returns the number of travelling rays in existence
@@ -882,10 +899,10 @@ void battlestate::iterateAI(float inc){
 			else {
 				e.position += unitvector(dire) * 1.0f * inc;	//Future 1 is a speed multiplier, inc keeps it consistent with the number of frames being put out
 
-				enemysB4(e);
+				//enemysB4(e);
 
 			}
-			return;		//Future remove return when we want enemies to be able to move and shoot at the same time
+			continue;		//Future remove return when we want enemies to be able to move and shoot at the same time
 		}
 		else {
 			switch (e.moveB) {		//Picking a move behavior
@@ -919,7 +936,7 @@ void battlestate::iterateAI(float inc){
 			default:
 				break;
 			}
-			return;
+			continue;
 		}
 		//cerr << "ERROR: INVALID BEHAVIOR" << endl;
 	}
