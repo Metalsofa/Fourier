@@ -13,3 +13,8 @@ Note: There do not exist any stable releases for this game yet. The purpose of t
 
 ## See also
 This game uses a unique vector art file format, the Fourier Graphic, or '.fgr' file. The tools to edit and manipulate these types of files are in development [here](https://github.com/Metalsofa/FGR-Suite), and help developing them is always appreciated!
+
+
+# UPDATE
+
+While this project has not been updated in a hot minute, it is not dead. Both developers have been busy with schoolwork and other things (Work + Job Apps) and will pick up when we have time. This is a passion project that is done in the developers' spare time, and we both want to come back and work on it as soon as possible.
