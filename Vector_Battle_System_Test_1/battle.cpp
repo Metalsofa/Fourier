@@ -22,8 +22,9 @@ using namespace fgr;
 //
 ///////////////////////////////////////////////////////////
 
-
-//Returns a vector of every intersection point formed by the walls in the battlefield
+//Param: None
+//Return: vector of every intersection point formed by the walls in the battlefield
+//Notes: None
 vector<point> battlefield::intersections() const {
 	vector<point> returnthis;
 	for (int i = 0; i < walls.size(); i++) {
@@ -44,7 +45,9 @@ vector<point> battlefield::intersections() const {
 	return returnthis;
 }
 
-//Returns the point (-100, -100) if there are no intersections.
+//Param: A single point, dot
+//Return: Intersection closest to dot
+//Notes: None
 point battlefield::nearestintersection(const point& dot) const {
 	point nearest(-100, -100);
 	for (unsigned int i = 0; i < intersections().size(); i++) {
@@ -56,47 +59,68 @@ point battlefield::nearestintersection(const point& dot) const {
 	}
 	return nearest;
 }
-
-//Set the dimensions of this battlefield object
+//Param: float width, float height
+//Return: None
+//Notes: Sets the dimensions of this battlefield to the parameters
 void battlefield::setSize(float wide, float high) {
 	width = wide;
 	height = high;
 }
 
-//Accessor for the width of this battlefield
+//Param: None
+//Return: width member variable
+//Notes: None
 float battlefield::getWidth() {
 	return width;
 }
 
-//Accessor for the height of this battlefield
+//Param: None
+//Return: height member variable
+//Notes: None
 float battlefield::getHeight() {
 	return height;
 }
 
-//Return the number of walls
+//Param: None
+//Return: Number of walls on the battlefield
+//Notes: None
 size_t battlefield::wallCount() { return walls.size(); }
 
-//Get a particular wall
+//Param: ID for a wall
+//Return: a wall by reference from the walls vector
+//Notes: None
 wall& battlefield::getWall(int wallID) {
 	return walls[wallID];
 }
 
-//Get a refrence to the entire vector of walls
+//Param: None
+//Return: A reference to the vector of walls member variable
+//Notes: None
 vector<wall>& battlefield::getWalls() {
 	return walls;
 }
 
-//Add a wall to the vector of walls
+//Param: Wall to add to battlefield
+//Return: None
+//Notes: None
 void battlefield::addWall(wall& newWall) { //Consider overloading this to take a wall or to take multiple args
 	walls.push_back(newWall);
 }
 
-//Pop a wall from the vector of walls
+//Param: ID of wall to remove(Must be valid)
+//Return: None
+//Notes: Order of walls vector is not perserved unlike delWall, and is more efficient than delWall
 void battlefield::popWall(int wallID) {
 	swap(walls[wallID], walls.back());
 	return walls.pop_back();
 }
 
+//Param: ID of wall to remove
+//Return: None
+//Notes: Order of walls vector is perserved unlike popWall, and is less efficient than popWall
+void battlefield::delWall(int wallID) {
+	walls.erase(walls.begin() + wallID);
+}
 
 ///////////////////////////////////////////////////////////
 //
@@ -107,27 +131,37 @@ void battlefield::popWall(int wallID) {
 //
 ///////////////////////////////////////////////////////////
 
-//Default constructor
+//Param: None
+//Return: None
+//Notes: Default constructor (Unimplemenented)
 battlePreset::battlePreset() {
 
 }
 
-//Construct from height and width
+//Param: Height and Width for the map
+//Return: None
+//Notes: Constructor
 battlePreset::battlePreset(float width, float height) {
 	map.setSize(width, height);
 }
 
-//Construct this battle preset using a file
+//Param: filename of file with battle preset data
+//Return: None
+//Notes: Constructor
 battlePreset::battlePreset(std::string filename) {
 	readFromFile(filename);
 }
 
-//Write this battle preset to a file
+//Param: filename of file to write this battlepreset to
+//Return: None
+//Notes: Write this battle preset to a file (Unimplemented)
 void battlePreset::writeToFile(std::string filename) {
 
 }
 
-//Read in a battle preset from a file
+//Param: filename of a file to read a preset from 
+//Return: None
+//Notes: Overwrites current settings with whatever is read from file (Unimplemented)
 void battlePreset::readFromFile(std::string filename) {
 
 }
@@ -143,34 +177,52 @@ void battlePreset::readFromFile(std::string filename) {
 ///////////////////////////////////////////////////////////
 
 
-//Returns a float of the battlefield's width, just for convenience
+//Param: None
+//Return: Width of the battlefield
+//Notes: Mostly for convienience
 float battlestate::boardWidth() {
 	return float(map.getWidth());
 }
 
-//Returns a FLOAT of the battlefield's height, just for convineince.
+//Param: None
+//Return: Height of battlefield
+//Notes: Mostly for convienience
 float battlestate::boardHeight() {
 	return float(map.getHeight());
 }
 
-//Pass this function two integers to change the size of the map.
+//Param: Width and height of battlefield
+//Return: None
+//Notes: Overwrites current width and height with parameters
 void battlestate::setmapsize(float& wideness, float& highness) {
 	map.setSize(wideness, highness);
 }
 
+//Param: Wall by reference
+//Return: None
+//Notes: Check battlefield::addWall for more
 void battlestate::constructWall(wall& newWall) {
 	map.addWall(newWall);
 }
 
+//Param: id of wall to remove
+//Return: None
+//Notes: Check battlefield::popWall for more
 void battlestate::destroyWall(int wallID) {
 	map.popWall(wallID);
 }
 
-//Constructor for battlestate; takes a battlePreset
-battlestate::battlestate(battlePreset& preset) { 
+//Param: Another battlepreset by reference
+//Return: None
+//Notes: Copy constructor
+battlestate::battlestate(battlePreset& preset) {
 	map = preset.map;
 }
 
+
+//Param: None
+//Return: None
+//Notes: Sets up the characters in a way used by the devs for testing
 void battlestate::initChars() {
 	//Setup battle: Initialize combatants
 	player plyr1("teststat1.txt", point(0, 6), graphic("alpha.fgr"));
@@ -188,7 +240,7 @@ void battlestate::initChars() {
 	protags.push_back(plyr3);
 
 	player plyr4("teststat4.txt", point(0, 0), graphic("delta.fgr"));
-	plyr4.AddSpell(rayConst(metastat(255, 255, 255), 5, 1, 1),5);
+	plyr4.AddSpell(rayConst(metastat(255, 255, 255), 5, 1, 1), 5);
 	protags.push_back(plyr4);
 
 	enemy e1(1, 3);
@@ -218,22 +270,33 @@ void battlestate::initChars() {
 
 }
 
-//Returns the number of travelling rays in existence
+
+//Param: None
+//Return: The number of traveling rays on the battlefield
+//Notes: None
 std::size_t battlestate::rayCount() {
 	return rays.size();
 }
 
-//Add a ray to the vector or travelling rays 
+
+//Param: Ray by reference to add to battlefield
+//Return: None
+//Notes: This method has an overloaded version where the parameter is const
 void battlestate::spawnRay(ray& spawnthis) {
 	rays.push_back(spawnthis);
 }
 
-//Oh look there's another version of the previous function that works with const
+//Param: Ray by const reference to add to the battlefield
+//Return: None
+//Notes: This method has an overloaded version where the parameter is not const
 void battlestate::spawnRay(const ray& spawnthis) {
 	rays.push_back(spawnthis);
 }
 
-void battlestate::iterateRay(float inc){
+//Param: A time unit to iterate all the rays by
+//Return: None
+//Notes: Moves all the rays in accordance to how they should move (Bounce off walls, go through portals, etc.)
+void battlestate::iterateRay(float inc) {
 	for (unsigned int i = 0; i < rays.size(); i++) {
 		rays[i].advance(inc);
 		//Now we check for collisions
@@ -260,7 +323,7 @@ void battlestate::iterateRay(float inc){
 		}
 		unsigned int j = 0;	//Portal index
 		for (portal& surface : map.portals) {
-			if (rays[i].checkcollision(surface.getbody()) ) {
+			if (rays[i].checkcollision(surface.getbody())) {
 				term = true;
 				if (rays[i].terminating) { rays[i].terminate(rays[i].bits[0]); break; }
 				int permit = rays[i].permitted(surface.getmaterial().getPermittivitySpells());
@@ -406,7 +469,7 @@ void battlestate::iterateRay(float inc){
 						}
 						/* So now j is the ID for the wall inters is on, and closestID is the ID for
 						the closest wall to previnter*/
-						float err = 0.01f; 
+						float err = 0.01f;
 						int prevwallID = closestID;
 						int currentwallID = j;
 						if (prevwallID == currentwallID
@@ -452,8 +515,7 @@ void battlestate::iterateRay(float inc){
 								if (distanceComparator < distanceCurrentClosest) {
 									closestIDb = closestIDa;
 									closestIDa = i;
-								}
-								else if (closestIDb == -1 || distanceComparator <
+								} else if (closestIDb == -1 || distanceComparator <
 									distancetoseg(head, wals[closestIDb].getbody())) {
 									closestIDb = i;
 								}
@@ -478,15 +540,19 @@ void battlestate::iterateRay(float inc){
 		if (!term) { rays[i].terminating = false; }
 		//Erase this ray if it's out of bounds or dead
 		if (abs(rays[i].getbits().back().x() - map.getWidth() / 2) > map.getWidth()
-		  || abs(rays[i].getbits().back().y() - map.getHeight() / 2) > map.getHeight() || rays[i].deathtime()) {
+			|| abs(rays[i].getbits().back().y() - map.getHeight() / 2) > map.getHeight() || rays[i].deathtime()) {
 			rays.erase(rays.begin() + i);
 			i--; //Appropriately adjust our iterator
 		}
 	}
 }
 
-
-point battlestate::recursiveReflectiveAimWall (enemy& e, int wallInd, int playerInd, int depth, point pos, const metastat& shotColor) {
+//Param: Enemy that is shooting, current wall that is being tested, which player is the target, recursion depth, 
+//		 position that enemy is shooting from(mathematically), color of the ray(to test for permeation)
+//Return: Point that an enemy at pos should shoot at to hit the player at playerInd, will return e.position if no such value can be found
+//Notes: (DEPRECATED, USE recursiveReflexiveAim) 
+//		 This is a recursive function that should be perfect AI to hit a player given the walls on the battlefield 
+point battlestate::recursiveReflectiveAimWall(enemy& e, int wallInd, int playerInd, int depth, point pos, const metastat& shotColor) {
 	//If there are no walls, just take a straight shot for the player
 	if (!map.getWalls().size()) {
 		return protags[playerInd].position;
@@ -572,9 +638,14 @@ point battlestate::recursiveReflectiveAimWall (enemy& e, int wallInd, int player
 	return e.position;
 }
 
+//Param: Enemy that is shooting, current wall that is being tested, which player is the target, recursion depth, 
+//		 position that enemy is shooting from(mathematically), color of the ray(to test for permeation), 
+//		 and whether we are testing a portal(1) or a wall(0)
+//Return: Point that an enemy at pos should shoot at to hit the player at playerInd, will return e.position if no such value can be found
+//Notes: This is a recursive function that should be perfect AI to hit a player given the walls and portals on the battlefield 
 point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, int depth, point pos, const metastat& shotColor, int portOrWall = 0) {
 	//If there are no walls, just take a straight shot for the player
-	if (!(map.getWalls().size() + map.portals.size())){
+	if (!(map.getWalls().size() + map.portals.size())) {
 		return protags[playerInd].position;
 	}
 	if (portOrWall != 0 && wallInd != -1 && map.portals[wallInd].pairInd == -1) {
@@ -588,7 +659,7 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 		//Draw a line from here to the target
 		segment s(protags[playerInd].position, pos);
 		//Check if this line intersects the given wall
-		if ((portOrWall == 0 && isintersect(map.getWall(wallInd).body, s)) ||(portOrWall == 1 && isintersect(map.portals[wallInd].body, s))) {
+		if ((portOrWall == 0 && isintersect(map.getWall(wallInd).body, s)) || (portOrWall == 1 && isintersect(map.portals[wallInd].body, s))) {
 			//Draw a line from the intersection to the target
 			segment trace(intersection((portOrWall == 0 ? map.getWall(wallInd).body : map.portals[wallInd].body), s), s.p1);
 			//Check that no other walls intersect with this segment
@@ -694,7 +765,7 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 				return reflection(reticle, map.getWall(wallInd).body);
 			}
 			return reflection(reticle, map.portals[wallInd].body, map.portals[map.portals[wallInd].pairInd].body);
-			
+
 		}
 	}
 	//Check every other portal
@@ -721,7 +792,7 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 			if (contin) { continue; }
 
 			//Recall this function on portals[i], after reflecting 'pos' across that portal
-			point reticle(recursiveReflectiveAim(e, map.portals[i].pairInd, playerInd, depth - 1, reflection(pos, map.portals[i].body, map.portals[map.portals[i].pairInd].body), shotColor,1));
+			point reticle(recursiveReflectiveAim(e, map.portals[i].pairInd, playerInd, depth - 1, reflection(pos, map.portals[i].body, map.portals[map.portals[i].pairInd].body), shotColor, 1));
 			//Continue if nothing valid is found
 			if (reticle == e.position)
 				continue;
@@ -777,32 +848,37 @@ point battlestate::recursiveReflectiveAim(enemy& e, int wallInd, int playerInd, 
 }
 
 //Movement-Behavior function pointer: Just follows the path
+//Param: Enemy by reference
+//Return: None
+//Notes: Moves the enemy to follow the path;
+//		 Ex: Path = {A,B,C} enemy moves in order A, B, C, B, A, B...
 void battlestate::enemymB1(enemy& e) {
-	if (e.path.size() == 0) { return; } 
-	else if (e.path.size() == 1) { 
+	if (e.path.size() == 0) { return; } else if (e.path.size() == 1) {
 		if ((e.path.front() - e.position).magnitude() > .05) { //.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
 			move(e.path.front());
 		}
-		return; 
+		return;
 	}
 	if (e.ind == 0) {
 		e.ind++;
 		e.dir = true;
 		e.move();
-	} 
-	else if(e.ind == (e.path.size()-1)){
+	} else if (e.ind == (e.path.size() - 1)) {
 		e.ind--;
 		e.dir = false;
 		e.move();
-	} 
-	else{
+	} else {
 		e.ind += (e.dir ? 1 : -1);
 		e.move();
 	}
 	return;
 }
 
-//Similar to mB1, loops through the path
+
+//Param: Enemy by reference
+//Return: None
+//Notes: Moves the enemy to follow the path in a loop fation;
+//		 Ex: Path = {A,B,C} enemy moves in order A, B, C, A, B, C ...
 void battlestate::enemymB1b(enemy& e) {
 	if (e.path.size() == 0) { return; } else if (e.path.size() == 1) {
 		if ((e.path.front() - e.position).magnitude() > .05) { //.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
@@ -816,7 +892,9 @@ void battlestate::enemymB1b(enemy& e) {
 	return;
 }
 
-//Shooting-behaviour function pointer: shoots randomly in one of the cardinal or diagonal directions
+//Param: Enemy by reference
+//Return: None
+//Notes: Enemy will shoot in one of the 8 cardinal and intercardinal directions
 void battlestate::enemysBRand8(enemy& e) {
 	int direction = rand() % 4;
 	if (rand() % 2 == 0) {	//Shoot in a cardinal direction
@@ -837,14 +915,16 @@ void battlestate::enemysBRand8(enemy& e) {
 			e.aimAt(point(1, -1) + e.position);
 			break;
 		case 3:
-			e.aimAt(point(1,1) + e.position);
+			e.aimAt(point(1, 1) + e.position);
 			break;
 		}
 	}
 	spawnRay(e.shoot());
 }
 
-//Shooting-behaviour function pointer: Just shoot each player if there are no walls in the way
+//Param: Enemy by reference
+//Return: None
+//Notes: Enemy will shoot if there are no walls in the way (Does not account for portals)
 void battlestate::enemysB1(enemy& e) {	//Just shoots if there are no walls in the way of enemy and player
 	bool shot = true;
 	for (player& p : protags) {
@@ -865,7 +945,9 @@ void battlestate::enemysB1(enemy& e) {	//Just shoots if there are no walls in th
 }
 
 
-//Shooting-behavior function pointer: Makes simple use of the recursive-reflective aiming function
+//Param: Enemy by reference
+//Return: None
+//Notes: Uses the perfect recursive aim function 
 void battlestate::enemysB4(enemy& e) {
 	for (int i = 0; i < protags.size(); i++) {
 		point aimDot = recursiveReflectiveAim(e, -1, 0, 3, e.position, metastat(clWhite.getLevel('r'), clWhite.getLevel('g'), clWhite.getLevel('b')));
@@ -878,33 +960,44 @@ void battlestate::enemysB4(enemy& e) {
 	}
 }
 
+//Param: Enemy by reference
+//Return: None
+//Notes: Moves the enemy in some path(Unimplemented)
 void battlestate::enemymB2(enemy& e) {
 
 }
+
+//Param: Enemy by reference
+//Return: None
+//Notes: Moves the enemy in some path(Unimplemented)
 void battlestate::enemymB3(enemy& e) {
 
 }
 
+//Param: Enemy by reference
+//Return: None
+//Notes: Moves the enemy in some path(Unimplemented)
 void battlestate::enemymB4(enemy& e) {
 
 }
 
-void battlestate::iterateAI(float inc){
+//Param: Time unit
+//Return: None
+//Notes: Iterates the enemy with their appropriate behaviors 
+void battlestate::iterateAI(float inc) {
 	for (enemy& e : antags) {
 		if (e.moving) {
 			point dire = (e.dest - e.position);
 			if (dire.magnitude() < .05) {	//.05 can be decreased for more precise movement, or increased for more stable movement and prevent overshoot
 				e.moving = false;
-			}
-			else {
+			} else {
 				e.position += unitvector(dire) * 1.0f * inc;	//Future 1 is a speed multiplier, inc keeps it consistent with the number of frames being put out
 
 				//enemysB4(e);
 
 			}
 			continue;		//Future remove return when we want enemies to be able to move and shoot at the same time
-		}
-		else {
+		} else {
 			switch (e.moveB) {		//Picking a move behavior
 			case 1:
 				enemymB1(e);
@@ -942,17 +1035,26 @@ void battlestate::iterateAI(float inc){
 	}
 }
 
+//Param: time unit of imcrement
+//Return: None
+//Notes: Adds energy to player
 void battlestate::iteratePlayer(float inc) {	//Used to iterate the players stats frame by frame
 	for (auto& p : protags) {
 		if (p.energy < p.energyCap) {
 			p.energy += (10 * inc);	//FUTURE: update to match agility or speed of player
-		}	
+		}
 	}
 }
+
+
 /*This function is called every frame during battle unless the battle is paused; even then, It may still be best
 to call it and simply because certain animations might look cool cycling in the background when the battle is //DP: If u want to do that we should isolate the animation from movement
 awaiting user input. All iterative battle behaviour and logic goes in here, or is called from in here.*/
-void battlestate::iterate(float &inc /*incremental time*/) {
+
+//Param: time unit of increment
+//Return: None
+//Notes: iterates rays, ai, and players
+void battlestate::iterate(float inc /*incremental time*/) {
 	//Iterate Rays
 	iterateRay(inc);
 
@@ -964,8 +1066,10 @@ void battlestate::iterate(float &inc /*incremental time*/) {
 }
 
 
-//Affect the battle
-void battlestate::playerAct(int playerInd){
+//Param: Index for player
+//Return: None
+//Notes: Creates the spell that the player wants to create
+void battlestate::playerAct(int playerInd) {
 	const Spell* s = protags[playerInd].act();
 	if (!s)
 		return;
@@ -991,14 +1095,14 @@ void battlestate::playerAct(int playerInd){
 		//p.material.c
 		map.portals.push_back(p);
 		if (lastPortalInd == -1) {
-			protags[playerInd].lastPortal = map.portals.size()-1;
+			protags[playerInd].lastPortal = map.portals.size() - 1;
 		} else {
 			map.portals[lastPortalInd].pairInd = map.portals.size() - 1;
 			protags[playerInd].lastPortal = -1;
 		}
 		return;
 	}
-		
+
 	}
 	//cout << "NOT ENOUGH ENERGY";
 	return;
