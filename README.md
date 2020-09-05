@@ -17,4 +17,6 @@ This game uses a unique vector art file format, the Fourier Graphic, or '.fgr' f
 
 # UPDATE
 
-While this project has not been updated in a hot minute, it is not dead. Both developers have been busy with schoolwork and other things (Work + Job Apps) and will pick up when we have time. This is a passion project that is done in the developers' spare time, and we both want to come back and work on it as soon as possible.
+~~While this project has not been updated in a hot minute, it is not dead. Both developers have been busy with schoolwork and other things (Work + Job Apps) and will pick up when we have time. This is a passion project that is done in the developers' spare time, and we both want to come back and work on it as soon as possible.~~
+
+Edit 2020: Found this in my github repos, and realized that it was still considered "open". Both developers have moved on to other things, and safe to say this won't be worked on in the near future. If you are reading this, feel free to pick it up and continue it!
